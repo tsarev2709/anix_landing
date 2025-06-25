@@ -416,12 +416,12 @@ const AnixAILanding = () => {
           </div>
           
           <h1 className="hero-title">
-            <span className="title-line">Создавайте</span>
+            <span className="title-line">Создаваём</span>
             <span className="title-line glow-text">ИИ-Анимации</span>
             <span className="title-line">Нового Уровня</span>
           </h1>
           <p className="hero-subtitle">
-            Революционная технология нейронных сетей превращает ваше видение в потрясающую анимацию за минуты, а не месяцы.
+            Революционная технология нейронных сетей превращает ваше видение в потрясающую анимацию за дни, а не месяцы.
           </p>
           <button className="cta-button primary" onClick={redirectToTelegram}>
             <span>Создать ИИ-Анимацию</span>
