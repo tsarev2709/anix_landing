@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/anix_landing/static/css/main.e3f0e811.css",
-    "main.js": "/anix_landing/static/js/main.b3f0577f.js",
+    "main.js": "/anix_landing/static/js/main.4cea3396.js",
     "index.html": "/anix_landing/index.html",
     "main.e3f0e811.css.map": "/anix_landing/static/css/main.e3f0e811.css.map",
-    "main.b3f0577f.js.map": "/anix_landing/static/js/main.b3f0577f.js.map"
+    "main.4cea3396.js.map": "/anix_landing/static/js/main.4cea3396.js.map"
   },
   "entrypoints": [
     "static/css/main.e3f0e811.css",
-    "static/js/main.b3f0577f.js"
+    "static/js/main.4cea3396.js"
   ]
 }
