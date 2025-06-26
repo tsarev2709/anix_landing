@@ -416,7 +416,7 @@ const AnixAILanding = () => {
           </div>
           
           <h1 className="hero-title">
-            <span className="title-line">Создаём</span>
+            <span className="title-line">Создаём мы</span>
             <span className="title-line glow-text">ИИ-Анимации</span>
             <span className="title-line">Нового Уровня</span>
           </h1>
