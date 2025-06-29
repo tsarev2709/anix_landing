@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
+import AnixLandingPage from "./components/AnixLandingPage";
+
 
 const AnixAILanding = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -522,125 +524,12 @@ const AnixAILanding = () => {
         </div>
       </section>
 
-      {/* Completely Redesigned Process Timeline */}
-      <section ref={processRef} className="process-section-v2">
-        <div className="container">
-          <h2 className="section-title">Наш ИИ Процесс</h2>
-          <div className="process-subtitle">
-            Пошаговая трансформация ваших идей в потрясающую анимацию
-          </div>
-          
-          <div className="process-workspace">
-            {/* Central AI Brain */}
-            <div className="ai-brain-container">
-              <div className={`ai-brain ${processInView ? 'active' : ''}`}>
-                <div className="brain-core"></div>
-                <div className="brain-waves">
-                  {Array.from({length: 6}).map((_, i) => (
-                    <div key={i} className={`wave wave-${i + 1}`}></div>
-                  ))}
-                </div>
-                <div className="brain-particles">
-                  {Array.from({length: 12}).map((_, i) => (
-                    <div key={i} className={`particle particle-${i + 1}`}></div>
-                  ))}
-                </div>
-              </div>
-            </div>
 
-            {/* Process Steps in Circle */}
-            <div className="process-circle">
-              {processSteps.map((step, index) => (
-                <div
-                  key={index}
-                  className={`process-step-v2 step-${index + 1} ${index <= currentStep ? 'active' : ''} ${index === currentStep ? 'current' : ''}`}
-                  style={{
-                    '--step-color': step.color,
-                    '--step-gradient': step.bgGradient,
-                    '--step-delay': `${index * 0.3}s`
-                  }}
-                >
-                  <div className="step-orbit">
-                    <div className="step-node">
-                      <div className="step-icon-wrapper">
-                        <span className="step-icon">{step.icon}</span>
-                      </div>
-                      <div className="step-number">{index + 1}</div>
-                    </div>
-                  </div>
-                  
-                  <div className="step-info-panel">
-                    <div className="step-info-content">
-                      <h3 className="step-title">{step.title}</h3>
-                      <p className="step-description">{step.description}</p>
-                      
-                      <div className="step-metrics">
-                        <div className="metric-item">
-                          <span className="metric-label">Время:</span>
-                          <span className="metric-value">{step.time}</span>
-                        </div>
-                        <div className="metric-item">
-                          <span className="metric-label">Экономия:</span>
-                          <span className="metric-value saved">{step.saved}</span>
-                        </div>
-                      </div>
-                      
-                      <div className="step-progress">
-                        <div className="progress-bar">
-                          <div 
-                            className="progress-fill" 
-                            style={{width: index <= currentStep ? step.saved : '0%'}}
-                          ></div>
-                        </div>
-                      </div>
-                      
-                      <div className="step-features">
-                        {step.details.map((detail, i) => (
-                          <div key={i} className="feature-tag" style={{'--delay': `${i * 0.1}s`}}>
-                            {detail}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Connection Line to AI Brain */}
-                  <div className="connection-line">
-                    <div className="line-core"></div>
-                    <div className="line-pulse"></div>
-                  </div>
-                </div>
-              ))}
-            </div>
 
-            {/* Process Flow Visualization */}
-            <div className="process-flow">
-              {processSteps.map((step, index) => (
-                <div key={index} className={`flow-step ${index <= currentStep ? 'active' : ''}`}>
-                  <div className="flow-dot"></div>
-                  {index < processSteps.length - 1 && (
-                    <div className="flow-connector">
-                      <div className="connector-line"></div>
-                      <div className="connector-arrow">→</div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          <div className="metrics-display">
-            <div className="metric-item">
-              <div className="metric-number">{counters.projects}+</div>
-              <div className="metric-label">Завершенных Проектов</div>
-            </div>
-            <div className="metric-item">
-              <div className="metric-number">{counters.hours}+</div>
-              <div className="metric-label">Сэкономленных Часов</div>
-            </div>
-          </div>
-        </div>
-      </section>
+
+      {/*  👉 ставим Roadmap ЗА пределами .container */}
+      <AnixLandingPage />
+
 
       {/* Pricing & Packages Section */}
       <section className="pricing-section">
