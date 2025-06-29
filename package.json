@@ -2,17 +2,41 @@
   "name": "anix-landing",
   "version": "0.1.0",
   "private": true,
+
+  /* URL, где сайт будет доступен */
+  "homepage": "https://tsarev2709.github.io/anix_landing",
+
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+
+    /* + UI/анимации секции */
+    "framer-motion": "^11.0.0",
+    "lucide-react": "^0.365.0",
+
+    /* Tailwind-CSS стек */
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.30",
+    "autoprefixer": "^10.4.17"
   },
+
+  "devDependencies": {
+    /* утилита для выкладки build/ в ветку gh-pages */
+    "gh-pages": "^6.0.0"
+  },
+
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+
+    /* деплой: сборка → пуш статических файлов в gh-pages */
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
+
   "browserslist": {
     "production": [
       ">0.2%",
