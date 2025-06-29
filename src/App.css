@@ -2253,3 +2253,44 @@ body {
     left: 100%;
   }
 }
+
+/* === ДОБАВЛЯЕМ ДЛЯ RoadmapSection === */
+
+/* Тёмные и стеклянные подложки */
+.backdrop-blur-lg { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+.backdrop-blur-xl { backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
+.glass-morph {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Радиальный градиент-утилита (Tailwind пока даёт только linear) */
+.bg-gradient-radial { background: radial-gradient(circle,var(--tw-gradient-stops)); }
+
+/* Глоу-тени */
+.glow-purple { box-shadow: 0 0 20px rgba(110,15,216,.4); }
+.glow-teal   { box-shadow: 0 0 20px rgba(0,224,176,.4); }
+.glow-coral  { box-shadow: 0 0 20px rgba(255,122,109,.4); }
+
+/* Анимированная рамка */
+.border-animated{position:relative;overflow:hidden;}
+.border-animated::before{
+  content:'';
+  position:absolute;top:0;left:-100%;width:100%;height:2px;
+  background:linear-gradient(90deg,transparent,#6E0FD8,transparent);
+  animation:slide 2s infinite;
+}
+@keyframes slide{0%{left:-100%}100%{left:100%}}
+
+/* Частицы, плавная прокрутка, will-change-оптимизация */
+.particle{position:absolute;pointer-events:none;opacity:.6;}
+.will-change-transform{will-change:transform;}
+.will-change-opacity{will-change:opacity;}
+
+/* Выбор текста и фокусы */
+::selection{background:rgba(110,15,216,.3);color:#fff;}
+::-moz-selection{background:rgba(110,15,216,.3);color:#fff;}
+button:focus,a:focus{outline:2px solid #6E0FD8;outline-offset:2px;}
+
