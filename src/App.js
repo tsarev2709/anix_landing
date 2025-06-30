@@ -252,7 +252,7 @@ const AnixAILanding = () => {
     {
       name: 'Алексей Чен',
       role: 'Директор по ИИ',
-      image: '/src/images/god.jpg',
+      image: '/images/god.jpg',
       expertise: ['Нейронные Сети', 'Моушн Дизайн'],
       experience: '8 лет опыта'
     },
