@@ -4,6 +4,7 @@ import AnixLandingPage from "./components/AnixLandingPage";
 import god from './images/god.jpg';
 import bestie from './images/bestie.jpg';
 import vanya from './images/vanya.JPG';
+import logo from './images/logo.png';
 
 
 const AnixAILanding = () => {
@@ -430,7 +431,7 @@ const AnixAILanding = () => {
         
         <div className="hero-content">
           <div className="logo-container">
-            <img src="https://github.com/user-attachments/assets/1c4ee8a8-ffc8-43fe-b830-8ab71e326ec3" alt="Anix Logo" className="anix-logo" />
+            <img src="logo" alt="Anix Logo" className="anix-logo" />
           </div>
           
           <h1 className="hero-title">
