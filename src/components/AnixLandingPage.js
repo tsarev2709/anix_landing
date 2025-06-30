@@ -16,49 +16,50 @@ const AnixLandingPage = () => {
   const processSteps = [
     {
       id: 1,
-      title: "Script",
-      subtitle: "Creative Foundation",
-      description: "Craft compelling narratives that resonate with your audience through strategic storytelling",
-      icon: <Palette className="w-8 h-8" />,
+      title: "Погружение",
+      subtitle: "Карта к вашей цели",
+      description: "Изучаем ваш бизнес, цели и аудиторию для создания анимации с фокусом на результат.",
+      icon: <Brain className="w-8 h-8" />,
       image: "https://images.unsplash.com/photo-1608804375269-d077e2a2adaa",
       color: "from-anix-purple to-anix-coral",
       delay: 0
     },
     {
       id: 2,
-      title: "Keyframes",
-      subtitle: "Visual Architecture",
-      description: "Design pivotal moments that define your animation's visual journey and emotional impact",
+      title: "Сценарий",
+      subtitle: "Сердце вашего ролика",
+      description: "Создаем ясный и вовлекающий сценарий, который точно передает ваше ключевое сообщение.",
       icon: <Play className="w-8 h-8" />,
+      icon: <Zap className="w-8 h-8" />,
       image: "https://images.pexels.com/photos/7267188/pexels-photo-7267188.jpeg",
       color: "from-anix-teal to-anix-purple",
       delay: 0.2
     },
     {
       id: 3,
-      title: "AI Interpolation",
-      subtitle: "Intelligent Motion",
-      description: "Our advanced AI seamlessly fills between keyframes, creating fluid, natural animations",
-      icon: <Brain className="w-8 h-8" />,
+      title: "Визуальный Блюпринт",
+      subtitle: "Эскиз будущего шедевра",
+      description: "Разрабатываем раскадровку, детально прорабатывая визуальный ряд и композицию.",
+      icon: <Palette className="w-8 h-8" />,
       image: "https://images.pexels.com/photos/8728386/pexels-photo-8728386.jpeg",
       color: "from-anix-coral to-anix-teal",
       delay: 0.4
     },
     {
       id: 4,
-      title: "Rendering",
-      subtitle: "Technical Excellence",
-      description: "High-performance rendering transforms your vision into stunning, production-ready content",
-      icon: <Zap className="w-8 h-8" />,
+      title: "AI-Анимация",
+      subtitle: "AI-движер в действии",
+      description: "Используем нейросети для быстрого и экономичного производства высококачественной покадровой анимации.",
+      icon: <Play className="w-8 h-8" />,
       image: "https://images.pexels.com/photos/7774029/pexels-photo-7774029.jpeg",
       color: "from-anix-purple to-anix-teal",
       delay: 0.6
     },
     {
       id: 5,
-      title: "Analytics",
-      subtitle: "Performance Insights",
-      description: "Deep analytics reveal how your content performs, optimizing for maximum engagement",
+      title: "Замер Эффекта",
+      subtitle: "Доказанная эффективность",
+      description: "Оцениваем, как ролик повлиял на ключевые бизнес-показатели (конверсия, узнаваемость, лояльность).",
       icon: <BarChart3 className="w-8 h-8" />,
       image: "https://images.pexels.com/photos/5475810/pexels-photo-5475810.jpeg",
       color: "from-anix-teal to-anix-coral",
@@ -152,10 +153,10 @@ const AnixLandingPage = () => {
               viewport={{ once: true }}
             >
               <h3 className="text-5xl md:text-7xl font-heading font-bold text-white mb-6">
-                Our Process
+                Путь к Идеальной Анимации
               </h3>
               <p className="text-xl text-white/70 max-w-2xl mx-auto">
-                Experience the extraordinary journey from concept to analytics through our revolutionary AI-powered workflow
+                От бизнес-задачи до измеримого результата — наш отлаженный AI-процесс создает мощную анимацию в рекордные сроки
               </p>
             </motion.div>
 

@@ -252,7 +252,7 @@ const AnixAILanding = () => {
     {
       name: 'Алексей Чен',
       role: 'Директор по ИИ',
-      image: 'https://images.unsplash.com/photo-1637722883499-7782c2a64f07',
+      image: '/src/images/god.jpg',
       expertise: ['Нейронные Сети', 'Моушн Дизайн'],
       experience: '8 лет опыта'
     },
@@ -276,20 +276,6 @@ const AnixAILanding = () => {
       image: 'https://images.unsplash.com/photo-1634794251656-9f286d822b05',
       expertise: ['3D Анимация', 'Визуальные Эффекты'],
       experience: '7 лет опыта'
-    },
-    {
-      name: 'Сергей Новиков',
-      role: 'Дата Сайентист',
-      image: 'https://images.unsplash.com/photo-1637722883499-7782c2a64f07',
-      expertise: ['Глубокое Обучение', 'Компьютерное Зрение'],
-      experience: '9 лет опыта'
-    },
-    {
-      name: 'Анна Смирнова',
-      role: 'UX/UI Дизайнер',
-      image: 'https://images.unsplash.com/photo-1634794251656-9f286d822b05',
-      expertise: ['Интерфейс ИИ', 'Пользовательский Опыт'],
-      experience: '5 лет опыта'
     }
   ];
 
@@ -297,7 +283,7 @@ const AnixAILanding = () => {
     {
       id: 1,
       name: 'Сара Джонсон',
-      company: 'ТехКорп Инк.',
+      company: 'Kolobox',
       text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
       videoThumbnail: 'https://images.unsplash.com/photo-1642406415849-a410b5d01a94',
       videoUrl: 'https://vimeo.com/1078357836/a4d72de864',
@@ -305,8 +291,35 @@ const AnixAILanding = () => {
     },
     {
       id: 2,
+      name: 'Сара Джонсон',
+      company: 'ТПЭС',
+      text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
+      videoThumbnail: 'https://images.unsplash.com/photo-1642406415849-a410b5d01a94',
+      videoUrl: 'https://vimeo.com/1078357836/a4d72de864',
+      aiGenerated: 82
+    },
+    {
+      id: 3,
+      name: 'Сара Джонсон',
+      company: 'Clappy',
+      text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
+      videoThumbnail: 'https://images.unsplash.com/photo-1642406415849-a410b5d01a94',
+      videoUrl: 'https://vimeo.com/1078357836/a4d72de864',
+      aiGenerated: 82
+    },
+    {
+      id: 4,
+      name: 'Сара Джонсон',
+      company: 'Hemotech AI',
+      text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
+      videoThumbnail: 'https://images.unsplash.com/photo-1642406415849-a410b5d01a94',
+      videoUrl: 'https://vimeo.com/1078357836/a4d72de864',
+      aiGenerated: 82
+    },
+    {
+      id: 5,
       name: 'Михаил Браун',
-      company: 'Креативные Студии',
+      company: 'конкурс "От эскиза до подиума"',
       text: 'Технология нейронных сетей революционна. Наша продуктивность увеличилась на 300%.',
       videoThumbnail: 'https://images.unsplash.com/photo-1546358789-12e9019c9e84',
       videoUrl: 'https://vimeo.com/1078354208?share=copy',
