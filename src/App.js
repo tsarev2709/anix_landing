@@ -431,7 +431,7 @@ const AnixAILanding = () => {
         
         <div className="hero-content">
           <div className="logo-container">
-            <img src="logo" alt="Anix Logo" className="anix-logo" />
+            <img src={logo} alt="Anix Logo" className="anix-logo" />
           </div>
           
           <h1 className="hero-title">

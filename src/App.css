@@ -147,10 +147,12 @@ body {
   animation: fadeInUp 1s ease-out 0.1s forwards;
   opacity: 0;
   transform: translateY(30px);
+  transform: scale(1.5); /* Увеличивает весь контейнер в 1.5 раза */
+  transform-origin: top center; /* Точка трансформации (верхний центр) */
 }
 
 .anix-logo {
-  width: 120px;
+  width: 180px; /* Было 120px → 120 * 1.5 = 180px */
   height: auto;
   filter: drop-shadow(0 8px 16px rgba(139, 69, 255, 0.4));
   animation: logoFloat 4s ease-in-out infinite;
