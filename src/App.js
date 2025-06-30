@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import AnixLandingPage from "./components/AnixLandingPage";
+import god from './images/god.jpg';
+import bestie from './images/bestie.jpg';
+import vanya from './images/vanya.JPG';
 
 
 const AnixAILanding = () => {
@@ -250,23 +253,23 @@ const AnixAILanding = () => {
 
   const teamMembers = [
     {
-      name: 'Алексей Чен',
+      name: 'Андрей Царёв',
       role: 'Директор по ИИ',
-      image: '/images/god.jpg',
+      image: god,
       expertise: ['Нейронные Сети', 'Моушн Дизайн'],
       experience: '8 лет опыта'
     },
     {
-      name: 'Мария Родригес',
+      name: 'Александра Севостьянова',
       role: 'Креативный Руководитель',
-      image: 'https://images.unsplash.com/photo-1634794251656-9f286d822b05',
+      image: bestie,
       expertise: ['Креативное Направление', 'ИИ Интеграция'],
       experience: '6 лет опыта'
     },
     {
-      name: 'Давид Ким',
+      name: 'Кухарук Иван',
       role: 'Технический Руководитель',
-      image: 'https://images.unsplash.com/photo-1637722883499-7782c2a64f07',
+      image: vanya,
       expertise: ['Машинное Обучение', 'Анимация'],
       experience: '10 лет опыта'
     },
