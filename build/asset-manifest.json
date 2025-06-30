@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/anix_landing/static/css/main.ff2f716e.css",
-    "main.js": "/anix_landing/static/js/main.43b86acb.js",
-    "static/media/bestie.jpg": "/anix_landing/static/media/bestie.d11a3ca1eb9eb78933a3.jpg",
+    "main.css": "/anix_landing/static/css/main.b24db21c.css",
+    "main.js": "/anix_landing/static/js/main.0898acbf.js",
+    "static/media/bestie.jpg": "/anix_landing/static/media/bestie.7dadafc24b228d239686.jpg",
     "static/media/vanya.JPG": "/anix_landing/static/media/vanya.350150ccfa520e8229c6.JPG",
     "static/media/god.jpg": "/anix_landing/static/media/god.04d9267b91731f1dd2cd.jpg",
-    "static/media/logo.png": "/anix_landing/static/media/logo.2505cf39d34e8370f142.png",
+    "static/media/logo.png": "/anix_landing/static/media/logo.55853e3f274ba2e9e23c.png",
     "index.html": "/anix_landing/index.html",
-    "main.ff2f716e.css.map": "/anix_landing/static/css/main.ff2f716e.css.map",
-    "main.43b86acb.js.map": "/anix_landing/static/js/main.43b86acb.js.map"
+    "main.b24db21c.css.map": "/anix_landing/static/css/main.b24db21c.css.map",
+    "main.0898acbf.js.map": "/anix_landing/static/js/main.0898acbf.js.map"
   },
   "entrypoints": [
-    "static/css/main.ff2f716e.css",
-    "static/js/main.43b86acb.js"
+    "static/css/main.b24db21c.css",
+    "static/js/main.0898acbf.js"
   ]
 }
