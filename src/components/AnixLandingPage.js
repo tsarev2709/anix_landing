@@ -31,7 +31,7 @@ const AnixLandingPage = () => {
       description: "Создаем ясный и вовлекающий сценарий, который точно передает ваше ключевое сообщение.",
       icon: <Play className="w-8 h-8" />,
       icon: <Zap className="w-8 h-8" />,
-      image: "https://images.pexels.com/photos/7267188/pexels-photo-7267188.jpeg",
+      image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=1200",
       color: "from-anix-teal to-anix-purple",
       delay: 0.2
     },
