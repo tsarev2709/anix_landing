@@ -1,19 +1,23 @@
 {
   "files": {
     "main.css": "/anix_landing/static/css/main.12d56a54.css",
-    "main.js": "/anix_landing/static/js/main.d13e0547.js",
+    "main.js": "/anix_landing/static/js/main.367f72f3.js",
     "static/media/bestie.jpg": "/anix_landing/static/media/bestie.7dadafc24b228d239686.jpg",
+    "static/media/hemoai.png": "/anix_landing/static/media/hemoai.ef667ac8009226c70baa.png",
     "static/media/vanya.JPG": "/anix_landing/static/media/vanya.350150ccfa520e8229c6.JPG",
+    "static/media/kolbox.png": "/anix_landing/static/media/kolbox.dd70a6a8ce28a39724f4.png",
+    "static/media/clappy.png": "/anix_landing/static/media/clappy.fdc6e8060c9eff547982.png",
+    "static/media/TPES.png": "/anix_landing/static/media/TPES.7505ba4a6840fb8fbd72.png",
     "static/media/god.jpg": "/anix_landing/static/media/god.04d9267b91731f1dd2cd.jpg",
     "static/media/fiztech.png": "/anix_landing/static/media/fiztech.b9763fe7bb748d9d819c.png",
     "static/media/moscow.png": "/anix_landing/static/media/moscow.80881d98c85c7a98547f.png",
     "static/media/logo.png": "/anix_landing/static/media/logo.55853e3f274ba2e9e23c.png",
     "index.html": "/anix_landing/index.html",
     "main.12d56a54.css.map": "/anix_landing/static/css/main.12d56a54.css.map",
-    "main.d13e0547.js.map": "/anix_landing/static/js/main.d13e0547.js.map"
+    "main.367f72f3.js.map": "/anix_landing/static/js/main.367f72f3.js.map"
   },
   "entrypoints": [
     "static/css/main.12d56a54.css",
-    "static/js/main.d13e0547.js"
+    "static/js/main.367f72f3.js"
   ]
 }
