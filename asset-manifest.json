@@ -1,17 +1,19 @@
 {
   "files": {
     "main.css": "/anix_landing/static/css/main.b24db21c.css",
-    "main.js": "/anix_landing/static/js/main.f40f914c.js",
+    "main.js": "/anix_landing/static/js/main.d13e0547.js",
     "static/media/bestie.jpg": "/anix_landing/static/media/bestie.7dadafc24b228d239686.jpg",
     "static/media/vanya.JPG": "/anix_landing/static/media/vanya.350150ccfa520e8229c6.JPG",
     "static/media/god.jpg": "/anix_landing/static/media/god.04d9267b91731f1dd2cd.jpg",
+    "static/media/fiztech.png": "/anix_landing/static/media/fiztech.b9763fe7bb748d9d819c.png",
+    "static/media/moscow.png": "/anix_landing/static/media/moscow.80881d98c85c7a98547f.png",
     "static/media/logo.png": "/anix_landing/static/media/logo.55853e3f274ba2e9e23c.png",
     "index.html": "/anix_landing/index.html",
     "main.b24db21c.css.map": "/anix_landing/static/css/main.b24db21c.css.map",
-    "main.f40f914c.js.map": "/anix_landing/static/js/main.f40f914c.js.map"
+    "main.d13e0547.js.map": "/anix_landing/static/js/main.d13e0547.js.map"
   },
   "entrypoints": [
     "static/css/main.b24db21c.css",
-    "static/js/main.f40f914c.js"
+    "static/js/main.d13e0547.js"
   ]
 }
