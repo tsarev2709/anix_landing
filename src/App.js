@@ -10,6 +10,10 @@ import yandex from './images/yandex.png';
 import inno from './images/inno.png';
 import moscow from './images/moscow.png';
 import fiztech from './images/fiztech.png';
+import clappy from './images/clappy.png';
+import hemoai from './images/hemoai.png';
+import kolbox from './images/kolbox.png';
+import TPES from './images/TPES.png';
 
 
 const AnixAILanding = () => {
@@ -294,45 +298,36 @@ const AnixAILanding = () => {
       name: 'Сара Джонсон',
       company: 'Kolobox',
       text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
-      videoThumbnail: 'https://images.unsplash.com/photo-1642406415849-a410b5d01a94',
+      videoThumbnail: kolbox,
       videoUrl: 'https://vimeo.com/1078357836/a4d72de864',
-      aiGenerated: 82
+      aiGenerated: 88
     },
     {
       id: 2,
       name: 'Сара Джонсон',
       company: 'ТПЭС',
       text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
-      videoThumbnail: 'https://images.unsplash.com/photo-1642406415849-a410b5d01a94',
+      videoThumbnail: TPES,
       videoUrl: 'https://vimeo.com/1078357836/a4d72de864',
-      aiGenerated: 82
+      aiGenerated: 91
     },
     {
       id: 3,
       name: 'Сара Джонсон',
       company: 'Clappy',
       text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
-      videoThumbnail: 'https://images.unsplash.com/photo-1642406415849-a410b5d01a94',
+      videoThumbnail: clappy,
       videoUrl: 'https://vimeo.com/1078357836/a4d72de864',
-      aiGenerated: 82
+      aiGenerated: 85
     },
     {
       id: 4,
       name: 'Сара Джонсон',
       company: 'Hemotech AI',
       text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
-      videoThumbnail: 'https://images.unsplash.com/photo-1642406415849-a410b5d01a94',
+      videoThumbnail: hemoai,
       videoUrl: 'https://vimeo.com/1078357836/a4d72de864',
-      aiGenerated: 82
-    },
-    {
-      id: 5,
-      name: 'Михаил Браун',
-      company: 'конкурс "От эскиза до подиума"',
-      text: 'Технология нейронных сетей революционна. Наша продуктивность увеличилась на 300%.',
-      videoThumbnail: 'https://images.unsplash.com/photo-1546358789-12e9019c9e84',
-      videoUrl: 'https://vimeo.com/1078354208?share=copy',
-      aiGenerated: 89
+      aiGenerated: 95
     }
   ];
 

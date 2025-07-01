@@ -1481,18 +1481,16 @@ body {
 
 .award-trophy {
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: auto;
   margin: 0 auto 24px;
-  border-radius: 50%;
-  overflow: hidden;
 }
 
 .award-trophy img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
+  height: auto;
+  display: block;
+  border-radius: 4px; 
 }
 
 .trophy-glow {
