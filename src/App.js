@@ -299,7 +299,7 @@ const AnixAILanding = () => {
       company: 'Kolobox',
       text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
       videoThumbnail: kolbox,
-      videoUrl: 'https://vimeo.com/1078357836/a4d72de864',
+      videoUrl: 'https://player.vimeo.com/video/1078357836?h=a4d72de864',
       aiGenerated: 88
     },
     {
@@ -308,7 +308,7 @@ const AnixAILanding = () => {
       company: 'ТПЭС',
       text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
       videoThumbnail: TPES,
-      videoUrl: 'https://vimeo.com/1078357836/a4d72de864',
+      videoUrl: 'https://player.vimeo.com/video/1078354208',
       aiGenerated: 91
     },
     {
@@ -317,7 +317,7 @@ const AnixAILanding = () => {
       company: 'Clappy',
       text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
       videoThumbnail: clappy,
-      videoUrl: 'https://vimeo.com/1078357836/a4d72de864',
+      videoUrl: 'https://player.vimeo.com/video/1078358379?h=8fc297f159',
       aiGenerated: 85
     },
     {
