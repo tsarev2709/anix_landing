@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/anix_landing/static/css/main.e562149a.css",
-    "main.js": "/anix_landing/static/js/main.84a63ac8.js",
+    "main.js": "/anix_landing/static/js/main.c252ddd3.js",
     "static/media/bestie.jpg": "/anix_landing/static/media/bestie.7dadafc24b228d239686.jpg",
     "static/media/hemoai.png": "/anix_landing/static/media/hemoai.ef667ac8009226c70baa.png",
     "static/media/vanya.JPG": "/anix_landing/static/media/vanya.350150ccfa520e8229c6.JPG",
@@ -14,10 +14,10 @@
     "static/media/logo.png": "/anix_landing/static/media/logo.55853e3f274ba2e9e23c.png",
     "index.html": "/anix_landing/index.html",
     "main.e562149a.css.map": "/anix_landing/static/css/main.e562149a.css.map",
-    "main.84a63ac8.js.map": "/anix_landing/static/js/main.84a63ac8.js.map"
+    "main.c252ddd3.js.map": "/anix_landing/static/js/main.c252ddd3.js.map"
   },
   "entrypoints": [
     "static/css/main.e562149a.css",
-    "static/js/main.84a63ac8.js"
+    "static/js/main.c252ddd3.js"
   ]
 }
