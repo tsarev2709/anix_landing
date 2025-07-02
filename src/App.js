@@ -278,14 +278,14 @@ const AnixAILanding = () => {
     },
     {
       name: 'Кухарук Иван',
-      role: 'Технический Руководитель',
+      role: 'CTO',
       image: vanya,
       expertise: ['Машинное Обучение', 'Анимация'],
       experience: '10 лет опыта'
     },
     {
-      name: 'Елена Волкова',
-      role: 'Ведущий Аниматор',
+      name: 'Дарья Косичкина',
+      role: 'Lead NeuroArtist, R&D',
       image: 'https://images.unsplash.com/photo-1634794251656-9f286d822b05',
       expertise: ['3D Анимация', 'Визуальные Эффекты'],
       experience: '7 лет опыта'
@@ -295,7 +295,7 @@ const AnixAILanding = () => {
   const testimonials = [
     {
       id: 1,
-      name: 'Сара Джонсон',
+      name: 'Евгений Воронов',
       company: 'Kolobox',
       text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
       videoThumbnail: kolbox,
@@ -304,7 +304,7 @@ const AnixAILanding = () => {
     },
     {
       id: 2,
-      name: 'Сара Джонсон',
+      name: 'Дмитрий из ТПЭС',
       company: 'ТПЭС',
       text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
       videoThumbnail: TPES,
@@ -313,7 +313,7 @@ const AnixAILanding = () => {
     },
     {
       id: 3,
-      name: 'Сара Джонсон',
+      name: 'Татьяна Куркина',
       company: 'Clappy',
       text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
       videoThumbnail: clappy,
@@ -322,11 +322,11 @@ const AnixAILanding = () => {
     },
     {
       id: 4,
-      name: 'Сара Джонсон',
+      name: 'Екатерина Поликер',
       company: 'Hemotech AI',
       text: 'Anix AI преобразил наш рабочий процесс анимации. Результаты потрясающие, а экономия времени невероятная.',
       videoThumbnail: hemoai,
-      videoUrl: 'https://vimeo.com/1078357836/a4d72de864',
+      videoUrl: 'https://player.vimeo.com/video/1078358021?h=afe067a81f',
       aiGenerated: 95
     }
   ];
