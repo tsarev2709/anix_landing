@@ -254,9 +254,6 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
               className="text-4xl md:text-5xl font-heading font-bold text-white mb-3"
               whileHover={{ 
                 scale: 1.02,
-                backgroundImage: `linear-gradient(45deg, #6E0FD8, #00E0B0, #FF7A6D)`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
               }}
               transition={{ duration: 0.3 }}
             >
