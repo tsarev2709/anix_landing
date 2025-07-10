@@ -569,6 +569,7 @@ const AnixAILanding = () => {
           </div>
         </div>
       </section>
+
       {/* Team Section */}
       <section className="team-section">
         <div className="container">
