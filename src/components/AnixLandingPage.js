@@ -264,7 +264,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
               {step.subtitle}
             </p>
 
-            <p className="text-lg text-white/80 leading-relaxed max-w-md w-full ${!isEven ? 'ml-[100px]' : ''}">
+            <p className="text-lg text-white/80 leading-relaxed max-w-md w-full ${!isEven ? '' : 'mr-[100px]'} ">
               {step.description}
             </p>
           </div>
