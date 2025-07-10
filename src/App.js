@@ -511,7 +511,7 @@ const AnixAILanding = () => {
             
             <div className="service-card">
               <div className="service-icon">⚡</div>
-              <h3>Поддержка Масштабирования</h3>
+              <h3>Масштабирование</h3>
               <p>Видео легко тиражируется, работает на новых рынках, языках, партнёрах.</p>
               <p>"Хочу выйти в США, но нужен контент под локаль".</p>
               <div className="service-overlay">
