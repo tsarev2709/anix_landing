@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.e562149a.css",
+    "main.css": "/static/css/main.dbdd735c.css",
     "main.js": "/static/js/main.46ab94c5.js",
     "static/media/bestie.jpg": "/static/media/bestie.7dadafc24b228d239686.jpg",
     "static/media/hemoai.png": "/static/media/hemoai.ef667ac8009226c70baa.png",
@@ -13,11 +13,11 @@
     "static/media/moscow.png": "/static/media/moscow.80881d98c85c7a98547f.png",
     "static/media/logo.png": "/static/media/logo.55853e3f274ba2e9e23c.png",
     "index.html": "/index.html",
-    "main.e562149a.css.map": "/static/css/main.e562149a.css.map",
+    "main.dbdd735c.css.map": "/static/css/main.dbdd735c.css.map",
     "main.46ab94c5.js.map": "/static/js/main.46ab94c5.js.map"
   },
   "entrypoints": [
-    "static/css/main.e562149a.css",
+    "static/css/main.dbdd735c.css",
     "static/js/main.46ab94c5.js"
   ]
 }
