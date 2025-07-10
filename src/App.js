@@ -171,8 +171,8 @@ const AnixAILanding = () => {
         particle.update();
         particle.draw();
       });
-      
-      // Draw connections
+
+      // Draw connection
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
