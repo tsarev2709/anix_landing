@@ -16,9 +16,9 @@ const AnixLandingPage = () => {
   const processSteps = [
     {
       id: 1,
-      title: "Погружение",
-      subtitle: "Карта к вашей цели",
-      description: "Изучаем ваш бизнес, цели и аудиторию для создания анимации с фокусом на результат.",
+      title: "Диагностика",
+      subtitle: "Разбираем, где болит",
+      description: "Выясняем, где у вас «проседает»: в воронке, понимании продукта, объяснении для клиентов или сопротивлении закупщиков. Роем глубже, чем бриф.",
       icon: <Brain className="w-8 h-8" />,
       image: "https://images.unsplash.com/photo-1608804375269-d077e2a2adaa",
       color: "from-anix-purple to-anix-coral",
@@ -26,9 +26,9 @@ const AnixLandingPage = () => {
     },
     {
       id: 2,
-      title: "Сценарий",
-      subtitle: "Сердце вашего ролика",
-      description: "Создаем ясный и вовлекающий сценарий, который точно передает ваше ключевое сообщение.",
+      title: "Месседж",
+      subtitle: "Что нужно вбить в голову клиенту",
+      description: "Формулируем ключевое сообщение, которое должно застрять в голове. Основа — не креатив, а логика продаж.",
       icon: <Play className="w-8 h-8" />,
       icon: <Zap className="w-8 h-8" />,
       image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=1200",
@@ -37,9 +37,9 @@ const AnixLandingPage = () => {
     },
     {
       id: 3,
-      title: "Визуальный Блюпринт",
-      subtitle: "Эскиз будущего шедевра",
-      description: "Разрабатываем раскадровку, детально прорабатывая визуальный ряд и композицию.",
+      title: "Сценарий",
+      subtitle: "Продающий сюжет в 60 секундах",
+      description: "Собираем из боли, пользы и решений ясный сценарий. Без воды, с конкретными смыслами, которые двигают клиента к действию. Умеем делать так, чтобы это цепляло.",
       icon: <Palette className="w-8 h-8" />,
       image: "https://images.pexels.com/photos/8728386/pexels-photo-8728386.jpeg",
       color: "from-anix-coral to-anix-teal",
@@ -47,9 +47,9 @@ const AnixLandingPage = () => {
     },
     {
       id: 4,
-      title: "AI-Анимация",
-      subtitle: "AI-движер в действии",
-      description: "Используем нейросети для быстрого и экономичного производства высококачественной покадровой анимации.",
+      title: "Визуализация",
+      subtitle: "Показываем, чтобы понял даже закупщик",
+      description: "Готовим раскадровку, подбираем визуальные метафоры и стиль. Не ради красоты — ради ясности и понимания.",
       icon: <Play className="w-8 h-8" />,
       image: "https://images.pexels.com/photos/7774029/pexels-photo-7774029.jpeg",
       color: "from-anix-purple to-anix-teal",
@@ -57,13 +57,23 @@ const AnixLandingPage = () => {
     },
     {
       id: 5,
-      title: "Замер Эффекта",
-      subtitle: "Доказанная эффективность",
-      description: "Оцениваем, как ролик повлиял на ключевые бизнес-показатели (конверсия, узнаваемость, лояльность).",
+      title: "AI-Продакшн",
+      subtitle: "Быстро. Качественно. Без студийных затрат",
+      description: "Собираем финальный ролик с помощью AI-инструментов и отточенного пайплайна. За 10 дней, а не за 3 месяца.",
       icon: <BarChart3 className="w-8 h-8" />,
       image: "https://images.pexels.com/photos/5475810/pexels-photo-5475810.jpeg",
       color: "from-anix-teal to-anix-coral",
       delay: 0.8
+    },
+    {
+      id: 6,
+      title: "Проверка в бою",
+      subtitle: "Смотрим, как это увеличивает метрики",
+      description: "Тестируем в бою: воронка, охват, питч инвесторам или onboarding. Проверяем, как видео влияет на конверсии и восприятие продукта.",
+      icon: <BarChart3 className="w-8 h-8" />,
+      image: "https://images.pexels.com/photos/5475810/pexels-photo-5475810.jpeg",
+      color: "from-anix-teal to-anix-coral",
+      delay: 1.0
     }
   ];
 
