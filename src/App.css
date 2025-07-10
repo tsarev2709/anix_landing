@@ -427,16 +427,22 @@ body {
   background: #1a1a1a;
 }
 
-.team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 40px;
-  max-width: 1200px;
+.container {
+  max-width: 1300px;
   margin: 0 auto;
-  justify-content: center; /* Добавляем центрирование */
+  padding: 0 10px; /* Добавляем отступы по бокам */
+}
+
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Главное свойство для центрирования */
+  gap: 40px;
+  margin-top: 40px;
 }
 
 .team-card {
+  width: 375px; /* Фиксированная ширина */
   position: relative;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
@@ -444,7 +450,6 @@ body {
   border-radius: 24px;
   overflow: hidden;
   transition: all 0.4s ease;
-  transform-style: preserve-3d;
 }
 
 .team-card:hover {
@@ -454,7 +459,7 @@ body {
 
 .team-image-container {
   position: relative;
-  height: 300px;
+  height: 350px;
   overflow: hidden;
 }
 
