@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.dd267329.css",
-    "main.js": "/static/js/main.2235fd5e.js",
+    "main.js": "/static/js/main.c52aa897.js",
     "static/media/bestie.jpg": "/static/media/bestie.7dadafc24b228d239686.jpg",
     "static/media/hemoai.png": "/static/media/hemoai.ef667ac8009226c70baa.png",
     "static/media/vanya.JPG": "/static/media/vanya.350150ccfa520e8229c6.JPG",
@@ -14,10 +14,10 @@
     "static/media/logo.png": "/static/media/logo.55853e3f274ba2e9e23c.png",
     "index.html": "/index.html",
     "main.dd267329.css.map": "/static/css/main.dd267329.css.map",
-    "main.2235fd5e.js.map": "/static/js/main.2235fd5e.js.map"
+    "main.c52aa897.js.map": "/static/js/main.c52aa897.js.map"
   },
   "entrypoints": [
     "static/css/main.dd267329.css",
-    "static/js/main.2235fd5e.js"
+    "static/js/main.c52aa897.js"
   ]
 }
