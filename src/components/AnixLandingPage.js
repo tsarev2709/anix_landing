@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { Play, Zap, BarChart3, Palette, Brain } from 'lucide-react';
-import one from './images/1.png';
-import two from './images/2.png';
-import three from './images/3.png';
-import four from './images/4.png';
-import five from './images/5.png';
-import six from './images/6.png';
+import one from '/home/runner/work/anix_landing/anix_landing/src/images/1.png';
+import two from '/home/runner/work/anix_landing/anix_landing/src/images/2.png';
+import three from '/home/runner/work/anix_landing/anix_landing/src/images/3.png';
+import four from '/home/runner/work/anix_landing/anix_landing/src/images/4.png';
+import five from '/home/runner/work/anix_landing/anix_landing/src/images/5.png';
+import six from '/home/runner/work/anix_landing/anix_landing/src/images/6.png';
 
 const AnixLandingPage = () => {
   const containerRef = useRef(null);
