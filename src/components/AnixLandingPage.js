@@ -57,8 +57,8 @@ const AnixLandingPage = () => {
       subtitle: "Показываем, чтобы понял даже закупщик",
       description: "Готовим раскадровку, подбираем визуальные метафоры и стиль. Не ради красоты — ради ясности и понимания.",
       icon: <Play className="w-8 h-8" />,
-      image: "https://images.pexels.com/photos/7774029/pexels-photo-7774029.jpeg",
-      color: four,
+      image: four,
+      color: "from-anix-coral to-anix-teal",
       delay: 0.6
     },
     {
