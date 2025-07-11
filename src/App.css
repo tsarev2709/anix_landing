@@ -1455,6 +1455,7 @@ body {
   display: flex;
   gap: 32px;
   overflow-x: auto;
+  white-space: nowrap;
   scroll-behavior: smooth;
   padding: 20px 0;
   scrollbar-width: none;
@@ -2077,6 +2078,7 @@ body {
   .awards-scroll {
     scroll-snap-type: x mandatory;
     touch-action: pan-y;
+    white-space: nowrap;
   }
 
   .awards-scroll .award-card {
@@ -2090,6 +2092,7 @@ body {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
+    white-space: nowrap;
     gap: 16px;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;

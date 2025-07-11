@@ -32,6 +32,18 @@ const AnixAILanding = () => {
   const processRef = useRef(null);
   const particlesRef = useRef(null);
   const awardsScrollRef = useRef(null);
+  const touchStartX = useRef(0);
+
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    const deltaX = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(deltaX) > 50) {
+      scrollAwards(deltaX > 0 ? 'left' : 'right');
+    }
+  };
 
   // Animated counter effect
   useEffect(() => {
@@ -680,7 +692,12 @@ const AnixAILanding = () => {
               ◀
             </button>
             
-            <div className="awards-scroll" ref={awardsScrollRef}>
+            <div
+              className="awards-scroll"
+              ref={awardsScrollRef}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            >
               {awards.map((award, index) => (
                 <div key={index} className="award-card">
                   <div className="award-trophy">
