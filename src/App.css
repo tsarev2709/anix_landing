@@ -392,6 +392,10 @@ body {
   opacity: 1;
 }
 
+.service-overlay.show {
+  opacity: 1;
+}
+
 .case-study {
   text-align: center;
   color: white;
@@ -1502,6 +1506,8 @@ body {
 
 .award-card {
   min-width: 240px;
+  max-width: 320px;
+  overflow-wrap: anywhere;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -2102,7 +2108,6 @@ body {
   .blog-grid,
   .pricing-carousel {
     scroll-snap-type: x mandatory;
-    touch-action: pan-x;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -2115,7 +2120,6 @@ body {
   /* Mobile sliders */
   .awards-scroll {
     scroll-snap-type: x mandatory;
-    touch-action: pan-x;
     -webkit-overflow-scrolling: touch;
     white-space: nowrap;
   }
@@ -2123,6 +2127,7 @@ body {
   .awards-scroll .award-card {
     flex: 0 0 60%;
     min-width: 60%;
+    max-width: 320px;
     scroll-snap-align: start;
   }
 
@@ -2135,7 +2140,6 @@ body {
     gap: 16px;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
     justify-content: flex-start;
   }
 
@@ -2225,9 +2229,6 @@ body {
     display: none;
   }
 
-  .pricing-nav {
-    display: none;
-  }
   
   .floating-telegram {
     bottom: 20px;
@@ -2281,6 +2282,7 @@ body {
   
   .award-card {
     min-width: 60%;
+    max-width: 320px;
     padding: 24px 16px;
   }
 
@@ -2298,9 +2300,6 @@ body {
     padding: 20px;
   }
 
-  .pricing-nav {
-    display: none;
-  }
 }
 
 /* Cyberpunk Effects */
@@ -2398,5 +2397,11 @@ body {
 ::selection{background:rgba(110,15,216,.3);color:#fff;}
 ::-moz-selection{background:rgba(110,15,216,.3);color:#fff;}
 button:focus,a:focus{outline:2px solid #6E0FD8;outline-offset:2px;}
+
+@media (min-width: 769px) {
+  .pricing-nav {
+    display: none;
+  }
+}
 
 

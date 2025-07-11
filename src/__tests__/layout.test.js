@@ -40,3 +40,10 @@ test('hero-content has expected max width', () => {
   expect(match).not.toBeNull();
   expect(match[0]).toMatch(/max-width:\s*800px/);
 });
+
+test('award card fits mobile width', () => {
+  const css = fs.readFileSync('src/App.css', 'utf8');
+  const match = css.match(/\.award-card\s*\{[^}]*\}/);
+  expect(match).not.toBeNull();
+  expect(match[0]).toMatch(/max-width:\s*320px/);
+});
