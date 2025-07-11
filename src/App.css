@@ -1505,6 +1505,9 @@ body {
   padding: 20px 0;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 50%;
+  scroll-padding-right: 50%;
 }
 
 .awards-scroll::-webkit-scrollbar {
@@ -1512,8 +1515,10 @@ body {
 }
 
 .award-card {
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 300px;
   min-width: 240px;
-  max-width: 320px;
   overflow-wrap: anywhere;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
@@ -1524,6 +1529,7 @@ body {
   transition: all 0.4s ease;
   position: relative;
   overflow: hidden;
+  scroll-snap-align: center;
 }
 
 .award-card:hover {
@@ -2133,15 +2139,17 @@ body {
   /* Mobile sliders */
   .awards-scroll {
     scroll-snap-type: x mandatory;
+    scroll-padding-left: 50%;
+    scroll-padding-right: 50%;
     -webkit-overflow-scrolling: touch;
     white-space: nowrap;
   }
 
   .awards-scroll .award-card {
-    flex: 0 0 60%;
-    min-width: 60%;
+    flex: 0 0 auto;
+    width: 100%;
     max-width: 300px;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
   }
 
   .team-grid,
@@ -2302,9 +2310,10 @@ body {
   }
   
   .award-card {
-    min-width: 55%;
-    max-width: 240px;
+    width: 100%;
+    max-width: 300px;
     padding: 24px 16px;
+    scroll-snap-align: center;
   }
 
   .package-header {
