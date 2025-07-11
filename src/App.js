@@ -457,22 +457,22 @@ const AnixAILanding = () => {
       {/* Hero Section */}
       <section ref={heroRef} className="hero-section">
         <div className="hero-background">
-          <img src="https://images.pexels.com/photos/5475810/pexels-photo-5475810.jpeg" alt="AI Technology" className="hero-bg-image" />
+          <img src="https://images.pexels.com/photos/5475810/pexels-photo-5475810.jpeg" alt="анимационный ролик объясняющий B2B продукт" className="hero-bg-image" />
           <div className="hero-overlay"></div>
         </div>
         
         <div className="hero-content">
           <div className="logo-container">
-            <img src={logo} alt="Anix Logo" className="anix-logo" />
+            <img src={logo} alt="анимационный ролик объясняющий B2B продукт" className="anix-logo" />
           </div>
           
           <h1 className="hero-title">
-            <span className="title-line">Создаём</span>
-            <span className="title-line glow-text">ИИ-Анимации</span>
-            <span className="title-line">Нового Уровня</span>
+            <span className="title-line">Explainer-видео для бизнеса</span>
+            <span className="title-line glow-text">которое помогает продавать</span>
+            <span className="title-line">за 10 дней</span>
           </h1>
           <p className="hero-subtitle">
-            Революционная технология нейронных сетей превращает ваше видение в потрясающую анимацию за дни, а не месяцы.
+            Революционная технология нейронных сетей делает анимацию сложных продуктов понятной и быстрой.
           </p>
           <button className="cta-button primary" onClick={redirectToTelegram}>
             <span>Создать ИИ-Анимацию</span>
@@ -490,7 +490,7 @@ const AnixAILanding = () => {
       {/* Services Section */}
       <section className="services-section">
         <div className="container">
-          <h2 className="section-title"> Почему вам это нужно</h2>
+          <h2 className="section-title">Видео, которое помогает продавать</h2>
           <div className="services-grid">
             <div className="service-card">
               <div className="service-icon">🎬</div>
@@ -555,7 +555,7 @@ const AnixAILanding = () => {
             {teamMembers.map((member, index) => (
               <div key={index} className="team-card">
                 <div className="team-image-container">
-                  <img src={member.image} alt={member.name} className="team-image" />
+                  <img src={member.image} alt="анимационный ролик объясняющий B2B продукт" className="team-image" />
                   <div className="team-overlay">
                     <div className="expertise-badges">
                       {member.expertise.map((skill, i) => (
@@ -649,7 +649,7 @@ const AnixAILanding = () => {
                   setSelectedVideo(testimonial);
                   setShowVideoModal(true);
                 }}>
-                  <img src={testimonial.videoThumbnail} alt="Превью видео" />
+                  <img src={testimonial.videoThumbnail} alt="анимационный ролик объясняющий B2B продукт" />
                   <div className="video-play-button">
                     <div className="play-icon">▶</div>
                   </div>
@@ -684,7 +684,7 @@ const AnixAILanding = () => {
               {awards.map((award, index) => (
                 <div key={index} className="award-card">
                   <div className="award-trophy">
-                    <img src={award.image} alt={`Награда`} />
+                    <img src={award.image} alt="анимационный ролик объясняющий B2B продукт" />
                     <div className="trophy-glow"></div>
                   </div>
                   <div className="award-info">
@@ -822,7 +822,7 @@ const AnixAILanding = () => {
         
         {showQRCode && (
           <div className="qr-modal">
-            <img src={generateQRCode()} alt="QR-код Telegram" />
+            <img src={generateQRCode()} alt="анимационный ролик объясняющий B2B продукт" />
             <p>Сканируйте для связи</p>
           </div>
         )}

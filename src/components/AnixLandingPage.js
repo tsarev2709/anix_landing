@@ -44,7 +44,7 @@ const AnixLandingPage = () => {
     {
       id: 3,
       title: "Сценарий",
-      subtitle: "Продающий сюжет в 60 секундах",
+      subtitle: "Упаковка сложного продукта в 60 секунд",
       description: "Собираем из боли, пользы и решений ясный сценарий. Без воды, с конкретными смыслами, которые двигают клиента к действию. Умеем делать так, чтобы это цепляло.",
       icon: <Palette className="w-8 h-8" />,
       image: three,
@@ -54,7 +54,7 @@ const AnixLandingPage = () => {
     {
       id: 4,
       title: "Визуализация",
-      subtitle: "Показываем, чтобы понял даже закупщик",
+      subtitle: "Видео, понятное даже закупщику",
       description: "Готовим раскадровку, подбираем визуальные метафоры и стиль. Не ради красоты — ради ясности и понимания.",
       icon: <Play className="w-8 h-8" />,
       image: four,
@@ -74,8 +74,8 @@ const AnixLandingPage = () => {
     {
       id: 6,
       title: "Проверка в бою",
-      subtitle: "Смотрим, как это увеличивает метрики",
-      description: "Тестируем в бою: воронка, охват, питч инвесторам или onboarding. Проверяем, как видео влияет на конверсии и восприятие продукта.",
+      subtitle: "Видео для воронки продаж",
+      description: "Тестируем в бою: воронка, охват, питч инвесторам или onboarding. Увеличить конверсию с помощью видео и улучшить восприятие продукта.",
       icon: <BarChart3 className="w-8 h-8" />,
       image: six,
       color: "from-anix-teal to-anix-coral",
@@ -169,7 +169,7 @@ const AnixLandingPage = () => {
               viewport={{ once: true }}
             >
               <h3 className="text-5xl md:text-7xl font-heading font-bold text-white mb-6">
-                Путь к Идеальной Анимации
+                Анимация сложных продуктов: путь к идеальной подаче
               </h3>
               <p className="text-xl text-white/70 max-w-2xl mx-auto">
                 От бизнес-задачи до измеримого результата — наш отлаженный AI-процесс создает мощную анимацию в рекордные сроки
@@ -330,7 +330,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
               
               <img
                 src={step.image}
-                alt={step.title}
+                alt="анимационный ролик объясняющий B2B продукт"
                 className="relative z-10 w-full h-64 object-cover rounded-xl"
                 loading="lazy"
               />
