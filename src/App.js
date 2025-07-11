@@ -32,7 +32,9 @@ const AnixAILanding = () => {
   const processRef = useRef(null);
   const particlesRef = useRef(null);
   const awardsScrollRef = useRef(null);
+  const pricingScrollRef = useRef(null);
   const swipeStart = useRef(0);
+  const pricingSwipeStart = useRef(0);
 
   const handleTouchStart = (e) => {
     swipeStart.current = e.touches[0].clientX;
@@ -52,6 +54,26 @@ const AnixAILanding = () => {
     const deltaX = e.clientX - swipeStart.current;
     if (deltaX > 50) scrollAwards('left');
     if (deltaX < -50) scrollAwards('right');
+  };
+
+  const handlePricingTouchStart = (e) => {
+    pricingSwipeStart.current = e.touches[0].clientX;
+  };
+
+  const handlePricingTouchEnd = (e) => {
+    const deltaX = e.changedTouches[0].clientX - pricingSwipeStart.current;
+    if (deltaX > 50) scrollPricing('left');
+    if (deltaX < -50) scrollPricing('right');
+  };
+
+  const handlePricingMouseDown = (e) => {
+    pricingSwipeStart.current = e.clientX;
+  };
+
+  const handlePricingMouseUp = (e) => {
+    const deltaX = e.clientX - pricingSwipeStart.current;
+    if (deltaX > 50) scrollPricing('left');
+    if (deltaX < -50) scrollPricing('right');
   };
 
   // Animated counter effect
@@ -451,6 +473,16 @@ const AnixAILanding = () => {
     }
   };
 
+  const scrollPricing = (direction) => {
+    if (pricingScrollRef.current) {
+      const scrollAmount = 400;
+      pricingScrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 1500);
   }, []);
@@ -609,10 +641,22 @@ const AnixAILanding = () => {
       <section className="pricing-section">
         <div className="container">
           <h2 className="section-title">Цены и Пакеты</h2>
-          
-          <div className="pricing-grid">
-            {Object.entries(pricingPackages).map(([category, packages]) => (
-              <div key={category} className="pricing-column">
+
+          <div className="pricing-carousel-container">
+            <button className="pricing-nav left" onClick={() => scrollPricing('left')}>
+              ◀
+            </button>
+
+            <div
+              className="pricing-carousel"
+              ref={pricingScrollRef}
+              onTouchStart={handlePricingTouchStart}
+              onTouchEnd={handlePricingTouchEnd}
+              onMouseDown={handlePricingMouseDown}
+              onMouseUp={handlePricingMouseUp}
+            >
+              {Object.entries(pricingPackages).map(([category, packages]) => (
+                <div key={category} className="pricing-column">
                 <div className="column-header">
                   <h3>{category}</h3>
                   <div className="column-subtitle">
@@ -621,7 +665,7 @@ const AnixAILanding = () => {
                     {category === 'Корпорации' && 'Решения корпоративного уровня'}
                   </div>
                 </div>
-                
+
                 <div className="packages-list">
                   {packages.map((pkg, index) => (
                     <div key={index} className="package-card">
@@ -654,7 +698,12 @@ const AnixAILanding = () => {
                   ))}
                 </div>
               </div>
-            ))}
+              ))}
+            </div>
+
+            <button className="pricing-nav right" onClick={() => scrollPricing('right')}>
+              ▶
+            </button>
           </div>
         </div>
       </section>
