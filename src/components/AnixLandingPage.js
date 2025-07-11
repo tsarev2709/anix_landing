@@ -222,7 +222,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
     >
       {/* Timeline Connector */}
       {!isLast && (
-        <div className="absolute left-1/2 transform -translate-x-1/2 top-48 w-1 h-32 z-10">
+        <div className="absolute left-1/2 transform -translate-x-1/2 top-48 w-1 h-32 z-10 hidden md:block">
           <motion.div
             className="w-full h-full bg-gradient-to-b from-transparent via-anix-purple/30 to-transparent"
             initial={{ scaleY: 0 }}
@@ -233,7 +233,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
         </div>
       )}
 
-      <div className={`flex items-center ${isEven ? 'flex-row' : 'flex-row-reverse'} gap-16`}>
+      <div className={`flex items-center gap-16 flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
         {/* Content Side */}
         <motion.div
           className="flex-1"
@@ -242,7 +242,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
           transition={{ duration: 0.8, delay: step.delay + 0.2 }}
           viewport={{ once: true }}
         >
-          <div className={`${isEven ? 'text-right pr-8' : 'text-left pl-8'} max-w-md`}>
+          <div className={`${isEven ? 'md:text-right md:pr-8' : 'md:text-left md:pl-8'} max-w-md text-center mx-auto md:mx-0`}>
             <motion.div
               className={`inline-flex items-center gap-3 mb-4 ${isEven ? 'flex-row-reverse' : 'flex-row'}`}
               whileHover={{ scale: 1.05 }}
@@ -278,12 +278,12 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
 
         {/* Central Timeline Node */}
         <motion.div
-          className="relative z-20"
+          className="relative z-20 hidden md:block"
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 200, 
+          transition={{
+            type: "spring",
+            stiffness: 200,
             damping: 15, 
             delay: step.delay + 0.4 
           }}
@@ -311,7 +311,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
           viewport={{ once: true }}
         >
           <motion.div
-            className={`relative ${isEven ? 'pl-8' : 'pr-8'}`}
+            className={`relative ${isEven ? 'md:pl-8' : 'md:pr-8'} mt-8 md:mt-0`}
             whileHover={{ scale: 1.02, rotateY: isEven ? 5 : -5 }}
             transition={{ duration: 0.6 }}
           >

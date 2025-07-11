@@ -1172,7 +1172,7 @@ body {
 
 /* Pricing Section */
 .pricing-section {
-  padding: 120px 0;
+  padding: 120px 0 60px;
   background: #1a1a1a;
 }
 
@@ -1263,6 +1263,8 @@ body {
   border-radius: 16px;
   padding: 24px;
   transition: all 0.3s ease;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 .package-card:hover {
@@ -1543,6 +1545,12 @@ body {
   object-fit: contain;   /* Добавлено */
   position: relative;    /* Добавлено */
   z-index: 1;           /* Добавлено */
+}
+
+@media (max-width: 768px) {
+  .award-trophy img {
+    max-width: 33vw;
+  }
 }
 
 .trophy-glow {
@@ -2198,6 +2206,10 @@ body {
   }
   
   .connection-line {
+    display: none;
+  }
+
+  .package-cta {
     display: none;
   }
   
