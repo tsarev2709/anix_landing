@@ -450,6 +450,8 @@ body {
   border-radius: 24px;
   overflow: hidden;
   transition: all 0.4s ease;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .team-card:hover {
@@ -1265,6 +1267,7 @@ body {
   transition: all 0.3s ease;
   word-wrap: break-word;
   overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .package-card:hover {
@@ -1319,7 +1322,7 @@ body {
 }
 
 .package-details.expanded {
-  max-height: 200px;
+  max-height: 1000px;
   margin-bottom: 16px;
 }
 
@@ -1376,6 +1379,8 @@ body {
   border-radius: 20px;
   overflow: hidden;
   transition: transform 0.3s ease;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .testimonial-card:hover {
@@ -2147,6 +2152,7 @@ body {
     white-space: nowrap;
     gap: 16px;
     scroll-snap-type: x mandatory;
+    scroll-padding: 0 50%;
     -webkit-overflow-scrolling: touch;
     justify-content: flex-start;
   }
@@ -2155,7 +2161,9 @@ body {
   .testimonial-card {
     flex: 0 0 80%;
     min-width: 80%;
-    scroll-snap-align: start;
+    scroll-snap-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
   
   .process-section-v2 {

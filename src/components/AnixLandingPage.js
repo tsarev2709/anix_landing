@@ -18,6 +18,14 @@ const AnixLandingPage = () => {
 
   const [activeStep, setActiveStep] = useState(0);
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const processSteps = [
     {
@@ -122,14 +130,14 @@ const AnixLandingPage = () => {
         className="w-full h-full bg-gradient-to-b from-anix-purple via-anix-teal to-anix-coral opacity-30"
         initial={{ scaleY: 0 }}
         animate={{ scaleY: isActive ? 1 : 0.3 }}
-        transition={{ duration: 1, delay: index * 0.2 }}
+        transition={{ duration: 1, delay: index * 0.2 * (isMobile ? 0.5 : 1) }}
         style={{ originY: 0 }}
       />
       <motion.div
         className="absolute inset-0 w-full bg-gradient-to-b from-anix-purple to-anix-teal"
         initial={{ scaleY: 0 }}
         animate={{ scaleY: isActive ? 1 : 0 }}
-        transition={{ duration: 0.8, delay: index * 0.2 + 0.5 }}
+        transition={{ duration: 0.8, delay: index * 0.2 * (isMobile ? 0.5 : 1) + 0.5 }}
         style={{ originY: 0 }}
       />
     </div>
@@ -196,7 +204,7 @@ const AnixLandingPage = () => {
   );
 };
 
-const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
+const TimelineStep = ({ step, index, isActive, setActiveStep, isLast, isMobile }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { 
     threshold: 0.3,
@@ -217,7 +225,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
       className="relative mb-32"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      transition={{ duration: 0.8, delay: step.delay }}
+      transition={{ duration: 0.8, delay: step.delay * (isMobile ? 0.5 : 1) }}
       viewport={{ once: true }}
     >
       {/* Timeline Connector */}
@@ -227,7 +235,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
             className="w-full h-full bg-gradient-to-b from-transparent via-anix-purple/30 to-transparent"
             initial={{ scaleY: 0 }}
             animate={{ scaleY: isActive ? 1 : 0.3 }}
-            transition={{ duration: 1.5, delay: index * 0.3 }}
+          transition={{ duration: 1.5, delay: index * 0.3 * (isMobile ? 0.5 : 1) }}
             style={{ originY: 0 }}
           />
         </div>
@@ -239,7 +247,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
           className="flex-1"
           initial={{ x: isEven ? -100 : 100, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: step.delay + 0.2 }}
+          transition={{ duration: 0.8, delay: step.delay * (isMobile ? 0.5 : 1) + 0.2 }}
           viewport={{ once: true }}
         >
           <div className={`${isEven ? 'md:text-right md:pr-8' : 'md:text-left md:pl-8'} max-w-md text-center mx-auto md:mx-0`}>
@@ -285,7 +293,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
             type: "spring",
             stiffness: 200,
             damping: 15, 
-            delay: step.delay + 0.4 
+            delay: step.delay * (isMobile ? 0.5 : 1) + 0.4
           }}
           viewport={{ once: true }}
         >
@@ -307,7 +315,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
           className="flex-1"
           initial={{ x: isEven ? 100 : -100, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: step.delay + 0.3 }}
+          transition={{ duration: 0.8, delay: step.delay * (isMobile ? 0.5 : 1) + 0.3 }}
           viewport={{ once: true }}
         >
           <motion.div
