@@ -35,6 +35,7 @@ const AnixAILanding = () => {
   const pricingScrollRef = useRef(null);
   const swipeStart = useRef(0);
   const pricingSwipeStart = useRef(0);
+  const [activeService, setActiveService] = useState(null);
 
   const handleTouchStart = (e) => {
     swipeStart.current = e.touches[0].clientX;
@@ -465,21 +466,47 @@ const AnixAILanding = () => {
 
   const scrollAwards = (direction) => {
     if (awardsScrollRef.current) {
-      const scrollAmount = 300;
-      awardsScrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
+      const container = awardsScrollRef.current;
+      const card = container.querySelector('.award-card');
+      const cardWidth = card ? card.offsetWidth + 32 : 300;
+      const maxScroll = container.scrollWidth - container.clientWidth;
+
+      if (direction === 'left') {
+        if (container.scrollLeft <= 0) {
+          container.scrollTo({ left: maxScroll, behavior: 'smooth' });
+        } else {
+          container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+        }
+      } else {
+        if (container.scrollLeft >= maxScroll) {
+          container.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        }
+      }
     }
   };
 
   const scrollPricing = (direction) => {
     if (pricingScrollRef.current) {
-      const scrollAmount = 400;
-      pricingScrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
+      const container = pricingScrollRef.current;
+      const card = container.querySelector('.pricing-column');
+      const cardWidth = card ? card.offsetWidth + 32 : 400;
+      const maxScroll = container.scrollWidth - container.clientWidth;
+
+      if (direction === 'left') {
+        if (container.scrollLeft <= 0) {
+          container.scrollTo({ left: maxScroll, behavior: 'smooth' });
+        } else {
+          container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+        }
+      } else {
+        if (container.scrollLeft >= maxScroll) {
+          container.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        }
+      }
     }
   };
 
@@ -545,12 +572,15 @@ const AnixAILanding = () => {
         <div className="container">
           <h2 className="section-title">Видео, которое помогает продавать</h2>
           <div className="services-grid">
-            <div className="service-card">
+            <div
+              className="service-card"
+              onClick={() => setActiveService(activeService === 0 ? null : 0)}
+            >
               <div className="service-icon">🎬</div>
               <h3>Сокращение цикла сделки</h3>
               <p>Меньше времени уходит на прогрев, презентации и убеждение.</p>
               <p>"Мы теряем клиентов из-за долгих обсуждений и недопонимания".</p>
-              <div className="service-overlay">
+              <div className={`service-overlay ${activeService === 0 ? 'show' : ''}`}>
                 <div className="case-study">
                   <h4>Превентивная победа</h4>
                   <p>Наши клиенты в среднем сократили цикл сделки в 3 раза.</p>
@@ -562,12 +592,15 @@ const AnixAILanding = () => {
               </div>
             </div>
             
-            <div className="service-card">
+            <div
+              className="service-card"
+              onClick={() => setActiveService(activeService === 1 ? null : 1)}
+            >
               <div className="service-icon">⚡</div>
               <h3>Масштабирование</h3>
               <p>Видео легко тиражируется, работает на новых рынках, языках, партнёрах.</p>
               <p>"Хочу выйти в США, но нужен контент под локаль".</p>
-              <div className="service-overlay">
+              <div className={`service-overlay ${activeService === 1 ? 'show' : ''}`}>
                 <div className="case-study">
                   <h4>История успеха</h4>
                   <p>Обычно наш клиент увеличивает конверсию в отклик от 10 раз.</p>
@@ -579,12 +612,15 @@ const AnixAILanding = () => {
               </div>
             </div>
             
-            <div className="service-card">
+            <div
+              className="service-card"
+              onClick={() => setActiveService(activeService === 2 ? null : 2)}
+            >
               <div className="service-icon">🎨</div>
               <h3>Конкурентная Упаковка</h3>
               <p>Продукт визуально и эмоционально выигрывает у конкурентов.</p>
               <p>"На фоне других выглядим скучно, нас не запоминают".</p>
-              <div className="service-overlay">
+              <div className={`service-overlay ${activeService === 2 ? 'show' : ''}`}>
                 <div className="case-study">
                   <h4>Вау эффект</h4>
                   <p>Выделитесь на конференции и лендинге</p>
