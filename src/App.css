@@ -2077,8 +2077,8 @@ body {
   }
 
   .awards-scroll .award-card {
-    flex: 0 0 80%;
-    min-width: 80%;
+    flex: 0 0 60%;
+    min-width: 60%;
     scroll-snap-align: start;
   }
 
@@ -2232,7 +2232,7 @@ body {
   }
   
   .award-card {
-    min-width: 80%;
+    min-width: 60%;
     padding: 24px 16px;
   }
   
