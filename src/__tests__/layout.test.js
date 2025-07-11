@@ -45,5 +45,5 @@ test('award card fits mobile width', () => {
   const css = fs.readFileSync('src/App.css', 'utf8');
   const match = css.match(/\.award-card\s*\{[^}]*\}/);
   expect(match).not.toBeNull();
-  expect(match[0]).toMatch(/max-width:\s*320px/);
+  expect(match[0]).toMatch(/max-width:\s*300px/);
 });
