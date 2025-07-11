@@ -468,7 +468,10 @@ const AnixAILanding = () => {
     if (awardsScrollRef.current) {
       const container = awardsScrollRef.current;
       const card = container.querySelector('.award-card');
-      const cardWidth = card ? card.offsetWidth + 32 : 300;
+      const cardWidth =
+        window.innerWidth <= 768
+          ? container.clientWidth
+          : (card ? card.offsetWidth + 32 : 300);
       const maxScroll = container.scrollWidth - container.clientWidth;
 
       if (direction === 'left') {
@@ -491,7 +494,10 @@ const AnixAILanding = () => {
     if (pricingScrollRef.current) {
       const container = pricingScrollRef.current;
       const card = container.querySelector('.pricing-column');
-      const cardWidth = card ? card.offsetWidth + 32 : 400;
+      const cardWidth =
+        window.innerWidth <= 768
+          ? container.clientWidth
+          : (card ? card.offsetWidth + 32 : 400);
       const maxScroll = container.scrollWidth - container.clientWidth;
 
       if (direction === 'left') {

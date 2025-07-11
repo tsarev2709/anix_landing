@@ -1172,7 +1172,7 @@ body {
 
 /* Pricing Section */
 .pricing-section {
-  padding: 120px 0 60px;
+  padding: 80px 0 60px;
   background: #1a1a1a;
 }
 
@@ -2281,6 +2281,7 @@ body {
   .blog-card,
   .package-card {
     padding: 20px;
+    text-align: center;
   }
 
   .expertise-badge {
@@ -2293,9 +2294,15 @@ body {
   }
   
   .award-card {
-    min-width: 60%;
-    max-width: 300px;
+    min-width: 55%;
+    max-width: 240px;
     padding: 24px 16px;
+  }
+
+  .package-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
   }
 
   .pricing-column {

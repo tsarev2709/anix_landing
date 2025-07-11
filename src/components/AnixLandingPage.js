@@ -159,7 +159,7 @@ const AnixLandingPage = () => {
       >
 
         {/* Our Process Timeline */}
-        <section ref={timelineRef} className="py-20 px-4">
+        <section ref={timelineRef} className="pt-20 pb-10 px-4">
           <div className="max-w-7xl mx-auto">
             <motion.div
               className="text-center mb-20"
