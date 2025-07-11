@@ -4,6 +4,10 @@ import TestUtils from 'react-dom/test-utils';
 import fs from 'fs';
 import App from '../App';
 
+jest.mock('react-swipeable', () => ({
+  useSwipeable: () => ({}),
+}), { virtual: true });
+
 test('hero section appears after loading and has three lines', () => {
   jest.useFakeTimers();
   // Polyfill IntersectionObserver for JSDOM

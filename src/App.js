@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import './App.css';
 import AnixLandingPage from "./components/AnixLandingPage";
 import god from './images/god.jpg';
@@ -32,6 +33,11 @@ const AnixAILanding = () => {
   const processRef = useRef(null);
   const particlesRef = useRef(null);
   const awardsScrollRef = useRef(null);
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => scrollAwards('right'),
+    onSwipedRight: () => scrollAwards('left'),
+    trackMouse: true
+  });
 
   // Animated counter effect
   useEffect(() => {
@@ -680,7 +686,7 @@ const AnixAILanding = () => {
               ◀
             </button>
             
-            <div className="awards-scroll" ref={awardsScrollRef}>
+            <div className="awards-scroll" ref={awardsScrollRef} {...swipeHandlers}>
               {awards.map((award, index) => (
                 <div key={index} className="award-card">
                   <div className="award-trophy">
