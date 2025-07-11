@@ -242,7 +242,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
           transition={{ duration: 0.8, delay: step.delay + 0.2 }}
           viewport={{ once: true }}
         >
-          <div className={`${isEven ? 'text-right pr-8' : 'text-left pl-8'}`}>
+          <div className={`${isEven ? 'text-right pr-8' : 'text-left pl-8'} max-w-md`}>
             <motion.div
               className={`inline-flex items-center gap-3 mb-4 ${isEven ? 'flex-row-reverse' : 'flex-row'}`}
               whileHover={{ scale: 1.05 }}
@@ -270,7 +270,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast }) => {
               {step.subtitle}
             </p>
 
-            <p className="text-lg text-white/80 leading-relaxed max-w-md w-full">
+            <p className="text-lg text-white/80 leading-relaxed">
               {step.description}
             </p>
           </div>
