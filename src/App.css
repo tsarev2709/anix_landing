@@ -26,10 +26,7 @@ body {
 /* Loading Screen */
 .loading-screen {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0; /* avoids viewport overflow on mobile */
   background: linear-gradient(135deg, #1a1a1a 0%, #2d1b3d 100%);
   display: flex;
   align-items: center;
@@ -1915,10 +1912,7 @@ body {
 /* Video Modal */
 .video-modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0; /* prevents creating extra horizontal scroll */
   background: rgba(0, 0, 0, 0.9);
   display: flex;
   align-items: center;
@@ -2077,7 +2071,8 @@ body {
   /* Mobile sliders */
   .awards-scroll {
     scroll-snap-type: x mandatory;
-    touch-action: pan-y;
+    touch-action: pan-x;
+    -webkit-overflow-scrolling: touch;
     white-space: nowrap;
   }
 
@@ -2096,7 +2091,7 @@ body {
     gap: 16px;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
+    touch-action: pan-x;
     justify-content: flex-start;
   }
 
