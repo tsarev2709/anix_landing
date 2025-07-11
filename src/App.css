@@ -2082,7 +2082,7 @@ body {
   .awards-scroll .award-card {
     flex: 0 0 80%;
     min-width: 80%;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
   }
 
   .team-grid,
@@ -2094,13 +2094,14 @@ body {
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
+    justify-content: flex-start;
   }
 
   .team-card,
   .testimonial-card {
     flex: 0 0 80%;
     min-width: 80%;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
   }
   
   .process-section-v2 {
