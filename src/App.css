@@ -137,9 +137,7 @@ body {
   position: relative;
   z-index: 3;
   text-align: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
+  max-width: 800px;
   padding: 0 24px;
 }
 
@@ -148,8 +146,7 @@ body {
   margin-bottom: 32px;
   animation: fadeInUp 1s ease-out 0.1s forwards;
   opacity: 0;
-  transform: translateY(30px);
-  transform: scale(1.5); /* Увеличивает весь контейнер в 1.5 раза */
+  transform: translateY(30px) scale(1.5); /* Увеличивает весь контейнер в 1.5 раза */
   transform-origin: top center; /* Точка трансформации (верхний центр) */
 }
 
