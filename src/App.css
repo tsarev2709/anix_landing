@@ -1464,7 +1464,7 @@ body {
 }
 
 .award-card {
-  min-width: 300px;
+  min-width: 240px;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1492,7 +1492,7 @@ body {
 }
 
 .award-trophy img {
-  max-width: 100%;       /* Изменено с width */
+  max-width: 80%;
   max-height: 100%;      /* Добавлено */
   height: auto;
   display: block;
