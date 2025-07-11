@@ -679,10 +679,6 @@ const AnixAILanding = () => {
           <h2 className="section-title">Цены и Пакеты</h2>
 
           <div className="pricing-carousel-container">
-            <button className="pricing-nav left" onClick={() => scrollPricing('left')}>
-              ◀
-            </button>
-
             <div
               className="pricing-carousel"
               ref={pricingScrollRef}
@@ -736,10 +732,6 @@ const AnixAILanding = () => {
               </div>
               ))}
             </div>
-
-            <button className="pricing-nav right" onClick={() => scrollPricing('right')}>
-              ▶
-            </button>
           </div>
         </div>
       </section>
