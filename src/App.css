@@ -2072,6 +2072,36 @@ body {
     grid-template-columns: 1fr;
     gap: 24px;
   }
+
+  /* Mobile sliders */
+  .awards-scroll {
+    scroll-snap-type: x mandatory;
+    touch-action: pan-y;
+  }
+
+  .awards-scroll .award-card {
+    flex: 0 0 80%;
+    min-width: 80%;
+    scroll-snap-align: center;
+  }
+
+  .team-grid,
+  .testimonials-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
+
+  .team-card,
+  .testimonial-card {
+    flex: 0 0 80%;
+    min-width: 80%;
+    scroll-snap-align: center;
+  }
   
   .process-section-v2 {
     padding: 80px 0;
@@ -2203,7 +2233,7 @@ body {
   }
   
   .award-card {
-    min-width: 250px;
+    min-width: 80%;
     padding: 24px 16px;
   }
   
