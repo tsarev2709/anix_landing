@@ -2192,6 +2192,11 @@ body {
   .package-card {
     padding: 20px;
   }
+
+  .expertise-badge {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
   
   .contact-method {
     padding: 16px;
