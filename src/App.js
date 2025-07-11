@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSwipeable } from 'react-swipeable';
 import './App.css';
 import AnixLandingPage from "./components/AnixLandingPage";
 import god from './images/god.jpg';
@@ -33,11 +32,27 @@ const AnixAILanding = () => {
   const processRef = useRef(null);
   const particlesRef = useRef(null);
   const awardsScrollRef = useRef(null);
-  const swipeHandlers = useSwipeable({
-    onSwipedLeft: () => scrollAwards('right'),
-    onSwipedRight: () => scrollAwards('left'),
-    trackMouse: true
-  });
+  const swipeStart = useRef(0);
+
+  const handleTouchStart = (e) => {
+    swipeStart.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    const deltaX = e.changedTouches[0].clientX - swipeStart.current;
+    if (deltaX > 50) scrollAwards('left');
+    if (deltaX < -50) scrollAwards('right');
+  };
+
+  const handleMouseDown = (e) => {
+    swipeStart.current = e.clientX;
+  };
+
+  const handleMouseUp = (e) => {
+    const deltaX = e.clientX - swipeStart.current;
+    if (deltaX > 50) scrollAwards('left');
+    if (deltaX < -50) scrollAwards('right');
+  };
 
   // Animated counter effect
   useEffect(() => {
@@ -686,7 +701,14 @@ const AnixAILanding = () => {
               ◀
             </button>
             
-            <div className="awards-scroll" ref={awardsScrollRef} {...swipeHandlers}>
+            <div
+              className="awards-scroll"
+              ref={awardsScrollRef}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+            >
               {awards.map((award, index) => (
                 <div key={index} className="award-card">
                   <div className="award-trophy">
