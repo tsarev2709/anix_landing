@@ -319,7 +319,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast, isMobile }
           viewport={{ once: true }}
         >
           <motion.div
-            className={`relative ${isEven ? 'md:pl-8' : 'md:pr-8'} mt-8 md:mt-0`}
+            className={`relative ${isEven ? 'md:pl-8 md:mr-auto' : 'md:pr-8 md:ml-auto'} mt-8 md:mt-0 max-w-md`}
             whileHover={{ scale: 1.02, rotateY: isEven ? 5 : -5 }}
             transition={{ duration: 0.6 }}
           >
