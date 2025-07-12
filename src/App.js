@@ -556,7 +556,7 @@ const AnixAILanding = () => {
           
           <h1 className="hero-title">
             <span className="title-line">Explainer-видео для бизнеса</span>
-            <span className="title-line glow-text">которое помогает продавать</span>
+            <span className="title-line glow-text">которое продает</span>
             <span className="title-line">за 10 дней</span>
           </h1>
           <p className="hero-subtitle">
