@@ -13,8 +13,8 @@ import fiztech from './images/fiztech.png';
 import clappy from './images/clappy.png';
 import hemoai from './images/hemoai.png';
 import kolbox from './images/kolbox.png';
-import lida from './images/lida.JPG';
-import dasha from './images/dasha.JPG';
+import lida from './images/lida.jpg';
+import dasha from './images/dasha.jpg';
 import TPES from './images/TPES.png';
 
 
