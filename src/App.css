@@ -497,8 +497,9 @@ body {
 
 .expertise-badges {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
 }
 
 .expertise-badge {
@@ -540,7 +541,7 @@ body {
   margin-bottom: 8px;
 }
 
-.experience {
+.benefit {
   color: rgba(255, 255, 255, 0.7);
   font-size: 14px;
 }
