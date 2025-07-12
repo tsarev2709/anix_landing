@@ -563,13 +563,12 @@ const AnixAILanding = () => {
             Революционная технология нейронных сетей делает анимацию сложных продуктов понятной и быстрой.
           </p>
           <button className="cta-button primary" onClick={redirectToTelegram}>
-            <span>Создать ИИ-Анимацию</span>
+            <span>Повысить продажи</span>
             <div className="button-glow"></div>
           </button>
         </div>
         
         <div className="geometric-shapes">
-          <div className="floating-shape shape-1"></div>
           <div className="floating-shape shape-2"></div>
           <div className="floating-shape shape-3"></div>
         </div>

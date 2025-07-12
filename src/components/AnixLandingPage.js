@@ -47,7 +47,7 @@ const AnixLandingPage = () => {
       icon: <Zap className="w-8 h-8" />,
       image: two,
       color: "from-anix-teal to-anix-purple",
-      delay: 0.2
+      delay: 0.1
     },
     {
       id: 3,
@@ -57,7 +57,7 @@ const AnixLandingPage = () => {
       icon: <Palette className="w-8 h-8" />,
       image: three,
       color: "from-anix-coral to-anix-teal",
-      delay: 0.4
+      delay: 0.2
     },
     {
       id: 4,
@@ -67,7 +67,7 @@ const AnixLandingPage = () => {
       icon: <Play className="w-8 h-8" />,
       image: four,
       color: "from-anix-coral to-anix-teal",
-      delay: 0.6
+      delay: 0.3
     },
     {
       id: 5,
@@ -77,7 +77,7 @@ const AnixLandingPage = () => {
       icon: <BarChart3 className="w-8 h-8" />,
       image: five,
       color: "from-anix-teal to-anix-coral",
-      delay: 0.8
+      delay: 0.4
     },
     {
       id: 6,
@@ -87,7 +87,7 @@ const AnixLandingPage = () => {
       icon: <BarChart3 className="w-8 h-8" />,
       image: six,
       color: "from-anix-teal to-anix-coral",
-      delay: 1.0
+      delay: 0.5
     }
   ];
 
