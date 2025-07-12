@@ -13,6 +13,8 @@ import fiztech from './images/fiztech.png';
 import clappy from './images/clappy.png';
 import hemoai from './images/hemoai.png';
 import kolbox from './images/kolbox.png';
+import lida from './images/lida.JPG';
+import dasha from './images/dasha.JPG';
 import TPES from './images/TPES.png';
 
 
@@ -331,14 +333,14 @@ const AnixAILanding = () => {
       name: 'Дарья Косичкина',
       role: 'Нейроаниматор',
       benefit: 'Делает визуал, который объясняет и цепляет',
-      image: 'https://images.unsplash.com/photo-1544723495-432537deda45',
+      image: dasha,
       tags: ['2D-анимация', 'Моушн-дизайн', 'Визуальные метафоры', 'Раскадровка']
     },
     {
       name: 'Лидия Солнышко',
       role: 'Нейроаниматор',
       benefit: 'Собирает AI-видео, чтобы быстро и качественно',
-      image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e',
+      image: lida,
       tags: ['AI-видео', 'Постпродакшн', 'Алгоритмы', 'Motion pipeline']
     }
   ];
