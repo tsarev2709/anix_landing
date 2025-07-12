@@ -308,38 +308,38 @@ const AnixAILanding = () => {
   const teamMembers = [
     {
       name: 'Андрей Царёв',
-      role: 'Cтратег и product owner сложных B2B-видео',
+      role: 'Стратег и продюсер B2B-видео',
+      benefit: 'Понимает рынок, превращает суть в продающий аргумент',
       image: god,
-      expertise: ['Знает, как из невнятного техно-хаоса собрать видео-аргумент, от которого клиент говорит «берите мои деньги»', 'Работал с deeptech, AI, венчурными стартапами, вузами и фондами. Понимает и рынок, и смысл', 'Приходит, когда «продукт офигенный, а продаж нет» — и превращает его в машину убедительности'],
-      experience: 'Наставник продюсеров и продюсер наставников'
+      tags: ['B2B', 'Продуктовое позиционирование', 'Драматургия', 'Аналитика']
     },
     {
       name: 'Александра Севостьянова',
-      role: 'Cценарист-продажник с театральной прожаркой',
+      role: 'Сценарист-продажник и режиссёр',
+      benefit: 'Превращает сложное в ясную и цепляющую подачу',
       image: bestie,
-      expertise: ['Пишет сценарии к видео, которые ведут клиента за руку к покупке', 'Подсказывает, где сцена недоиграна, где инсайт не докручен, где «продажа не случилась»', 'Помогала десяткам фаундеров объяснять сложное простым языком — так, чтобы конверсии росли'],
-      experience: '10+ спектаклей, сотни репетиций '
+      tags: ['B2B-питчи', 'Театральная режиссура', 'Продажный текст', 'Клиентские боли']
     },
     {
-      name: 'Кухарук Иван',
-      role: 'Технический Руководитель',
+      name: 'Иван Кухарук',
+      role: 'Технический директор',
+      benefit: 'Проектирует процесс и следит, чтобы всё работало',
       image: vanya,
-      expertise: ['Машинное Обучение', 'Анимация'],
-      experience: '10 лет опыта'
+      tags: ['Проджект-менеджмент', 'Бизнес-анализ', 'AI-интеграция', 'Процесс']
     },
     {
-      name: 'Елена Волкова',
-      role: 'Ведущий Аниматор',
-      image: 'https://images.unsplash.com/photo-1634794251656-9f286d822b05',
-      expertise: ['3D Анимация', 'Визуальные Эффекты'],
-      experience: '7 лет опыта'
+      name: 'Дарья Косичкина',
+      role: 'Нейроаниматор',
+      benefit: 'Делает визуал, который объясняет и цепляет',
+      image: 'https://images.unsplash.com/photo-1544723495-432537deda45',
+      tags: ['2D-анимация', 'Моушн-дизайн', 'Визуальные метафоры', 'Раскадровка']
     },
     {
-      name: 'Елена Волкова',
-      role: 'Ведущий Аниматор',
-      image: 'https://images.unsplash.com/photo-1634794251656-9f286d822b05',
-      expertise: ['3D Анимация', 'Визуальные Эффекты'],
-      experience: '7 лет опыта'
+      name: 'Лидия Солнышко',
+      role: 'Нейроаниматор',
+      benefit: 'Собирает AI-видео, чтобы быстро и качественно',
+      image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e',
+      tags: ['AI-видео', 'Постпродакшн', 'Алгоритмы', 'Motion pipeline']
     }
   ];
 
@@ -645,7 +645,7 @@ const AnixAILanding = () => {
       {/* Team Section */}
       <section className="team-section">
         <div className="container">
-          <h2 className="section-title">Эксперты по Нейронным Сетям</h2>
+      <h2 className="section-title">Команда, которая продаёт вместо вас</h2>
           <div className="team-grid">
             {teamMembers.map((member, index) => (
               <div key={index} className="team-card">
@@ -653,9 +653,9 @@ const AnixAILanding = () => {
                   <img src={member.image} alt="анимационный ролик объясняющий B2B продукт" className="team-image" />
                   <div className="team-overlay">
                     <div className="expertise-badges">
-                      {member.expertise.map((skill, i) => (
-                        <span key={i} className="expertise-badge pulse-effect">
-                          {skill}
+                      {member.tags.map((tag, i) => (
+                        <span key={i} className="expertise-badge">
+                          {tag}
                         </span>
                       ))}
                     </div>
@@ -664,7 +664,7 @@ const AnixAILanding = () => {
                 <div className="team-info">
                   <h3>{member.name}</h3>
                   <p className="role">{member.role}</p>
-                  <p className="experience">{member.experience}</p>
+                  <p className="benefit">{member.benefit}</p>
                 </div>
               </div>
             ))}
