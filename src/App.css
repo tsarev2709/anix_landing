@@ -164,7 +164,7 @@ body {
 }
 
 .hero-title {
-  font-size: clamp(48px, 8vw, 96px);
+  font-size: clamp(40px, 6vw, 80px);
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 24px;
@@ -1476,6 +1476,7 @@ body {
   display: flex;
   align-items: center;
   gap: 24px;
+  overflow: hidden;
 }
 
 .scroll-button {
@@ -2111,7 +2112,7 @@ body {
   }
   
   .hero-title {
-    font-size: clamp(32px, 8vw, 48px);
+    font-size: clamp(28px, 7vw, 40px);
   }
   
   .hero-subtitle {
@@ -2248,10 +2249,15 @@ body {
     grid-template-columns: 1fr;
     gap: 40px;
   }
+
+  .contact-visual {
+    display: none;
+  }
   
   .awards-scroll-container {
     flex-direction: column;
     gap: 16px;
+    overflow: hidden;
   }
   
   .scroll-button {
