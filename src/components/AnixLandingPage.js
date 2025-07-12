@@ -250,7 +250,7 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast, isMobile }
           transition={{ duration: 0.8, delay: step.delay * (isMobile ? 0.5 : 1) + 0.2 }}
           viewport={{ once: true }}
         >
-          <div className={`${isEven ? 'md:text-right md:pr-8' : 'md:text-left md:pl-8'} max-w-md text-center mx-auto md:mx-0`}>
+          <div className={`${isEven ? 'md:text-right md:pr-8 md:ml-auto' : 'md:text-left md:pl-8 md:mr-auto'} max-w-md text-center mx-auto`}>
             <motion.div
               className={`inline-flex items-center gap-3 mb-4 ${isEven ? 'flex-row-reverse' : 'flex-row'}`}
               whileHover={{ scale: 1.05 }}
