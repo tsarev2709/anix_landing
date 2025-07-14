@@ -168,7 +168,7 @@ const AnixLandingPage = () => {
 
         {/* Our Process Timeline */}
         <section ref={timelineRef} className="pt-20 pb-10 px-4">
-          <div className="max-w-7xl mx-auto">
+          <div className="roadmap-container">
             <motion.div
               className="text-center mb-20"
               initial={{ opacity: 0, y: 30 }}

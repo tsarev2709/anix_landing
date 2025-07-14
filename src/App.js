@@ -899,29 +899,73 @@ const AnixAILanding = () => {
         <div className="container">
           <h2 className="section-title">Последние Новости</h2>
           <div className="blog-grid">
-            <article className="blog-card">
+            <a
+              href="https://vc.ru/ai/2028376-startap-anix-iz-mfti-2d-animatsiya"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="blog-card"
+            >
               <div className="blog-category">
-                <span className="category-tag">#ТехнологииАнимации</span>
+                <span className="category-tag">#Новости</span>
               </div>
-              <h3>Будущее ИИ-анимации: Нейронные сети против традиционных методов</h3>
-              <p>Исследуем, как нейронные сети революционизируют индустрию анимации...</p>
+              <h3>Стартап Anix из МФТИ автоматизирует 2D‑анимацию</h3>
+              <p>VC.ru рассказывает об образовательных корнях проекта и его ИИ‑технологиях.</p>
               <div className="blog-meta">
-                <span>5 мин чтения</span>
-                <span>Дек 2024</span>
+                <span>3 мин чтения</span>
+                <span>Май 2025</span>
               </div>
-            </article>
-            
-            <article className="blog-card">
+            </a>
+
+            <a
+              href="https://vc.ru/marketing/1934034-kontent-marketing-s-animatsiey"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="blog-card"
+            >
               <div className="blog-category">
-                <span className="category-tag">#ТехнологииАнимации</span>
+                <span className="category-tag">#Маркетинг</span>
               </div>
-              <h3>Кейс: Как мы сократили время анимации на 90%</h3>
-              <p>Глубокий анализ нашего ИИ-конвейера анимации и результатов...</p>
+              <h3>Контент‑маркетинг с анимацией: практические советы</h3>
+              <p>Материал о том, как использовать ролики для усиления воронки продаж.</p>
               <div className="blog-meta">
-                <span>8 мин чтения</span>
-                <span>Ноя 2024</span>
+                <span>4 мин чтения</span>
+                <span>Апр 2025</span>
               </div>
-            </article>
+            </a>
+
+            <a
+              href="https://me-forum.ru/media/events/mef-2025-sessiya-5-molodye-predprinimateli-v-mosko/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="blog-card"
+            >
+              <div className="blog-category">
+                <span className="category-tag">#MEF2025</span>
+              </div>
+              <h3>Anix выступил на сессии молодых предпринимателей MEF</h3>
+              <p>На Московском экономическом форуме команда поделилась опытом нейроанимации.</p>
+              <div className="blog-meta">
+                <span>2 мин чтения</span>
+                <span>Мар 2025</span>
+              </div>
+            </a>
+
+            <a
+              href="https://vc.ru/life/1916917-kak-b2b-kompaniyam-sozdat-uspeshnyy-animatsionnyy-rolik"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="blog-card"
+            >
+              <div className="blog-category">
+                <span className="category-tag">#B2BВидео</span>
+              </div>
+              <h3>Как B2B‑компаниям создать успешный анимационный ролик</h3>
+              <p>Подробный гид по выбору формата и ключевым этапам производства.</p>
+              <div className="blog-meta">
+                <span>6 мин чтения</span>
+                <span>Фев 2025</span>
+              </div>
+            </a>
           </div>
         </div>
       </section>
