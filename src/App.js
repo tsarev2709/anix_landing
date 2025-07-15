@@ -463,7 +463,7 @@ const AnixAILanding = () => {
   };
 
   const generateQRCode = () => {
-    return `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=https://t.me/anix_helper`;
+    return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://t.me/anix_helper`;
   };
 
   const scrollAwards = (direction) => {
