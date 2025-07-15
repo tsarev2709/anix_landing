@@ -544,10 +544,7 @@ const AnixAILanding = () => {
       
       {/* Hero Section */}
       <section ref={heroRef} className="hero-section">
-        <div className="hero-background">
-          <img src="https://images.pexels.com/photos/5475810/pexels-photo-5475810.jpeg" alt="анимационный ролик объясняющий B2B продукт" className="hero-bg-image" />
-          <div className="hero-overlay"></div>
-        </div>
+        
         
         <div className="hero-content">
           <div className="logo-container">
