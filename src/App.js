@@ -644,6 +644,43 @@ const AnixAILanding = () => {
         </div>
       </section>
             
+      {/* Testimonials */}
+      <section className="testimonials-section">
+        <div className="container">
+          <h2 className="section-title">Истории Успеха Клиентов</h2>
+          <div className="testimonials-grid">
+            {testimonials.map((testimonial) => (
+              <div key={testimonial.id} className="testimonial-card">
+                <div className="video-preview" onClick={() => {
+                  setSelectedVideo(testimonial);
+                  setShowVideoModal(true);
+                }}>
+                  <img src={testimonial.videoThumbnail} alt="анимационный ролик объясняющий B2B продукт" />
+                  <div className="video-play-button">
+                    <div className="play-icon">▶</div>
+                  </div>
+                  <div className="ai-indicator">
+                    Генерация ИИ: {testimonial.aiGenerated}%
+                  </div>
+                </div>
+                <div className="testimonial-content">
+                  <p>"{testimonial.text}"</p>
+                  <div className="testimonial-author">
+                    <strong>{testimonial.name}</strong>
+                    <span>{testimonial.company}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+
+      {/*  👉 ставим Roadmap ЗА пределами .container */}
+      <AnixLandingPage />
+
 
       {/* Team Section */}
       <section className="team-section">
@@ -677,9 +714,6 @@ const AnixAILanding = () => {
 
 
 
-
-      {/*  👉 ставим Roadmap ЗА пределами .container */}
-      <AnixLandingPage />
 
 
       {/* Pricing & Packages Section */}
@@ -745,37 +779,7 @@ const AnixAILanding = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="testimonials-section">
-        <div className="container">
-          <h2 className="section-title">Истории Успеха Клиентов</h2>
-          <div className="testimonials-grid">
-            {testimonials.map((testimonial) => (
-              <div key={testimonial.id} className="testimonial-card">
-                <div className="video-preview" onClick={() => {
-                  setSelectedVideo(testimonial);
-                  setShowVideoModal(true);
-                }}>
-                  <img src={testimonial.videoThumbnail} alt="анимационный ролик объясняющий B2B продукт" />
-                  <div className="video-play-button">
-                    <div className="play-icon">▶</div>
-                  </div>
-                  <div className="ai-indicator">
-                    Генерация ИИ: {testimonial.aiGenerated}%
-                  </div>
-                </div>
-                <div className="testimonial-content">
-                  <p>"{testimonial.text}"</p>
-                  <div className="testimonial-author">
-                    <strong>{testimonial.name}</strong>
-                    <span>{testimonial.company}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+
 
       {/* Enhanced Awards Section */}
       <section className="awards-section">
