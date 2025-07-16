@@ -571,7 +571,7 @@ const AnixAILanding = () => {
             <span className="title-line">за 10 дней</span>
           </h1>
           <p className="hero-subtitle">
-            Революционная технология нейронных сетей делает анимацию сложных продуктов понятной и быстрой.
+            Революционный пайплайн Anix делает анимацию сложных продуктов понятной и быстрой.
         </p>
           <a
             href="https://t.me/m/i23MvBuLOGJi"

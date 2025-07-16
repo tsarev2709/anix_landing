@@ -358,6 +358,11 @@ body {
   box-shadow: 0 20px 40px rgba(139, 69, 255, 0.2);
 }
 
+/* Blur background text on hover */
+.service-card:hover > *:not(.service-overlay) {
+  filter: blur(4px);
+}
+
 .service-icon {
   font-size: 48px;
   margin-bottom: 24px;
