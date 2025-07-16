@@ -353,7 +353,8 @@ const AnixAILanding = () => {
       text: 'Работать с Anix — это кайф. Очень бережно подошли к брифу, уловили суть, предлагали идеи, оперативно реагировали на фидбек и в итоге сделали видео, которое нам до сих пор не надоело пересматривать. Получилось живо, динамично, душевно. ',
       videoThumbnail: kolbox,
       videoUrl: 'https://player.vimeo.com/video/1078357836?h=a4d72de864',
-      aiGenerated: 88
+      reach: 25,
+      conversion: 18
     },
     {
       id: 2,
@@ -362,7 +363,8 @@ const AnixAILanding = () => {
       text: 'Приняли решение сделать ролик, потому что сработала моя интуиция, а еще было жгучее чувство, что ролик очень важен для нас - особенно на РВФ, куда нужно было с собой что-то вести, и это должно было быть чем-то весомым, достойным и привлекающим внимание. По итогу ролик безусловно отработал на 150% в Казани, мы себя чувствовали уверенно, даже перед высокопоставленными лицами и официальными делегациями, еще разослали его по своим ресурсам, групповым чатам и т.д. Сейчас есть необходимость перевода ролика на английский язык. Оценка ролика и работы команды Anix самая высокая.',
       videoThumbnail: TPES,
       videoUrl: 'https://player.vimeo.com/video/1078354208',
-      aiGenerated: 91
+      reach: 30,
+      conversion: 30
     },
     {
       id: 3,
@@ -371,7 +373,8 @@ const AnixAILanding = () => {
       text: 'Anix AI преобразил процесс продаж. Результаты потрясающие, а экономия времени невероятная.',
       videoThumbnail: clappy,
       videoUrl: 'https://player.vimeo.com/video/1078358379?h=8fc297f159',
-      aiGenerated: 85
+      reach: 40,
+      conversion: 16
     },
     {
       id: 4,
@@ -380,7 +383,18 @@ const AnixAILanding = () => {
       text: 'Сначала были сомнения, поймет ли команда мой специфический запрос, потом увидела скетчи будущего мультфильма и успокоилась. Я абсолютно везде использую иллюстрации. Это стало визитной карточкой, все узнают эти картинки. Неожиданным моментом стало то, что мало кто из стартапов пользуются роликами эксплейнерами. По итогу ролик используем на сайте, на выставках, на листовках и в презентации. Результат превзошел все ожидания.',
       videoThumbnail: hemoai,
       videoUrl: 'https://player.vimeo.com/video/1078358021?h=afe067a81f',
-      aiGenerated: 95
+      reach: 53,
+      conversion: 22
+    },
+    {
+      id: 5,
+      name: 'Фонд Целевого Капитала МФТИ',
+      company: 'Физтех',
+      text: 'Видео помогло донести ценность проекта инвесторам и партнерам.',
+      videoThumbnail: fiztech,
+      videoUrl: 'https://player.vimeo.com/video/1078359999',
+      reach: 100,
+      conversion: 10
     }
   ];
 
@@ -660,7 +674,10 @@ const AnixAILanding = () => {
                     <div className="play-icon">▶</div>
                   </div>
                   <div className="ai-indicator">
-                    Генерация ИИ: {testimonial.aiGenerated}%
+                    Повышение охвата: X{testimonial.reach}
+                  </div>
+                  <div className="conversion-indicator">
+                    Повышение конверсии +{testimonial.conversion}%
                   </div>
                 </div>
                 <div className="testimonial-content">
@@ -1007,14 +1024,18 @@ const AnixAILanding = () => {
                   title={`Видео от ${selectedVideo.name}`}
                 ></iframe>
                 <div className="progress-bar-container">
-                  <div className="progress-label">Контент, сгенерированный ИИ</div>
+                  <div className="progress-label">Повышение охвата</div>
                   <div className="progress-bar">
-                    <div 
-                      className="progress-fill" 
-                      style={{width: `${selectedVideo.aiGenerated}%`}}
-                    ></div>
+                    <div className="progress-fill" style={{width: '100%'}}></div>
                   </div>
-                  <div className="progress-percentage">{selectedVideo.aiGenerated}%</div>
+                  <div className="progress-percentage">X{selectedVideo.reach}</div>
+                </div>
+                <div className="progress-bar-container">
+                  <div className="progress-label">Повышение конверсии</div>
+                  <div className="progress-bar">
+                    <div className="progress-fill" style={{width: '100%'}}></div>
+                  </div>
+                  <div className="progress-percentage">+{selectedVideo.conversion}%</div>
                 </div>
                 <div className="modal-info">
                   <h3>{selectedVideo.name}</h3>
