@@ -1950,6 +1950,10 @@ body {
   position: fixed;
   inset: 0;
   backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  /* Vignette effect: keep the center sharp and blur the edges */
+  mask-image: radial-gradient(circle at center, transparent 60%, black 100%);
+  -webkit-mask-image: radial-gradient(circle at center, transparent 60%, black 100%);
   pointer-events: none;
   z-index: 999;
 }
