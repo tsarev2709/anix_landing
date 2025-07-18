@@ -1894,6 +1894,71 @@ body {
   color: rgba(255, 255, 255, 0.6);
 }
 
+/* Subscribe & Brief Sections */
+.subscribe-section,
+.brief-section {
+  padding: 80px 0;
+  background: #1a1a1a;
+}
+
+.subscribe-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+}
+
+.subscribe-section h3,
+.brief-section h3 {
+  font-size: 28px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.subscribe-btn {
+  position: relative;
+  background: linear-gradient(45deg, #8b45ff, #20b2aa);
+  color: #fff;
+  padding: 20px 40px;
+  border-radius: 16px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.subscribe-btn .sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.8) 2px, transparent 2px);
+  background-size: 10px 10px;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.subscribe-btn:hover .sparkles {
+  opacity: 1;
+  transform: scale(1.5);
+  animation: spin 2s linear infinite;
+}
+
+.page-blur-overlay {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(5px);
+  pointer-events: none;
+  z-index: 999;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg) scale(1.5); }
+  to { transform: rotate(360deg) scale(1.5); }
+}
+
 /* Roadmap Container */
 .roadmap-container {
   max-width: 1200px;
