@@ -391,7 +391,7 @@ const AnixAILanding = () => {
       name: 'Фонд Целевого Капитала МФТИ',
       company: 'Физтех',
       text: 'Работать с командой Anix было очень приятно — ребята с самого начала погрузились в задачу, предлагали яркие визуальные концепты и всегда были на связи. Я особенно оценила их внимательность к деталям и умение слышать: когда мы в процессе работы поняли, что нам важно добавить наш ключевой слоган «Исследовать дальше!» — они очень органично встроили его в финал, чтобы он действительно звучал и запоминался.\n\nМне было важно, чтобы ролик не был дежурным — а передавал дух ФЦК и был интересен выпускникам. Ребята с этим справились — предлагали варианты, были открыты к обсуждению, исправляли моменты по тексту (например, фразы вроде «лучшие из лучших», которые нам показались неудачными), и в целом двигались гибко и без лишней формальности.\n\nСпасибо большое всей команде — за профессионализм, энергичность и лёгкость в общении. Получилось живо, современно и по делу. Надеюсь, это не последний наш совместный проект!',
-      videoThumbnail: fiztech,
+      videoThumbnail: 'https://vumbnail.com/1102413873.jpg',
       videoUrl: 'https://player.vimeo.com/video/1102413873?badge=0&autopause=0&player_id=0&app_id=58479',
       reach: 100,
       conversion: 10
@@ -663,7 +663,11 @@ const AnixAILanding = () => {
         <div className="container">
           <h2 className="section-title">Истории Успеха Клиентов</h2>
           <div className="testimonials-grid">
-            {testimonials.map((testimonial) => (
+            {testimonials.map((testimonial) => {
+              const previewText = testimonial.text.length > 350
+                ? `${testimonial.text.slice(0, 350)}...`
+                : testimonial.text;
+              return (
               <div key={testimonial.id} className="testimonial-card">
                 <div className="video-preview" onClick={() => {
                   setSelectedVideo(testimonial);
@@ -681,14 +685,14 @@ const AnixAILanding = () => {
                   </div>
                 </div>
                 <div className="testimonial-content">
-                  <p>"{testimonial.text}"</p>
+                  <p>"{previewText}"</p>
                   <div className="testimonial-author">
                     <strong>{testimonial.name}</strong>
                     <span>{testimonial.company}</span>
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         </div>
       </section>
