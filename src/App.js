@@ -762,8 +762,21 @@ const AnixAILanding = () => {
         </div>
       </section>
 
-
-
+      {/* Subscribe Telegram Section */}
+      <section className="subscribe-section">
+        <div className="container subscribe-container">
+          <h3>Подпишись на наш телеграм канал</h3>
+          <button
+            className="subscribe-btn"
+            onMouseEnter={() => setIsPageBlurred(true)}
+            onMouseLeave={() => setIsPageBlurred(false)}
+            onClick={() => window.open('https://t.me/anixpro', '_blank')}
+          >
+            Подписаться
+            <span className="sparkles" />
+          </button>
+        </div>
+      </section>
 
 
       {/* Pricing & Packages Section */}
@@ -1021,21 +1034,6 @@ const AnixAILanding = () => {
         </div>
       </section>
 
-      {/* Subscribe Telegram Section */}
-      <section className="subscribe-section">
-        <div className="container subscribe-container">
-          <h3>Подпишись на наш телеграм канал</h3>
-          <button
-            className="subscribe-btn"
-            onMouseEnter={() => setIsPageBlurred(true)}
-            onMouseLeave={() => setIsPageBlurred(false)}
-            onClick={() => window.open('https://t.me/anix_helper', '_blank')}
-          >
-            Подписаться
-            <span className="sparkles" />
-          </button>
-        </div>
-      </section>
 
       {/* Brief Section */}
       <section className="brief-section">
