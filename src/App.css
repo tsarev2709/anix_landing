@@ -1926,7 +1926,10 @@ body {
   cursor: pointer;
   overflow: hidden;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 .subscribe-btn .sparkles {
@@ -2232,6 +2235,22 @@ body {
     flex: 0 0 80%;
     min-width: 80%;
     scroll-snap-align: start;
+  }
+
+  .subscribe-container {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .subscribe-section h3,
+  .brief-section h3 {
+    font-size: 20px;
+  }
+
+  .subscribe-btn {
+    padding: 14px 24px;
+    font-size: 16px;
   }
 
   /* Mobile sliders */
