@@ -39,6 +39,14 @@ const AnixAILanding = () => {
   const swipeStart = useRef(0);
   const pricingSwipeStart = useRef(0);
   const [activeService, setActiveService] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleTouchStart = (e) => {
     swipeStart.current = e.touches[0].clientX;
@@ -536,19 +544,20 @@ const AnixAILanding = () => {
         window.innerWidth <= 768
           ? container.clientWidth
           : (card ? card.offsetWidth + 32 : 400);
+      const scrollAmount = cardWidth / 1.5;
       const maxScroll = container.scrollWidth - container.clientWidth;
 
       if (direction === 'left') {
         if (container.scrollLeft <= 0) {
           container.scrollTo({ left: maxScroll, behavior: 'smooth' });
         } else {
-          container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+          container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
         }
       } else {
         if (container.scrollLeft >= maxScroll) {
           container.scrollTo({ left: 0, behavior: 'smooth' });
         } else {
-          container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+          container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         }
       }
     }
@@ -689,8 +698,9 @@ const AnixAILanding = () => {
           <h2 className="section-title">Истории Успеха Клиентов</h2>
           <div className="testimonials-grid">
             {testimonials.map((testimonial) => {
-              const previewText = testimonial.text.length > 350
-                ? `${testimonial.text.slice(0, 350)}...`
+              const maxLen = isMobile ? 275 : 350;
+              const previewText = testimonial.text.length > maxLen
+                ? `${testimonial.text.slice(0, maxLen)}...`
                 : testimonial.text;
               return (
               <div key={testimonial.id} className="testimonial-card">
@@ -909,6 +919,24 @@ const AnixAILanding = () => {
         </div>
       </section>
 
+      {/* Brief Section */}
+      <section className="brief-section">
+        <div className="container subscribe-container">
+          <h3>Хотите заполнить бриф? Можете сделать это в нашем телеграм-боте текстом или голосовыми сообщениями</h3>
+          <a
+            href="https://t.me/AnixBriefBot"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="subscribe-btn"
+            onMouseEnter={() => setIsPageBlurred(true)}
+            onMouseLeave={() => setIsPageBlurred(false)}
+          >
+            Заполнить бриф
+            <span className="sparkles" />
+          </a>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section className="contact-section">
         <div className="container">
@@ -1035,23 +1063,6 @@ const AnixAILanding = () => {
       </section>
 
 
-      {/* Brief Section */}
-      <section className="brief-section">
-        <div className="container subscribe-container">
-          <h3>Хотите заполнить бриф? Можете сделать это в нашем телеграм-боте текстом или голосовыми сообщениями</h3>
-          <a
-            href="https://t.me/AnixBriefBot"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="subscribe-btn"
-            onMouseEnter={() => setIsPageBlurred(true)}
-            onMouseLeave={() => setIsPageBlurred(false)}
-          >
-            Заполнить бриф
-            <span className="sparkles" />
-          </a>
-        </div>
-      </section>
 
       {/* Floating Telegram Button */}
       <div 
