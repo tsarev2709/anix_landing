@@ -1504,8 +1504,7 @@ body {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 24px;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .scroll-button {
@@ -1520,20 +1519,30 @@ body {
   transition: all 0.3s ease;
   flex-shrink: 0;
   z-index: 2;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .scroll-button:hover {
   transform: scale(1.1);
   box-shadow: 0 8px 24px rgba(139, 69, 255, 0.4);
 }
+.scroll-button.left {
+  left: 0;
+}
+.scroll-button.right {
+  right: 0;
+}
 
 .awards-scroll {
+    padding: 20px 16px;
   display: flex;
   gap: 32px;
   overflow-x: auto;
   white-space: nowrap;
   scroll-behavior: smooth;
-  padding: 20px 0;
+  padding: 20px 60px;
   scrollbar-width: none;
   -ms-overflow-style: none;
   scroll-snap-type: x mandatory;
@@ -1624,6 +1633,7 @@ body {
   margin-bottom: 8px;
   color: white;
   line-height: 1.3;
+  word-break: break-word;
 }
 
 .award-category {
@@ -2302,6 +2312,7 @@ body {
 
   /* Mobile sliders */
   .awards-scroll {
+    padding: 20px 16px;
     scroll-snap-type: x mandatory;
     scroll-padding-left: 50%;
     scroll-padding-right: 50%;

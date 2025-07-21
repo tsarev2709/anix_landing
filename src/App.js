@@ -878,7 +878,11 @@ const AnixAILanding = () => {
           <h2 className="section-title">Признание Индустрии</h2>
           
           <div className="awards-scroll-container">
-            <button className="scroll-button left" onClick={() => scrollAwards('left')}>
+            <button
+              className="scroll-button left"
+              aria-label="Предыдущая награда"
+              onClick={() => scrollAwards('left')}
+            >
               ◀
             </button>
             
@@ -891,7 +895,7 @@ const AnixAILanding = () => {
               onMouseUp={handleMouseUp}
             >
               {awards.map((award, index) => (
-                <div key={index} className="award-card">
+                <div key={index} className="award-card w-full max-w-xs flex-none">
                   <div className="award-trophy">
                     <img
                       src={award.image}
@@ -910,7 +914,11 @@ const AnixAILanding = () => {
               ))}
             </div>
             
-            <button className="scroll-button right" onClick={() => scrollAwards('right')}>
+            <button
+              className="scroll-button right"
+              aria-label="Следующая награда"
+              onClick={() => scrollAwards('right')}
+            >
               ▶
             </button>
           </div>
