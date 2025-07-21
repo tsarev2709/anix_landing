@@ -34,6 +34,9 @@ jobs:
       - name: Prepare 404 page
         if: steps.npm-ci.outcome == 'success'
         run: cp build/index.html build/404.html
+        
+      - name: Add CNAME file
+        run: echo "studio.anix-ai.pro" > build/CNAME
 
       - name: Deploy to gh-pages
         if: steps.npm-ci.outcome == 'success'
