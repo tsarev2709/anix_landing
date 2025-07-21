@@ -602,11 +602,11 @@ const AnixAILanding = () => {
         
         <div className="hero-content">
           
-          <h1 className="hero-title">
-            <span className="title-line">Explainer-видео для бизнеса</span>
-            <span className="title-line glow-text">которое продает</span>
-            <span className="title-line">за 10 дней</span>
-          </h1>
+            <h1 className="hero-title">
+              <span className="title-line">Мультик, который делает твой продукт</span>
+              <span className="title-line glow-text">на 500% понятнее</span>
+              <span className="title-line">и в 2 раза дороже</span>
+            </h1>
           <p className="hero-subtitle">
             Революционный пайплайн Anix делает анимацию сложных продуктов понятной и быстрой.
         </p>
