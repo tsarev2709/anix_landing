@@ -1,5 +1,6 @@
+/* global global */
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import TestUtils from 'react-dom/test-utils';
 import fs from 'fs';
 import App from '../App';
@@ -25,7 +26,7 @@ test('hero section appears after loading and has three lines', () => {
   const container = document.createElement('div');
   document.body.appendChild(container);
   TestUtils.act(() => {
-    ReactDOM.render(<App />, container);
+    createRoot(container).render(<App />);
   });
 
   expect(container.querySelector('.loading-screen')).toBeTruthy();
