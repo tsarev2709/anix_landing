@@ -17,6 +17,10 @@ import dasha from './images/dasha.jpg';
 import TPES from './images/TPES.png';
 import BlogCard from './components/BlogCard';
 
+// Helper for responsive img attributes
+const makeSrcSet = (src) => `${src} 1x, ${src} 2x`;
+const responsiveSizes = '(max-width: 768px) 100vw, 600px';
+
 
 const AnixAILanding = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -512,54 +516,58 @@ const AnixAILanding = () => {
 
   const scrollAwards = (direction) => {
     if (awardsScrollRef.current) {
-      const container = awardsScrollRef.current;
-      const card = container.querySelector('.award-card');
-      const cardWidth =
-        window.innerWidth <= 768
-          ? container.clientWidth
-          : (card ? card.offsetWidth + 32 : 300);
-      const maxScroll = container.scrollWidth - container.clientWidth;
+      requestAnimationFrame(() => {
+        const container = awardsScrollRef.current;
+        const card = container.querySelector('.award-card');
+        const cardWidth =
+          window.innerWidth <= 768
+            ? container.clientWidth
+            : (card ? card.offsetWidth + 32 : 300);
+        const maxScroll = container.scrollWidth - container.clientWidth;
 
-      if (direction === 'left') {
-        if (container.scrollLeft <= 0) {
-          container.scrollTo({ left: maxScroll, behavior: 'smooth' });
+        if (direction === 'left') {
+          if (container.scrollLeft <= 0) {
+            container.scrollTo({ left: maxScroll, behavior: 'smooth' });
+          } else {
+            container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+          }
         } else {
-          container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
+          if (container.scrollLeft >= maxScroll) {
+            container.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+          }
         }
-      } else {
-        if (container.scrollLeft >= maxScroll) {
-          container.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          container.scrollBy({ left: cardWidth, behavior: 'smooth' });
-        }
-      }
+      });
     }
   };
 
   const scrollPricing = (direction) => {
     if (pricingScrollRef.current) {
-      const container = pricingScrollRef.current;
-      const card = container.querySelector('.pricing-column');
-      const cardWidth =
-        window.innerWidth <= 768
-          ? container.clientWidth
-          : (card ? card.offsetWidth + 32 : 400);
-      const scrollAmount = cardWidth / 1.5;
-      const maxScroll = container.scrollWidth - container.clientWidth;
+      requestAnimationFrame(() => {
+        const container = pricingScrollRef.current;
+        const card = container.querySelector('.pricing-column');
+        const cardWidth =
+          window.innerWidth <= 768
+            ? container.clientWidth
+            : (card ? card.offsetWidth + 32 : 400);
+        const scrollAmount = cardWidth / 1.5;
+        const maxScroll = container.scrollWidth - container.clientWidth;
 
-      if (direction === 'left') {
-        if (container.scrollLeft <= 0) {
-          container.scrollTo({ left: maxScroll, behavior: 'smooth' });
+        if (direction === 'left') {
+          if (container.scrollLeft <= 0) {
+            container.scrollTo({ left: maxScroll, behavior: 'smooth' });
+          } else {
+            container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+          }
         } else {
-          container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+          if (container.scrollLeft >= maxScroll) {
+            container.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+          }
         }
-      } else {
-        if (container.scrollLeft >= maxScroll) {
-          container.scrollTo({ left: 0, behavior: 'smooth' });
-        } else {
-          container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        }
-      }
+      });
     }
   };
 
@@ -707,6 +715,8 @@ const AnixAILanding = () => {
                 }}>
                   <img
                     src={testimonial.videoThumbnail}
+                    srcSet={makeSrcSet(testimonial.videoThumbnail)}
+                    sizes={responsiveSizes}
                     alt="анимационный ролик объясняющий B2B продукт"
                     loading="lazy"
                     decoding="async"
@@ -754,6 +764,8 @@ const AnixAILanding = () => {
                 <div className="team-image-container">
                   <img
                     src={member.image}
+                    srcSet={makeSrcSet(member.image)}
+                    sizes={responsiveSizes}
                     alt="анимационный ролик объясняющий B2B продукт"
                     className="team-image"
                     loading="lazy"
@@ -889,6 +901,8 @@ const AnixAILanding = () => {
                   <div className="award-trophy">
                     <img
                       src={award.image}
+                      srcSet={makeSrcSet(award.image)}
+                      sizes={responsiveSizes}
                       alt="анимационный ролик объясняющий B2B продукт"
                       loading="lazy"
                       decoding="async"
@@ -1105,6 +1119,8 @@ const AnixAILanding = () => {
           <div className="qr-modal">
             <img
               src={generateQRCode()}
+              srcSet={`${generateQRCode()} 1x, ${generateQRCode()} 2x`}
+              sizes={responsiveSizes}
               alt="анимационный ролик объясняющий B2B продукт"
               loading="lazy"
               decoding="async"
