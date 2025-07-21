@@ -47,7 +47,6 @@ const AnixLandingPage = () => {
       title: "Месседж",
       subtitle: "Что нужно вбить в голову клиенту",
       description: "Формулируем ключевое сообщение, которое должно застрять в голове. Основа — не креатив, а логика продаж.",
-      icon: <Play className="w-8 h-8" />,
       icon: <Zap className="w-8 h-8" />,
       image: two,
       color: "from-anix-teal to-anix-purple",
