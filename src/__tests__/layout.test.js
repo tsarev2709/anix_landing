@@ -8,6 +8,11 @@ jest.mock('react-swipeable', () => ({
   useSwipeable: () => ({}),
 }), { virtual: true });
 
+// Mock react-helmet to avoid dependency errors in tests
+jest.mock('react-helmet', () => ({
+  Helmet: ({ children }) => <>{children}</>
+}), { virtual: true });
+
 test('hero section appears after loading and has three lines', () => {
   jest.useFakeTimers();
   // Polyfill IntersectionObserver for JSDOM
