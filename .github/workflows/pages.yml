@@ -18,25 +18,32 @@ jobs:
         with:
           node-version: 18
 
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install deps
-        id: npm-ci
-        run: npm ci
-        continue-on-error: true
+        id: npm-install
+        run: npm install
 
       - name: Notify if install failed
-        if: steps.npm-ci.outcome == 'failure'
-        run: echo "npm ci failed. Run 'npm install' locally and commit the updated lockfile."
+        if: steps.npm-install.outcome == 'failure'
+        run: echo "npm install failed"
 
       - name: Build
-        if: steps.npm-ci.outcome == 'success'
+        if: steps.npm-install.outcome == 'success'
         run: npm run build
 
       - name: Prepare 404 page
-        if: steps.npm-ci.outcome == 'success'
+        if: steps.npm-install.outcome == 'success'
         run: cp build/index.html build/404.html
 
       - name: Deploy to gh-pages
-        if: steps.npm-ci.outcome == 'success'
+        if: steps.npm-install.outcome == 'success'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
