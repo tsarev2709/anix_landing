@@ -16,6 +16,7 @@ import kolbox from './images/kolbox.png';
 import lida from './images/lida.jpg';
 import dasha from './images/dasha.jpg';
 import TPES from './images/TPES.png';
+import BlogCard from './components/BlogCard';
 
 
 const AnixAILanding = () => {
@@ -991,22 +992,14 @@ const AnixAILanding = () => {
         <div className="container">
           <h2 className="section-title">Последние Новости</h2>
           <div className="blog-grid">
-            <a
-              href="https://vc.ru/ai/2028376-startap-anix-iz-mfti-2d-animatsiya"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="blog-card"
-            >
-              <div className="blog-category">
-                <span className="category-tag">#Новости</span>
-              </div>
-              <h3>Стартап Anix из МФТИ автоматизирует 2D‑анимацию</h3>
-              <p>VC.ru рассказывает об образовательных корнях проекта и его ИИ‑технологиях.</p>
-              <div className="blog-meta">
-                <span>3 мин чтения</span>
-                <span>Май 2025</span>
-              </div>
-            </a>
+            <BlogCard
+              url="https://vc.ru/ai/2028376-startap-anix-iz-mfti-2d-animatsiya"
+              category="Новости"
+              headline="Стартап Anix из МФТИ автоматизирует 2D‑анимацию"
+              description="VC.ru рассказывает об образовательных корнях проекта и его ИИ‑технологиях."
+              date="2025-05-01"
+              image="%PUBLIC_URL%/3.png"
+            />
 
             <a
               href="https://vc.ru/marketing/1934034-kontent-marketing-s-animatsiey"
