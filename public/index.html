@@ -25,6 +25,13 @@
 
     <link rel="icon" href="%PUBLIC_URL%/anix_wand.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!-- preconnect for CDN used by lite-youtube-embed -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://www.youtube.com" />
+    <link rel="preconnect" href="https://i.ytimg.com" />
+    <link rel="preconnect" href="https://player.vimeo.com" />
+    <link rel="preconnect" href="https://vumbnail.com" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.0/dist/lite-youtube-embed.css" />
 
     <script type="application/ld+json">
       {
@@ -40,8 +47,11 @@
         ]
       }
     </script>
+  </head>
+  <body>
+    <div id="root"></div>
     <!-- Yandex.Metrika counter with Content Analytics enabled -->
-    <script type="text/javascript">
+    <script>
       (function (m, e, t, r, i, k, a) {
         m[i] = m[i] || function () {
           (m[i].a = m[i].a || []).push(arguments);
@@ -66,17 +76,16 @@
         webvisor: true,
       });
     </script>
-    <noscript
-      ><div>
+    <noscript>
+      <div>
         <img
           src="https://mc.yandex.ru/watch/103290769"
           style="position:absolute; left:-9999px;"
           alt=""
-        /></div
-    ></noscript>
+        />
+      </div>
+    </noscript>
     <!-- /Yandex.Metrika counter -->
-  </head>
-  <body>
-    <div id="root"></div>
+    <script defer src="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.0/dist/lite-youtube-embed.js"></script>
   </body>
 </html>

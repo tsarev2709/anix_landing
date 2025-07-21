@@ -595,7 +595,13 @@ const AnixAILanding = () => {
         
         <div className="hero-content">
           <div className="logo-container">
-            <img src={logo} alt="анимационный ролик объясняющий B2B продукт" className="anix-logo" />
+            <img
+              src={logo}
+              alt="анимационный ролик объясняющий B2B продукт"
+              className="anix-logo"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
           
           <h1 className="hero-title">
@@ -709,7 +715,12 @@ const AnixAILanding = () => {
                   setSelectedVideo(testimonial);
                   setShowVideoModal(true);
                 }}>
-                  <img src={testimonial.videoThumbnail} alt="анимационный ролик объясняющий B2B продукт" />
+                  <img
+                    src={testimonial.videoThumbnail}
+                    alt="анимационный ролик объясняющий B2B продукт"
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <div className="video-play-button">
                     <div className="play-icon">▶</div>
                   </div>
@@ -751,7 +762,13 @@ const AnixAILanding = () => {
             {teamMembers.map((member, index) => (
               <div key={index} className="team-card">
                 <div className="team-image-container">
-                  <img src={member.image} alt="анимационный ролик объясняющий B2B продукт" className="team-image" />
+                  <img
+                    src={member.image}
+                    alt="анимационный ролик объясняющий B2B продукт"
+                    className="team-image"
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <div className="team-overlay">
                     <div className="expertise-badges">
                       {member.tags.map((tag, i) => (
@@ -876,7 +893,12 @@ const AnixAILanding = () => {
               {awards.map((award, index) => (
                 <div key={index} className="award-card">
                   <div className="award-trophy">
-                    <img src={award.image} alt="анимационный ролик объясняющий B2B продукт" />
+                    <img
+                      src={award.image}
+                      alt="анимационный ролик объясняющий B2B продукт"
+                      loading="lazy"
+                      decoding="async"
+                    />
                     <div className="trophy-glow"></div>
                   </div>
                   <div className="award-info">
@@ -1060,15 +1082,11 @@ const AnixAILanding = () => {
         <div className="container">
           <h2 className="section-title">Интервью с основателями</h2>
           <div className="interview-video w-full max-w-4xl mx-auto">
-            {/* Responsive YouTube iframe */}
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/Tt5Bj1VHaqQ?si=RLY4WYH9sUZx_lUf"
-              title="Интервью с основателями"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+            {/* Lightweight YouTube embed */}
+            <lite-youtube
+              videoid="Tt5Bj1VHaqQ"
+              style={{ width: '100%', height: '100%' }}
+            ></lite-youtube>
           </div>
         </div>
       </section>
@@ -1087,7 +1105,12 @@ const AnixAILanding = () => {
         
         {showQRCode && (
           <div className="qr-modal">
-            <img src={generateQRCode()} alt="анимационный ролик объясняющий B2B продукт" />
+            <img
+              src={generateQRCode()}
+              alt="анимационный ролик объясняющий B2B продукт"
+              loading="lazy"
+              decoding="async"
+            />
             <p>Сканируйте для связи</p>
           </div>
         )}
@@ -1108,6 +1131,7 @@ const AnixAILanding = () => {
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen
                   title={`Видео от ${selectedVideo.name}`}
+                  loading="lazy"
                 ></iframe>
                 <div className="progress-bar-container">
                   <div className="progress-label">Повышение охвата</div>
