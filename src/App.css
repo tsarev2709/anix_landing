@@ -2233,6 +2233,11 @@ body {
   .anix-logo {
     width: 80px;
   }
+
+  /* Hide logo on mobile to keep hero title visible */
+  .logo-container {
+    display: none;
+  }
   
   .services-grid,
   .team-grid,
