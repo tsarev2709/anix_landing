@@ -3,12 +3,13 @@
 @tailwind utilities;
 
 /* Reset and Base Styles */
-* {
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html,
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   background-color: #1a1a1a;
@@ -148,7 +149,8 @@ body {
 }
 
 .anix-logo {
-  width: 180px; /* Было 120px → 120 * 1.5 = 180px */
+  width: 100%;
+  max-width: 180px; /* Было 120px → 120 * 1.5 = 180px */
   height: auto;
   filter: drop-shadow(0 8px 16px rgba(139, 69, 255, 0.4));
   animation: logoFloat 4s ease-in-out infinite;
@@ -449,7 +451,8 @@ body {
 }
 
 .team-card {
-  width: 375px; /* Фиксированная ширина */
+  width: 100%;
+  max-width: 375px;
   position: relative;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
@@ -603,7 +606,8 @@ body {
 }
 
 .ai-brain {
-  width: 200px;
+  width: 100%;
+  max-width: 200px;
   height: 200px;
   position: relative;
   transition: all 1s ease;
@@ -767,7 +771,8 @@ body {
 /* Process Circle */
 .process-circle {
   position: relative;
-  width: 800px;
+  width: 100%;
+  max-width: 800px;
   height: 800px;
   margin: 0 auto;
 }
@@ -835,7 +840,8 @@ body {
 
 .step-node {
   position: relative;
-  width: 120px;
+  width: 100%;
+  max-width: 120px;
   height: 120px;
   margin: 0 auto;
 }
@@ -909,7 +915,8 @@ body {
 
 /* Step Info Panel */
 .step-info-panel {
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1037,7 +1044,8 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   height: 2px;
   transform-origin: left center;
   opacity: 0;
@@ -1236,8 +1244,9 @@ body {
   border-radius: 24px;
   padding: 32px;
   transition: transform 0.3s ease;
-  flex: 0 0 350px;
-  min-width: 350px;
+  width: 100%;
+  max-width: 350px;
+  flex: 0 0 auto;
 }
 
 .pricing-column:hover {
@@ -1791,7 +1800,8 @@ body {
 
 .contact-animation {
   position: relative;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   height: 300px;
 }
 
@@ -2196,12 +2206,14 @@ body {
 /* Responsive Design */
 @media (max-width: 1200px) {
   .process-circle {
-    width: 700px;
+    width: 100%;
+    max-width: 700px;
     height: 700px;
   }
-  
+
   .step-info-panel {
-    width: 280px;
+    width: 100%;
+    max-width: 280px;
   }
 }
 
@@ -2328,7 +2340,8 @@ body {
   }
   
   .ai-brain {
-    width: 150px;
+    width: 100%;
+    max-width: 150px;
     height: 150px;
     margin: 0 auto;
   }
@@ -2450,7 +2463,8 @@ body {
   }
   
   .ai-brain {
-    width: 120px;
+    width: 100%;
+    max-width: 120px;
     height: 120px;
   }
   
