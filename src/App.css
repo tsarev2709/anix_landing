@@ -2112,6 +2112,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: auto; /* enable scrolling on very small screens */
   z-index: 2000;
   animation: modalFadeIn 0.3s ease-out;
 }
@@ -2134,6 +2135,10 @@ body {
   width: 90%;
   position: relative;
   animation: modalSlideIn 0.4s ease-out;
+  max-height: calc(100vh - 40px); /* prevent overflow on small screens */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* hide any overflow from close button */
 }
 
 @keyframes modalSlideIn {
@@ -2172,6 +2177,9 @@ body {
 
 .modal-content {
   padding: 32px;
+  overflow-y: auto; /* allow scrolling inside the modal */
+  flex: 1 1 auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-content iframe {
@@ -2433,18 +2441,32 @@ body {
   .qr-modal {
     right: -100px;
   }
-  
+
   .video-modal {
-    width: 95%;
-    margin: 20px;
+    width: calc(100% - 32px);
+    height: calc(100% - 32px);
+    max-width: none;
+    max-height: none;
+    margin: 16px;
+    border-radius: 16px;
   }
-  
+
   .modal-content {
-    padding: 20px;
+    padding: 16px;
+    max-height: 100%;
   }
-  
+
   .modal-content iframe {
-    height: 250px;
+    height: 220px;
+  }
+
+  .modal-info h3 {
+    font-size: 20px;
+  }
+
+  .modal-info p {
+    font-size: 14px;
+    line-height: 1.6;
   }
 }
 
