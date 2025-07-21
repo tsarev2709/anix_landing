@@ -8,6 +8,10 @@ import four from '../images/4.png';
 import five from '../images/5.png';
 import six from '../images/6.png';
 
+// Helper for responsive images
+const makeSrcSet = (img) => `${img} 1x, ${img} 2x`;
+const responsiveSizes = '(max-width: 768px) 100vw, 600px';
+
 const AnixLandingPage = () => {
   const containerRef = useRef(null);
   const timelineRef = useRef(null);
@@ -338,6 +342,8 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast, isMobile }
               
               <img
                 src={step.image}
+                srcSet={makeSrcSet(step.image)}
+                sizes={responsiveSizes}
                 alt="анимационный ролик объясняющий B2B продукт"
                 className="relative z-10 w-full h-64 object-cover rounded-xl"
                 loading="lazy"
