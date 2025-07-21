@@ -40,8 +40,6 @@ const AnixAILanding = () => {
   const particlesRef = useRef(null);
   const awardsScrollRef = useRef(null);
   const pricingScrollRef = useRef(null);
-  const interviewRef = useRef(null);
-  const [showInterview, setShowInterview] = useState(false);
   const swipeStart = useRef(0);
   const pricingSwipeStart = useRef(0);
   const [activeService, setActiveService] = useState(null);
@@ -52,19 +50,6 @@ const AnixAILanding = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setShowInterview(true);
-          obs.disconnect();
-        }
-      });
-    }, { threshold: 0.25 });
-    if (interviewRef.current) obs.observe(interviewRef.current);
-    return () => obs.disconnect();
   }, []);
 
   const handleTouchStart = (e) => {
@@ -1109,22 +1094,6 @@ const AnixAILanding = () => {
           </div>
         </div>
         </section>
-
-      {/* Interview Section */}
-      <section className="interview-section">
-        <div className="container">
-          <h2 className="section-title">Интервью с основателями</h2>
-          <div className="interview-video w-full max-w-4xl mx-auto" ref={interviewRef}>
-            {showInterview && (
-              <lite-youtube
-                videoid="Tt5Bj1VHaqQ"
-                playlabel="Запустить видео интервью"
-                style={{ width: '100%', height: '400px' }}
-              ></lite-youtube>
-            )}
-          </div>
-        </div>
-      </section>
 
 
       {/* Floating Telegram Button */}
