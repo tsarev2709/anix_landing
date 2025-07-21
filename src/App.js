@@ -4,7 +4,6 @@ import AnixLandingPage from "./components/AnixLandingPage";
 import god from './images/god.jpg';
 import bestie from './images/bestie.jpg';
 import vanya from './images/vanya.JPG';
-import logo from './images/logo.png';
 import sber from './images/sber.png';
 import yandex from './images/yandex.png';
 import inno from './images/inno.png';
@@ -594,15 +593,6 @@ const AnixAILanding = () => {
         
         
         <div className="hero-content">
-          <div className="logo-container">
-            <img
-              src={logo}
-              alt="анимационный ролик объясняющий B2B продукт"
-              className="anix-logo"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
           
           <h1 className="hero-title">
             <span className="title-line">Explainer-видео для бизнеса</span>
