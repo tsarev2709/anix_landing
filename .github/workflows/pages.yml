@@ -30,6 +30,11 @@ jobs:
         id: npm-install
         run: npm install
 
+      - name: Lint
+        if: steps.npm-install.outcome == 'success'
+        run: npm run lint
+        continue-on-error: true
+
       - name: Notify if install failed
         if: steps.npm-install.outcome == 'failure'
         run: echo "npm install failed"
