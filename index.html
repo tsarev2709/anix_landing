@@ -20,6 +20,10 @@
   <meta name="twitter:image" content="3.png">
   <link rel="icon" href="anix_wand.png">
   <link rel="manifest" href="manifest.json">
+  <!-- Preconnect to external origins for faster first byte -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://mc.yandex.ru">
+  <link rel="preconnect" href="https://mc.yandex.com">
   <!-- Yandex.Metrika counter with Content Analytics enabled -->
   <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
@@ -69,5 +73,12 @@
       <h3>Победители <span>Общая категория</span></h3>
     </div>
   </noscript>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js');
+      });
+    }
+  </script>
 </body>
 </html>
