@@ -37,7 +37,7 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "lint": "npx eslint src",
+    "lint": "node node_modules/eslint/bin/eslint.js src",
     "lint:fix": "eslint src --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,css}\"",
     "lint:css": "stylelint \"src/**/*.{css,scss}\"",
