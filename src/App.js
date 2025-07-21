@@ -1094,11 +1094,13 @@ const AnixAILanding = () => {
         <div className="container">
           <h2 className="section-title">Интервью с основателями</h2>
           <div className="interview-video w-full max-w-4xl mx-auto">
-            {/* Lightweight YouTube embed */}
-            <lite-youtube
-              videoid="Tt5Bj1VHaqQ"
-              style={{ width: '100%', height: '100%' }}
-            ></lite-youtube>
+            <iframe
+              src="https://www.youtube.com/embed/Tt5Bj1VHaqQ?si=ZoLYv93JrxJ6YZEz"
+              title="Интервью с основателями"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       </section>
