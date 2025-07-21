@@ -30,6 +30,10 @@ jobs:
         id: npm-install
         run: npm install
 
+      - name: Fix npm binary permissions
+        if: steps.npm-install.outcome == 'success'
+        run: chmod +x node_modules/.bin/* || true
+
       - name: Lint
         if: steps.npm-install.outcome == 'success'
         run: npm run lint
