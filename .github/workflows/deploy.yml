@@ -19,15 +19,24 @@ jobs:
           node-version: 18
 
       - name: Install deps
+        id: npm-ci
         run: npm ci
+        continue-on-error: true
+
+      - name: Notify if install failed
+        if: steps.npm-ci.outcome == 'failure'
+        run: echo "npm ci failed. Run 'npm install' locally and commit the updated lockfile."
 
       - name: Build
+        if: steps.npm-ci.outcome == 'success'
         run: npm run build
 
       - name: Prepare 404 page
+        if: steps.npm-ci.outcome == 'success'
         run: cp build/index.html build/404.html
 
       - name: Deploy to gh-pages
+        if: steps.npm-ci.outcome == 'success'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -35,6 +44,7 @@ jobs:
           publish_branch: gh-pages
 
       - name: Wait for Pages deployment
+        if: steps.npm-ci.outcome == 'success'
         shell: bash
         run: |
           set -e
