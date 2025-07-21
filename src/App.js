@@ -40,6 +40,8 @@ const AnixAILanding = () => {
   const particlesRef = useRef(null);
   const awardsScrollRef = useRef(null);
   const pricingScrollRef = useRef(null);
+  const interviewRef = useRef(null);
+  const [showInterview, setShowInterview] = useState(false);
   const swipeStart = useRef(0);
   const pricingSwipeStart = useRef(0);
   const [activeService, setActiveService] = useState(null);
@@ -50,6 +52,19 @@ const AnixAILanding = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setShowInterview(true);
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.25 });
+    if (interviewRef.current) obs.observe(interviewRef.current);
+    return () => obs.disconnect();
   }, []);
 
   const handleTouchStart = (e) => {
@@ -718,6 +733,8 @@ const AnixAILanding = () => {
                     srcSet={makeSrcSet(testimonial.videoThumbnail)}
                     sizes={responsiveSizes}
                     alt="анимационный ролик объясняющий B2B продукт"
+                    width="600"
+                    height="338"
                     loading="lazy"
                     decoding="async"
                   />
@@ -767,6 +784,8 @@ const AnixAILanding = () => {
                     srcSet={makeSrcSet(member.image)}
                     sizes={responsiveSizes}
                     alt="анимационный ролик объясняющий B2B продукт"
+                    width="400"
+                    height="400"
                     className="team-image"
                     loading="lazy"
                     decoding="async"
@@ -904,6 +923,8 @@ const AnixAILanding = () => {
                       srcSet={makeSrcSet(award.image)}
                       sizes={responsiveSizes}
                       alt="анимационный ролик объясняющий B2B продукт"
+                      width="200"
+                      height="200"
                       loading="lazy"
                       decoding="async"
                     />
@@ -1093,14 +1114,14 @@ const AnixAILanding = () => {
       <section className="interview-section">
         <div className="container">
           <h2 className="section-title">Интервью с основателями</h2>
-          <div className="interview-video w-full max-w-4xl mx-auto">
-            <iframe
-              src="https://www.youtube.com/embed/Tt5Bj1VHaqQ?si=ZoLYv93JrxJ6YZEz"
-              title="Интервью с основателями"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
+          <div className="interview-video w-full max-w-4xl mx-auto" ref={interviewRef}>
+            {showInterview && (
+              <lite-youtube
+                videoid="Tt5Bj1VHaqQ"
+                playlabel="Запустить видео интервью"
+                style={{ width: '100%', height: '400px' }}
+              ></lite-youtube>
+            )}
           </div>
         </div>
       </section>
@@ -1124,6 +1145,8 @@ const AnixAILanding = () => {
               srcSet={`${generateQRCode()} 1x, ${generateQRCode()} 2x`}
               sizes={responsiveSizes}
               alt="анимационный ролик объясняющий B2B продукт"
+              width="180"
+              height="180"
               loading="lazy"
               decoding="async"
             />

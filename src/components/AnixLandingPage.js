@@ -345,6 +345,8 @@ const TimelineStep = ({ step, index, isActive, setActiveStep, isLast, isMobile }
                 srcSet={makeSrcSet(step.image)}
                 sizes={responsiveSizes}
                 alt="анимационный ролик объясняющий B2B продукт"
+                width="600"
+                height="256"
                 className="relative z-10 w-full h-64 object-cover rounded-xl"
                 loading="lazy"
               />
