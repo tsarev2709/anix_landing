@@ -1053,12 +1053,29 @@ const AnixAILanding = () => {
             </a>
           </div>
         </div>
+        </section>
+
+      {/* Interview Section */}
+      <section className="interview-section">
+        <div className="container">
+          <h2 className="section-title">Интервью с основателями</h2>
+          <div className="interview-video w-full max-w-4xl mx-auto">
+            {/* Responsive YouTube iframe */}
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/Tt5Bj1VHaqQ?si=RLY4WYH9sUZx_lUf"
+              title="Интервью с основателями"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
       </section>
 
 
-
       {/* Floating Telegram Button */}
-      <div 
+      <div
         className="floating-telegram"
         onMouseEnter={() => setShowQRCode(true)}
         onMouseLeave={() => setShowQRCode(false)}
