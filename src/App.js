@@ -656,7 +656,7 @@ const AnixAILanding = () => {
               <div className="service-icon">🎬</div>
               <h3>Сокращение цикла сделки</h3>
               <p>Меньше времени уходит на прогрев, презентации и убеждение.</p>
-              <p>"Мы теряем клиентов из-за долгих обсуждений и недопонимания".</p>
+              <p>&quot;Мы теряем клиентов из-за долгих обсуждений и недопонимания&quot;.</p>
               <div className={`service-overlay ${activeService === 0 ? 'show' : ''}`}>
                 <div className="case-study">
                   <h4>Превентивная победа</h4>
@@ -676,7 +676,7 @@ const AnixAILanding = () => {
               <div className="service-icon">⚡</div>
               <h3>Масштабирование</h3>
               <p>Видео легко тиражируется, работает на новых рынках, языках, партнёрах.</p>
-              <p>"Хочу выйти в США, но нужен контент под локаль".</p>
+              <p>&quot;Хочу выйти в США, но нужен контент под локаль&quot;.</p>
               <div className={`service-overlay ${activeService === 1 ? 'show' : ''}`}>
                 <div className="case-study">
                   <h4>История успеха</h4>
@@ -696,7 +696,7 @@ const AnixAILanding = () => {
               <div className="service-icon">🎨</div>
               <h3>Конкурентная Упаковка</h3>
               <p>Продукт визуально и эмоционально выигрывает у конкурентов.</p>
-              <p>"На фоне других выглядим скучно, нас не запоминают".</p>
+              <p>&quot;На фоне других выглядим скучно, нас не запоминают&quot;.</p>
               <div className={`service-overlay ${activeService === 2 ? 'show' : ''}`}>
                 <div className="case-study">
                   <h4>Вау эффект</h4>
@@ -749,7 +749,7 @@ const AnixAILanding = () => {
                   </div>
                 </div>
                 <div className="testimonial-content">
-                  <p>"{previewText}"</p>
+                  <p>&quot;{previewText}&quot;</p>
                   <div className="testimonial-author">
                     <strong>{testimonial.name}</strong>
                     {testimonial.website ? (
@@ -1189,7 +1189,7 @@ const AnixAILanding = () => {
                 <div className="modal-info">
                   <h3>{selectedVideo.name}</h3>
                   <p>{selectedVideo.company}</p>
-                  <p>"{selectedVideo.text}"</p>
+                  <p>&quot;{selectedVideo.text}&quot;</p>
                 </div>
               </div>
             )}
