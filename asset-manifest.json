@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.1a0557e8.css",
-    "main.js": "/static/js/main.b305eedb.js",
+    "main.css": "/static/css/main.cfb33aee.css",
+    "main.js": "/static/js/main.6208b1b5.js",
     "static/media/5.png": "/static/media/5.cda5ec63bf97128f563e.png",
     "static/media/3.png": "/static/media/3.95d850bfd9557355a532.png",
     "static/media/6.png": "/static/media/6.0e09c03f6c9871e51db8.png",
@@ -19,13 +19,12 @@
     "static/media/god.jpg": "/static/media/god.04d9267b91731f1dd2cd.jpg",
     "static/media/fiztech.png": "/static/media/fiztech.b9763fe7bb748d9d819c.png",
     "static/media/moscow.png": "/static/media/moscow.80881d98c85c7a98547f.png",
-    "static/media/logo.png": "/static/media/logo.55853e3f274ba2e9e23c.png",
     "index.html": "/index.html",
-    "main.1a0557e8.css.map": "/static/css/main.1a0557e8.css.map",
-    "main.b305eedb.js.map": "/static/js/main.b305eedb.js.map"
+    "main.cfb33aee.css.map": "/static/css/main.cfb33aee.css.map",
+    "main.6208b1b5.js.map": "/static/js/main.6208b1b5.js.map"
   },
   "entrypoints": [
-    "static/css/main.1a0557e8.css",
-    "static/js/main.b305eedb.js"
+    "static/css/main.cfb33aee.css",
+    "static/js/main.6208b1b5.js"
   ]
 }
