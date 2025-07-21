@@ -1,4 +1,4 @@
-/* global global */
+/* eslint-disable no-redeclare */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import TestUtils from 'react-dom/test-utils';
