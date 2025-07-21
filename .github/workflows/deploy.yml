@@ -33,3 +33,44 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build         # та же папка, что в npm run build
           publish_branch: gh-pages
+
+      - name: Wait for Pages deployment
+        shell: bash
+        run: |
+          set -e
+          MAX_RETRIES=5
+          RETRIES=0
+          while true; do
+            http_code=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github+json" \
+              -o response.json -w "%{http_code}" \
+              "https://api.github.com/repos/${{ github.repository }}/pages/builds/latest")
+            if [ "$http_code" = "200" ]; then
+              status=$(jq -r '.status' response.json)
+              echo "Current status: $status"
+              if [ "$status" = "built" ] || [ "$status" = "succeeded" ]; then
+                echo "Deployment completed"
+                break
+              elif [ "$status" = "building" ] || [ "$status" = "queued" ]; then
+                sleep 10
+              else
+                echo "Deployment failed: $status"
+                cat response.json
+                exit 1
+              fi
+            elif [ "$http_code" = "500" ]; then
+              RETRIES=$((RETRIES + 1))
+              if [ $RETRIES -lt $MAX_RETRIES ]; then
+                echo "Getting Pages deployment status failed (500). Retry $RETRIES/$MAX_RETRIES after 30s..."
+                sleep 30
+              else
+                echo "Getting Pages deployment status failed with 500 after $MAX_RETRIES attempts."
+                exit 1
+              fi
+            else
+              echo "Unexpected response $http_code"
+              cat response.json
+              exit 1
+            fi
+          done
+          rm -f response.json
