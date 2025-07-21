@@ -1,0 +1,22 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-config-tailwindcss"],
+  "plugins": ["stylelint-prettier"],
+  "rules": {
+    "declaration-property-unit-disallowed-list": {
+      "width": ["px"],
+      "min-width": ["px"],
+      "max-width": ["px"]
+    },
+    "declaration-property-value-disallowed-list": {
+      "min-width": [">100vw"],
+      "overflow-x": ["auto", "scroll"],
+      "position": ["absolute", "fixed"],
+      "*": ["vw", "vh"]
+    },
+    "declaration-block-no-duplicate-properties": true,
+    "prettier/prettier": true,
+    "declaration-property-value-required-list": {
+      "box-sizing": ["border-box"]
+    }
+  }
+}
