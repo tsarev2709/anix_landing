@@ -27,6 +27,8 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <!-- preconnect for CDN used by lite-youtube-embed -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://mc.yandex.ru" />
+    <link rel="preconnect" href="https://mc.yandex.com" />
     <link rel="preconnect" href="https://www.youtube.com" />
     <link rel="preconnect" href="https://i.ytimg.com" />
     <link rel="preconnect" href="https://player.vimeo.com" />
@@ -91,5 +93,12 @@
     </noscript>
     <!-- /Yandex.Metrika counter -->
     <script defer src="https://cdn.jsdelivr.net/npm/lite-youtube-embed@0.3.0/dist/lite-youtube-embed.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('%PUBLIC_URL%/service-worker.js');
+        });
+      }
+    </script>
   </body>
 </html>
