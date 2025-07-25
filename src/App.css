@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 /* Reset and Base Styles */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -11,7 +13,13 @@
 
 html,
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    'Roboto',
+    sans-serif;
   background-color: #1a1a1a;
   color: #ffffff;
   line-height: 1.6;
@@ -63,7 +71,9 @@ body {
 }
 
 @keyframes neuralPulse {
-  0%, 80%, 100% {
+  0%,
+  80%,
+  100% {
     transform: scale(0);
     opacity: 0.5;
   }
@@ -157,7 +167,8 @@ body {
 }
 
 @keyframes logoFloat {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
@@ -253,7 +264,12 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.5s;
@@ -310,7 +326,8 @@ body {
 }
 
 @keyframes floatAnimation {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
   50% {
@@ -410,7 +427,11 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(139, 69, 255, 0.9), rgba(32, 178, 170, 0.9));
+  background: linear-gradient(
+    135deg,
+    rgba(139, 69, 255, 0.9),
+    rgba(32, 178, 170, 0.9)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -515,7 +536,11 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(139, 69, 255, 0.8), rgba(32, 178, 170, 0.8));
+  background: linear-gradient(
+    135deg,
+    rgba(139, 69, 255, 0.8),
+    rgba(32, 178, 170, 0.8)
+  );
   display: flex;
   align-items: center;
   justify-content: center;
@@ -548,7 +573,8 @@ body {
 }
 
 @keyframes pulseGlow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
   }
   50% {
@@ -594,9 +620,17 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(139, 69, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(32, 178, 170, 0.1) 0%, transparent 50%);
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(139, 69, 255, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(32, 178, 170, 0.1) 0%,
+      transparent 50%
+    );
   pointer-events: none;
 }
 
@@ -640,7 +674,8 @@ body {
 }
 
 @keyframes brainPulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -651,11 +686,16 @@ body {
 .brain-core {
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle, #8b45ff 0%, #20b2aa 50%, transparent 100%);
+  background: radial-gradient(
+    circle,
+    #8b45ff 0%,
+    #20b2aa 50%,
+    transparent 100%
+  );
   border-radius: 50%;
   position: relative;
   overflow: hidden;
-  box-shadow: 
+  box-shadow:
     0 0 40px rgba(139, 69, 255, 0.6),
     inset 0 0 40px rgba(32, 178, 170, 0.3);
 }
@@ -668,7 +708,12 @@ body {
   transform: translate(-50%, -50%);
   width: 80%;
   height: 80%;
-  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
   border-radius: 50%;
   animation: brainShimmer 3s linear infinite;
 }
@@ -760,18 +805,42 @@ body {
   animation: particleOrbit 6s linear infinite;
 }
 
-.particle-1 { animation-delay: 0s; }
-.particle-2 { animation-delay: 0.5s; }
-.particle-3 { animation-delay: 1s; }
-.particle-4 { animation-delay: 1.5s; }
-.particle-5 { animation-delay: 2s; }
-.particle-6 { animation-delay: 2.5s; }
-.particle-7 { animation-delay: 3s; }
-.particle-8 { animation-delay: 3.5s; }
-.particle-9 { animation-delay: 4s; }
-.particle-10 { animation-delay: 4.5s; }
-.particle-11 { animation-delay: 5s; }
-.particle-12 { animation-delay: 5.5s; }
+.particle-1 {
+  animation-delay: 0s;
+}
+.particle-2 {
+  animation-delay: 0.5s;
+}
+.particle-3 {
+  animation-delay: 1s;
+}
+.particle-4 {
+  animation-delay: 1.5s;
+}
+.particle-5 {
+  animation-delay: 2s;
+}
+.particle-6 {
+  animation-delay: 2.5s;
+}
+.particle-7 {
+  animation-delay: 3s;
+}
+.particle-8 {
+  animation-delay: 3.5s;
+}
+.particle-9 {
+  animation-delay: 4s;
+}
+.particle-10 {
+  animation-delay: 4.5s;
+}
+.particle-11 {
+  animation-delay: 5s;
+}
+.particle-12 {
+  animation-delay: 5.5s;
+}
 
 @keyframes particleOrbit {
   0% {
@@ -816,7 +885,8 @@ body {
 }
 
 @keyframes currentStepHighlight {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -877,7 +947,7 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  box-shadow: 
+  box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.3),
     0 0 40px var(--step-color);
   overflow: hidden;
@@ -1011,7 +1081,11 @@ body {
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--step-color), rgba(var(--step-color), 0.6));
+  background: linear-gradient(
+    90deg,
+    var(--step-color),
+    rgba(var(--step-color), 0.6)
+  );
   transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
@@ -1023,7 +1097,12 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
   animation: progressShimmer 2s ease-in-out infinite;
 }
 
@@ -1090,7 +1169,12 @@ body {
   left: 0;
   width: 20px;
   height: 100%;
-  background: linear-gradient(90deg, transparent, var(--step-color), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--step-color),
+    transparent
+  );
   animation: pulseLine 2s ease-in-out infinite;
 }
 
@@ -1558,7 +1642,7 @@ body {
 }
 
 .awards-scroll {
-    padding: 20px 16px;
+  padding: 20px 16px;
   display: flex;
   gap: 32px;
   overflow-x: auto;
@@ -1604,20 +1688,20 @@ body {
   width: 100%;
   height: 120px;
   margin: 0 auto 24px;
-  display: flex;          /* Добавлено */
-  align-items: center;    /* Добавлено */
-  justify-content: center;/* Добавлено */
+  display: flex; /* Добавлено */
+  align-items: center; /* Добавлено */
+  justify-content: center; /* Добавлено */
 }
 
 .award-trophy img {
   max-width: 80%;
-  max-height: 100%;      /* Добавлено */
+  max-height: 100%; /* Добавлено */
   height: auto;
   display: block;
   border-radius: 4px;
-  object-fit: contain;   /* Добавлено */
-  position: relative;    /* Добавлено */
-  z-index: 1;           /* Добавлено */
+  object-fit: contain; /* Добавлено */
+  position: relative; /* Добавлено */
+  z-index: 1; /* Добавлено */
 }
 
 @media (max-width: 768px) {
@@ -1628,10 +1712,10 @@ body {
 
 .trophy-glow {
   position: absolute;
-  top: 50%;             /* Изменено */
-  left: 50%;           /* Изменено */
-  width: 120%;         /* Изменено */
-  height: 200%;        /* Изменено */
+  top: 50%; /* Изменено */
+  left: 50%; /* Изменено */
+  width: 120%; /* Изменено */
+  height: 200%; /* Изменено */
   transform: translate(-50%, -50%); /* Добавлено */
   background: radial-gradient(circle, rgba(139, 69, 255, 0.3), transparent 70%);
   animation: trophyGlow 3s ease-in-out infinite;
@@ -1639,7 +1723,8 @@ body {
 }
 
 @keyframes trophyGlow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.5;
     transform: scale(1);
   }
@@ -1869,7 +1954,8 @@ body {
 }
 
 @keyframes floatContact {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -1889,25 +1975,49 @@ body {
   background: #0f0f0f;
 }
 
-.nda-table {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  max-width: 1000px;
-  margin: 0 auto;
+.nda-table-wrapper {
+  overflow-x: auto;
 }
 
-.nda-cell {
-  background: rgba(255, 255, 255, 0.05);
+.nda-table {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  border-collapse: collapse;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
+}
+
+.nda-table th,
+.nda-table td {
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: left;
+}
+
+.nda-table th {
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: 600;
+}
+
+.nda-table td {
+  background: rgba(255, 255, 255, 0.05);
 }
 
 @media (max-width: 768px) {
-  .nda-table {
-    grid-template-columns: 1fr;
+  .nda-table thead {
+    display: none;
+  }
+  .nda-table tr {
+    display: block;
+    margin-bottom: 16px;
+  }
+  .nda-table td {
+    display: block;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .nda-table td:last-child {
+    border-bottom: none;
   }
 }
 
@@ -1964,7 +2074,6 @@ body {
   color: rgba(255, 255, 255, 0.6);
 }
 
-
 /* Subscribe & Brief Sections */
 .subscribe-section,
 .brief-section {
@@ -2007,11 +2116,17 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.8) 2px, transparent 2px);
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.8) 2px,
+    transparent 2px
+  );
   background-size: 10px 10px;
   opacity: 0;
   transform: scale(0);
-  transition: opacity 0.3s, transform 0.3s;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
 }
 
 .subscribe-btn:hover .sparkles {
@@ -2027,14 +2142,22 @@ body {
   -webkit-backdrop-filter: blur(5px);
   /* Vignette effect: keep the center sharp and blur the edges */
   mask-image: radial-gradient(circle at center, transparent 60%, black 100%);
-  -webkit-mask-image: radial-gradient(circle at center, transparent 60%, black 100%);
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    transparent 60%,
+    black 100%
+  );
   pointer-events: none;
   z-index: 999;
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg) scale(1.5); }
-  to { transform: rotate(360deg) scale(1.5); }
+  from {
+    transform: rotate(0deg) scale(1.5);
+  }
+  to {
+    transform: rotate(360deg) scale(1.5);
+  }
 }
 
 /* Roadmap Container */
@@ -2074,7 +2197,8 @@ body {
 }
 
 @keyframes telegramPulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -2095,7 +2219,8 @@ body {
 }
 
 @keyframes telegramGlow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0;
     transform: scale(1);
   }
@@ -2290,15 +2415,15 @@ body {
   .container {
     padding: 0 16px;
   }
-  
+
   .hero-title {
     font-size: clamp(28px, 7vw, 40px);
   }
-  
+
   .hero-subtitle {
     font-size: 16px;
   }
-  
+
   .anix-logo {
     width: 80px;
   }
@@ -2307,7 +2432,7 @@ body {
   .logo-container {
     display: none;
   }
-  
+
   .services-grid,
   .team-grid,
   .testimonials-grid,
@@ -2377,16 +2502,16 @@ body {
     white-space: normal;
     overflow-wrap: anywhere;
   }
-  
+
   .process-section-v2 {
     padding: 80px 0;
     min-height: auto;
   }
-  
+
   .process-workspace {
     min-height: 600px;
   }
-  
+
   .process-circle {
     width: 100%;
     height: auto;
@@ -2395,7 +2520,7 @@ body {
     flex-direction: column;
     gap: 40px;
   }
-  
+
   .process-step-v2 {
     position: relative !important;
     top: auto !important;
@@ -2405,7 +2530,7 @@ body {
     transform: none !important;
     text-align: center;
   }
-  
+
   .ai-brain-container {
     position: relative;
     top: auto;
@@ -2413,19 +2538,19 @@ body {
     transform: none;
     margin-bottom: 40px;
   }
-  
+
   .ai-brain {
     width: 100%;
     max-width: 150px;
     height: 150px;
     margin: 0 auto;
   }
-  
+
   .step-info-panel {
     width: 100%;
     margin: 0 auto;
   }
-  
+
   .connection-line {
     display: none;
   }
@@ -2433,7 +2558,7 @@ body {
   .package-cta {
     display: none;
   }
-  
+
   .process-flow {
     position: relative;
     bottom: auto;
@@ -2442,12 +2567,12 @@ body {
     justify-content: center;
     margin-top: 40px;
   }
-  
+
   .metrics-display {
     flex-direction: column;
     gap: 32px;
   }
-  
+
   .contact-grid {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -2456,28 +2581,27 @@ body {
   .contact-visual {
     display: none;
   }
-  
+
   .awards-scroll-container {
     flex-direction: column;
     gap: 16px;
     overflow: hidden;
   }
-  
+
   .scroll-button {
     display: none;
   }
 
-  
   .floating-telegram {
     bottom: 20px;
     right: 20px;
     padding: 12px 20px;
   }
-  
+
   .floating-telegram span {
     display: none;
   }
-  
+
   .qr-modal {
     right: -100px;
   }
@@ -2514,7 +2638,7 @@ body {
   .section-title {
     font-size: 28px;
   }
-  
+
   .service-card,
   .team-card,
   .testimonial-card,
@@ -2528,11 +2652,11 @@ body {
     font-size: 12px;
     padding: 8px 12px;
   }
-  
+
   .contact-method {
     padding: 16px;
   }
-  
+
   .award-card {
     width: 100%;
     max-width: 300px;
@@ -2550,17 +2674,16 @@ body {
     flex: 0 0 90%;
     min-width: 90%;
   }
-  
+
   .ai-brain {
     width: 100%;
     max-width: 120px;
     height: 120px;
   }
-  
+
   .step-info-panel {
     padding: 20px;
   }
-
 }
 
 /* Cyberpunk Effects */
@@ -2571,9 +2694,21 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    linear-gradient(45deg, transparent 48%, rgba(139, 69, 255, 0.03) 49%, rgba(139, 69, 255, 0.03) 51%, transparent 52%),
-    linear-gradient(-45deg, transparent 48%, rgba(32, 178, 170, 0.02) 49%, rgba(32, 178, 170, 0.02) 51%, transparent 52%);
+  background:
+    linear-gradient(
+      45deg,
+      transparent 48%,
+      rgba(139, 69, 255, 0.03) 49%,
+      rgba(139, 69, 255, 0.03) 51%,
+      transparent 52%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 48%,
+      rgba(32, 178, 170, 0.02) 49%,
+      rgba(32, 178, 170, 0.02) 51%,
+      transparent 52%
+    );
   background-size: 100px 100px;
   pointer-events: none;
   z-index: 1;
@@ -2582,10 +2717,14 @@ body {
 
 @keyframes cyberpunkGrid {
   0% {
-    background-position: 0 0, 0 0;
+    background-position:
+      0 0,
+      0 0;
   }
   100% {
-    background-position: 100px 100px, -100px 100px;
+    background-position:
+      100px 100px,
+      -100px 100px;
   }
 }
 
@@ -2593,7 +2732,13 @@ body {
 .neural-divider {
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #8b45ff, #20b2aa, transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #8b45ff,
+    #20b2aa,
+    transparent
+  );
   margin: 80px 0;
   position: relative;
   overflow: hidden;
@@ -2606,7 +2751,12 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
   animation: neuralScan 3s ease-in-out infinite;
 }
 
@@ -2622,47 +2772,91 @@ body {
 /* === ДОБАВЛЯЕМ ДЛЯ RoadmapSection === */
 
 /* Тёмные и стеклянные подложки */
-.backdrop-blur-lg { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-.backdrop-blur-xl { backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); }
-.glass-morph {
-  background: rgba(255,255,255,0.05);
+.backdrop-blur-lg {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255,255,255,0.1);
+}
+.backdrop-blur-xl {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+.glass-morph {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Радиальный градиент-утилита (Tailwind пока даёт только linear) */
-.bg-gradient-radial { background: radial-gradient(circle,var(--tw-gradient-stops)); }
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
 
 /* Глоу-тени */
-.glow-purple { box-shadow: 0 0 20px rgba(110,15,216,.4); }
-.glow-teal   { box-shadow: 0 0 20px rgba(0,224,176,.4); }
-.glow-coral  { box-shadow: 0 0 20px rgba(255,122,109,.4); }
+.glow-purple {
+  box-shadow: 0 0 20px rgba(110, 15, 216, 0.4);
+}
+.glow-teal {
+  box-shadow: 0 0 20px rgba(0, 224, 176, 0.4);
+}
+.glow-coral {
+  box-shadow: 0 0 20px rgba(255, 122, 109, 0.4);
+}
 
 /* Анимированная рамка */
-.border-animated{position:relative;overflow:hidden;}
-.border-animated::before{
-  content:'';
-  position:absolute;top:0;left:-100%;width:100%;height:2px;
-  background:linear-gradient(90deg,transparent,#6E0FD8,transparent);
-  animation:slide 2s infinite;
+.border-animated {
+  position: relative;
+  overflow: hidden;
 }
-@keyframes slide{0%{left:-100%}100%{left:100%}}
+.border-animated::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #6e0fd8, transparent);
+  animation: slide 2s infinite;
+}
+@keyframes slide {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
 
 /* Частицы, плавная прокрутка, will-change-оптимизация */
-.particle{position:absolute;pointer-events:none;opacity:.6;}
-.will-change-transform{will-change:transform;}
-.will-change-opacity{will-change:opacity;}
+.particle {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.6;
+}
+.will-change-transform {
+  will-change: transform;
+}
+.will-change-opacity {
+  will-change: opacity;
+}
 
 /* Выбор текста и фокусы */
-::selection{background:rgba(110,15,216,.3);color:#fff;}
-::-moz-selection{background:rgba(110,15,216,.3);color:#fff;}
-button:focus,a:focus{outline:2px solid #6E0FD8;outline-offset:2px;}
+::selection {
+  background: rgba(110, 15, 216, 0.3);
+  color: #fff;
+}
+::-moz-selection {
+  background: rgba(110, 15, 216, 0.3);
+  color: #fff;
+}
+button:focus,
+a:focus {
+  outline: 2px solid #6e0fd8;
+  outline-offset: 2px;
+}
 
 @media (min-width: 769px) {
   .pricing-nav {
     display: none;
   }
 }
-
-
