@@ -338,6 +338,28 @@ body {
   background: linear-gradient(135deg, #1a1a1a 0%, #2d1b3d 100%);
 }
 
+/* Pain Section */
+.pain-section {
+  padding: 80px 0;
+  background: #0f0f0f;
+}
+
+.pain-list {
+  max-width: 800px;
+  margin: 0 auto 32px;
+  display: grid;
+  gap: 12px;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.pain-summary {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 22px;
+  text-align: center;
+}
+
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -1859,6 +1881,34 @@ body {
 .blog-section {
   padding: 120px 0;
   background: #1a1a1a;
+}
+
+/* NDA Cases Section */
+.nda-cases-section {
+  padding: 80px 0;
+  background: #0f0f0f;
+}
+
+.nda-table {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.nda-cell {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .nda-table {
+    grid-template-columns: 1fr;
+  }
 }
 
 .blog-grid {

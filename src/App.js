@@ -618,7 +618,7 @@ const AnixAILanding = () => {
             onMouseEnter={() => setIsPageBlurred(true)}
             onMouseLeave={() => setIsPageBlurred(false)}
           >
-            <span>Повысить продажи</span>
+            <span>🎯 Получить видео, которое увеличит demo rate</span>
             <div className="button-glow"></div>
           </a>
         </div>
@@ -626,6 +626,21 @@ const AnixAILanding = () => {
         <div className="geometric-shapes">
           <div className="floating-shape shape-2"></div>
           <div className="floating-shape shape-3"></div>
+        </div>
+      </section>
+
+      {/* Pain Section */}
+      <section className="pain-section">
+        <div className="container">
+          <h2 className="section-title">Пока вы объясняете, кто-то уже продал</h2>
+          <ul className="pain-list">
+            <li>❌ Ваш продукт классный. Но его не понимают.</li>
+            <li>❌ Вы делаете демо — а до него доходят 3% лидов.</li>
+            <li>❌ Вас сравнивают с конкурентами, не понимая вашей ценности.</li>
+          </ul>
+          <p className="pain-summary">
+            🎯 Мы — ваша презентация, упаковка и sales-инструмент в одном видео. Объясняем продукт так, что его начинают покупать.
+          </p>
         </div>
       </section>
 
@@ -748,12 +763,39 @@ const AnixAILanding = () => {
             )})}
           </div>
         </div>
-      </section>
+        </section>
 
+      <div className="container text-center mt-12">
+        <a
+          href="https://t.me/m/i23MvBuLOGJi"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cta-button primary"
+          onMouseEnter={() => setIsPageBlurred(true)}
+          onMouseLeave={() => setIsPageBlurred(false)}
+        >
+          <span>📊 Хочу, чтобы вы разобрали мой продукт</span>
+          <div className="button-glow"></div>
+        </a>
+      </div>
 
 
       {/*  👉 ставим Roadmap ЗА пределами .container */}
       <AnixLandingPage />
+
+      <div className="container text-center mt-12">
+        <a
+          href="https://t.me/m/i23MvBuLOGJi"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="cta-button primary"
+          onMouseEnter={() => setIsPageBlurred(true)}
+          onMouseLeave={() => setIsPageBlurred(false)}
+        >
+          <span>🚀 Рассчитайте, сколько денег приносит объяснение</span>
+          <div className="button-glow"></div>
+        </a>
+      </div>
 
 
       {/* Team Section */}
@@ -1095,6 +1137,27 @@ const AnixAILanding = () => {
         </div>
         </section>
 
+      {/* NDA Cases Section */}
+      <section className="nda-cases-section">
+        <div className="container">
+          <h2 className="section-title">Что мы уже сделали (и не всегда можем назвать)</h2>
+          <div className="nda-table">
+            <div className="nda-cell">Корпоративная безопасность</div>
+            <div className="nda-cell">3% отклик на тренинги</div>
+            <div className="nda-cell">27% вовлечённость, 2× завершения</div>
+            <div className="nda-cell">HR в госкорпорации</div>
+            <div className="nda-cell">непонимание миссии</div>
+            <div className="nda-cell">5 отделов перестроили процессы</div>
+            <div className="nda-cell">SaaS в LinkedIn</div>
+            <div className="nda-cell">1–2 ответа на 100</div>
+            <div className="nda-cell">18% reply rate, 12% демо</div>
+            <div className="nda-cell">Видео на IT-фестивале</div>
+            <div className="nda-cell">слабый поток</div>
+            <div className="nda-cell">+400% у стенда спикера</div>
+          </div>
+        </div>
+      </section>
+
 
       {/* Floating Telegram Button */}
       <div
@@ -1104,7 +1167,7 @@ const AnixAILanding = () => {
         onClick={redirectToTelegram}
       >
         <div className="telegram-icon">✈</div>
-        <span>Написать в Telegram</span>
+        <span>📅 Забронировать слот → получить предложение за 24 часа</span>
         <div className="telegram-glow"></div>
         
         {showQRCode && (
