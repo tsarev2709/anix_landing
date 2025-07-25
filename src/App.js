@@ -618,8 +618,8 @@ const AnixAILanding = () => {
             onMouseEnter={() => setIsPageBlurred(true)}
             onMouseLeave={() => setIsPageBlurred(false)}
           >
-            <span>🎯 Получить видео, которое увеличит demo rate</span>
-            <div className="button-glow"></div>
+          <span>{isMobile ? 'Повысить продажи' : '🎯 Получить видео, которое увеличит demo rate'}</span>
+          <div className="button-glow"></div>
           </a>
         </div>
         
@@ -1167,7 +1167,7 @@ const AnixAILanding = () => {
         onClick={redirectToTelegram}
       >
         <div className="telegram-icon">✈</div>
-        <span>📅 Забронировать слот → получить предложение за 24 часа</span>
+        <span>{isMobile ? 'Написать в Telegram' : '📅 Забронировать слот → получить предложение за 24 часа'}</span>
         <div className="telegram-glow"></div>
         
         {showQRCode && (
