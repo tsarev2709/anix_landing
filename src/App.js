@@ -996,7 +996,50 @@ const AnixAILanding = () => {
         </div>
       </section>
 
-      {/* Subscribe Telegram Section */}
+      {/* NDA Cases Section */}
+      <section className="nda-cases-section">
+        <div className="container">
+          <h2 className="section-title">
+            Что мы уже сделали (и не всегда можем назвать)
+          </h2>
+          <div className="nda-table-wrapper">
+            <table className="nda-table">
+              <thead>
+                <tr>
+                  <th>Сфера применения</th>
+                  <th>Что было до видео</th>
+                  <th>Что стало после видео</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Корпоративная безопасность</td>
+                  <td>3% отклик на тренинги</td>
+                  <td>27% вовлечённость, 2× завершения</td>
+                </tr>
+                <tr>
+                  <td>HR в госкорпорации</td>
+                  <td>непонимание миссии</td>
+                  <td>5 отделов перестроили процессы</td>
+                </tr>
+                <tr>
+                  <td>SaaS в LinkedIn</td>
+                  <td>1–2 ответа на 100</td>
+                  <td>18% reply rate, 12% демо</td>
+                </tr>
+                <tr>
+                  <td>Видео на IT-фестивале</td>
+                  <td>слабый поток</td>
+                  <td>+400% у стенда спикера</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+
+        {/* Subscribe Telegram Section */}
       <section className="subscribe-section">
         <div className="container subscribe-container">
           <h3>Подпишись на наш телеграм канал</h3>
@@ -1338,47 +1381,6 @@ const AnixAILanding = () => {
         </div>
       </section>
 
-      {/* NDA Cases Section */}
-      <section className="nda-cases-section">
-        <div className="container">
-          <h2 className="section-title">
-            Что мы уже сделали (и не всегда можем назвать)
-          </h2>
-          <div className="nda-table-wrapper">
-            <table className="nda-table">
-              <thead>
-                <tr>
-                  <th>Сфера применения</th>
-                  <th>Что было до видео</th>
-                  <th>Что стало после видео</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Корпоративная безопасность</td>
-                  <td>3% отклик на тренинги</td>
-                  <td>27% вовлечённость, 2× завершения</td>
-                </tr>
-                <tr>
-                  <td>HR в госкорпорации</td>
-                  <td>непонимание миссии</td>
-                  <td>5 отделов перестроили процессы</td>
-                </tr>
-                <tr>
-                  <td>SaaS в LinkedIn</td>
-                  <td>1–2 ответа на 100</td>
-                  <td>18% reply rate, 12% демо</td>
-                </tr>
-                <tr>
-                  <td>Видео на IT-фестивале</td>
-                  <td>слабый поток</td>
-                  <td>+400% у стенда спикера</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
 
       {/* Floating Telegram Button */}
       <div
