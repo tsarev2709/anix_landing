@@ -793,7 +793,7 @@ const AnixAILanding = () => {
             Как explainer-видео повышает продажи сложных продуктов
           </h2>
           <p className="text-center text-white/70 mb-8">
-            Оставьте контакты и получите чек-лист
+            Получите бесплатный чек-лист для маркетинга сложных решений
           </p>
           <div className="max-w-md mx-auto">
             <LeadForm />
@@ -1082,8 +1082,7 @@ const AnixAILanding = () => {
         </div>
       </section>
 
-
-        {/* Subscribe Telegram Section */}
+      {/* Subscribe Telegram Section */}
       <section className="subscribe-section">
         <div className="container subscribe-container">
           <h3>Подпишись на наш телеграм канал</h3>
