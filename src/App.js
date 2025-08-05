@@ -16,6 +16,8 @@ import lida from './images/lida.jpg';
 import dasha from './images/dasha.jpg';
 import TPES from './images/TPES.png';
 import BlogCard from './components/BlogCard';
+import LeadForm from './components/LeadForm';
+import CookieBanner from './components/CookieBanner';
 
 // Helper for responsive img attributes
 const makeSrcSet = (src) => `${src} 1x, ${src} 2x`;
@@ -33,6 +35,7 @@ const AnixAILanding = () => {
   const [processInView, setProcessInView] = useState(false);
   const [processStarted, setProcessStarted] = useState(false);
   const [isPageBlurred, setIsPageBlurred] = useState(false);
+  const [showLeadPopup, setShowLeadPopup] = useState(false);
 
   const heroRef = useRef(null);
   const processRef = useRef(null);
@@ -49,6 +52,32 @@ const AnixAILanding = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const scrollHeight = document.documentElement.scrollHeight;
+      if (
+        scrollPosition / scrollHeight > 0.6 &&
+        !localStorage.getItem('leadPopupShown')
+      ) {
+        setShowLeadPopup(true);
+        localStorage.setItem('leadPopupShown', 'true');
+      }
+    };
+    const handleExitIntent = (e) => {
+      if (e.clientY <= 0 && !localStorage.getItem('leadPopupShown')) {
+        setShowLeadPopup(true);
+        localStorage.setItem('leadPopupShown', 'true');
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    document.addEventListener('mouseleave', handleExitIntent);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mouseleave', handleExitIntent);
+    };
   }, []);
 
   const handleTouchStart = (e) => {
@@ -757,6 +786,21 @@ const AnixAILanding = () => {
         </div>
       </section>
 
+      {/* Lead Magnet Section */}
+      <section className="bg-anix-darker py-16">
+        <div className="container">
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-4">
+            Как explainer-видео повышает продажи сложных продуктов
+          </h2>
+          <p className="text-center text-white/70 mb-8">
+            Оставьте контакты и получите чек-лист
+          </p>
+          <div className="max-w-md mx-auto">
+            <LeadForm />
+          </div>
+        </div>
+      </section>
+
       {/* Pain Section */}
       <section className="pain-section">
         <div className="container">
@@ -1381,6 +1425,24 @@ const AnixAILanding = () => {
         </div>
       </section>
 
+      {showLeadPopup && (
+        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center">
+          <div className="bg-anix-dark p-6 rounded-lg relative w-full max-w-md">
+            <button
+              className="absolute top-2 right-2 text-white text-2xl leading-none"
+              onClick={() => setShowLeadPopup(false)}
+            >
+              ×
+            </button>
+            <h2 className="text-2xl font-heading font-bold text-center mb-4">
+              Как explainer-видео повышает продажи сложных продуктов
+            </h2>
+            <LeadForm onSuccess={() => setShowLeadPopup(false)} />
+          </div>
+        </div>
+      )}
+
+      <CookieBanner />
 
       {/* Floating Telegram Button */}
       <div
