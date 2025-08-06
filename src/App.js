@@ -786,20 +786,22 @@ const AnixAILanding = () => {
         </div>
       </section>
 
-      {/* Lead Magnet Section */}
-      <section className="bg-anix-darker py-16">
-        <div className="container">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-4">
-            Как explainer-видео повышает продажи сложных продуктов
-          </h2>
-          <p className="text-center text-white/70 mb-8">
-            Получите бесплатный чек-лист для маркетинга сложных решений
-          </p>
-          <div className="max-w-md mx-auto">
-            <LeadForm />
+      {/* Lead Magnet Section (temporarily hidden) */}
+      {false && (
+        <section className="bg-anix-darker py-16">
+          <div className="container">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-4">
+              Как explainer-видео повышает продажи сложных продуктов
+            </h2>
+            <p className="text-center text-white/70 mb-8">
+              Получите бесплатный чек-лист для маркетинга сложных решений
+            </p>
+            <div className="max-w-md mx-auto">
+              <LeadForm />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Pain Section */}
       <section className="pain-section">
