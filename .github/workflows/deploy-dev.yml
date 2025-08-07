@@ -8,40 +8,39 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Use Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Cache node modules
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install deps
-        run: npm install
+      - name: Install dependencies
+        run: npm ci
 
       - name: Build
-        run: CI=true npm run build
+        run: npm run build
 
-      - name: Prepare 404 page
+      - name: Create 404 redirect
         run: |
-          if [ ! -f build/404.html ]; then
-            cp build/index.html build/404.html
-          fi
+          cat <<'HTML' > build/404.html
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta charset="utf-8" />
+              <title>Redirecting...</title>
+              <meta http-equiv="refresh" content="0; url=/dev/" />
+            </head>
+            <body></body>
+          </html>
+          HTML
 
-      - name: Deploy to gh-pages-dev
+      - name: Deploy to gh-pages/dev
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
-          publish_branch: gh-pages-dev
-          cname: dev.studio.anix-ai.pro
+          publish_branch: gh-pages
+          destination_dir: dev
+          keep_files: true
+          cname: studio.anix-ai.pro
