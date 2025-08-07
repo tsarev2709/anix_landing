@@ -35,6 +35,9 @@ jobs:
       - name: Prepare 404 page
         run: cp build/index.html build/404.html
 
+      - name: Create CNAME for dev subdomain
+        run: echo dev.studio.anix-ai.pro > build/CNAME
+
       - name: Deploy to gh-pages dev folder
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -42,4 +45,4 @@ jobs:
           publish_dir: ./build
           publish_branch: gh-pages
           destination_dir: dev
-          cname: dev.studio.anix-ai.pro
+          keep_files: true
