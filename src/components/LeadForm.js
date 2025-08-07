@@ -1,6 +1,50 @@
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
 
+const RESEND_API_KEY = 're_ATrQ5hQa_8i8yxvW2a3U3mwxgNHNzcY2p';
+
+const sendChecklistEmail = async (email) => {
+  const htmlContent = `
+<h2>🎯 Как explainer-видео помогает продавать B2B-продукты</h2>
+
+<p><b>📄 Ваш чек-лист доступен здесь:</b><br/>
+👉 <a href="https://studio.anix-ai.pro/checklist.pdf">Скачать PDF</a></p>
+
+<p><b>🚀 Кейс 1: SaaS-платформа для HR</b><br/>
+Видео помогло увеличить конверсии на лендинге с 1,2% до 1,66%<br/>
+<strong>Почему:</strong> люди начали лучше понимать ценность — в первые 30 сек.</p>
+
+<p><b>🛠 Кейс 2: промышленное ПО</b><br/>
+Видео добавили на главную и в презентации — заявки с сайта удвоились<br/>
+<strong>Почему:</strong> менеджеры стали меньше объяснять, больше продавать</p>
+
+<p><a href="https://studio.anix-ai.pro#cases">→ Посмотреть больше кейсов</a></p>
+
+<hr/>
+
+<p>С уважением,<br/>
+Команда Anix<br/>
+<a href="https://anix-ai.pro">anix-ai.pro</a> | hello@anix-ai.pro</p>`;
+
+  try {
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        from: 'hello@anix-ai.pro',
+        to: email,
+        subject: 'Ваш чек-лист по explainer-видео + 2 кейса',
+        html: htmlContent,
+      }),
+    });
+  } catch (err) {
+    console.error('Ошибка отправки email', err);
+  }
+};
+
 const LeadForm = ({ onSuccess }) => {
   const [formData, setFormData] = useState({
     email: '',
@@ -23,14 +67,20 @@ const LeadForm = ({ onSuccess }) => {
     if (!formData.email || !formData.position || !formData.consent) return;
 
     const { email, position, telegram } = formData;
-    const { error } = await supabase
-      .from('leads')
-      .insert([{ email, position, telegram }]);
+    const { error } = await supabase.from('leads').insert([
+      {
+        email,
+        position,
+        telegram,
+        created_at: new Date().toISOString(),
+      },
+    ]);
 
     if (error) {
       console.error(error);
       alert('Ошибка. Попробуйте ещё раз.');
     } else {
+      await sendChecklistEmail(email);
       setSubmitted(true);
       onSuccess && onSuccess();
       alert('Спасибо! Чек-лист отправлен вам на почту.');
