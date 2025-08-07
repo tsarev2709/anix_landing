@@ -30,19 +30,18 @@ jobs:
         run: npm install
 
       - name: Build
-        run: npm run build
+        run: CI=true npm run build
 
       - name: Prepare 404 page
-        run: cp build/index.html build/404.html
+        run: |
+          if [ ! -f build/404.html ]; then
+            cp build/index.html build/404.html
+          fi
 
-      - name: Create CNAME for dev subdomain
-        run: echo dev.studio.anix-ai.pro > build/CNAME
-
-      - name: Deploy to gh-pages dev folder
+      - name: Deploy to gh-pages-dev
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
-          publish_branch: gh-pages
-          destination_dir: dev
-          keep_files: true
+          publish_branch: gh-pages-dev
+          cname: dev.studio.anix-ai.pro
