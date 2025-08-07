@@ -13,10 +13,8 @@ const CookieBanner = () => {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-anix-dark text-white p-4 flex flex-col md:flex-row items-center justify-between z-50">
-      <p className="mb-2 md:mb-0">
-        Мы используем куки для аналитики и маркетинга.
-      </p>
+    <div className="fixed bottom-4 left-4 bg-anix-dark text-white p-4 flex items-center justify-between z-50 rounded shadow-lg space-x-4">
+      <p>Мы используем куки для аналитики и маркетинга.</p>
       <button
         onClick={accept}
         className="bg-anix-purple hover:bg-anix-teal text-white px-4 py-2 rounded"
