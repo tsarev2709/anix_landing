@@ -1050,19 +1050,28 @@ const AnixAILanding = () => {
         </div>
       </section>
 
-      {/* Subscribe Telegram Section */}
-      <section className="subscribe-section">
-        <div className="container subscribe-container">
-          <h3>Подпишись на наш телеграм канал</h3>
-          <button
-            className="subscribe-btn"
-            onMouseEnter={() => setIsPageBlurred(true)}
-            onMouseLeave={() => setIsPageBlurred(false)}
-            onClick={() => window.open('https://t.me/anixpro', '_blank')}
+      {/* Telegram Subscribe Section */}
+      <section className="telegram-subscribe py-20 bg-gradient-to-r from-[#5f35ff] to-[#4ac9ff] text-white text-center">
+        <div className="container max-w-3xl mx-auto px-4">
+          <h2 className="text-3xl font-bold mb-4">
+            Хотите видеть, как мы собираем видео изнутри?
+          </h2>
+          <p className="text-lg text-[#e0e0e0] mb-6">
+            В Telegram — backstage, советы и примеры лучших роликов Anix
+          </p>
+
+          <a
+            href="https://t.me/anixpro"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-white text-[#5f35ff] px-6 py-3 rounded-full font-semibold shadow-md hover:scale-105 transition-transform"
           >
-            Подписаться
-            <span className="sparkles" />
-          </button>
+            Подписаться → @anixpro
+          </a>
+
+          <p className="text-sm text-[#cccccc] mt-6">
+            Уже 400+ фаундеров и продактов читают нас каждую неделю
+          </p>
         </div>
       </section>
 
