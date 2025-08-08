@@ -40,3 +40,9 @@ contents of the `build/` directory to the `gh-pages` branch:
 ```bash
 npm run deploy
 ```
+## Deployment flow
+
+Все изменения вносятся в ветку `dev`. После проверки на [dev.studio.anix-ai.pro](https://dev.studio.anix-ai.pro) создаётся Pull Request в `main`. Только после ручного approve изменения попадают на production ([studio.anix-ai.pro](https://studio.anix-ai.pro)).
+
+- `dev` → staging → dev.studio.anix-ai.pro
+- `main` → production → studio.anix-ai.pro

@@ -27,15 +27,32 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install deps
+        id: npm-install
         run: npm install
 
+      - name: Fix npm binary permissions
+        if: steps.npm-install.outcome == 'success'
+        run: chmod +x node_modules/.bin/* || true
+
+      - name: Lint
+        if: steps.npm-install.outcome == 'success'
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Notify if install failed
+        if: steps.npm-install.outcome == 'failure'
+        run: echo "npm install failed"
+
       - name: Build
+        if: steps.npm-install.outcome == 'success'
         run: npm run build
 
       - name: Prepare 404 page
+        if: steps.npm-install.outcome == 'success'
         run: cp build/index.html build/404.html
 
       - name: Deploy to gh-pages dev folder
+        if: steps.npm-install.outcome == 'success'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
