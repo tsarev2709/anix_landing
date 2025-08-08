@@ -17,6 +17,7 @@ import dasha from './images/dasha.jpg';
 import TPES from './images/TPES.png';
 import BlogCard from './components/BlogCard';
 import CookieBanner from './components/CookieBanner';
+import LeadForm from './components/LeadForm';
 
 // Helper for responsive img attributes
 const makeSrcSet = (src) => `${src} 1x, ${src} 2x`;
@@ -1041,6 +1042,14 @@ const AnixAILanding = () => {
         </div>
       </section>
 
+      {/* Lead Form Section */}
+      <section className="lead-form-section">
+        <div className="container lead-form-container">
+          <h3>Получите чек-лист по explainer-видео</h3>
+          <LeadForm />
+        </div>
+      </section>
+
       {/* Subscribe Telegram Section */}
       <section className="subscribe-section">
         <div className="container subscribe-container">
@@ -1393,11 +1402,7 @@ const AnixAILanding = () => {
         onClick={redirectToTelegram}
       >
         <div className="telegram-icon">✈</div>
-        <span>
-          {isMobile
-            ? 'Написать в Telegram'
-            : '📅 Забронировать слот → получить предложение за 24 часа'}
-        </span>
+        <span>🔮 Получить расчёт под мой проект</span>
         <div className="telegram-glow"></div>
 
         {showQRCode && (

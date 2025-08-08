@@ -2074,25 +2074,34 @@ body {
   color: rgba(255, 255, 255, 0.6);
 }
 
-/* Subscribe & Brief Sections */
+/* Subscribe, Brief & Lead Form Sections */
 .subscribe-section,
-.brief-section {
+.brief-section,
+.lead-form-section {
   padding: 80px 0;
   background: #1a1a1a;
 }
 
 .subscribe-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   gap: 40px;
+  text-align: center;
 }
 
 .subscribe-section h3,
-.brief-section h3 {
+.brief-section h3,
+.lead-form-section h3 {
   font-size: 28px;
   font-weight: 600;
   color: #fff;
+  text-align: center;
+}
+
+.lead-form-container {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .subscribe-btn {
@@ -2110,6 +2119,11 @@ body {
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+  box-shadow: 0 0 25px rgba(139, 69, 255, 0.6);
+}
+
+.subscribe-btn:hover {
+  box-shadow: 0 0 35px rgba(139, 69, 255, 0.8);
 }
 
 .subscribe-btn .sparkles {
@@ -2455,7 +2469,8 @@ body {
   }
 
   .subscribe-section h3,
-  .brief-section h3 {
+  .brief-section h3,
+  .lead-form-section h3 {
     font-size: 20px;
   }
 
