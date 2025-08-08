@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://anix.video/sitemap.xml
