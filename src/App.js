@@ -742,7 +742,7 @@ const AnixAILanding = () => {
             href="https://t.me/m/i23MvBuLOGJi"
             target="_blank"
             rel="noopener noreferrer"
-            className="cta-button primary"
+            className="cta-button primary block w-full md:w-auto text-base md:text-lg"
             onMouseEnter={() => setIsPageBlurred(true)}
             onMouseLeave={() => setIsPageBlurred(false)}
           >
@@ -929,12 +929,12 @@ const AnixAILanding = () => {
         </div>
       </section>
 
-      <div className="container text-center mt-12">
+      <div className="container text-center my-12 md:my-16">
         <a
           href="https://t.me/m/i23MvBuLOGJi"
           target="_blank"
           rel="noopener noreferrer"
-          className="cta-button primary"
+          className="cta-button primary block w-full md:w-auto text-base md:text-lg"
           onMouseEnter={() => setIsPageBlurred(true)}
           onMouseLeave={() => setIsPageBlurred(false)}
         >
@@ -946,12 +946,12 @@ const AnixAILanding = () => {
       {/*  👉 ставим Roadmap ЗА пределами .container */}
       <AnixLandingPage />
 
-      <div className="container text-center mt-12">
+      <div className="container text-center my-12 md:my-16">
         <a
           href="https://t.me/m/i23MvBuLOGJi"
           target="_blank"
           rel="noopener noreferrer"
-          className="cta-button primary"
+          className="cta-button primary block w-full md:w-auto text-base md:text-lg"
           onMouseEnter={() => setIsPageBlurred(true)}
           onMouseLeave={() => setIsPageBlurred(false)}
         >
