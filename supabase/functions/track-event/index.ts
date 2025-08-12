@@ -1,6 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 
-const allowedEvents = ['form_view', 'form_start', 'form_submit'];
+const allowedEvents = [
+  'form_view',
+  'form_start',
+  'form_submit',
+  'email_open',
+  'section_transition',
+  'cta_view',
+  'cta_click',
+];
 
 export default async function handler(req: Request): Promise<Response> {
   const origin = req.headers.get('origin') || '';

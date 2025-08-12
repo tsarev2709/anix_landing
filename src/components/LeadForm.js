@@ -1,21 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { track } from '../lib/analytics';
 
 const telegramPattern =
   /^(@?[a-zA-Z0-9_]{5,32}|https?:\/\/t\.me\/[a-zA-Z0-9_]{5,32}|tg:\/\/resolve\?domain=[a-zA-Z0-9_]{5,32})$/;
-
-const track = async (event, payload = {}) => {
-  const url = process.env.NEXT_PUBLIC_TRACK_EVENT_URL;
-  if (!url) return;
-  try {
-    await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ event, ...payload }),
-    });
-  } catch (err) {
-    console.error('track error', err);
-  }
-};
 
 const LeadForm = () => {
   const [formData, setFormData] = useState({
@@ -27,12 +14,14 @@ const LeadForm = () => {
   });
   const [started, setStarted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [toast, setToast] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const utm = window.location.search;
     const referrer = document.referrer;
     const pathname = window.location.pathname;
-    track('form_view', { meta: { utm, referrer, pathname } });
+    track('form_view', { utm, referrer, pathname });
   }, []);
 
   const onFirstInput = () => {
@@ -55,9 +44,10 @@ const LeadForm = () => {
     e.preventDefault();
     const { email, position, telegram, consent, captchaToken } = formData;
     if (!email || !position || !telegramPattern.test(telegram) || !consent) {
-      alert('Проверьте форму');
+      setToast('Проверьте форму');
       return;
     }
+    setLoading(true);
     try {
       const utm = window.location.search;
       const referrer = document.referrer;
@@ -80,9 +70,12 @@ const LeadForm = () => {
       if (!res.ok) throw new Error(data.error || 'Ошибка');
       track('form_submit', { leadId: data.leadId });
       setSubmitted(true);
-      alert('Спасибо! Чек-лист отправлен вам на почту.');
+      setToast('Спасибо! Чек-лист отправлен вам на почту.');
     } catch (err) {
-      alert(err.message);
+      setToast(err.message);
+    } finally {
+      setLoading(false);
+      setTimeout(() => setToast(''), 4000);
     }
   };
 
@@ -162,9 +155,10 @@ const LeadForm = () => {
         <div className="space-y-1">
           <button
             type="submit"
-            className="w-full bg-anix-purple hover:bg-anix-teal text-white py-2 rounded transition-colors"
+            disabled={loading}
+            className="w-full bg-anix-purple hover:bg-anix-teal text-white py-2 rounded transition-colors disabled:opacity-50"
           >
-            📩 Получить чек-лист в Telegram
+            {loading ? 'Отправка...' : '📩 Получить чек-лист в Telegram'}
           </button>
           <p className="text-sm text-[#B0B0B0] text-center">
             Чек-лист придёт в Telegram, а при желании разберём его вместе с
@@ -172,6 +166,9 @@ const LeadForm = () => {
           </p>
         </div>
       </form>
+      {toast && (
+        <div className="mt-2 text-center text-sm text-white" role="status">{toast}</div>
+      )}
       <a
         href="#"
         className="block text-center text-xs text-gray-400 underline mt-2"
