@@ -151,12 +151,18 @@ const LeadForm = ({ onSuccess }) => {
             Я согласен(а) на обработку персональных данных
           </label>
         </div>
-        <button
-          type="submit"
-          className="w-full bg-anix-purple hover:bg-anix-teal text-white py-2 rounded transition-colors"
-        >
-          Получить чек-лист
-        </button>
+        <div className="space-y-1">
+          <button
+            type="submit"
+            className="w-full bg-anix-purple hover:bg-anix-teal text-white py-2 rounded transition-colors"
+          >
+            📩 Получить чек-лист в Telegram
+          </button>
+          <p className="text-sm text-[#B0B0B0] text-center">
+            Чек-лист придёт в Telegram, а при желании разберём его вместе с
+            вами.
+          </p>
+        </div>
       </form>
       <a
         href="#"

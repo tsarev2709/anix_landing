@@ -748,11 +748,15 @@ const AnixAILanding = () => {
           >
             <span>
               {isMobile
-                ? 'Повысить продажи'
+                ? '📈 Повысить продажи в Telegram'
                 : '🎯 Получить видео, которое увеличит demo rate'}
             </span>
             <div className="button-glow"></div>
           </a>
+          <p className="text-sm md:text-base text-[#B0B0B0] mt-1">
+            Откроется чат в Telegram — уточним пару деталей и пришлём
+            предложение за 24 часа.
+          </p>
         </div>
 
         <div className="geometric-shapes">
@@ -938,9 +942,12 @@ const AnixAILanding = () => {
           onMouseEnter={() => setIsPageBlurred(true)}
           onMouseLeave={() => setIsPageBlurred(false)}
         >
-          <span>📊 Хочу, чтобы вы разобрали мой продукт</span>
+          <span>🧠 Разобрать мой продукт в Telegram</span>
           <div className="button-glow"></div>
         </a>
+        <p className="text-sm md:text-base text-[#B0B0B0] mt-1">
+          В Telegram обсудим ваш продукт и подберём лучший формат видео.
+        </p>
       </div>
 
       {/*  👉 ставим Roadmap ЗА пределами .container */}
@@ -955,9 +962,12 @@ const AnixAILanding = () => {
           onMouseEnter={() => setIsPageBlurred(true)}
           onMouseLeave={() => setIsPageBlurred(false)}
         >
-          <span>🚀 Рассчитайте, сколько денег приносит объяснение</span>
+          <span>🚀 Узнать доход от видео в Telegram</span>
           <div className="button-glow"></div>
         </a>
+        <p className="text-sm md:text-base text-[#B0B0B0] mt-1">
+          В Telegram рассчитаем, сколько дополнительной прибыли принесёт видео.
+        </p>
       </div>
 
       {/* Team Section */}
@@ -1066,11 +1076,11 @@ const AnixAILanding = () => {
             rel="noopener noreferrer"
             className="inline-block bg-white text-[#5f35ff] px-6 py-3 rounded-full font-semibold shadow-md hover:scale-105 transition-transform"
           >
-            Подписаться → @anixpro
+            💬 Подписаться в Telegram → @anixpro
           </a>
-
-          <p className="text-sm text-[#cccccc] mt-6">
-            Уже 400+ фаундеров и продактов читают нас каждую неделю
+          <p className="text-sm text-[#B0B0B0] mt-1">
+            Перейдёте в наш Telegram-канал с бэкстейджем, советами и примерами
+            лучших роликов.
           </p>
         </div>
       </section>
