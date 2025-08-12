@@ -1,61 +1,50 @@
-import React, { useState } from 'react';
-import { supabase } from '../supabaseClient';
+import React, { useState, useEffect } from 'react';
 
-const RESEND_API_KEY = 're_ATrQ5hQa_8i8yxvW2a3U3mwxgNHNzcY2p';
+const telegramPattern =
+  /^(@?[a-zA-Z0-9_]{5,32}|https?:\/\/t\.me\/[a-zA-Z0-9_]{5,32}|tg:\/\/resolve\?domain=[a-zA-Z0-9_]{5,32})$/;
 
-const sendChecklistEmail = async (email) => {
-  const htmlContent = `
-<h2>🎯 Как explainer-видео помогает продавать B2B-продукты</h2>
-
-<p><b>📄 Ваш чек-лист доступен здесь:</b><br/>
-👉 <a href="https://studio.anix-ai.pro/checklist.pdf">Скачать PDF</a></p>
-
-<p><b>🚀 Кейс 1: SaaS-платформа для HR</b><br/>
-Видео помогло увеличить конверсии на лендинге с 1,2% до 1,66%<br/>
-<strong>Почему:</strong> люди начали лучше понимать ценность — в первые 30 сек.</p>
-
-<p><b>🛠 Кейс 2: промышленное ПО</b><br/>
-Видео добавили на главную и в презентации — заявки с сайта удвоились<br/>
-<strong>Почему:</strong> менеджеры стали меньше объяснять, больше продавать</p>
-
-<p><a href="https://studio.anix-ai.pro#cases">→ Посмотреть больше кейсов</a></p>
-
-<hr/>
-
-<p>С уважением,<br/>
-Команда Anix<br/>
-<a href="https://anix-ai.pro">anix-ai.pro</a> | hello@anix-ai.pro</p>`;
-
+const track = async (event, payload = {}) => {
+  const url = process.env.NEXT_PUBLIC_TRACK_EVENT_URL;
+  if (!url) return;
   try {
-    await fetch('https://api.resend.com/emails', {
+    await fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-      },
-      body: JSON.stringify({
-        from: 'hello@anix-ai.pro',
-        to: email,
-        subject: 'Ваш чек-лист по explainer-видео + 2 кейса',
-        html: htmlContent,
-      }),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ event, ...payload }),
     });
   } catch (err) {
-    console.error('Ошибка отправки email', err);
+    console.error('track error', err);
   }
 };
 
-const LeadForm = ({ onSuccess }) => {
+const LeadForm = () => {
   const [formData, setFormData] = useState({
     email: '',
     position: '',
     telegram: '',
     consent: false,
+    captchaToken: '',
   });
+  const [started, setStarted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const utm = window.location.search;
+    const referrer = document.referrer;
+    const pathname = window.location.pathname;
+    track('form_view', { meta: { utm, referrer, pathname } });
+  }, []);
+
+  const onFirstInput = () => {
+    if (!started) {
+      track('form_start');
+      setStarted(true);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    onFirstInput();
     setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value,
@@ -64,26 +53,36 @@ const LeadForm = ({ onSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.email || !formData.position || !formData.consent) return;
-
-    const { email, position, telegram } = formData;
-    const { error } = await supabase.from('leads').insert([
-      {
-        email,
-        position,
-        telegram,
-        created_at: new Date().toISOString(),
-      },
-    ]);
-
-    if (error) {
-      console.error(error);
-      alert('Ошибка. Попробуйте ещё раз.');
-    } else {
-      await sendChecklistEmail(email);
+    const { email, position, telegram, consent, captchaToken } = formData;
+    if (!email || !position || !telegramPattern.test(telegram) || !consent) {
+      alert('Проверьте форму');
+      return;
+    }
+    try {
+      const utm = window.location.search;
+      const referrer = document.referrer;
+      const pathname = window.location.pathname;
+      const res = await fetch(process.env.NEXT_PUBLIC_SUBMIT_LEAD_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          position,
+          telegram,
+          consent,
+          captchaToken,
+          utm,
+          referrer,
+          pathname,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Ошибка');
+      track('form_submit', { leadId: data.leadId });
       setSubmitted(true);
-      onSuccess && onSuccess();
       alert('Спасибо! Чек-лист отправлен вам на почту.');
+    } catch (err) {
+      alert(err.message);
     }
   };
 
@@ -127,11 +126,13 @@ const LeadForm = ({ onSuccess }) => {
         </div>
         <div>
           <label className="block text-sm mb-1" htmlFor="telegram">
-            Telegram
+            Telegram*
           </label>
           <input
             id="telegram"
             name="telegram"
+            required
+            pattern={telegramPattern.source}
             value={formData.telegram}
             onChange={handleChange}
             className="w-full px-3 py-2 rounded bg-anix-dark border border-gray-600 text-white"
@@ -151,6 +152,13 @@ const LeadForm = ({ onSuccess }) => {
             Я согласен(а) на обработку персональных данных
           </label>
         </div>
+        <div
+          className="cf-turnstile"
+          data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+          data-callback={(token) =>
+            setFormData((p) => ({ ...p, captchaToken: token }))
+          }
+        />
         <div className="space-y-1">
           <button
             type="submit"
