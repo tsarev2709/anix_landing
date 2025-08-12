@@ -2009,12 +2009,20 @@ body {
 }
 
 @media (max-width: 768px) {
+  .nda-table {
+    border: none;
+  }
   .nda-table thead {
     display: none;
   }
+  .nda-table tbody {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
   .nda-table tr {
     display: block;
-    margin-bottom: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   .nda-table td {
     display: block;
@@ -2023,6 +2031,12 @@ body {
   }
   .nda-table td:last-child {
     border-bottom: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .nda-table tbody {
+    grid-template-columns: 1fr;
   }
 }
 
