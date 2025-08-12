@@ -11,8 +11,11 @@ body { background: var(--bg-global); transition: background .4s ease; }
 /* 1) Градиент-мостик */
 .sep--gradient::before{
   content:""; position:absolute; inset:0;
-  background: linear-gradient(to bottom, var(--bg) 0%, var(--next-bg) 100%);
-  opacity:.95;
+  background:linear-gradient(
+    to bottom,
+    color-mix(in oklab, var(--bg) 20%, transparent) 0%,
+    color-mix(in oklab, var(--next-bg) 80%, transparent) 100%
+  );
 }
 
 /* 2) Кривая без SVG — через clip-path ellipse */
@@ -39,16 +42,4 @@ body { background: var(--bg-global); transition: background .4s ease; }
   mix-blend-mode:soft-light;
 }
 
-/* sticky CTA полоса */
-.cta-sticky{
-  position:sticky; bottom:12px; margin:0 auto; max-width:720px;
-  display:flex; gap:12px; align-items:center; justify-content:space-between;
-  padding:12px 14px; border-radius:14px;
-  background:
-    linear-gradient(90deg, color-mix(in oklab, var(--bg) 80%, white 20%), color-mix(in oklab, var(--next-bg) 80%, white 20%));
-  box-shadow:0 6px 24px rgba(0,0,0,.25);
-  z-index:5; backdrop-filter:blur(6px);
-}
-.cta-btn{ padding:10px 14px; border-radius:10px; font-weight:600; text-decoration:none;
-  background:linear-gradient(135deg, #6ae, #86f); color:#fff; }
-@media (min-width:768px){ .cta-sticky{ bottom:16px; } }
+/* sticky CTA полоса removed */

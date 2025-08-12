@@ -1301,7 +1301,7 @@ const AnixAILanding = () => {
           <h2 className="section-title">Свяжитесь с Нами</h2>
           <div className="contact-grid">
             <div className="contact-info">
-              <h3>Готовы революционизировать вашу анимацию?</h3>
+              <h3>Готовы прокачать вашу воронку продаж?</h3>
               <p>
                 Свяжитесь с нами любым удобным способом. Мы ответим в течение
                 часа!
