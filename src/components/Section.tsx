@@ -1,6 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import SectionSeparator from './SectionSeparator';
 import StickyBridge from './StickyBridge';
+
+function getNextSection(el?: HTMLElement | null) {
+  let n = el?.nextElementSibling as HTMLElement | null;
+  while (n && !n.classList.contains('section')) {
+    n = n.nextElementSibling as HTMLElement | null;
+  }
+  return n;
+}
 
 type Props = {
   id: string;
@@ -8,6 +16,7 @@ type Props = {
   nextBg?: string;
   separator?: 'gradient' | 'curve';
   stickyTransition?: boolean;
+  className?: string;
   children: React.ReactNode;
 };
 
@@ -17,21 +26,31 @@ export default function Section({
   nextBg,
   separator = 'gradient',
   stickyTransition = false,
+  className = '',
   children,
+  ...rest
 }: Props) {
   const ref = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    if (!nextBg && ref.current) {
-      const next = ref.current.nextElementSibling as HTMLElement | null;
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+
+    // свой фон
+    ref.current.style.setProperty('--bg', bg);
+
+    // nextBg: из пропса или вычисляем из следующей .section
+    if (nextBg) {
+      ref.current.style.setProperty('--next-bg', nextBg);
+    } else {
+      const next = getNextSection(ref.current);
       if (next) {
-        const nb =
-          getComputedStyle(next).getPropertyValue('--bg') ||
-          (next.style as any).backgroundColor;
-        ref.current.style.setProperty('--next-bg', nb || '#141429');
+        const cs = getComputedStyle(next);
+        let nb = cs.getPropertyValue('--bg').trim();
+        if (!nb) nb = cs.backgroundColor;
+        if (nb) ref.current.style.setProperty('--next-bg', nb);
       }
     }
-  }, [nextBg]);
+  }, [bg, nextBg]);
 
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -52,12 +71,9 @@ export default function Section({
   return (
     <section
       ref={ref}
-      className="section"
+      className={`section ${className}`.trim()}
       data-section={id}
-      style={{
-        ['--bg' as any]: bg,
-        ['--next-bg' as any]: nextBg ?? 'transparent',
-      }}
+      {...rest}
     >
       {children}
       <SectionSeparator position="bottom" variant={separator} />
