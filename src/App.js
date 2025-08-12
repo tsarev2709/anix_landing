@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import AnixLandingPage from './components/AnixLandingPage';
+import Section from './components/Section';
 import god from './images/god.jpg';
 import bestie from './images/bestie.jpg';
 import vanya from './images/vanya.JPG';
@@ -35,7 +36,6 @@ const AnixAILanding = () => {
   const [processInView, setProcessInView] = useState(false);
   const [processStarted, setProcessStarted] = useState(false);
   const [isPageBlurred, setIsPageBlurred] = useState(false);
-  const heroRef = useRef(null);
   const processRef = useRef(null);
   const particlesRef = useRef(null);
   const awardsScrollRef = useRef(null);
@@ -724,7 +724,8 @@ const AnixAILanding = () => {
       <canvas ref={particlesRef} className="particles-canvas" />
 
       {/* Hero Section */}
-      <section ref={heroRef} className="hero-section">
+      <Section id="hero" bg="#0f0f1f" nextBg="#141429" separator="curve" stickyTransition>
+        <div className="hero-section">
         <div className="hero-content">
           <h1 className="hero-title">
             <span className="title-line">
@@ -762,10 +763,12 @@ const AnixAILanding = () => {
           <div className="floating-shape shape-2"></div>
           <div className="floating-shape shape-3"></div>
         </div>
-      </section>
+        </div>
+      </Section>
 
       {/* Pain Section */}
-      <section className="pain-section">
+      <Section id="pain" bg="#141429" nextBg="#1a1a33" stickyTransition>
+        <div className="pain-section">
         <div className="container">
           <h2 className="section-title">
             Пока вы объясняете, кто-то уже продал
@@ -782,10 +785,12 @@ const AnixAILanding = () => {
             Объясняем продукт так, что его начинают покупать.
           </p>
         </div>
-      </section>
+        </div>
+      </Section>
 
       {/* Services Section */}
-      <section className="services-section">
+      <Section id="services" bg="#1a1a33" nextBg="#202040" stickyTransition>
+        <div className="services-section">
         <div className="container">
           <h2 className="section-title">Видео, которое помогает продавать</h2>
           <div className="services-grid">
@@ -866,10 +871,12 @@ const AnixAILanding = () => {
             </div>
           </div>
         </div>
-      </section>
+        </div>
+      </Section>
 
       {/* Testimonials */}
-      <section className="testimonials-section">
+      <Section id="cases" bg="#202040" nextBg="#26264d" stickyTransition>
+        <div className="testimonials-section">
         <div className="container">
           <h2 className="section-title">Истории Успеха Клиентов</h2>
           <div className="testimonials-grid">
@@ -930,7 +937,8 @@ const AnixAILanding = () => {
             })}
           </div>
         </div>
-      </section>
+        </div>
+      </Section>
 
       <div className="container text-center my-12 md:my-16">
         <a
@@ -1052,16 +1060,19 @@ const AnixAILanding = () => {
       </section>
 
       {/* Lead Form Section */}
-      <section className="lead-form-section">
-        <div className="container lead-form-container">
-          <h3>Получите чек-лист по explainer-видео</h3>
-          <LeadForm />
+      <Section id="lead" bg="#26264d" nextBg="#2c2c59" stickyTransition>
+        <div className="lead-form-section">
+          <div className="container lead-form-container">
+            <h3>Получите чек-лист по explainer-видео</h3>
+            <LeadForm />
+          </div>
         </div>
-      </section>
+      </Section>
 
       {/* Telegram Subscribe Section */}
-      <section className="telegram-subscribe py-20 bg-gradient-to-r from-[#5f35ff] to-[#4ac9ff] text-white text-center">
-        <div className="container max-w-3xl mx-auto px-4">
+      <Section id="subscribe" bg="#2c2c59" nextBg="#333366" stickyTransition>
+        <div className="telegram-subscribe py-20 bg-gradient-to-r from-[#5f35ff] to-[#4ac9ff] text-white text-center">
+          <div className="container max-w-3xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-4">
             Хотите видеть, как мы собираем видео изнутри?
           </h2>
@@ -1082,11 +1093,13 @@ const AnixAILanding = () => {
             лучших роликов.
           </p>
         </div>
-      </section>
+        </div>
+      </Section>
 
       {/* Pricing & Packages Section */}
-      <section className="pricing-section">
-        <div className="container">
+      <Section id="pricing" bg="#333366" nextBg="#404080" stickyTransition>
+        <div className="pricing-section">
+          <div className="container">
           <h2 className="section-title">Цены и Пакеты</h2>
 
           <div className="pricing-carousel-container">
@@ -1161,8 +1174,9 @@ const AnixAILanding = () => {
               ))}
             </div>
           </div>
+          </div>
         </div>
-      </section>
+      </Section>
 
       {/* Enhanced Awards Section */}
       <section className="awards-section">
@@ -1225,7 +1239,8 @@ const AnixAILanding = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="faq-section">
+      <Section id="faq" bg="#404080" nextBg="#47478d" stickyTransition separator="curve">
+        <div className="faq-section">
         <div className="container">
           <h2 className="section-title">Часто Задаваемые Вопросы</h2>
           <div className="faq-list">
@@ -1253,7 +1268,8 @@ const AnixAILanding = () => {
             ))}
           </div>
         </div>
-      </section>
+        </div>
+      </Section>
 
       {/* Brief Section (temporarily hidden) */}
       {/*
@@ -1275,7 +1291,8 @@ const AnixAILanding = () => {
             <span className="sparkles" />
           </a>
         </div>
-      </section>
+        </div>
+      </Section>
       */}
 
       {/* Contact Section */}

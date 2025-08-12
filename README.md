@@ -49,5 +49,28 @@ Lead events are stored in the `lead_events` table. The following events are reco
 - `form_start`
 - `form_submit`
 - `email_open`
+- `section_transition`
+- `cta_view`
+- `cta_click`
 
 Use the Supabase SQL editor to query `lead_events` and inspect conversion rates.
+
+## Section transitions & CTA
+
+Sections use the `<Section>` component to define their background color (`bg`) and the color of the next section (`nextBg`).
+
+```
+<Section id="hero" bg="#0f0f1f" nextBg="#141429" separator="curve" stickyTransition>
+  {/* content */}
+</Section>
+```
+
+- Add new sections by wrapping content in `<Section>` and giving it a unique `id`.
+- `separator` can be `gradient` or `curve`.
+- Include `stickyTransition` where a sticky bridge between sections is required.
+
+The global layout listens for section visibility and CTA interactions to send:
+
+- `section_transition` — when the user scrolls between sections.
+- `cta_view` — when the sticky CTA becomes visible.
+- `cta_click` — when the CTA link is clicked.
