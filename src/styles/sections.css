@@ -7,8 +7,6 @@ body {
 }
 
 .section {
-  --bg: #0f0f1f;
-  --next-bg: #141429;
   position: relative;
   background: var(--bg);
   isolation: isolate;
@@ -42,7 +40,6 @@ body {
   inset: 0;
   /* fallback для браузеров без color-mix */
   background: linear-gradient(to bottom, var(--bg) 0%, var(--next-bg) 100%);
-  opacity: 1;
   /* Основной градиент в perceptual space */
   background: linear-gradient(
     to bottom,
@@ -62,7 +59,6 @@ body {
   inset: -20% 0 0 0;
   background: linear-gradient(to bottom, var(--bg) 0%, var(--next-bg) 100%);
   clip-path: ellipse(120% 80% at 50% 10%); /* мягкая дуга */
-  opacity: 0.98;
 }
 
 /* Sticky мост между секциями */

@@ -724,7 +724,7 @@ const AnixAILanding = () => {
       <canvas ref={particlesRef} className="particles-canvas" />
 
       {/* Hero Section */}
-      <Section id="hero" bg="#0f0f1f" nextBg="#141429" separator="curve" stickyTransition>
+      <Section id="hero" bg="#0f0f1f" separator="curve" stickyTransition>
         <div className="hero-section">
         <div className="hero-content">
           <h1 className="hero-title">
@@ -767,7 +767,7 @@ const AnixAILanding = () => {
       </Section>
 
       {/* Pain Section */}
-      <Section id="pain" bg="#141429" nextBg="#1a1a33" stickyTransition>
+      <Section id="pain" bg="#141429" stickyTransition>
         <div className="pain-section">
         <div className="container">
           <h2 className="section-title">
@@ -789,7 +789,7 @@ const AnixAILanding = () => {
       </Section>
 
       {/* Services Section */}
-      <Section id="services" bg="#1a1a33" nextBg="#202040" stickyTransition>
+      <Section id="services" bg="#1a1a33" stickyTransition>
         <div className="services-section">
         <div className="container">
           <h2 className="section-title">Видео, которое помогает продавать</h2>
@@ -875,7 +875,7 @@ const AnixAILanding = () => {
       </Section>
 
       {/* Testimonials */}
-      <Section id="cases" bg="#202040" nextBg="#26264d" stickyTransition>
+      <Section id="cases" bg="#202040" stickyTransition>
         <div className="testimonials-section">
         <div className="container">
           <h2 className="section-title">Истории Успеха Клиентов</h2>
@@ -978,7 +978,7 @@ const AnixAILanding = () => {
       </div>
 
       {/* Team Section */}
-      <section className="team-section">
+      <Section id="team" bg="#1a1a1a" className="team-section">
         <div className="container">
           <h2 className="section-title">Команда, которая продаёт вместо вас</h2>
           <div className="team-grid">
@@ -1015,10 +1015,10 @@ const AnixAILanding = () => {
             ))}
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* NDA Cases Section */}
-      <section className="nda-cases-section">
+      <Section id="nda" bg="#0f0f0f" className="nda-cases-section">
         <div className="container">
           <h2 className="section-title">
             Что мы уже сделали (и не всегда можем назвать)
@@ -1057,10 +1057,10 @@ const AnixAILanding = () => {
             </table>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* Lead Form Section */}
-      <Section id="lead" bg="#26264d" nextBg="#2c2c59" stickyTransition>
+      <Section id="lead" bg="#26264d" stickyTransition>
         <div className="lead-form-section">
           <div className="container lead-form-container">
             <h3>Получите чек-лист по explainer-видео</h3>
@@ -1070,7 +1070,7 @@ const AnixAILanding = () => {
       </Section>
 
       {/* Telegram Subscribe Section */}
-      <Section id="subscribe" bg="#2c2c59" nextBg="#333366" stickyTransition>
+      <Section id="subscribe" bg="#2c2c59" stickyTransition>
         <div className="telegram-subscribe py-20 bg-gradient-to-r from-[#5f35ff] to-[#4ac9ff] text-white text-center">
           <div className="container max-w-3xl mx-auto px-4">
           <h2 className="text-3xl font-bold mb-4">
@@ -1097,7 +1097,7 @@ const AnixAILanding = () => {
       </Section>
 
       {/* Pricing & Packages Section */}
-      <Section id="pricing" bg="#333366" nextBg="#404080" stickyTransition>
+      <Section id="pricing" bg="#333366" stickyTransition>
         <div className="pricing-section">
           <div className="container">
           <h2 className="section-title">Цены и Пакеты</h2>
@@ -1179,7 +1179,7 @@ const AnixAILanding = () => {
       </Section>
 
       {/* Enhanced Awards Section */}
-      <section className="awards-section">
+      <Section id="awards" bg="#2d1b3d" className="awards-section">
         <div className="container">
           <h2 className="section-title">Признание Индустрии</h2>
 
@@ -1236,10 +1236,10 @@ const AnixAILanding = () => {
             </button>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* FAQ Section */}
-      <Section id="faq" bg="#404080" nextBg="#47478d" stickyTransition separator="curve">
+      <Section id="faq" bg="#404080" stickyTransition separator="curve">
         <div className="faq-section">
         <div className="container">
           <h2 className="section-title">Часто Задаваемые Вопросы</h2>
@@ -1296,7 +1296,7 @@ const AnixAILanding = () => {
       */}
 
       {/* Contact Section */}
-      <section className="contact-section">
+      <Section id="contact" bg="#2d1b3d" className="contact-section">
         <div className="container">
           <h2 className="section-title">Свяжитесь с Нами</h2>
           <div className="contact-grid">
@@ -1351,10 +1351,10 @@ const AnixAILanding = () => {
             </div>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* Blog Section */}
-      <section className="blog-section">
+      <Section id="blog" bg="#1a1a1a" className="blog-section">
         <div className="container">
           <h2 className="section-title">Последние Новости</h2>
           <div className="blog-grid">
@@ -1427,7 +1427,7 @@ const AnixAILanding = () => {
             </a>
           </div>
         </div>
-      </section>
+      </Section>
 
       <CookieBanner />
 
