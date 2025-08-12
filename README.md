@@ -40,3 +40,14 @@ contents of the `build/` directory to the `gh-pages` branch:
 ```bash
 npm run deploy
 ```
+
+## Analytics
+
+Lead events are stored in the `lead_events` table. The following events are recorded:
+
+- `form_view`
+- `form_start`
+- `form_submit`
+- `email_open`
+
+Use the Supabase SQL editor to query `lead_events` and inspect conversion rates.
