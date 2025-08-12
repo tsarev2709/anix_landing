@@ -1,45 +1,95 @@
-:root { --bg-global:#0f0f1f; }
-body { background: var(--bg-global); transition: background .4s ease; }
-
-.section{
-  --bg:#0f0f1f; --next-bg:#141429;
-  position:relative; background:var(--bg); isolation:isolate;
+:root {
+  --bg-global: #0f0f1f;
 }
-.sep{ position:absolute; left:0; right:0; height:56px; pointer-events:none; z-index:0; }
-.sep--bottom{ bottom:-1px; } .sep--top{ top:-1px; }
+body {
+  background: var(--bg-global);
+  transition: background 0.4s ease;
+}
+
+.section {
+  --bg: #0f0f1f;
+  --next-bg: #141429;
+  position: relative;
+  background: var(--bg);
+  isolation: isolate;
+}
+
+.sep {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+@media (min-width: 768px) {
+  .sep {
+    height: 64px;
+  }
+}
+
+.sep--bottom {
+  bottom: -1px;
+}
+.sep--top {
+  top: -1px;
+}
 
 /* 1) Градиент-мостик */
-.sep--gradient::before{
-  content:""; position:absolute; inset:0;
-  background:linear-gradient(
+.sep--gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Fallback для старых браузеров без color-mix */
+  background: linear-gradient(to bottom, var(--bg) 0%, var(--next-bg) 100%);
+  opacity: 1;
+  /* Основной градиент — смешивание цветов в perceptual space */
+  background: linear-gradient(
     to bottom,
-    color-mix(in oklab, var(--bg) 20%, transparent) 0%,
-    color-mix(in oklab, var(--next-bg) 80%, transparent) 100%
+    color-mix(in oklch, var(--bg) 100%, var(--next-bg) 0%) 0%,
+    color-mix(in oklch, var(--bg) 50%, var(--next-bg) 50%) 50%,
+    color-mix(in oklch, var(--bg) 0%, var(--next-bg) 100%) 100%
   );
 }
 
 /* 2) Кривая без SVG — через clip-path ellipse */
-.sep--curve{ height:72px; }
-.sep--curve::before{
-  content:""; position:absolute; inset:-20% 0 0 0;
+.sep--curve {
+  height: 72px;
+}
+.sep--curve::before {
+  content: '';
+  position: absolute;
+  inset: -20% 0 0 0;
   background: linear-gradient(to bottom, var(--bg) 0%, var(--next-bg) 100%);
   clip-path: ellipse(120% 80% at 50% 10%); /* мягкая дуга */
-  opacity:.98;
+  opacity: 0.98;
 }
 
 /* Sticky мост между секциями */
-.sticky-bridge{ position:sticky; top:0; height:64px;
-  background: linear-gradient(to bottom, var(--bg) 0%, var(--next-bg) 100%); z-index:0;
+.sticky-bridge {
+  position: sticky;
+  top: 0;
+  height: 64px;
+  background: linear-gradient(to bottom, var(--bg) 0%, var(--next-bg) 100%);
+  z-index: 0;
 }
-@media (min-width:768px){ .sticky-bridge{ height:96px; } }
+@media (min-width: 768px) {
+  .sticky-bridge {
+    height: 96px;
+  }
+}
 
 /* Едва заметная микро-текстура без изображений */
-.page-grain{
-  position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.02;
+.page-grain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.02;
   background:
     repeating-linear-gradient(0deg, #000 0 1px, transparent 1px 2px),
     repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 2px);
-  mix-blend-mode:soft-light;
+  mix-blend-mode: soft-light;
 }
 
 /* sticky CTA полоса removed */

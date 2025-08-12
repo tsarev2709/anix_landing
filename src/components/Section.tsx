@@ -24,12 +24,12 @@ export default function Section({
   useEffect(() => {
     if (!nextBg && ref.current) {
       const next = ref.current.nextElementSibling as HTMLElement | null;
-      if (next)
-        ref.current.style.setProperty(
-          '--next-bg',
+      if (next) {
+        const nb =
           getComputedStyle(next).getPropertyValue('--bg') ||
-            (next.style as any).backgroundColor
-        );
+          (next.style as any).backgroundColor;
+        ref.current.style.setProperty('--next-bg', nb || '#141429');
+      }
     }
   }, [nextBg]);
 
