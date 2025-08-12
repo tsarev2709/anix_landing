@@ -35,15 +35,15 @@ body {
   top: -1px;
 }
 
-/* 1) Градиент-мостик */
+/* Плавный цветовой переход между секциями */
 .sep--gradient::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  /* Fallback для старых браузеров без color-mix */
+  /* fallback для браузеров без color-mix */
   background: linear-gradient(to bottom, var(--bg) 0%, var(--next-bg) 100%);
   opacity: 1;
-  /* Основной градиент — смешивание цветов в perceptual space */
+  /* Основной градиент в perceptual space */
   background: linear-gradient(
     to bottom,
     color-mix(in oklch, var(--bg) 100%, var(--next-bg) 0%) 0%,
