@@ -35,7 +35,6 @@ const AnixAILanding = () => {
   const [processInView, setProcessInView] = useState(false);
   const [processStarted, setProcessStarted] = useState(false);
   const [isPageBlurred, setIsPageBlurred] = useState(false);
-
   const heroRef = useRef(null);
   const processRef = useRef(null);
   const particlesRef = useRef(null);
@@ -1256,7 +1255,8 @@ const AnixAILanding = () => {
         </div>
       </section>
 
-      {/* Brief Section */}
+      {/* Brief Section (temporarily hidden) */}
+      {/*
       <section className="brief-section">
         <div className="container subscribe-container">
           <h3>
@@ -1276,6 +1276,7 @@ const AnixAILanding = () => {
           </a>
         </div>
       </section>
+      */}
 
       {/* Contact Section */}
       <section className="contact-section">
