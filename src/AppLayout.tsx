@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import StickyCTA from './components/StickyCTA';
 import { track } from './lib/analytics';
 
@@ -14,7 +14,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       lastSection.current = id;
     };
     const onCTAview = () => track('cta_view', { section: lastSection.current });
-    const onCTAclick = () => track('cta_click', { section: lastSection.current });
+    const onCTAclick = () =>
+      track('cta_click', { section: lastSection.current });
 
     window.addEventListener('section-inview', onIn);
     const obs = new MutationObserver(() => {

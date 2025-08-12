@@ -64,6 +64,9 @@
       "prettier --write",
       "node node_modules/eslint/bin/eslint.js --fix"
     ],
+    "src/**/*.{ts,tsx}": [
+      "prettier --write"
+    ],
     "src/**/*.{css,scss}": [
       "stylelint --fix"
     ]
