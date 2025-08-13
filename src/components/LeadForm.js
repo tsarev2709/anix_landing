@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { track } from '../lib/analytics';
+import { CONFIG, assertConfig } from '@/config';
+assertConfig();
 
 const telegramPattern =
   /^(@?[a-zA-Z0-9_]{5,32}|https?:\/\/t\.me\/[a-zA-Z0-9_]{5,32}|tg:\/\/resolve\?domain=[a-zA-Z0-9_]{5,32})$/;
@@ -52,7 +54,19 @@ const LeadForm = () => {
       const utm = window.location.search;
       const referrer = document.referrer;
       const pathname = window.location.pathname;
-      const res = await fetch(process.env.NEXT_PUBLIC_SUBMIT_LEAD_URL, {
+      if (
+        !CONFIG.SUBMIT_LEAD_URL ||
+        CONFIG.SUBMIT_LEAD_URL.includes('undefined')
+      ) {
+        console.error(
+          '[Form] Misconfigured SUBMIT_LEAD_URL:',
+          CONFIG.SUBMIT_LEAD_URL
+        );
+        setToast('Ошибка конфигурации формы');
+        setLoading(false);
+        return;
+      }
+      const res = await fetch(CONFIG.SUBMIT_LEAD_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -147,7 +161,7 @@ const LeadForm = () => {
         </div>
         <div
           className="cf-turnstile"
-          data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+          data-sitekey={CONFIG.TURNSTILE_SITE_KEY}
           data-callback={(token) =>
             setFormData((p) => ({ ...p, captchaToken: token }))
           }
@@ -167,7 +181,9 @@ const LeadForm = () => {
         </div>
       </form>
       {toast && (
-        <div className="mt-2 text-center text-sm text-white" role="status">{toast}</div>
+        <div className="mt-2 text-center text-sm text-white" role="status">
+          {toast}
+        </div>
       )}
       <a
         href="#"
