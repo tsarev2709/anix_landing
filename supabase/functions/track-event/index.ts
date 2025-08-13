@@ -1,55 +1,43 @@
+const ORIGIN = 'https://studio.anix-ai.pro';
+const CORS = {
+  'Access-Control-Allow-Origin': ORIGIN,
+  'Access-Control-Allow-Headers': 'content-type',
+  'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+};
+
+function json(body: any, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json', ...CORS },
+  });
+}
+
 const allowedEvents = [
   'form_view',
   'form_start',
   'form_submit',
-  'email_open',
+  'form_error',
   'section_transition',
   'cta_view',
   'cta_click',
 ];
 
-const ALLOW_ORIGIN = 'https://studio.anix-ai.pro';
-const cors = {
-  'Access-Control-Allow-Origin': ALLOW_ORIGIN,
-  'Access-Control-Allow-Headers': 'content-type',
-  'Access-Control-Allow-Methods': 'POST,OPTIONS,GET',
-};
-
-export default async function handler(req: Request): Promise<Response> {
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: cors });
-  }
-
-  if (req.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
-      status: 405,
-      headers: { ...cors, 'Content-Type': 'application/json' },
-    });
-  }
+async function handler(req: Request): Promise<Response> {
+  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
+  if (req.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
 
   try {
     const { event, leadId, meta } = await req.json();
     if (!allowedEvents.includes(event)) {
-      return new Response(JSON.stringify({ error: 'Unknown event' }), {
-        status: 400,
-        headers: { ...cors, 'Content-Type': 'application/json' },
-      });
+      return json({ error: 'bad_event' }, 400);
     }
 
     const SB_URL = Deno.env.get('SB_URL') || process.env.SB_URL;
     const SB_SERVICE_ROLE_KEY =
       Deno.env.get('SB_SERVICE_ROLE_KEY') || process.env.SB_SERVICE_ROLE_KEY;
+    if (!SB_URL || !SB_SERVICE_ROLE_KEY) return json({ error: 'misconfigured' }, 500);
 
-    if (!SB_URL || !SB_SERVICE_ROLE_KEY) {
-      return new Response(JSON.stringify({ error: 'misconfigured' }), {
-        status: 500,
-        headers: { ...cors, 'Content-Type': 'application/json' },
-      });
-    }
-
-    const { createClient } = await import(
-      'https://esm.sh/@supabase/supabase-js@2'
-    );
+    const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
     const sb = createClient(SB_URL, SB_SERVICE_ROLE_KEY);
     const ip =
       req.headers.get('x-forwarded-for') ||
@@ -64,20 +52,15 @@ export default async function handler(req: Request): Promise<Response> {
       ip,
       ua,
     });
-    if (error) {
-      return new Response(JSON.stringify({ error: 'Database error' }), {
-        status: 500,
-        headers: { ...cors, 'Content-Type': 'application/json' },
-      });
-    }
-    return new Response(JSON.stringify({ ok: true }), {
-      status: 200,
-      headers: { ...cors, 'Content-Type': 'application/json' },
-    });
-  } catch (err: any) {
-    return new Response(JSON.stringify({ error: 'Unexpected error' }), {
-      status: 500,
-      headers: { ...cors, 'Content-Type': 'application/json' },
-    });
+    if (error) return json({ error: 'Database error' }, 500);
+
+    return json({ ok: true });
+  } catch (err) {
+    return json({ error: 'Unexpected error' }, 500);
   }
 }
+
+if (typeof Deno !== 'undefined' && typeof (Deno as any).serve === 'function') {
+  (Deno as any).serve(handler);
+}
+export default handler;

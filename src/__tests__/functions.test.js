@@ -90,7 +90,7 @@ describe('submit-lead', () => {
   });
 
   test('success returns leadId', async () => {
-    jest.doMock('@supabase/supabase-js', () => ({
+    jest.doMock('https://esm.sh/@supabase/supabase-js@2', () => ({
       createClient: () => ({
         from: () => ({
           insert: () => ({
@@ -105,8 +105,8 @@ describe('submit-lead', () => {
     const submitLead =
       require('../../supabase/functions/submit-lead/index.js').default;
     process.env.TURNSTILE_SECRET_KEY = 'secret';
-    process.env.SUPABASE_URL = 'https://example.supabase.co';
-    process.env.SUPABASE_SERVICE_ROLE_KEY = 'role';
+    process.env.SB_URL = 'https://example.supabase.co';
+    process.env.SB_SERVICE_ROLE_KEY = 'role';
     process.env.RESEND_API_KEY = 'resend';
     global.fetch = jest.fn((url) => {
       if (url.includes('turnstile')) {
@@ -114,7 +114,7 @@ describe('submit-lead', () => {
           json: () => Promise.resolve({ success: true }),
         });
       }
-      return Promise.resolve({ json: () => Promise.resolve({}) });
+      return Promise.resolve({ ok: true, json: () => Promise.resolve({}) });
     });
     const req = new Request('https://example.com', {
       method: 'POST',
@@ -137,7 +137,7 @@ describe('submit-lead', () => {
   });
 
   test('captcha fail returns 400', async () => {
-    jest.doMock('@supabase/supabase-js', () => ({
+    jest.doMock('https://esm.sh/@supabase/supabase-js@2', () => ({
       createClient: () => ({
         from: () => ({
           insert: () => ({
@@ -175,11 +175,13 @@ describe('submit-lead', () => {
 
 describe('email-open', () => {
   test('returns png', async () => {
-    jest.doMock('@supabase/supabase-js', () => ({
+    jest.doMock('https://esm.sh/@supabase/supabase-js@2', () => ({
       createClient: () => ({
         from: () => ({ insert: () => Promise.resolve({ error: null }) }),
       }),
     }));
+    process.env.SB_URL = 'https://example.supabase.co';
+    process.env.SB_SERVICE_ROLE_KEY = 'role';
     const emailOpen =
       require('../../supabase/functions/email-open/index.js').default;
     const req = new Request('https://example.com?lead_id=abc');

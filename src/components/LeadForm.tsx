@@ -1,12 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { track } from '../lib/analytics';
+import React, { useEffect, useState } from 'react';
 import { CONFIG, assertConfig } from '@/config';
-assertConfig();
+import { track } from '../lib/analytics';
+
+function withTimeout<T>(p: Promise<T>, ms = 15000) {
+  const ac = new AbortController();
+  const t = setTimeout(() => ac.abort(), ms);
+  return Promise.race([
+    p.finally(() => clearTimeout(t)),
+    new Promise<T>((_, rej) =>
+      ac.signal.addEventListener('abort', () => rej(new Error('timeout')))
+    ),
+  ]) as Promise<T>;
+}
+
+async function submitLead(payload: any) {
+  if (!CONFIG.SUBMIT_LEAD_URL || CONFIG.SUBMIT_LEAD_URL.includes('undefined')) {
+    throw new Error('misconfigured');
+  }
+  try {
+    const res = await withTimeout(
+      fetch(CONFIG.SUBMIT_LEAD_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+    );
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      const msg = data?.error || data?.message || `HTTP ${res.status}`;
+      const err: any = new Error(String(msg));
+      err.code = res.status;
+      throw err;
+    }
+    return data;
+  } catch (e: any) {
+    if (e?.name === 'AbortError' || e?.message === 'timeout')
+      throw new Error('network_timeout');
+    if (e?.message === 'Failed to fetch') throw new Error('network_failed');
+    throw e;
+  }
+}
 
 const telegramPattern =
   /^(@?[a-zA-Z0-9_]{5,32}|https?:\/\/t\.me\/[a-zA-Z0-9_]{5,32}|tg:\/\/resolve\?domain=[a-zA-Z0-9_]{5,32})$/;
 
-const LeadForm = () => {
+const LeadForm: React.FC = () => {
   const [formData, setFormData] = useState({
     email: '',
     position: '',
@@ -16,10 +54,11 @@ const LeadForm = () => {
   });
   const [started, setStarted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [toast, setToast] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorText, setErrorText] = useState<string | null>(null);
 
   useEffect(() => {
+    assertConfig();
     const utm = window.location.search;
     const referrer = document.referrer;
     const pathname = window.location.pathname;
@@ -33,7 +72,7 @@ const LeadForm = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     onFirstInput();
     setFormData((prev) => ({
@@ -42,56 +81,63 @@ const LeadForm = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setErrorText(null);
+    setSubmitting(true);
     const { email, position, telegram, consent, captchaToken } = formData;
-    if (!email || !position || !telegramPattern.test(telegram) || !consent) {
-      setToast('Проверьте форму');
+    if (!captchaToken) {
+      setErrorText('Подтвердите, что вы не бот (капча).');
+      track('form_error', { kind: 'captcha', raw: 'missing_token' });
+      setSubmitting(false);
       return;
     }
-    setLoading(true);
-    try {
-      const utm = window.location.search;
-      const referrer = document.referrer;
-      const pathname = window.location.pathname;
-      if (
-        !CONFIG.SUBMIT_LEAD_URL ||
-        CONFIG.SUBMIT_LEAD_URL.includes('undefined')
-      ) {
-        console.error(
-          '[Form] Misconfigured SUBMIT_LEAD_URL:',
-          CONFIG.SUBMIT_LEAD_URL
-        );
-        setToast('Ошибка конфигурации формы');
-        setLoading(false);
-        return;
-      }
-      const res = await fetch(CONFIG.SUBMIT_LEAD_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email,
-          position,
-          telegram,
-          consent,
-          captchaToken,
-          utm,
-          referrer,
-          pathname,
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Ошибка');
-      track('form_submit', { leadId: data.leadId });
-      setSubmitted(true);
-      setToast('Спасибо! Чек-лист отправлен вам на почту.');
-    } catch (err) {
-      setToast(err.message);
-    } finally {
-      setLoading(false);
-      setTimeout(() => setToast(''), 4000);
+    if (!telegramPattern.test(telegram)) {
+      setErrorText('Некорректный Telegram.');
+      track('form_error', { kind: 'telegram', raw: telegram });
+      setSubmitting(false);
+      return;
     }
-  };
+    const utm = window.location.search;
+    const referrer = document.referrer;
+    const pathname = window.location.pathname;
+    const payload = {
+      email,
+      position,
+      telegram,
+      consent,
+      captchaToken,
+      utm,
+      referrer,
+      pathname,
+    };
+    try {
+      const data = await submitLead(payload);
+      track('form_submit', { leadId: data?.leadId });
+      setSubmitted(true);
+      // here could clear form if needed
+    } catch (err: any) {
+      let msg = 'Не удалось отправить. Попробуйте обновить страницу.';
+      let kind: string = 'server';
+      if (err?.message === 'misconfigured') {
+        msg = 'Неверная конфигурация формы (URL).';
+        kind = 'config';
+      } else if (err?.message === 'network_timeout') {
+        msg = 'Сервер долго не отвечает. Попробуйте ещё раз.';
+        kind = 'network_timeout';
+      } else if (err?.message === 'network_failed') {
+        msg = 'Сеть недоступна или CORS. Проверьте подключение.';
+        kind = 'network_failed';
+      } else if (err?.code === 400 && /captcha/i.test(err?.message)) {
+        msg = 'Не прошла проверка капчи. Обновите страницу.';
+        kind = 'captcha';
+      }
+      setErrorText(msg);
+      track('form_error', { kind, raw: String(err?.message || err) });
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   if (submitted) {
     return (
@@ -103,7 +149,7 @@ const LeadForm = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={onSubmit} className="space-y-4">
         <div>
           <label className="block text-sm mb-1" htmlFor="email">
             Email*
@@ -162,29 +208,29 @@ const LeadForm = () => {
         <div
           className="cf-turnstile"
           data-sitekey={CONFIG.TURNSTILE_SITE_KEY}
-          data-callback={(token) =>
+          data-callback={(token: string) =>
             setFormData((p) => ({ ...p, captchaToken: token }))
           }
         />
         <div className="space-y-1">
           <button
             type="submit"
-            disabled={loading}
+            disabled={submitting}
             className="w-full bg-anix-purple hover:bg-anix-teal text-white py-2 rounded transition-colors disabled:opacity-50"
           >
-            {loading ? 'Отправка...' : '📩 Получить чек-лист в Telegram'}
+            {submitting ? 'Отправка...' : '📩 Получить чек-лист в Telegram'}
           </button>
+          {errorText && (
+            <div className="mt-2 text-center text-sm text-white" role="status">
+              {errorText}
+            </div>
+          )}
           <p className="text-sm text-[#B0B0B0] text-center">
             Чек-лист придёт в Telegram, а при желании разберём его вместе с
             вами.
           </p>
         </div>
       </form>
-      {toast && (
-        <div className="mt-2 text-center text-sm text-white" role="status">
-          {toast}
-        </div>
-      )}
       <a
         href="#"
         className="block text-center text-xs text-gray-400 underline mt-2"
