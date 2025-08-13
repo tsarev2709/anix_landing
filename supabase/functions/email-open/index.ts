@@ -1,9 +1,4 @@
-const ORIGIN = 'https://studio.anix-ai.pro';
-const CORS = {
-  'Access-Control-Allow-Origin': ORIGIN,
-  'Access-Control-Allow-Headers': 'content-type',
-  'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
-};
+import { CORS } from '../_shared/cors.ts';
 
 function json(body: any, status = 200) {
   return new Response(JSON.stringify(body), {

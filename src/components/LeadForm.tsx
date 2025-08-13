@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CONFIG, assertConfig } from '@/config';
 import { track } from '../lib/analytics';
+import { postJson } from '../lib/net';
 
 function withTimeout<T>(p: Promise<T>, ms = 15000) {
   const ac = new AbortController();
@@ -18,20 +19,7 @@ async function submitLead(payload: any) {
     throw new Error('misconfigured');
   }
   try {
-    const res = await withTimeout(
-      fetch(CONFIG.SUBMIT_LEAD_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-    );
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      const msg = data?.error || data?.message || `HTTP ${res.status}`;
-      const err: any = new Error(String(msg));
-      err.code = res.status;
-      throw err;
-    }
+    const data = await withTimeout(postJson(CONFIG.SUBMIT_LEAD_URL, payload));
     return data;
   } catch (e: any) {
     if (e?.name === 'AbortError' || e?.message === 'timeout')

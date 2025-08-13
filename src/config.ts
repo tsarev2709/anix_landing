@@ -7,6 +7,7 @@ export const CONFIG = {
   SUBMIT_LEAD_URL: process.env.REACT_APP_SUBMIT_LEAD_URL || FALLBACK_SUBMIT,
   TRACK_EVENT_URL: process.env.REACT_APP_TRACK_EVENT_URL || FALLBACK_TRACK,
   TURNSTILE_SITE_KEY: process.env.REACT_APP_TURNSTILE_SITE_KEY || '',
+  SUPABASE_ANON_KEY: process.env.REACT_APP_SUPABASE_ANON_KEY || '',
 };
 
 export function assertConfig() {
