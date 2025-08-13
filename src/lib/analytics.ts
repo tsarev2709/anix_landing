@@ -1,5 +1,7 @@
+import { CONFIG } from '@/config';
+
 export async function track(event: string, payload: Record<string, any> = {}) {
-  const url = process.env.NEXT_PUBLIC_TRACK_EVENT_URL;
+  const url = CONFIG.TRACK_EVENT_URL;
   if (!url) return;
   try {
     await fetch(url, {

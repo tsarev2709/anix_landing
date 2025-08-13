@@ -1,4 +1,7 @@
 import React from 'react';
+import { CONFIG } from '@/config';
+console.info('[CFG] SUBMIT:', CONFIG.SUBMIT_LEAD_URL);
+console.info('[CFG] TRACK :', CONFIG.TRACK_EVENT_URL);
 import ReactDOM from 'react-dom/client';
 import './App.css';
 import './styles/sections.css';
