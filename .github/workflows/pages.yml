@@ -45,6 +45,12 @@ jobs:
 
       - name: Build
         if: steps.npm-install.outcome == 'success'
+        env:
+          REACT_APP_SUBMIT_LEAD_URL: ${{ secrets.REACT_APP_SUBMIT_LEAD_URL }}
+          REACT_APP_TRACK_EVENT_URL: ${{ secrets.REACT_APP_TRACK_EVENT_URL }}
+          REACT_APP_TURNSTILE_SITE_KEY: ${{ secrets.REACT_APP_TURNSTILE_SITE_KEY }}
+          REACT_APP_SUPABASE_ANON_KEY: ${{ secrets.REACT_APP_SUPABASE_ANON_KEY }}
+          CI: false
         run: npm run build
 
       - name: Prepare 404 page
