@@ -1,28 +1,30 @@
-import { serve } from 'https://deno.land/std@0.224.0/http/server.ts';
-
-const ALLOW_ORIGIN = 'https://studio.anix-ai.pro';
-const cors = {
-  'Access-Control-Allow-Origin': ALLOW_ORIGIN,
+const ORIGIN = 'https://studio.anix-ai.pro';
+const CORS = {
+  'Access-Control-Allow-Origin': ORIGIN,
   'Access-Control-Allow-Headers': 'content-type',
-  'Access-Control-Allow-Methods': 'POST,OPTIONS,GET',
+  'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
 };
+
+function json(body: any, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json', ...CORS },
+  });
+}
 
 const PNG_BASE64 =
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAukB9oK9E2wAAAAASUVORK5CYII='; // 1x1 прозрачный png
 
-serve(async (req) => {
+async function handler(req: Request): Promise<Response> {
   if (req.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: cors });
+    return new Response(null, { status: 204, headers: CORS });
   }
 
   const SB_URL = Deno.env.get('SB_URL');
   const SB_SERVICE_ROLE_KEY = Deno.env.get('SB_SERVICE_ROLE_KEY');
 
   if (!SB_URL || !SB_SERVICE_ROLE_KEY) {
-    return new Response(JSON.stringify({ error: 'misconfigured' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json', ...cors },
-    });
+    return json({ error: 'misconfigured' }, 500);
   }
 
   const url = new URL(req.url);
@@ -51,8 +53,13 @@ serve(async (req) => {
       headers: {
         'Content-Type': 'image/png',
         'Cache-Control': 'no-store',
-        ...cors,
+        ...CORS,
       },
     }
   );
-});
+}
+
+if (typeof Deno !== 'undefined' && typeof (Deno as any).serve === 'function') {
+  (Deno as any).serve(handler);
+}
+export default handler;
