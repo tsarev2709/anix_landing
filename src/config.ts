@@ -19,4 +19,6 @@ export function assertConfig() {
   if (!CONFIG.TURNSTILE_SITE_KEY) missing.push('REACT_APP_TURNSTILE_SITE_KEY');
   if (missing.length)
     console.warn('[CFG] Using FALLBACK URLs. Missing:', missing.join(', '));
+  if (!CONFIG.SUPABASE_ANON_KEY)
+    console.warn('[CFG] Missing REACT_APP_SUPABASE_ANON_KEY');
 }
