@@ -1,232 +1,212 @@
-import React, { useEffect, useState } from 'react';
-import { CONFIG, assertConfig } from '@/config';
-import { track } from '../lib/analytics';
-import { postJson } from '../lib/net';
+import React from 'react';
+import { CONFIG } from '../config';
+import { postJson, trackEvent } from '../lib/net';
 
-function withTimeout<T>(p: Promise<T>, ms = 15000) {
-  const ac = new AbortController();
-  const t = setTimeout(() => ac.abort(), ms);
-  return Promise.race([
-    p.finally(() => clearTimeout(t)),
-    new Promise<T>((_, rej) =>
-      ac.signal.addEventListener('abort', () => rej(new Error('timeout')))
-    ),
-  ]) as Promise<T>;
-}
-
-async function submitLead(payload: any) {
-  if (!CONFIG.SUBMIT_LEAD_URL || CONFIG.SUBMIT_LEAD_URL.includes('undefined')) {
-    throw new Error('misconfigured');
-  }
-  try {
-    const data = await withTimeout(postJson(CONFIG.SUBMIT_LEAD_URL, payload));
-    return data;
-  } catch (e: any) {
-    if (e?.name === 'AbortError' || e?.message === 'timeout')
-      throw new Error('network_timeout');
-    if (e?.message === 'Failed to fetch') throw new Error('network_failed');
-    throw e;
+declare global {
+  interface Window {
+    turnstile?: any;
   }
 }
 
-const telegramPattern =
-  /^(@?[a-zA-Z0-9_]{5,32}|https?:\/\/t\.me\/[a-zA-Z0-9_]{5,32}|tg:\/\/resolve\?domain=[a-zA-Z0-9_]{5,32})$/;
+export default function LeadForm() {
+  const [email, setEmail] = React.useState('');
+  const [position, setPosition] = React.useState('');
+  const [telegram, setTelegram] = React.useState('');
+  const [consent, setConsent] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+  const siteKey = CONFIG.TURNSTILE_SITE_KEY;
 
-const LeadForm: React.FC = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    position: '',
-    telegram: '',
-    consent: false,
-    captchaToken: '',
-  });
-  const [started, setStarted] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [errorText, setErrorText] = useState<string | null>(null);
+  const captchaRef = React.useRef<HTMLDivElement>(null);
+  const captchaId = React.useRef<any>(null);
+  const tokenRef = React.useRef<string | null>(null);
 
-  useEffect(() => {
-    assertConfig();
-    const utm = window.location.search;
-    const referrer = document.referrer;
-    const pathname = window.location.pathname;
-    track('form_view', { utm, referrer, pathname });
-  }, []);
+  React.useEffect(() => {
+    if (!siteKey) return;
+    if (document.getElementById('cf-turnstile')) return;
+    const s = document.createElement('script');
+    s.id = 'cf-turnstile';
+    s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+    s.async = true;
+    s.defer = true;
+    document.head.appendChild(s);
+  }, [siteKey]);
 
-  const onFirstInput = () => {
-    if (!started) {
-      track('form_start');
-      setStarted(true);
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    onFirstInput();
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
-  };
-
-  async function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setErrorText(null);
-    setSubmitting(true);
-    const { email, position, telegram, consent, captchaToken } = formData;
-    if (!captchaToken) {
-      setErrorText('Подтвердите, что вы не бот (капча).');
-      track('form_error', { kind: 'captcha', raw: 'missing_token' });
-      setSubmitting(false);
-      return;
-    }
-    if (!telegramPattern.test(telegram)) {
-      setErrorText('Некорректный Telegram.');
-      track('form_error', { kind: 'telegram', raw: telegram });
-      setSubmitting(false);
-      return;
-    }
-    const utm = window.location.search;
-    const referrer = document.referrer;
-    const pathname = window.location.pathname;
-    const payload = {
-      email,
-      position,
-      telegram,
-      consent,
-      captchaToken,
-      utm,
-      referrer,
-      pathname,
-    };
-    try {
-      const data = await submitLead(payload);
-      track('form_submit', { leadId: data?.leadId });
-      setSubmitted(true);
-      // here could clear form if needed
-    } catch (err: any) {
-      let msg = 'Не удалось отправить. Попробуйте обновить страницу.';
-      let kind: string = 'server';
-      if (err?.message === 'misconfigured') {
-        msg = 'Неверная конфигурация формы (URL).';
-        kind = 'config';
-      } else if (err?.message === 'network_timeout') {
-        msg = 'Сервер долго не отвечает. Попробуйте ещё раз.';
-        kind = 'network_timeout';
-      } else if (err?.message === 'network_failed') {
-        msg = 'Сеть недоступна или CORS. Проверьте подключение.';
-        kind = 'network_failed';
-      } else if (err?.code === 400 && /captcha/i.test(err?.message)) {
-        msg = 'Не прошла проверка капчи. Обновите страницу.';
-        kind = 'captcha';
+  React.useEffect(() => {
+    if (!siteKey) return;
+    const i = setInterval(() => {
+      if (window.turnstile && captchaRef.current && !captchaId.current) {
+        captchaId.current = window.turnstile.render(captchaRef.current, {
+          sitekey: siteKey,
+          theme: 'dark',
+          size: 'invisible',
+          callback: (t: string) => {
+            tokenRef.current = t;
+          },
+        });
+        clearInterval(i);
       }
-      setErrorText(msg);
-      track('form_error', { kind, raw: String(err?.message || err) });
-    } finally {
-      setSubmitting(false);
-    }
+    }, 100);
+    return () => clearInterval(i);
+  }, [siteKey]);
+
+  async function ensureToken(timeoutMs = 8000) {
+    if (tokenRef.current) return tokenRef.current;
+    if (!window.turnstile || !captchaId.current)
+      throw new Error('captcha_not_ready');
+    const p = new Promise<string>((resolve, reject) => {
+      const to = setTimeout(
+        () => reject(new Error('captcha_timeout')),
+        timeoutMs
+      );
+      const cb = (t: string) => {
+        clearTimeout(to);
+        resolve(t);
+      };
+      window.turnstile.render(captchaRef.current, {
+        sitekey: siteKey,
+        theme: 'dark',
+        size: 'invisible',
+        callback: cb,
+      });
+      window.turnstile.execute(captchaId.current);
+    });
+    const t = await p;
+    tokenRef.current = t;
+    return t;
   }
 
-  if (submitted) {
-    return (
-      <p className="text-center text-green-400">
-        Спасибо! Чек-лист отправлен вам на почту.
-      </p>
-    );
-  }
+  const onSubmit: React.FormEventHandler = async (e) => {
+    e.preventDefault();
+    setError(null);
+    if (!CONFIG.SUBMIT_LEAD_URL) {
+      setError('Ошибка конфигурации формы.');
+      return;
+    }
+    if (!consent) {
+      setError('Необходимо согласие на обработку данных.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const captchaToken = await ensureToken();
+      const utm = Object.fromEntries(
+        new URLSearchParams(window.location.search)
+      );
+      const referrer = document.referrer || null;
+      const pathname = window.location.pathname;
+
+      await postJson(CONFIG.SUBMIT_LEAD_URL, {
+        email,
+        position,
+        telegram,
+        consent,
+        captchaToken,
+        utm,
+        referrer,
+        pathname,
+      });
+
+      alert('Чек-лист отправлен на ваш email. Проверьте почту!');
+      setEmail('');
+      setPosition('');
+      setTelegram('');
+      setConsent(false);
+      tokenRef.current = null;
+      if (window.turnstile && captchaId.current)
+        window.turnstile.reset(captchaId.current);
+    } catch (e: any) {
+      const code = e?.message;
+      const detail = e?.detail;
+      let msg = 'Не удалось отправить форму.';
+      if (code === 'captcha_timeout' || code === 'captcha_not_ready')
+        msg = 'Капча не успела выполниться. Попробуйте ещё раз.';
+      if (code === 'timeout') msg = 'Сервер долго не отвечает.';
+      if (code === 'resend_error')
+        msg =
+          'Письмо не отправилось. Напишите нам в Telegram — пришлём вручную.';
+      setError(detail ? `${msg} (${detail})` : msg);
+      await trackEvent(CONFIG.TRACK_EVENT_URL, {
+        type: 'form_error',
+        code,
+        detail,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <>
-      <form onSubmit={onSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm mb-1" htmlFor="email">
-            Email*
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full px-3 py-2 rounded bg-anix-dark border border-gray-600 text-white"
-          />
-        </div>
-        <div>
-          <label className="block text-sm mb-1" htmlFor="position">
-            Должность*
-          </label>
-          <input
-            id="position"
-            name="position"
-            required
-            value={formData.position}
-            onChange={handleChange}
-            className="w-full px-3 py-2 rounded bg-anix-dark border border-gray-600 text-white"
-          />
-        </div>
-        <div>
-          <label className="block text-sm mb-1" htmlFor="telegram">
-            Telegram*
-          </label>
-          <input
-            id="telegram"
-            name="telegram"
-            required
-            pattern={telegramPattern.source}
-            value={formData.telegram}
-            onChange={handleChange}
-            className="w-full px-3 py-2 rounded bg-anix-dark border border-gray-600 text-white"
-          />
-        </div>
-        <div className="flex items-center">
-          <input
-            id="consent"
-            name="consent"
-            type="checkbox"
-            required
-            checked={formData.consent}
-            onChange={handleChange}
-            className="mr-2"
-          />
-          <label htmlFor="consent" className="text-sm">
-            Я согласен(а) на обработку персональных данных
-          </label>
-        </div>
-        <div
-          className="cf-turnstile"
-          data-sitekey={CONFIG.TURNSTILE_SITE_KEY}
-          data-callback={(token: string) =>
-            setFormData((p) => ({ ...p, captchaToken: token }))
-          }
+    <form onSubmit={onSubmit} className="space-y-4">
+      <div>
+        <label className="block text-sm mb-1" htmlFor="email">
+          Email*
+        </label>
+        <input
+          id="email"
+          type="email"
+          value={email}
+          required
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full px-3 py-2 rounded bg-anix-dark border border-gray-600 text-white"
         />
-        <div className="space-y-1">
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full bg-anix-purple hover:bg-anix-teal text-white py-2 rounded transition-colors disabled:opacity-50"
-          >
-            {submitting ? 'Отправка...' : '📩 Получить чек-лист в Telegram'}
-          </button>
-          {errorText && (
-            <div className="mt-2 text-center text-sm text-white" role="status">
-              {errorText}
-            </div>
-          )}
-          <p className="text-sm text-[#B0B0B0] text-center">
-            Чек-лист придёт в Telegram, а при желании разберём его вместе с
-            вами.
-          </p>
-        </div>
-      </form>
-      <a
-        href="#"
-        className="block text-center text-xs text-gray-400 underline mt-2"
-      >
-        Политика конфиденциальности
-      </a>
-    </>
+      </div>
+      <div>
+        <label className="block text-sm mb-1" htmlFor="position">
+          Должность*
+        </label>
+        <input
+          id="position"
+          value={position}
+          required
+          onChange={(e) => setPosition(e.target.value)}
+          className="w-full px-3 py-2 rounded bg-anix-dark border border-gray-600 text-white"
+        />
+      </div>
+      <div>
+        <label className="block text-sm mb-1" htmlFor="telegram">
+          Telegram*
+        </label>
+        <input
+          id="telegram"
+          value={telegram}
+          required
+          onChange={(e) => setTelegram(e.target.value)}
+          className="w-full px-3 py-2 rounded bg-anix-dark border border-gray-600 text-white"
+        />
+      </div>
+      <div className="flex items-center">
+        <input
+          id="consent"
+          type="checkbox"
+          checked={consent}
+          onChange={(e) => setConsent(e.target.checked)}
+          className="mr-2"
+          required
+        />
+        <label htmlFor="consent" className="text-sm">
+          Я согласен(а) на обработку персональных данных
+        </label>
+      </div>
+      <div ref={captchaRef} aria-hidden="true" />
+      <div className="space-y-1">
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-anix-purple hover:bg-anix-teal text-white py-2 rounded transition-colors disabled:opacity-50"
+        >
+          {loading ? 'Отправка...' : '📩 Получить чек-лист в Telegram'}
+        </button>
+        {error && (
+          <div className="mt-2 text-center text-sm text-white" role="status">
+            {error}
+          </div>
+        )}
+        <p className="text-sm text-[#B0B0B0] text-center">
+          Чек-лист придёт в Telegram, а при желании разберём его вместе с вами.
+        </p>
+      </div>
+    </form>
   );
-};
-
-export default LeadForm;
+}
