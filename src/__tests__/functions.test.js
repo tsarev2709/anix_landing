@@ -90,32 +90,30 @@ describe('submit-lead', () => {
   });
 
   test('success returns leadId', async () => {
-    jest.doMock('https://esm.sh/@supabase/supabase-js@2', () => ({
-      createClient: () => ({
-        from: () => ({
-          insert: () => ({
-            select: () => ({
-              single: () =>
-                Promise.resolve({ data: { id: '123' }, error: null }),
+    jest.doMock(
+      'https://esm.sh/@supabase/supabase-js@2',
+      () => ({
+        createClient: () => ({
+          from: () => ({
+            insert: () => ({
+              select: () => ({
+                single: () =>
+                  Promise.resolve({ data: { id: '123' }, error: null }),
+              }),
             }),
           }),
         }),
       }),
-    }));
+      { virtual: true }
+    );
     const submitLead =
       require('../../supabase/functions/submit-lead/index.js').default;
-    process.env.TURNSTILE_SECRET_KEY = 'secret';
     process.env.SB_URL = 'https://example.supabase.co';
     process.env.SB_SERVICE_ROLE_KEY = 'role';
     process.env.RESEND_API_KEY = 'resend';
-    global.fetch = jest.fn((url) => {
-      if (url.includes('turnstile')) {
-        return Promise.resolve({
-          json: () => Promise.resolve({ success: true }),
-        });
-      }
-      return Promise.resolve({ ok: true, json: () => Promise.resolve({}) });
-    });
+    global.fetch = jest.fn(() =>
+      Promise.resolve({ ok: true, json: () => Promise.resolve({}) })
+    );
     const req = new Request('https://example.com', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -124,7 +122,6 @@ describe('submit-lead', () => {
         position: 'CEO',
         telegram: '@user123',
         consent: true,
-        captchaToken: 'token',
         utm: '',
         referrer: '',
         pathname: '/',
@@ -135,51 +132,19 @@ describe('submit-lead', () => {
     const body = await res.json();
     expect(body.leadId).toBe('123');
   });
-
-  test('captcha fail returns 400', async () => {
-    jest.doMock('https://esm.sh/@supabase/supabase-js@2', () => ({
-      createClient: () => ({
-        from: () => ({
-          insert: () => ({
-            select: () => ({
-              single: () => Promise.resolve({ data: { id: '1' }, error: null }),
-            }),
-          }),
-        }),
-      }),
-    }));
-    const submitLead =
-      require('../../supabase/functions/submit-lead/index.js').default;
-    process.env.TURNSTILE_SECRET_KEY = 'secret';
-    global.fetch = jest.fn(() =>
-      Promise.resolve({ json: () => Promise.resolve({ success: false }) })
-    );
-    const req = new Request('https://example.com', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        email: 'a@b.com',
-        position: 'CEO',
-        telegram: '@user123',
-        consent: true,
-        captchaToken: 'bad',
-        utm: '',
-        referrer: '',
-        pathname: '/',
-      }),
-    });
-    const res = await submitLead(req);
-    expect(res.status).toBe(400);
-  });
 });
 
 describe('email-open', () => {
   test('returns png', async () => {
-    jest.doMock('https://esm.sh/@supabase/supabase-js@2', () => ({
-      createClient: () => ({
-        from: () => ({ insert: () => Promise.resolve({ error: null }) }),
+    jest.doMock(
+      'https://esm.sh/@supabase/supabase-js@2',
+      () => ({
+        createClient: () => ({
+          from: () => ({ insert: () => Promise.resolve({ error: null }) }),
+        }),
       }),
-    }));
+      { virtual: true }
+    );
     process.env.SB_URL = 'https://example.supabase.co';
     process.env.SB_SERVICE_ROLE_KEY = 'role';
     const emailOpen =

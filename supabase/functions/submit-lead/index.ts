@@ -53,7 +53,6 @@ async function handler(req: Request): Promise<Response> {
       position,
       telegram,
       consent,
-      captchaToken,
       utm,
       referrer,
       pathname,
@@ -67,18 +66,6 @@ async function handler(req: Request): Promise<Response> {
     ) {
       return json({ error: 'invalid_input' }, 400);
     }
-
-    const turnstileSecret = Deno.env.get('TURNSTILE_SECRET_KEY') ||
-      process.env.TURNSTILE_SECRET_KEY;
-    if (!turnstileSecret) return json({ error: 'misconfigured' }, 500);
-
-    const turnRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ secret: turnstileSecret, response: captchaToken }),
-    });
-    const turnJson = await turnRes.json();
-    if (!turnJson.success) return json({ error: 'Captcha verification failed' }, 400);
 
     const SB_URL = Deno.env.get('SB_URL') || process.env.SB_URL;
     const SB_SERVICE_ROLE_KEY =
