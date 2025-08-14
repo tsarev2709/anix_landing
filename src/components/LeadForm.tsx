@@ -44,6 +44,7 @@ export default function LeadForm() {
             tokenRef.current = t;
           },
         });
+        window.turnstile.execute(captchaId.current);
         clearInterval(i);
       }
     }, 100);
@@ -59,20 +60,19 @@ export default function LeadForm() {
         () => reject(new Error('captcha_timeout')),
         timeoutMs
       );
-      const cb = (t: string) => {
-        clearTimeout(to);
-        resolve(t);
+      const check = () => {
+        if (tokenRef.current) {
+          clearTimeout(to);
+          resolve(tokenRef.current);
+        } else {
+          setTimeout(check, 100);
+        }
       };
-      window.turnstile.render(captchaRef.current, {
-        sitekey: siteKey,
-        theme: 'dark',
-        size: 'invisible',
-        callback: cb,
-      });
+      check();
+      window.turnstile.reset(captchaId.current);
       window.turnstile.execute(captchaId.current);
     });
     const t = await p;
-    tokenRef.current = t;
     return t;
   }
 
@@ -138,75 +138,78 @@ export default function LeadForm() {
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
-      <div>
-        <label className="block text-sm mb-1" htmlFor="email">
-          Email*
-        </label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          required
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-3 py-2 rounded bg-anix-dark border border-gray-600 text-white"
-        />
-      </div>
-      <div>
-        <label className="block text-sm mb-1" htmlFor="position">
-          Должность*
-        </label>
-        <input
-          id="position"
-          value={position}
-          required
-          onChange={(e) => setPosition(e.target.value)}
-          className="w-full px-3 py-2 rounded bg-anix-dark border border-gray-600 text-white"
-        />
-      </div>
-      <div>
-        <label className="block text-sm mb-1" htmlFor="telegram">
-          Telegram*
-        </label>
-        <input
-          id="telegram"
-          value={telegram}
-          required
-          onChange={(e) => setTelegram(e.target.value)}
-          className="w-full px-3 py-2 rounded bg-anix-dark border border-gray-600 text-white"
-        />
-      </div>
-      <div className="flex items-center">
-        <input
-          id="consent"
-          type="checkbox"
-          checked={consent}
-          onChange={(e) => setConsent(e.target.checked)}
-          className="mr-2"
-          required
-        />
-        <label htmlFor="consent" className="text-sm">
-          Я согласен(а) на обработку персональных данных
-        </label>
-      </div>
-      <div ref={captchaRef} aria-hidden="true" />
-      <div className="space-y-1">
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-anix-purple hover:bg-anix-teal text-white py-2 rounded transition-colors disabled:opacity-50"
-        >
-          {loading ? 'Отправка...' : '📩 Получить чек-лист в Telegram'}
-        </button>
-        {error && (
-          <div className="mt-2 text-center text-sm text-white" role="status">
-            {error}
-          </div>
-        )}
-        <p className="text-sm text-[#B0B0B0] text-center">
-          Чек-лист придёт в Telegram, а при желании разберём его вместе с вами.
-        </p>
-      </div>
-    </form>
+    <>
+      <div ref={captchaRef} className="hidden" />
+      <form onSubmit={onSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm mb-1" htmlFor="email">
+            Email*
+          </label>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            required
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-3 py-2 rounded bg-anix-dark border border-gray-600 text-white"
+          />
+        </div>
+        <div>
+          <label className="block text-sm mb-1" htmlFor="position">
+            Должность*
+          </label>
+          <input
+            id="position"
+            value={position}
+            required
+            onChange={(e) => setPosition(e.target.value)}
+            className="w-full px-3 py-2 rounded bg-anix-dark border border-gray-600 text-white"
+          />
+        </div>
+        <div>
+          <label className="block text-sm mb-1" htmlFor="telegram">
+            Telegram*
+          </label>
+          <input
+            id="telegram"
+            value={telegram}
+            required
+            onChange={(e) => setTelegram(e.target.value)}
+            className="w-full px-3 py-2 rounded bg-anix-dark border border-gray-600 text-white"
+          />
+        </div>
+        <div className="flex items-center">
+          <input
+            id="consent"
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => setConsent(e.target.checked)}
+            className="mr-2"
+            required
+          />
+          <label htmlFor="consent" className="text-sm">
+            Я согласен(а) на обработку персональных данных
+          </label>
+        </div>
+        <div className="space-y-1">
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-anix-purple hover:bg-anix-teal text-white py-2 rounded transition-colors disabled:opacity-50"
+          >
+            {loading ? 'Отправка...' : '📩 Получить чек-лист в Telegram'}
+          </button>
+          {error && (
+            <div className="mt-2 text-center text-sm text-white" role="status">
+              {error}
+            </div>
+          )}
+          <p className="text-sm text-[#B0B0B0] text-center">
+            Чек-лист придёт в Telegram, а при желании разберём его вместе с
+            вами.
+          </p>
+        </div>
+      </form>
+    </>
   );
 }
