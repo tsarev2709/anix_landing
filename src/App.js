@@ -18,7 +18,6 @@ import dasha from './images/dasha.jpg';
 import TPES from './images/TPES.png';
 import BlogCard from './components/BlogCard';
 import CookieBanner from './components/CookieBanner';
-import LeadForm from './components/LeadForm';
 
 // Helper for responsive img attributes
 const makeSrcSet = (src) => `${src} 1x, ${src} 2x`;
@@ -724,7 +723,7 @@ const AnixAILanding = () => {
       <canvas ref={particlesRef} className="particles-canvas" />
 
       {/* Hero Section */}
-      <Section id="hero" bg="#0f0f1f" separator="curve" stickyTransition>
+      <Section id="hero" bg="#0f0f1f" stickyTransition>
         <div className="hero-section">
         <div className="hero-content">
           <h1 className="hero-title">
@@ -1059,16 +1058,6 @@ const AnixAILanding = () => {
         </div>
       </Section>
 
-      {/* Lead Form Section */}
-      <Section id="lead" bg="#26264d" stickyTransition>
-        <div className="lead-form-section">
-          <div className="container lead-form-container">
-            <h3>Получите чек-лист по explainer-видео</h3>
-            <LeadForm />
-          </div>
-        </div>
-      </Section>
-
       {/* Telegram Subscribe Section */}
       <Section id="subscribe" bg="#2c2c59" stickyTransition>
         <div className="telegram-subscribe py-20 bg-gradient-to-r from-[#5f35ff] to-[#4ac9ff] text-white text-center">
@@ -1239,7 +1228,7 @@ const AnixAILanding = () => {
       </Section>
 
       {/* FAQ Section */}
-      <Section id="faq" bg="#404080" stickyTransition separator="curve">
+      <Section id="faq" bg="#404080" stickyTransition>
         <div className="faq-section">
         <div className="container">
           <h2 className="section-title">Часто Задаваемые Вопросы</h2>

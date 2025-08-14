@@ -12,55 +12,6 @@ body {
   isolation: isolate;
 }
 
-.sep {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 48px;
-  pointer-events: none;
-  z-index: 0;
-}
-@media (min-width: 768px) {
-  .sep {
-    height: 64px;
-  }
-}
-
-.sep--bottom {
-  bottom: -1px;
-}
-.sep--top {
-  top: -1px;
-}
-
-/* Плавный цветовой переход между секциями */
-.sep--gradient::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  /* fallback для браузеров без color-mix */
-  background: linear-gradient(to bottom, var(--bg) 0%, var(--next-bg) 100%);
-  /* Основной градиент в perceptual space */
-  background: linear-gradient(
-    to bottom,
-    color-mix(in oklch, var(--bg) 100%, var(--next-bg) 0%) 0%,
-    color-mix(in oklch, var(--bg) 50%, var(--next-bg) 50%) 50%,
-    color-mix(in oklch, var(--bg) 0%, var(--next-bg) 100%) 100%
-  );
-}
-
-/* 2) Кривая без SVG — через clip-path ellipse */
-.sep--curve {
-  height: 72px;
-}
-.sep--curve::before {
-  content: '';
-  position: absolute;
-  inset: -20% 0 0 0;
-  background: linear-gradient(to bottom, var(--bg) 0%, var(--next-bg) 100%);
-  clip-path: ellipse(120% 80% at 50% 10%); /* мягкая дуга */
-}
-
 /* Sticky мост между секциями */
 .sticky-bridge {
   position: sticky;
