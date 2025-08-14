@@ -1,5 +1,4 @@
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
-import SectionSeparator from './SectionSeparator';
 import StickyBridge from './StickyBridge';
 
 function getNextSection(el?: HTMLElement | null) {
@@ -14,7 +13,6 @@ type Props = {
   id: string;
   bg: string;
   nextBg?: string;
-  separator?: 'gradient' | 'curve';
   stickyTransition?: boolean;
   className?: string;
   children: React.ReactNode;
@@ -24,7 +22,6 @@ export default function Section({
   id,
   bg,
   nextBg,
-  separator = 'gradient',
   stickyTransition = false,
   className = '',
   children,
@@ -76,7 +73,6 @@ export default function Section({
       {...rest}
     >
       {children}
-      <SectionSeparator position="bottom" variant={separator} />
       {stickyTransition && <StickyBridge />}
     </section>
   );
