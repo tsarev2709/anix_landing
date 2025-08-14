@@ -2,7 +2,11 @@ import { CONFIG } from '../config';
 
 function isSupabaseFn(url: string) {
   try {
-    return new URL(url).host.endsWith('.functions.supabase.co');
+    const { host, pathname } = new URL(url);
+    return (
+      host.endsWith('.functions.supabase.co') ||
+      (host.endsWith('.supabase.co') && pathname.startsWith('/functions'))
+    );
   } catch {
     return false;
   }
