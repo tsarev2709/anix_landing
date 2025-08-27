@@ -5,16 +5,24 @@ import TestUtils from 'react-dom/test-utils';
 import fs from 'fs';
 import App from '../App';
 
-jest.mock('react-swipeable', () => ({
-  useSwipeable: () => ({}),
-}), { virtual: true });
+jest.mock(
+  'react-swipeable',
+  () => ({
+    useSwipeable: () => ({}),
+  }),
+  { virtual: true }
+);
 
 // Mock react-helmet to avoid dependency errors in tests
-jest.mock('react-helmet', () => ({
-  Helmet: ({ children }) => <>{children}</>
-}), { virtual: true });
+jest.mock(
+  'react-helmet',
+  () => ({
+    Helmet: ({ children }) => <>{children}</>,
+  }),
+  { virtual: true }
+);
 
-test('hero section appears after loading and has three lines', () => {
+test('hero section appears after loading and shows first value prop', () => {
   jest.useFakeTimers();
   // Polyfill IntersectionObserver for JSDOM
   global.IntersectionObserver = class {
@@ -32,12 +40,12 @@ test('hero section appears after loading and has three lines', () => {
   expect(container.querySelector('.loading-screen')).toBeTruthy();
 
   TestUtils.act(() => {
-    jest.runAllTimers();
+    jest.advanceTimersByTime(1500);
   });
 
   const heroTitle = container.querySelector('.hero-title');
   expect(heroTitle).toBeTruthy();
-  expect(heroTitle.querySelectorAll('.title-line').length).toBe(3);
+  expect(heroTitle.textContent).toBe('Делаем сложные продукты понятнее на 80%');
 });
 
 test('hero-content has expected max width', () => {

@@ -23,6 +23,34 @@ import CookieBanner from './components/CookieBanner';
 const makeSrcSet = (src) => `${src} 1x, ${src} 2x`;
 const responsiveSizes = '(max-width: 768px) 100vw, 600px';
 
+const VALUE_PROPS = [
+  {
+    title: 'Делаем сложные продукты понятнее на 80%',
+    subtitle:
+      'Наши ролики превращают технические детали в истории, которые клиенты понимают и запоминают.',
+  },
+  {
+    title: '+23% к отклику и рост demo rate на 35%',
+    subtitle:
+      'Explainer-видео Anix вовлекают клиента ещё до звонка и снимают основные возражения.',
+  },
+  {
+    title: 'Каждый вложенный рубль возвращается в 5–7 раз',
+    subtitle:
+      'Анимация Anix окупается за счёт роста заявок и ускорения сделок.',
+  },
+  {
+    title: 'Сокращаем цикл сделки на 40%',
+    subtitle:
+      'Видео объясняет продукт быстрее менеджеров и ускоряет путь клиента к покупке.',
+  },
+  {
+    title: '7 из 10 зрителей доверяют бренду больше после видео',
+    subtitle:
+      'Наши ролики формируют экспертность и удерживают внимание до конца.',
+  },
+];
+
 const AnixAILanding = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(-1);
@@ -43,12 +71,20 @@ const AnixAILanding = () => {
   const pricingSwipeStart = useRef(0);
   const [activeService, setActiveService] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [valuePropIndex, setValuePropIndex] = useState(0);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setValuePropIndex((i) => (i + 1) % VALUE_PROPS.length);
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   // Lead magnet popup removed
@@ -725,217 +761,223 @@ const AnixAILanding = () => {
       {/* Hero Section */}
       <Section id="hero" bg="#0f0f1f" stickyTransition>
         <div className="hero-section">
-        <div className="hero-content">
-          <h1 className="hero-title">
-            <span className="title-line">
-              Мультик, который делает твой продукт
-            </span>
-            <span className="title-line glow-text">на 500% понятнее</span>
-            <span className="title-line">и в 2 раза дороже</span>
-          </h1>
-          <p className="hero-subtitle">
-            Революционный пайплайн Anix делает анимацию сложных продуктов
-            понятной и быстрой.
-          </p>
-          <a
-            href="https://t.me/m/i23MvBuLOGJi"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cta-button primary block w-full md:w-auto text-base md:text-lg"
-            onMouseEnter={() => setIsPageBlurred(true)}
-            onMouseLeave={() => setIsPageBlurred(false)}
-          >
-            <span>
-              {isMobile
-                ? '📈 Повысить продажи в Telegram'
-                : '🎯 Получить видео, которое увеличит demo rate'}
-            </span>
-            <div className="button-glow"></div>
-          </a>
-          <p className="text-sm md:text-base text-[#B0B0B0] mt-1">
-            Откроется чат в Telegram — уточним пару деталей и пришлём
-            предложение за 24 часа.
-          </p>
-        </div>
+          <div className="hero-content">
+            <h1 className="hero-title">
+              <span key={valuePropIndex} className="title-line">
+                {VALUE_PROPS[valuePropIndex].title}
+              </span>
+            </h1>
+            <p className="hero-subtitle">
+              {VALUE_PROPS[valuePropIndex].subtitle}
+            </p>
+            <a
+              href="https://t.me/m/i23MvBuLOGJi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-button primary block w-full md:w-auto text-base md:text-lg"
+              onMouseEnter={() => setIsPageBlurred(true)}
+              onMouseLeave={() => setIsPageBlurred(false)}
+            >
+              <span>
+                {isMobile
+                  ? '📈 Повысить продажи в Telegram'
+                  : '🎯 Получить видео, которое увеличит demo rate'}
+              </span>
+              <div className="button-glow"></div>
+            </a>
+            <p className="text-sm md:text-base text-[#B0B0B0] mt-1">
+              Откроется чат в Telegram — уточним пару деталей и пришлём
+              предложение за 24 часа.
+            </p>
+          </div>
 
-        <div className="geometric-shapes">
-          <div className="floating-shape shape-2"></div>
-          <div className="floating-shape shape-3"></div>
-        </div>
+          <div className="geometric-shapes">
+            <div className="floating-shape shape-2"></div>
+            <div className="floating-shape shape-3"></div>
+          </div>
         </div>
       </Section>
 
       {/* Pain Section */}
       <Section id="pain" bg="#141429" stickyTransition>
         <div className="pain-section">
-        <div className="container">
-          <h2 className="section-title">
-            Пока вы объясняете, кто-то уже продал
-          </h2>
-          <ul className="pain-list">
-            <li>❌ Ваш продукт классный. Но его не понимают.</li>
-            <li>❌ Вы делаете демо — а до него доходят 3% лидов.</li>
-            <li>
-              ❌ Вас сравнивают с конкурентами, не понимая вашей ценности.
-            </li>
-          </ul>
-          <p className="pain-summary">
-            🎯 Мы — ваша презентация, упаковка и sales-инструмент в одном видео.
-            Объясняем продукт так, что его начинают покупать.
-          </p>
-        </div>
+          <div className="container">
+            <h2 className="section-title">
+              Пока вы объясняете, кто-то уже продал
+            </h2>
+            <ul className="pain-list">
+              <li>❌ Ваш продукт классный. Но его не понимают.</li>
+              <li>❌ Вы делаете демо — а до него доходят 3% лидов.</li>
+              <li>
+                ❌ Вас сравнивают с конкурентами, не понимая вашей ценности.
+              </li>
+            </ul>
+            <p className="pain-summary">
+              🎯 Мы — ваша презентация, упаковка и sales-инструмент в одном
+              видео. Объясняем продукт так, что его начинают покупать.
+            </p>
+          </div>
         </div>
       </Section>
 
       {/* Services Section */}
       <Section id="services" bg="#1a1a33" stickyTransition>
         <div className="services-section">
-        <div className="container">
-          <h2 className="section-title">Видео, которое помогает продавать</h2>
-          <div className="services-grid">
-            <div
-              className="service-card"
-              onClick={() => setActiveService(activeService === 0 ? null : 0)}
-            >
-              <div className="service-icon">🎬</div>
-              <h3>Сокращение цикла сделки</h3>
-              <p>Меньше времени уходит на прогрев, презентации и убеждение.</p>
-              <p>
-                &quot;Мы теряем клиентов из-за долгих обсуждений и
-                недопонимания&quot;.
-              </p>
+          <div className="container">
+            <h2 className="section-title">Видео, которое помогает продавать</h2>
+            <div className="services-grid">
               <div
-                className={`service-overlay ${activeService === 0 ? 'show' : ''}`}
+                className="service-card"
+                onClick={() => setActiveService(activeService === 0 ? null : 0)}
               >
-                <div className="case-study">
-                  <h4>Превентивная победа</h4>
-                  <p>Наши клиенты в среднем сократили цикл сделки в 3 раза.</p>
-                  <div className="metrics">
-                    <span>Доверие: +21 пункт</span>
-                    <span>x2 Меньше возражений</span>
+                <div className="service-icon">🎬</div>
+                <h3>Сокращение цикла сделки</h3>
+                <p>
+                  Меньше времени уходит на прогрев, презентации и убеждение.
+                </p>
+                <p>
+                  &quot;Мы теряем клиентов из-за долгих обсуждений и
+                  недопонимания&quot;.
+                </p>
+                <div
+                  className={`service-overlay ${activeService === 0 ? 'show' : ''}`}
+                >
+                  <div className="case-study">
+                    <h4>Превентивная победа</h4>
+                    <p>
+                      Наши клиенты в среднем сократили цикл сделки в 3 раза.
+                    </p>
+                    <div className="metrics">
+                      <span>Доверие: +21 пункт</span>
+                      <span>x2 Меньше возражений</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div
-              className="service-card"
-              onClick={() => setActiveService(activeService === 1 ? null : 1)}
-            >
-              <div className="service-icon">⚡</div>
-              <h3>Масштабирование</h3>
-              <p>
-                Видео легко тиражируется, работает на новых рынках, языках,
-                партнёрах.
-              </p>
-              <p>&quot;Хочу выйти в США, но нужен контент под локаль&quot;.</p>
               <div
-                className={`service-overlay ${activeService === 1 ? 'show' : ''}`}
+                className="service-card"
+                onClick={() => setActiveService(activeService === 1 ? null : 1)}
               >
-                <div className="case-study">
-                  <h4>История успеха</h4>
-                  <p>
-                    Обычно наш клиент увеличивает конверсию в отклик от 10 раз.
-                  </p>
-                  <div className="metrics">
-                    <span>x10 Повышение охватов</span>
-                    <span>+16% Конверсий</span>
+                <div className="service-icon">⚡</div>
+                <h3>Масштабирование</h3>
+                <p>
+                  Видео легко тиражируется, работает на новых рынках, языках,
+                  партнёрах.
+                </p>
+                <p>
+                  &quot;Хочу выйти в США, но нужен контент под локаль&quot;.
+                </p>
+                <div
+                  className={`service-overlay ${activeService === 1 ? 'show' : ''}`}
+                >
+                  <div className="case-study">
+                    <h4>История успеха</h4>
+                    <p>
+                      Обычно наш клиент увеличивает конверсию в отклик от 10
+                      раз.
+                    </p>
+                    <div className="metrics">
+                      <span>x10 Повышение охватов</span>
+                      <span>+16% Конверсий</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div
-              className="service-card"
-              onClick={() => setActiveService(activeService === 2 ? null : 2)}
-            >
-              <div className="service-icon">🎨</div>
-              <h3>Конкурентная Упаковка</h3>
-              <p>Продукт визуально и эмоционально выигрывает у конкурентов.</p>
-              <p>
-                &quot;На фоне других выглядим скучно, нас не запоминают&quot;.
-              </p>
               <div
-                className={`service-overlay ${activeService === 2 ? 'show' : ''}`}
+                className="service-card"
+                onClick={() => setActiveService(activeService === 2 ? null : 2)}
               >
-                <div className="case-study">
-                  <h4>Вау эффект</h4>
-                  <p>Выделитесь на конференции и лендинге</p>
-                  <div className="metrics">
-                    <span>Лояльность: +30 пунктов</span>
-                    <span>x3 Узнаваемость бренда</span>
+                <div className="service-icon">🎨</div>
+                <h3>Конкурентная Упаковка</h3>
+                <p>
+                  Продукт визуально и эмоционально выигрывает у конкурентов.
+                </p>
+                <p>
+                  &quot;На фоне других выглядим скучно, нас не запоминают&quot;.
+                </p>
+                <div
+                  className={`service-overlay ${activeService === 2 ? 'show' : ''}`}
+                >
+                  <div className="case-study">
+                    <h4>Вау эффект</h4>
+                    <p>Выделитесь на конференции и лендинге</p>
+                    <div className="metrics">
+                      <span>Лояльность: +30 пунктов</span>
+                      <span>x3 Узнаваемость бренда</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
       </Section>
 
       {/* Testimonials */}
       <Section id="cases" bg="#202040" stickyTransition>
         <div className="testimonials-section">
-        <div className="container">
-          <h2 className="section-title">Истории Успеха Клиентов</h2>
-          <div className="testimonials-grid">
-            {testimonials.map((testimonial) => {
-              const maxLen = isMobile ? 275 : 350;
-              const previewText =
-                testimonial.text.length > maxLen
-                  ? `${testimonial.text.slice(0, maxLen)}...`
-                  : testimonial.text;
-              return (
-                <div key={testimonial.id} className="testimonial-card">
-                  <div
-                    className="video-preview"
-                    onClick={() => {
-                      setSelectedVideo(testimonial);
-                      setShowVideoModal(true);
-                    }}
-                  >
-                    <img
-                      src={testimonial.videoThumbnail}
-                      srcSet={makeSrcSet(testimonial.videoThumbnail)}
-                      sizes={responsiveSizes}
-                      alt="анимационный ролик объясняющий B2B продукт"
-                      width="600"
-                      height="338"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <div className="video-play-button">
-                      <div className="play-icon">▶</div>
+          <div className="container">
+            <h2 className="section-title">Истории Успеха Клиентов</h2>
+            <div className="testimonials-grid">
+              {testimonials.map((testimonial) => {
+                const maxLen = isMobile ? 275 : 350;
+                const previewText =
+                  testimonial.text.length > maxLen
+                    ? `${testimonial.text.slice(0, maxLen)}...`
+                    : testimonial.text;
+                return (
+                  <div key={testimonial.id} className="testimonial-card">
+                    <div
+                      className="video-preview"
+                      onClick={() => {
+                        setSelectedVideo(testimonial);
+                        setShowVideoModal(true);
+                      }}
+                    >
+                      <img
+                        src={testimonial.videoThumbnail}
+                        srcSet={makeSrcSet(testimonial.videoThumbnail)}
+                        sizes={responsiveSizes}
+                        alt="анимационный ролик объясняющий B2B продукт"
+                        width="600"
+                        height="338"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div className="video-play-button">
+                        <div className="play-icon">▶</div>
+                      </div>
+                      <div className="ai-indicator">
+                        Повышение охвата: X{testimonial.reach}
+                      </div>
+                      <div className="conversion-indicator">
+                        Повышение конверсии +{testimonial.conversion}%
+                      </div>
                     </div>
-                    <div className="ai-indicator">
-                      Повышение охвата: X{testimonial.reach}
-                    </div>
-                    <div className="conversion-indicator">
-                      Повышение конверсии +{testimonial.conversion}%
+                    <div className="testimonial-content">
+                      <p>&quot;{previewText}&quot;</p>
+                      <div className="testimonial-author">
+                        <strong>{testimonial.name}</strong>
+                        {testimonial.website ? (
+                          <a
+                            href={testimonial.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {testimonial.company}
+                          </a>
+                        ) : (
+                          <span>{testimonial.company}</span>
+                        )}
+                      </div>
                     </div>
                   </div>
-                  <div className="testimonial-content">
-                    <p>&quot;{previewText}&quot;</p>
-                    <div className="testimonial-author">
-                      <strong>{testimonial.name}</strong>
-                      {testimonial.website ? (
-                        <a
-                          href={testimonial.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {testimonial.company}
-                        </a>
-                      ) : (
-                        <span>{testimonial.company}</span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
         </div>
       </Section>
 
@@ -1062,26 +1104,26 @@ const AnixAILanding = () => {
       <Section id="subscribe" bg="#2c2c59" stickyTransition>
         <div className="telegram-subscribe py-20 bg-gradient-to-r from-[#5f35ff] to-[#4ac9ff] text-white text-center">
           <div className="container max-w-3xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-4">
-            Хотите видеть, как мы собираем видео изнутри?
-          </h2>
-          <p className="text-lg text-[#e0e0e0] mb-6">
-            В Telegram — backstage, советы и примеры лучших роликов Anix
-          </p>
+            <h2 className="text-3xl font-bold mb-4">
+              Хотите видеть, как мы собираем видео изнутри?
+            </h2>
+            <p className="text-lg text-[#e0e0e0] mb-6">
+              В Telegram — backstage, советы и примеры лучших роликов Anix
+            </p>
 
-          <a
-            href="https://t.me/anixpro"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-white text-[#5f35ff] px-6 py-3 rounded-full font-semibold shadow-md hover:scale-105 transition-transform"
-          >
-            💬 Подписаться в Telegram → @anixpro
-          </a>
-          <p className="text-sm text-[#B0B0B0] mt-1">
-            Перейдёте в наш Telegram-канал с бэкстейджем, советами и примерами
-            лучших роликов.
-          </p>
-        </div>
+            <a
+              href="https://t.me/anixpro"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-white text-[#5f35ff] px-6 py-3 rounded-full font-semibold shadow-md hover:scale-105 transition-transform"
+            >
+              💬 Подписаться в Telegram → @anixpro
+            </a>
+            <p className="text-sm text-[#B0B0B0] mt-1">
+              Перейдёте в наш Telegram-канал с бэкстейджем, советами и примерами
+              лучших роликов.
+            </p>
+          </div>
         </div>
       </Section>
 
@@ -1089,80 +1131,80 @@ const AnixAILanding = () => {
       <Section id="pricing" bg="#333366" stickyTransition>
         <div className="pricing-section">
           <div className="container">
-          <h2 className="section-title">Цены и Пакеты</h2>
+            <h2 className="section-title">Цены и Пакеты</h2>
 
-          <div className="pricing-carousel-container">
-            <div
-              className="pricing-carousel"
-              ref={pricingScrollRef}
-              onTouchStart={handlePricingTouchStart}
-              onTouchEnd={handlePricingTouchEnd}
-              onMouseDown={handlePricingMouseDown}
-              onMouseUp={handlePricingMouseUp}
-            >
-              {Object.entries(pricingPackages).map(([category, packages]) => (
-                <div key={category} className="pricing-column">
-                  <div className="column-header">
-                    <h3>{category}</h3>
-                    <div className="column-subtitle">
-                      {category === 'Стартапы' &&
-                        'Идеально для растущего бизнеса'}
-                      {category === 'Средний Бизнес' &&
-                        'Оптимально для устоявшихся компаний'}
-                      {category === 'Корпорации' &&
-                        'Решения корпоративного уровня'}
+            <div className="pricing-carousel-container">
+              <div
+                className="pricing-carousel"
+                ref={pricingScrollRef}
+                onTouchStart={handlePricingTouchStart}
+                onTouchEnd={handlePricingTouchEnd}
+                onMouseDown={handlePricingMouseDown}
+                onMouseUp={handlePricingMouseUp}
+              >
+                {Object.entries(pricingPackages).map(([category, packages]) => (
+                  <div key={category} className="pricing-column">
+                    <div className="column-header">
+                      <h3>{category}</h3>
+                      <div className="column-subtitle">
+                        {category === 'Стартапы' &&
+                          'Идеально для растущего бизнеса'}
+                        {category === 'Средний Бизнес' &&
+                          'Оптимально для устоявшихся компаний'}
+                        {category === 'Корпорации' &&
+                          'Решения корпоративного уровня'}
+                      </div>
+                    </div>
+
+                    <div className="packages-list">
+                      {packages.map((pkg, index) => (
+                        <div key={index} className="package-card">
+                          <div className="package-header">
+                            <h4>{pkg.name}</h4>
+                            <div className="package-price">{pkg.price}</div>
+                          </div>
+
+                          <button
+                            className="details-button"
+                            onClick={() =>
+                              setExpandedPackage(
+                                expandedPackage === `${category}-${index}`
+                                  ? null
+                                  : `${category}-${index}`
+                              )
+                            }
+                          >
+                            Подробнее{' '}
+                            {expandedPackage === `${category}-${index}`
+                              ? '−'
+                              : '+'}
+                          </button>
+
+                          <div
+                            className={`package-details ${expandedPackage === `${category}-${index}` ? 'expanded' : ''}`}
+                          >
+                            <div className="details-content">
+                              {pkg.details.map((detail, i) => (
+                                <div key={i} className="detail-item">
+                                  {detail}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          <button
+                            className="package-cta"
+                            onClick={redirectToTelegram}
+                          >
+                            Начать
+                          </button>
+                        </div>
+                      ))}
                     </div>
                   </div>
-
-                  <div className="packages-list">
-                    {packages.map((pkg, index) => (
-                      <div key={index} className="package-card">
-                        <div className="package-header">
-                          <h4>{pkg.name}</h4>
-                          <div className="package-price">{pkg.price}</div>
-                        </div>
-
-                        <button
-                          className="details-button"
-                          onClick={() =>
-                            setExpandedPackage(
-                              expandedPackage === `${category}-${index}`
-                                ? null
-                                : `${category}-${index}`
-                            )
-                          }
-                        >
-                          Подробнее{' '}
-                          {expandedPackage === `${category}-${index}`
-                            ? '−'
-                            : '+'}
-                        </button>
-
-                        <div
-                          className={`package-details ${expandedPackage === `${category}-${index}` ? 'expanded' : ''}`}
-                        >
-                          <div className="details-content">
-                            {pkg.details.map((detail, i) => (
-                              <div key={i} className="detail-item">
-                                {detail}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-
-                        <button
-                          className="package-cta"
-                          onClick={redirectToTelegram}
-                        >
-                          Начать
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </Section>
@@ -1230,33 +1272,33 @@ const AnixAILanding = () => {
       {/* FAQ Section */}
       <Section id="faq" bg="#404080" stickyTransition>
         <div className="faq-section">
-        <div className="container">
-          <h2 className="section-title">Часто Задаваемые Вопросы</h2>
-          <div className="faq-list">
-            {faqData.map((faq, index) => (
-              <div key={index} className="faq-item">
-                <button
-                  className={`faq-question ${activeFAQ === index ? 'active' : ''}`}
-                  onClick={() =>
-                    setActiveFAQ(activeFAQ === index ? null : index)
-                  }
-                >
-                  <span>{faq.question}</span>
-                  <div className="faq-icon">
-                    {activeFAQ === index ? '−' : '+'}
-                  </div>
-                </button>
-                <div
-                  className={`faq-answer ${activeFAQ === index ? 'expanded' : ''}`}
-                >
-                  <div className="faq-answer-content">
-                    <p>{faq.answer}</p>
+          <div className="container">
+            <h2 className="section-title">Часто Задаваемые Вопросы</h2>
+            <div className="faq-list">
+              {faqData.map((faq, index) => (
+                <div key={index} className="faq-item">
+                  <button
+                    className={`faq-question ${activeFAQ === index ? 'active' : ''}`}
+                    onClick={() =>
+                      setActiveFAQ(activeFAQ === index ? null : index)
+                    }
+                  >
+                    <span>{faq.question}</span>
+                    <div className="faq-icon">
+                      {activeFAQ === index ? '−' : '+'}
+                    </div>
+                  </button>
+                  <div
+                    className={`faq-answer ${activeFAQ === index ? 'expanded' : ''}`}
+                  >
+                    <div className="faq-answer-content">
+                      <p>{faq.answer}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
         </div>
       </Section>
 
