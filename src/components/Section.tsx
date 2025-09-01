@@ -70,6 +70,14 @@ export default function Section({
       ref={ref}
       className={`section ${className}`.trim()}
       data-section={id}
+      style={
+        id === 'hero'
+          ? undefined
+          : {
+              contentVisibility: 'auto',
+              containIntrinsicSize: '1000px',
+            }
+      }
       {...rest}
     >
       {children}

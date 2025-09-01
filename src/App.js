@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import './App.css';
 import AnixLandingPage from './components/AnixLandingPage';
 import Section from './components/Section';
@@ -16,40 +16,14 @@ import kolbox from './images/kolbox.png';
 import lida from './images/lida.jpg';
 import dasha from './images/dasha.jpg';
 import TPES from './images/TPES.png';
-import BlogCard from './components/BlogCard';
-import CookieBanner from './components/CookieBanner';
+const BlogCard = React.lazy(() => import('./components/BlogCard'));
+const CookieBanner = React.lazy(() => import('./components/CookieBanner'));
 
 // Helper for responsive img attributes
 const makeSrcSet = (src) => `${src} 1x, ${src} 2x`;
 const responsiveSizes = '(max-width: 768px) 100vw, 600px';
 
-const VALUE_PROPS = [
-  {
-    title: 'Делаем сложные продукты понятнее на 80%',
-    subtitle:
-      'Наши ролики превращают технические детали в истории, которые клиенты понимают и запоминают.',
-  },
-  {
-    title: '+23% к отклику и рост demo rate на 35%',
-    subtitle:
-      'Explainer-видео Anix вовлекают клиента ещё до звонка и снимают основные возражения.',
-  },
-  {
-    title: 'Каждый вложенный рубль возвращается в 5–7 раз',
-    subtitle:
-      'Анимация Anix окупается за счёт роста заявок и ускорения сделок.',
-  },
-  {
-    title: 'Сокращаем цикл сделки на 40%',
-    subtitle:
-      'Видео объясняет продукт быстрее менеджеров и ускоряет путь клиента к покупке.',
-  },
-  {
-    title: '7 из 10 зрителей доверяют бренду больше после видео',
-    subtitle:
-      'Наши ролики формируют экспертность и удерживают внимание до конца.',
-  },
-];
+const VALUE_PROP = 'Делаем сложные продукты понятнее на 80%';
 
 const AnixAILanding = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -64,14 +38,13 @@ const AnixAILanding = () => {
   const [processStarted, setProcessStarted] = useState(false);
   const [isPageBlurred, setIsPageBlurred] = useState(false);
   const processRef = useRef(null);
-  const particlesRef = useRef(null);
+  const heroVideoRef = useRef(null);
   const awardsScrollRef = useRef(null);
   const pricingScrollRef = useRef(null);
   const swipeStart = useRef(0);
   const pricingSwipeStart = useRef(0);
   const [activeService, setActiveService] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
-  const [valuePropIndex, setValuePropIndex] = useState(0);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -81,10 +54,33 @@ const AnixAILanding = () => {
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setValuePropIndex((i) => (i + 1) % VALUE_PROPS.length);
-    }, 5000);
-    return () => clearInterval(interval);
+    const reduceData =
+      navigator.connection?.saveData ||
+      window.matchMedia('(prefers-reduced-data: reduce)').matches;
+    if (reduceData) return;
+
+    const loadVideo = () => {
+      if (!heroVideoRef.current) return;
+      const iframe = document.createElement('iframe');
+      iframe.src =
+        'https://player.vimeo.com/video/1102413873?background=1&autoplay=1&muted=1&loop=1&playsinline=1';
+      iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
+      iframe.setAttribute('loading', 'lazy');
+      iframe.setAttribute('title', 'Anix background');
+      iframe.style.position = 'absolute';
+      iframe.style.top = '0';
+      iframe.style.left = '0';
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.objectFit = 'cover';
+      heroVideoRef.current.appendChild(iframe);
+    };
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadVideo);
+    } else {
+      setTimeout(loadVideo, 1500);
+    }
   }, []);
 
   // Lead magnet popup removed
@@ -216,102 +212,6 @@ const AnixAILanding = () => {
 
     return () => observer.disconnect();
   }, [processStarted]);
-
-  // Neural network particle animation
-  useEffect(() => {
-    const canvas = particlesRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const particles = [];
-
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.size = Math.random() * 3 + 1;
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-      }
-
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(139, 69, 255, 0.8)';
-        ctx.fill();
-
-        const gradient = ctx.createRadialGradient(
-          this.x,
-          this.y,
-          0,
-          this.x,
-          this.y,
-          this.size * 3
-        );
-        gradient.addColorStop(0, 'rgba(139, 69, 255, 0.6)');
-        gradient.addColorStop(1, 'rgba(139, 69, 255, 0)');
-        ctx.fillStyle = gradient;
-        ctx.fill();
-      }
-    }
-
-    for (let i = 0; i < 80; i++) {
-      particles.push(new Particle());
-    }
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach((particle) => {
-        particle.update();
-        particle.draw();
-      });
-
-      // Draw connection
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 100) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(139, 69, 255, ${1 - distance / 100})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
-
-      requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   // Process steps with enhanced data
   const processSteps = [
@@ -755,21 +655,17 @@ const AnixAILanding = () => {
   return (
     <div className="anix-landing">
       {isPageBlurred && <div className="page-blur-overlay"></div>}
-      {/* Neural Network Particles Background */}
-      <canvas ref={particlesRef} className="particles-canvas" />
 
       {/* Hero Section */}
       <Section id="hero" bg="#0f0f1f" stickyTransition>
         <div className="hero-section">
+          <div className="hero-background" ref={heroVideoRef}>
+            <div className="hero-overlay"></div>
+          </div>
           <div className="hero-content">
             <h1 className="hero-title">
-              <span key={valuePropIndex} className="title-line">
-                {VALUE_PROPS[valuePropIndex].title}
-              </span>
+              <span className="title-line">{VALUE_PROP}</span>
             </h1>
-            <p className="hero-subtitle">
-              {VALUE_PROPS[valuePropIndex].subtitle}
-            </p>
             <a
               href="https://t.me/m/i23MvBuLOGJi"
               target="_blank"
@@ -785,15 +681,6 @@ const AnixAILanding = () => {
               </span>
               <div className="button-glow"></div>
             </a>
-            <p className="text-sm md:text-base text-[#B0B0B0] mt-1">
-              Откроется чат в Telegram — уточним пару деталей и пришлём
-              предложение за 24 часа.
-            </p>
-          </div>
-
-          <div className="geometric-shapes">
-            <div className="floating-shape shape-2"></div>
-            <div className="floating-shape shape-3"></div>
           </div>
         </div>
       </Section>
@@ -1389,14 +1276,16 @@ const AnixAILanding = () => {
         <div className="container">
           <h2 className="section-title">Последние Новости</h2>
           <div className="blog-grid">
-            <BlogCard
-              url="https://vc.ru/ai/2028376-startap-anix-iz-mfti-2d-animatsiya"
-              category="Новости"
-              headline="Стартап Anix из МФТИ автоматизирует 2D‑анимацию"
-              description="VC.ru рассказывает об образовательных корнях проекта и его ИИ‑технологиях."
-              date="2025-05-01"
-              image="%PUBLIC_URL%/3.png"
-            />
+            <Suspense fallback={null}>
+              <BlogCard
+                url="https://vc.ru/ai/2028376-startap-anix-iz-mfti-2d-animatsiya"
+                category="Новости"
+                headline="Стартап Anix из МФТИ автоматизирует 2D‑анимацию"
+                description="VC.ru рассказывает об образовательных корнях проекта и его ИИ‑технологиях."
+                date="2025-05-01"
+                image="%PUBLIC_URL%/3.png"
+              />
+            </Suspense>
 
             <a
               href="https://vc.ru/marketing/1934034-kontent-marketing-s-animatsiey"
@@ -1460,7 +1349,9 @@ const AnixAILanding = () => {
         </div>
       </Section>
 
-      <CookieBanner />
+      <Suspense fallback={null}>
+        <CookieBanner />
+      </Suspense>
 
       {/* Floating Telegram Button */}
       <div
