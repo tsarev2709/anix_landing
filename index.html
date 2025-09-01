@@ -7,12 +7,12 @@
   <meta name="description" content="Создаем анимационные видео, которые объясняют сложные продукты и помогают продавать. Увеличиваем доверие, понимание и конверсии — за 10 дней.">
   <meta name="robots" content="index, follow">
   <meta name="keywords" content="explainer видео, анимационные ролики для бизнеса, видео для b2b, продающее видео, видео для продукта, как объяснить продукт, видеомаркетинг b2b, анимация для роста продаж, видео для стартапа">
-  <link rel="canonical" href="https://anix.video/">
+  <link rel="canonical" href="https://studio.anix-ai.pro/">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta property="og:title" content="Anix — видео, которое продаёт">
   <meta property="og:description" content="Видео, которое объясняет ваш продукт лучше любого сейлза. Продающий ролик за 10 дней.">
   <meta property="og:image" content="3.png">
-  <meta property="og:url" content="https://anix.video/">
+  <meta property="og:url" content="https://studio.anix-ai.pro/">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Anix — explainer видео для роста продаж">
@@ -23,26 +23,51 @@
   <!-- Preconnect to external origins for faster first byte -->
     <link rel="preconnect" href="https://mc.yandex.ru">
     <link rel="preconnect" href="https://mc.yandex.com">
+    <link rel="preconnect" href="https://player.vimeo.com">
+    <link rel="preconnect" href="https://i.vimeocdn.com">
+    <link rel="preconnect" href="https://f.vimeocdn.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <style>
-    body{margin:0;font-family:'Inter',system-ui,sans-serif;background:#1a1a1a;color:#fff;line-height:1.6;overflow-x:hidden}
+    body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#1a1a1a;color:#fff;line-height:1.6;overflow-x:hidden}
   </style>
   <!-- Yandex.Metrika counter with Content Analytics enabled -->
-  <script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-      m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-      m[i].l=1*new Date();
-      for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
-      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
-    ym(103290769,"init",{
-      clickmap:true,
-      trackLinks:true,
-      accurateTrackBounce:true,
-      webvisor:true
-    });
+  <script>
+    function loadAnalytics(){
+      (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
+      ym(103290769,"init",{
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+      });
+    }
+    if('requestIdleCallback' in window){
+      requestIdleCallback(loadAnalytics);
+    } else {
+      setTimeout(loadAnalytics,2000);
+    }
   </script>
   <noscript><div><img src="https://mc.yandex.ru/watch/103290769" style="position:absolute; left:-9999px;" alt=""/></div></noscript>
   <!-- /Yandex.Metrika counter -->
+  <script>
+    function loadFonts(){
+      const link=document.createElement('link');
+      link.rel='stylesheet';
+      link.href='https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap';
+      document.head.appendChild(link);
+    }
+    if('requestIdleCallback' in window){
+      requestIdleCallback(loadFonts);
+    } else {
+      window.addEventListener('load', ()=>setTimeout(loadFonts,0));
+    }
+  </script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
