@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, Suspense } from 'react';
 import './App.css';
-import AnixLandingPage from './components/AnixLandingPage';
 import Section from './components/Section';
+import LiteVimeo from './components/LiteVimeo';
+const AnixLandingPage = React.lazy(() => import('./components/AnixLandingPage'));
 import god from './images/god.jpg';
 import bestie from './images/bestie.jpg';
 import vanya from './images/vanya.JPG';
@@ -38,7 +39,6 @@ const AnixAILanding = () => {
   const [processStarted, setProcessStarted] = useState(false);
   const [isPageBlurred, setIsPageBlurred] = useState(false);
   const processRef = useRef(null);
-  const heroVideoRef = useRef(null);
   const awardsScrollRef = useRef(null);
   const pricingScrollRef = useRef(null);
   const swipeStart = useRef(0);
@@ -49,38 +49,8 @@ const AnixAILanding = () => {
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener('resize', checkMobile, { passive: true });
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  useEffect(() => {
-    const reduceData =
-      navigator.connection?.saveData ||
-      window.matchMedia('(prefers-reduced-data: reduce)').matches;
-    if (reduceData) return;
-
-    const loadVideo = () => {
-      if (!heroVideoRef.current) return;
-      const iframe = document.createElement('iframe');
-      iframe.src =
-        'https://player.vimeo.com/video/1102413873?background=1&autoplay=1&muted=1&loop=1&playsinline=1';
-      iframe.setAttribute('allow', 'autoplay; fullscreen; picture-in-picture');
-      iframe.setAttribute('loading', 'lazy');
-      iframe.setAttribute('title', 'Anix background');
-      iframe.style.position = 'absolute';
-      iframe.style.top = '0';
-      iframe.style.left = '0';
-      iframe.style.width = '100%';
-      iframe.style.height = '100%';
-      iframe.style.objectFit = 'cover';
-      heroVideoRef.current.appendChild(iframe);
-    };
-
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(loadVideo);
-    } else {
-      setTimeout(loadVideo, 1500);
-    }
   }, []);
 
   // Lead magnet popup removed
@@ -659,7 +629,8 @@ const AnixAILanding = () => {
       {/* Hero Section */}
       <Section id="hero" bg="#0f0f1f" stickyTransition>
         <div className="hero-section">
-          <div className="hero-background" ref={heroVideoRef}>
+          <div className="hero-background">
+            <LiteVimeo videoId="1102413873" />
             <div className="hero-overlay"></div>
           </div>
           <div className="hero-content">
@@ -886,7 +857,9 @@ const AnixAILanding = () => {
       </div>
 
       {/*  👉 ставим Roadmap ЗА пределами .container */}
-      <AnixLandingPage />
+      <Suspense fallback={null}>
+        <AnixLandingPage />
+      </Suspense>
 
       <div className="container text-center my-12 md:my-16">
         <a
