@@ -75,7 +75,7 @@ export default function Section({
           ? undefined
           : {
               contentVisibility: 'auto',
-              containIntrinsicSize: '1000px',
+              containIntrinsicSize: '1000px 600px',
             }
       }
       {...rest}

@@ -4,7 +4,6 @@ console.info('[CFG] SUBMIT:', CONFIG.SUBMIT_LEAD_URL);
 console.info('[CFG] TRACK :', CONFIG.TRACK_EVENT_URL);
 import ReactDOM from 'react-dom/client';
 import './App.css';
-import './styles/sections.css';
 import App from './App';
 import NotFound from './components/NotFound';
 import AppLayout from './AppLayout';
@@ -21,4 +20,10 @@ if (relativePath === '/' || relativePath === '/index.html') {
   );
 } else {
   root.render(<NotFound />);
+}
+
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(() => import('./styles/sections.css'));
+} else {
+  setTimeout(() => import('./styles/sections.css'), 0);
 }
