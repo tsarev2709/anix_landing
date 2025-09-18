@@ -45,7 +45,9 @@ test('hero section appears after loading and shows first value prop', () => {
 
   const heroTitle = container.querySelector('.hero-title');
   expect(heroTitle).toBeTruthy();
-  expect(heroTitle.textContent).toBe('Делаем сложные продукты понятнее на 80%');
+  expect(heroTitle.textContent).toBe(
+    'Увеличиваем конверсию на любом этапе воронки в среднем на 15% с помощью анимации'
+  );
 });
 
 test('hero-content has expected max width', () => {
