@@ -846,7 +846,7 @@ const AnixAILanding = () => {
                       </div>
                     </div>
                     <div className="testimonial-content">
-                      <p>&quot;{previewText}&quot;</p>
+                      <p>{previewText}</p>
                       <div className="testimonial-author">
                         <strong>{testimonial.name}</strong>
                         {testimonial.website ? (
