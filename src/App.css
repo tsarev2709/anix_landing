@@ -135,6 +135,10 @@ body {
   font-size: 24px;
 }
 
+.hero-background .lite-vimeo-play {
+  display: none;
+}
+
 .hero-overlay {
   position: absolute;
   top: 0;
