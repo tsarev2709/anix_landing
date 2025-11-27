@@ -645,45 +645,55 @@ const AnixAILanding = () => {
             <div className="hero-overlay"></div>
           </div>
           <div className="hero-content">
-            <h1 className="hero-title">
-              Креативные видео, которые повышают ваши продажи уже в первый месяц
-            </h1>
-            <p className="hero-subtitle">
-              Мы объясняем ваши сложные продукты простым визуальным языком,
-              который удерживает внимание, пробивает банерную слепоту и улучшает
-              конверсию на всех этапах воронки. Быстро, точно и под вашу цель.
-            </p>
-            <div className="hero-benefits-grid">
-              <div className="hero-benefit-card">
-                <h3>Анализируем воронку</h3>
-                <p>Делаем сценарий, который решает конкретную бизнес-боль.</p>
+            <div className="hero-grid">
+              <div className="hero-text">
+                <h1 className="hero-title">
+                  Креативные видео, которые повышают ваши продажи уже в первый
+                  месяц
+                </h1>
+                <p className="hero-subtitle">
+                  Мы объясняем ваши сложные продукты простым визуальным языком,
+                  который удерживает внимание, пробивает банерную слепоту и
+                  улучшает конверсию на всех этапах воронки. Быстро, точно и под
+                  вашу цель.
+                </p>
+                <a
+                  href="https://t.me/m/i23MvBuLOGJi"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cta-button primary hero-cta"
+                  onMouseEnter={() => setIsPageBlurred(true)}
+                  onMouseLeave={() => setIsPageBlurred(false)}
+                >
+                  <span>
+                    Получить анализ вашей воронки и 3 точки роста за 15 минут
+                  </span>
+                  <div className="button-glow"></div>
+                </a>
               </div>
-              <div className="hero-benefit-card">
-                <h3>Видео, созданное инженерно</h3>
-                <p>Драматургия + нейросети + композиция.</p>
-              </div>
-              <div className="hero-benefit-card">
-                <h3>Результат за 3,7 дня</h3>
-                <p>Без артефактов и с высокой визуальной точностью.</p>
-              </div>
-              <div className="hero-benefit-card">
-                <h3>+15-25% конверсии</h3>
-                <p>Средний прирост у клиентов.</p>
+              <div className="hero-benefits-panel">
+                <div className="hero-benefits-grid">
+                  <div className="hero-benefit-card">
+                    <h3>Анализируем воронку</h3>
+                    <p>
+                      Делаем сценарий, который решает конкретную бизнес-боль.
+                    </p>
+                  </div>
+                  <div className="hero-benefit-card">
+                    <h3>Видео, созданное инженерно</h3>
+                    <p>Драматургия + нейросети + композиция.</p>
+                  </div>
+                  <div className="hero-benefit-card">
+                    <h3>Результат за 3,7 дня</h3>
+                    <p>Без артефактов и с высокой визуальной точностью.</p>
+                  </div>
+                  <div className="hero-benefit-card">
+                    <h3>+15-25% конверсии</h3>
+                    <p>Средний прирост у клиентов.</p>
+                  </div>
+                </div>
               </div>
             </div>
-            <a
-              href="https://t.me/m/i23MvBuLOGJi"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cta-button primary hero-cta"
-              onMouseEnter={() => setIsPageBlurred(true)}
-              onMouseLeave={() => setIsPageBlurred(false)}
-            >
-              <span>
-                Получить анализ вашей воронки и 3 точки роста за 15 минут
-              </span>
-              <div className="button-glow"></div>
-            </a>
           </div>
         </div>
       </Section>
