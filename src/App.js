@@ -27,24 +27,216 @@ const makeSrcSet = (src) => `${src} 1x, ${src} 2x`;
 const responsiveSizes = '(max-width: 768px) 100vw, 600px';
 
 const AnixAILanding = () => {
+  const translations = {
+    ru: {
+      heroTitle:
+        'Креативные видео, которые повышают ваши продажи уже в первый месяц',
+      heroSubtitle:
+        'Мы объясняем ваши сложные продукты простым визуальным языком, который удерживает внимание, пробивает баннерную слепоту и улучшает конверсию на всех этапах воронки. Быстро, точно и под вашу цель.',
+      heroCTA: 'Получить анализ вашей воронки и 3 точки роста за 15 минут',
+      heroBenefits: [
+        {
+          title: 'Анализируем воронку',
+          description: 'Делаем сценарий, который решает конкретную бизнес-боль.',
+        },
+        {
+          title: 'Видео, созданное инженерно',
+          description: 'Драматургия + нейросети + композиция.',
+        },
+        {
+          title: 'Результат за 3,7 дня',
+          description: 'Без артефактов и с высокой визуальной точностью.',
+        },
+        {
+          title: '+15-25% конверсии',
+          description: 'Средний прирост у клиентов.',
+        },
+      ],
+      ctaFullTitle: 'Получите анализ вашей воронки ➜ 3 точки роста за 15 минут',
+      ctaFullSubtitle:
+        'Мы разберем вашу текущую коммуникацию, найдем узкие места и предложим решение с прогнозом, как изменится конверсия после внедрения видео.',
+      formNameLabel: 'Имя',
+      formContactLabel: 'Телефон / Telegram',
+      formProductLabel: 'Опишите ваш продукт в 1-2 предложениях',
+      formProductPlaceholder: 'Кто ваша аудитория и какую задачу решает продукт',
+      formSubmit: 'Получить анализ бесплатно',
+      audienceTitle: 'К кому мы подходим',
+      audienceSubtitle:
+        'Мы работаем там, где продукт сложный, объяснения важнее эстетики',
+      audienceSegments: [
+        'Технологические компании',
+        'IT-продукты и SaaS',
+        'Фарм-компании и биотех',
+        'Финтех',
+        'Логистика',
+        'Промышленность',
+        'Стартапы на стадии роста',
+        'Гранты, акселераторы',
+        'PR-отделы',
+        'Отделы продаж',
+        'Маркетинг',
+      ],
+      teamTitle: 'Команда, которая продаёт вместо вас',
+      technologyTitle: 'Технологии, которые делают ваш проект быстрее и лучше',
+      technologyBullets: [
+        'Собственная нейросеть Anix',
+        'Автоматизация поиска и исправления артефактов',
+        'Инструменты для ускорения продакшена',
+        'Искусственный контроль качества',
+        'Дип-композиция и цветокоррекция',
+      ],
+      riskTitle: 'Снимаем риски до старта',
+      riskBullets: [
+        {
+          title: 'Не сработает?',
+          description: 'Показываем сегментные кейсы',
+          link: '#cases',
+        },
+        {
+          title: 'Дорого?',
+          description: 'Видео — актив, который работает месяцами.',
+        },
+        {
+          title: 'Для моего рынка подходит?',
+          description: 'Делаем видео для сложных сегментов.',
+        },
+        {
+          title: 'Нет времени?',
+          description: 'Собираем ролики за 3–7 дней.',
+        },
+      ],
+      pricingTitle:
+        'Прозрачный и честный: стоимость зависит только от вашей задачи',
+      pricingText:
+        'Средний проект стоит от 400 до 900 тысяч рублей. Для крупных компаний — помесячная работа. Есть быстрые форматы.',
+      pricingCTA: 'Получить точный расчёт стоимости',
+      finalCTATitle:
+        'Получите анализ вашей воронки, росты конверсий за 15 минут',
+      finalCTADescription:
+        'Форма как в первом блоке: оставьте контакты, расскажите о продукте — мы вернёмся с точками роста.',
+      subscribeTitle: 'Хотите видеть, как мы собираем видео изнутри?',
+      subscribeSubtitle:
+        'В Telegram — backstage, советы и примеры лучших роликов Anix',
+      subscribeCTA: '💬 Подписаться в Telegram → @anixpro',
+      subscribeNote:
+        'Перейдёте в наш Telegram-канал с бэкстейджем, советами и примерами лучших роликов.',
+      salesVideoTitle: 'Видео, которое помогает продавать',
+      ndaTitle: 'Что мы уже сделали (и не всегда можем назвать)',
+    },
+    en: {
+      heroTitle: 'Creative videos that boost your sales from month one',
+      heroSubtitle:
+        'We explain complex products with clear visuals that keep attention, fight banner blindness, and improve conversion across the funnel. Fast, precise, and goal-focused.',
+      heroCTA: 'Get a funnel audit and 3 growth points in 15 minutes',
+      heroBenefits: [
+        {
+          title: 'We audit the funnel',
+          description: 'We craft a script that solves a concrete business pain.',
+        },
+        {
+          title: 'Engineering-first videos',
+          description: 'Storytelling + neural networks + composition.',
+        },
+        {
+          title: 'Results in 3–7 days',
+          description: 'No artifacts and with high visual accuracy.',
+        },
+        {
+          title: '+15–25% conversion',
+          description: 'Average uplift for our clients.',
+        },
+      ],
+      ctaFullTitle: 'Get a funnel audit ➜ 3 growth ideas in 15 minutes',
+      ctaFullSubtitle:
+        'We review your communication, find bottlenecks, and propose a solution with an expected conversion impact.',
+      formNameLabel: 'Name',
+      formContactLabel: 'Phone / Telegram',
+      formProductLabel: 'Describe your product in 1–2 sentences',
+      formProductPlaceholder: 'Who is your audience and what problem do you solve?',
+      formSubmit: 'Get the audit for free',
+      audienceTitle: 'Who we are a fit for',
+      audienceSubtitle:
+        'We work where products are complex and clarity matters more than pure aesthetics',
+      audienceSegments: [
+        'Tech companies',
+        'IT products and SaaS',
+        'Pharma and biotech',
+        'Fintech',
+        'Logistics',
+        'Industrial',
+        'Growth-stage startups',
+        'Grants and accelerators',
+        'PR teams',
+        'Sales teams',
+        'Marketing',
+      ],
+      teamTitle: 'A team that sells instead of you',
+      technologyTitle:
+        'Technologies that make your project faster and better',
+      technologyBullets: [
+        'Proprietary Anix neural network',
+        'Automated artifact search and fixes',
+        'Acceleration tools for production',
+        'AI-driven quality control',
+        'Deep composition and color grading',
+      ],
+      riskTitle: 'De-risking before launch',
+      riskBullets: [
+        {
+          title: "Won't work?",
+          description: 'We show segment-specific cases',
+          link: '#cases',
+        },
+        {
+          title: 'Too expensive?',
+          description: 'Video is an asset that works for months.',
+        },
+        {
+          title: 'Will it fit my market?',
+          description: 'We build videos for complex segments.',
+        },
+        {
+          title: 'No time?',
+          description: 'We deliver in 3–7 days.',
+        },
+      ],
+      pricingTitle:
+        'Transparent and fair: pricing depends only on your task',
+      pricingText:
+        'An average project costs 400–900k RUB. For large companies we work month-to-month. Fast-track formats are available.',
+      pricingCTA: 'Get an exact quote',
+      finalCTATitle:
+        'Get a funnel audit and conversion growth plan in 15 minutes',
+      finalCTADescription:
+        'Same form as the first CTA: leave contacts and product details — we will reply with growth points.',
+      subscribeTitle: 'Want to see how we assemble videos from the inside?',
+      subscribeSubtitle:
+        'Telegram has backstage, tips, and the best Anix video examples',
+      subscribeCTA: '💬 Subscribe on Telegram → @anixpro',
+      subscribeNote:
+        'You will jump to our Telegram channel with backstage, tips, and top videos.',
+      salesVideoTitle: 'A video that helps you sell',
+      ndaTitle: 'What we have already built (even under NDA)',
+    },
+  };
+
   const [isLoading, setIsLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(-1);
   const [counters, setCounters] = useState({ projects: 0, hours: 0 });
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [showQRCode, setShowQRCode] = useState(false);
-  const [expandedPackage, setExpandedPackage] = useState(null);
   const [activeFAQ, setActiveFAQ] = useState(null);
   const [processInView, setProcessInView] = useState(false);
   const [processStarted, setProcessStarted] = useState(false);
   const [isPageBlurred, setIsPageBlurred] = useState(false);
   const processRef = useRef(null);
   const awardsScrollRef = useRef(null);
-  const pricingScrollRef = useRef(null);
   const swipeStart = useRef(0);
-  const pricingSwipeStart = useRef(0);
   const [activeService, setActiveService] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [language, setLanguage] = useState('ru');
+  const isEnglish = language === 'en';
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -73,26 +265,6 @@ const AnixAILanding = () => {
     const deltaX = e.clientX - swipeStart.current;
     if (deltaX > 50) scrollAwards('left');
     if (deltaX < -50) scrollAwards('right');
-  };
-
-  const handlePricingTouchStart = (e) => {
-    pricingSwipeStart.current = e.touches[0].clientX;
-  };
-
-  const handlePricingTouchEnd = (e) => {
-    const deltaX = e.changedTouches[0].clientX - pricingSwipeStart.current;
-    if (deltaX > 50) scrollPricing('left');
-    if (deltaX < -50) scrollPricing('right');
-  };
-
-  const handlePricingMouseDown = (e) => {
-    pricingSwipeStart.current = e.clientX;
-  };
-
-  const handlePricingMouseUp = (e) => {
-    const deltaX = e.clientX - pricingSwipeStart.current;
-    if (deltaX > 50) scrollPricing('left');
-    if (deltaX < -50) scrollPricing('right');
   };
 
   // Animated counter effect
@@ -407,96 +579,6 @@ const AnixAILanding = () => {
     },
   ];
 
-  const pricingPackages = {
-    Стартапы: [
-      {
-        name: 'Meaty Script',
-        price: '100K₽',
-        details: [
-          '⚡ 5 дней доставка',
-          '🎯 Что получите: Готовый сценарий + структура + бриф + визуальные советы',
-          '📝 Для кого: Есть продакшн, но нет идей как донести суть',
-        ],
-      },
-      {
-        name: 'Explain in 30s',
-        price: '250K₽',
-        details: [
-          '⚡ 7 дней доставка',
-          '🎯 Что получите: 1 продающий ролик (сценарий, анимация, звук)',
-          '🎨 Для кого: Нужно быстро объяснить "Кто вы?" без лишних слов',
-        ],
-      },
-      {
-        name: 'Content Start',
-        price: '450K₽',
-        details: [
-          '⚡ 10 дней доставка',
-          '🎯 Что получите: 3 адаптированных ролика для Reels/Shorts',
-          '🎬 Для кого: Нужен недорогой тест анимации для соцсетей',
-        ],
-      },
-    ],
-    'Средний Бизнес': [
-      {
-        name: 'Full Production',
-        price: '500K₽',
-        details: [
-          '⚡ 5 дней доставка',
-          '🎯 Что получите: Полный продакшен + стратегия + адаптация под все сети',
-          '🎨 Для кого: Нужен мощный ролик под лиды, найм или запуск',
-        ],
-      },
-      {
-        name: 'Result Series',
-        price: '650K₽',
-        details: [
-          '⚡ 25 день доставка',
-          '🎯 Что получите: 3-5 роликов в едином стиле + A/B-тесты',
-          '🔄 Для кого: Нужно вести клиента по воронке контентом',
-        ],
-      },
-      {
-        name: 'Feed Content',
-        price: '720K₽',
-        details: [
-          '⚡ регулярно',
-          '🎯 Что получите: Месяц коротких роликов/анимированных постов',
-          '📱 Для кого: Нужна регулярность без постоянных изобретений',
-        ],
-      },
-    ],
-    Корпорации: [
-      {
-        name: 'Content System',
-        price: '1.5M₽',
-        details: [
-          '⚡ 45 дней доставка',
-          '🎯  Что получите: Стратегия + продакшен + аналитика + фокус-группы',
-          '👥 Для кого: Построение устойчивой контент-воронки',
-        ],
-      },
-      {
-        name: 'In-House Team',
-        price: '5M₽',
-        details: [
-          '⚡ 90 дней настройка',
-          '🎯 Что получите: Построение внутреннего отдела (пайплайн, шаблоны, найм)',
-          '🛠️ Для кого: Контент на потоке без фрилансеров',
-        ],
-      },
-      {
-        name: 'Court Viz',
-        price: '1.75M₽',
-        details: [
-          '⚡ 60 дней доставка',
-          '🎯 Что получите: Презентации, HR-коммуникация, сериалы, супервайзинг',
-          '📋 Для кого: Решение задач бренда, HR, ESG через анимацию',
-        ],
-      },
-    ],
-  };
-
   const faqData = [
     {
       question: 'Как именно нейросети помогают в создании ролика?',
@@ -583,40 +665,11 @@ const AnixAILanding = () => {
     }
   };
 
-  const scrollPricing = (direction) => {
-    if (pricingScrollRef.current) {
-      requestAnimationFrame(() => {
-        const container = pricingScrollRef.current;
-        const card = container.querySelector('.pricing-column');
-        const cardWidth =
-          window.innerWidth <= 768
-            ? container.clientWidth
-            : card
-              ? card.offsetWidth + 32
-              : 400;
-        const scrollAmount = cardWidth / 1.5;
-        const maxScroll = container.scrollWidth - container.clientWidth;
-
-        if (direction === 'left') {
-          if (container.scrollLeft <= 0) {
-            container.scrollTo({ left: maxScroll, behavior: 'smooth' });
-          } else {
-            container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-          }
-        } else {
-          if (container.scrollLeft >= maxScroll) {
-            container.scrollTo({ left: 0, behavior: 'smooth' });
-          } else {
-            container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-          }
-        }
-      });
-    }
-  };
-
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 1500);
   }, []);
+
+  const copy = translations[language];
 
   if (isLoading) {
     return (
@@ -645,18 +698,21 @@ const AnixAILanding = () => {
             <div className="hero-overlay"></div>
           </div>
           <div className="hero-content">
+            <div className="language-toggle" aria-label="language switcher">
+              <button
+                type="button"
+                className={`language-toggle-button ${isEnglish ? 'active' : ''}`}
+                onClick={() => setLanguage(isEnglish ? 'ru' : 'en')}
+              >
+                <span className={!isEnglish ? 'active' : ''}>RU</span>
+                <div className="toggle-knob" />
+                <span className={isEnglish ? 'active' : ''}>EN</span>
+              </button>
+            </div>
             <div className="hero-grid">
               <div className="hero-text">
-                <h1 className="hero-title">
-                  Креативные видео, которые повышают ваши продажи уже в первый
-                  месяц
-                </h1>
-                <p className="hero-subtitle">
-                  Мы объясняем ваши сложные продукты простым визуальным языком,
-                  который удерживает внимание, пробивает банерную слепоту и
-                  улучшает конверсию на всех этапах воронки. Быстро, точно и под
-                  вашу цель.
-                </p>
+                <h1 className="hero-title">{copy.heroTitle}</h1>
+                <p className="hero-subtitle">{copy.heroSubtitle}</p>
                 <a
                   href="https://t.me/m/i23MvBuLOGJi"
                   target="_blank"
@@ -665,32 +721,18 @@ const AnixAILanding = () => {
                   onMouseEnter={() => setIsPageBlurred(true)}
                   onMouseLeave={() => setIsPageBlurred(false)}
                 >
-                  <span>
-                    Получить анализ вашей воронки и 3 точки роста за 15 минут
-                  </span>
+                  <span>{copy.heroCTA}</span>
                   <div className="button-glow"></div>
                 </a>
               </div>
               <div className="hero-benefits-panel">
                 <div className="hero-benefits-grid">
-                  <div className="hero-benefit-card">
-                    <h3>Анализируем воронку</h3>
-                    <p>
-                      Делаем сценарий, который решает конкретную бизнес-боль.
-                    </p>
-                  </div>
-                  <div className="hero-benefit-card">
-                    <h3>Видео, созданное инженерно</h3>
-                    <p>Драматургия + нейросети + композиция.</p>
-                  </div>
-                  <div className="hero-benefit-card">
-                    <h3>Результат за 3,7 дня</h3>
-                    <p>Без артефактов и с высокой визуальной точностью.</p>
-                  </div>
-                  <div className="hero-benefit-card">
-                    <h3>+15-25% конверсии</h3>
-                    <p>Средний прирост у клиентов.</p>
-                  </div>
+                  {copy.heroBenefits.map((benefit, index) => (
+                    <div key={index} className="hero-benefit-card">
+                      <h3>{benefit.title}</h3>
+                      <p>{benefit.description}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -704,22 +746,16 @@ const AnixAILanding = () => {
           <div className="container">
             <div className="cta-full-content">
               <div>
-                <h2 className="cta-full-title">
-                  Получите анализ вашей воронки ➜ 3 точки роста за 15 минут
-                </h2>
-                <p className="cta-full-subtitle">
-                  Мы разберем вашу текущую коммуникацию, найдем узкие места и
-                  предложим решение с прогнозом, как изменится конверсия после
-                  внедрения видео.
-                </p>
+                <h2 className="cta-full-title">{copy.ctaFullTitle}</h2>
+                <p className="cta-full-subtitle">{copy.ctaFullSubtitle}</p>
               </div>
               <form className="cta-full-form">
                 <label>
-                  Имя
-                  <input type="text" name="name" placeholder="Имя" />
+                  {copy.formNameLabel}
+                  <input type="text" name="name" placeholder={copy.formNameLabel} />
                 </label>
                 <label>
-                  Телефон / Telegram
+                  {copy.formContactLabel}
                   <input
                     type="text"
                     name="contact"
@@ -727,15 +763,15 @@ const AnixAILanding = () => {
                   />
                 </label>
                 <label>
-                  Опишите ваш продукт в 1-2 предложениях
+                  {copy.formProductLabel}
                   <textarea
                     name="product"
                     rows="3"
-                    placeholder="Кто ваша аудитория и какую задачу решает продукт"
+                    placeholder={copy.formProductPlaceholder}
                   ></textarea>
                 </label>
                 <button type="submit" className="cta-button primary">
-                  Получить анализ бесплатно
+                  {copy.formSubmit}
                   <div className="button-glow"></div>
                 </button>
               </form>
@@ -854,101 +890,6 @@ const AnixAILanding = () => {
         </div>
       </Section>
 
-      {/* Services Section */}
-      <Section id="services" bg="#1a1a33" stickyTransition>
-        <div className="services-section">
-          <div className="container">
-            <h2 className="section-title">Видео, которое помогает продавать</h2>
-            <div className="services-grid">
-              <div
-                className="service-card"
-                onClick={() => setActiveService(activeService === 0 ? null : 0)}
-              >
-                <div className="service-icon">🎬</div>
-                <h3>Сокращение цикла сделки</h3>
-                <p>
-                  Меньше времени уходит на прогрев, презентации и убеждение.
-                </p>
-                <p>
-                  &quot;Мы теряем клиентов из-за долгих обсуждений и
-                  недопонимания&quot;.
-                </p>
-                <div
-                  className={`service-overlay ${activeService === 0 ? 'show' : ''}`}
-                >
-                  <div className="case-study">
-                    <h4>Превентивная победа</h4>
-                    <p>
-                      Наши клиенты в среднем сократили цикл сделки в 3 раза.
-                    </p>
-                    <div className="metrics">
-                      <span>Доверие: +21 пункт</span>
-                      <span>x2 Меньше возражений</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className="service-card"
-                onClick={() => setActiveService(activeService === 1 ? null : 1)}
-              >
-                <div className="service-icon">⚡</div>
-                <h3>Масштабирование</h3>
-                <p>
-                  Видео легко тиражируется, работает на новых рынках, языках,
-                  партнёрах.
-                </p>
-                <p>
-                  &quot;Хочу выйти в США, но нужен контент под локаль&quot;.
-                </p>
-                <div
-                  className={`service-overlay ${activeService === 1 ? 'show' : ''}`}
-                >
-                  <div className="case-study">
-                    <h4>История успеха</h4>
-                    <p>
-                      Обычно наш клиент увеличивает конверсию в отклик от 10
-                      раз.
-                    </p>
-                    <div className="metrics">
-                      <span>x10 Повышение охватов</span>
-                      <span>+16% Конверсий</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className="service-card"
-                onClick={() => setActiveService(activeService === 2 ? null : 2)}
-              >
-                <div className="service-icon">🎨</div>
-                <h3>Конкурентная Упаковка</h3>
-                <p>
-                  Продукт визуально и эмоционально выигрывает у конкурентов.
-                </p>
-                <p>
-                  &quot;На фоне других выглядим скучно, нас не запоминают&quot;.
-                </p>
-                <div
-                  className={`service-overlay ${activeService === 2 ? 'show' : ''}`}
-                >
-                  <div className="case-study">
-                    <h4>Вау эффект</h4>
-                    <p>Выделитесь на конференции и лендинге</p>
-                    <div className="metrics">
-                      <span>Лояльность: +30 пунктов</span>
-                      <span>x3 Узнаваемость бренда</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Section>
-
       {/* Testimonials */}
       <Section id="cases" bg="#202040" stickyTransition>
         <div className="testimonials-section">
@@ -1015,6 +956,160 @@ const AnixAILanding = () => {
         </div>
       </Section>
 
+      {/* Audience Fit Section */}
+      <Section id="audience" bg="#0f0f1f" className="audience-section">
+        <div className="container">
+          <h2 className="section-title">{copy.audienceTitle}</h2>
+          <p className="audience-subtitle">{copy.audienceSubtitle}</p>
+          <div className="audience-grid">
+            {copy.audienceSegments.map((segment, index) => (
+              <div key={index} className="audience-card">
+                <span className="audience-index">{index + 1}</span>
+                <p>{segment}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Team Section */}
+      <Section id="team" bg="#1a1a1a" className="team-section">
+        <div className="container">
+          <h2 className="section-title">{copy.teamTitle}</h2>
+          <div className="team-grid">
+            {teamMembers.map((member, index) => (
+              <div key={index} className="team-card">
+                <div className="team-image-container">
+                  <img
+                    src={member.image}
+                    srcSet={makeSrcSet(member.image)}
+                    sizes={responsiveSizes}
+                    alt="анимационный ролик объясняющий B2B продукт"
+                    width="400"
+                    height="400"
+                    className="team-image"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="team-overlay">
+                    <div className="expertise-badges">
+                      {member.tags.map((tag, i) => (
+                        <span key={i} className="expertise-badge">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="team-info">
+                  <h3>{member.name}</h3>
+                  <p className="role">{member.role}</p>
+                  <p className="benefit">{member.benefit}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Technology Section */}
+      <Section id="technology" bg="#141429" className="technology-section">
+        <div className="container">
+          <h2 className="section-title">{copy.technologyTitle}</h2>
+          <div className="technology-grid">
+            {copy.technologyBullets.map((item, index) => (
+              <div key={index} className="technology-card">
+                <div className="technology-icon">⚙️</div>
+                <p>{item}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Risk Handling Section */}
+      <Section id="risk" bg="#0f0f1f" className="risk-section">
+        <div className="container">
+          <h2 className="section-title">{copy.riskTitle}</h2>
+          <div className="risk-grid">
+            {copy.riskBullets.map((risk, index) => (
+              <div key={index} className="risk-card">
+                <h3>{risk.title}</h3>
+                <p>
+                  {risk.link ? (
+                    <>
+                      {risk.description}{' '}
+                      <a href={risk.link} className="risk-link">
+                        →
+                      </a>
+                    </>
+                  ) : (
+                    risk.description
+                  )}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* Pricing Overview Section */}
+      <Section id="pricing" bg="#1a1a33" className="transparent-pricing-section">
+        <div className="container">
+          <h2 className="section-title">{copy.pricingTitle}</h2>
+          <p className="pricing-description">{copy.pricingText}</p>
+          <a
+            href="https://t.me/m/i23MvBuLOGJi"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="cta-button primary"
+            onMouseEnter={() => setIsPageBlurred(true)}
+            onMouseLeave={() => setIsPageBlurred(false)}
+          >
+            <span>{copy.pricingCTA}</span>
+            <div className="button-glow"></div>
+          </a>
+        </div>
+      </Section>
+
+      {/* Final CTA Section */}
+      <Section id="final-cta" bg="#0f0f1f" className="cta-full-section">
+        <div className="container">
+          <div className="cta-full-content">
+            <div>
+              <h2 className="cta-full-title">{copy.finalCTATitle}</h2>
+              <p className="cta-full-subtitle">{copy.finalCTADescription}</p>
+            </div>
+            <form className="cta-full-form">
+              <label>
+                {copy.formNameLabel}
+                <input type="text" name="name" placeholder={copy.formNameLabel} />
+              </label>
+              <label>
+                {copy.formContactLabel}
+                <input
+                  type="text"
+                  name="contact"
+                  placeholder="+7 (999) 999-99-99 / @username"
+                />
+              </label>
+              <label>
+                {copy.formProductLabel}
+                <textarea
+                  name="product"
+                  rows="3"
+                  placeholder={copy.formProductPlaceholder}
+                ></textarea>
+              </label>
+              <button type="submit" className="cta-button primary">
+                {copy.formSubmit}
+                <div className="button-glow"></div>
+              </button>
+            </form>
+          </div>
+        </div>
+      </Section>
+
       <div className="container text-center my-12 md:my-16">
         <a
           href="https://t.me/m/i23MvBuLOGJi"
@@ -1054,196 +1149,6 @@ const AnixAILanding = () => {
         </p>
       </div>
 
-      {/* Team Section */}
-      <Section id="team" bg="#1a1a1a" className="team-section">
-        <div className="container">
-          <h2 className="section-title">Команда, которая продаёт вместо вас</h2>
-          <div className="team-grid">
-            {teamMembers.map((member, index) => (
-              <div key={index} className="team-card">
-                <div className="team-image-container">
-                  <img
-                    src={member.image}
-                    srcSet={makeSrcSet(member.image)}
-                    sizes={responsiveSizes}
-                    alt="анимационный ролик объясняющий B2B продукт"
-                    width="400"
-                    height="400"
-                    className="team-image"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="team-overlay">
-                    <div className="expertise-badges">
-                      {member.tags.map((tag, i) => (
-                        <span key={i} className="expertise-badge">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="team-info">
-                  <h3>{member.name}</h3>
-                  <p className="role">{member.role}</p>
-                  <p className="benefit">{member.benefit}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* NDA Cases Section */}
-      <Section id="nda" bg="#0f0f0f" className="nda-cases-section">
-        <div className="container">
-          <h2 className="section-title">
-            Что мы уже сделали (и не всегда можем назвать)
-          </h2>
-          <div className="nda-table-wrapper">
-            <table className="nda-table">
-              <thead>
-                <tr>
-                  <th>Сфера применения</th>
-                  <th>Что было до видео</th>
-                  <th>Что стало после видео</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Корпоративная безопасность</td>
-                  <td>3% отклик на тренинги</td>
-                  <td>27% вовлечённость, 2× завершения</td>
-                </tr>
-                <tr>
-                  <td>HR в госкорпорации</td>
-                  <td>непонимание миссии</td>
-                  <td>5 отделов перестроили процессы</td>
-                </tr>
-                <tr>
-                  <td>SaaS в LinkedIn</td>
-                  <td>1–2 ответа на 100</td>
-                  <td>18% reply rate, 12% демо</td>
-                </tr>
-                <tr>
-                  <td>Видео на IT-фестивале</td>
-                  <td>слабый поток</td>
-                  <td>+400% у стенда спикера</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </Section>
-
-      {/* Telegram Subscribe Section */}
-      <Section id="subscribe" bg="#2c2c59" stickyTransition>
-        <div className="telegram-subscribe py-20 bg-gradient-to-r from-[#5f35ff] to-[#4ac9ff] text-white text-center">
-          <div className="container max-w-3xl mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-4">
-              Хотите видеть, как мы собираем видео изнутри?
-            </h2>
-            <p className="text-lg text-[#e0e0e0] mb-6">
-              В Telegram — backstage, советы и примеры лучших роликов Anix
-            </p>
-
-            <a
-              href="https://t.me/anixpro"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-white text-[#5f35ff] px-6 py-3 rounded-full font-semibold shadow-md hover:scale-105 transition-transform"
-            >
-              💬 Подписаться в Telegram → @anixpro
-            </a>
-            <p className="text-sm text-[#B0B0B0] mt-1">
-              Перейдёте в наш Telegram-канал с бэкстейджем, советами и примерами
-              лучших роликов.
-            </p>
-          </div>
-        </div>
-      </Section>
-
-      {/* Pricing & Packages Section */}
-      <Section id="pricing" bg="#333366" stickyTransition>
-        <div className="pricing-section">
-          <div className="container">
-            <h2 className="section-title">Цены и Пакеты</h2>
-
-            <div className="pricing-carousel-container">
-              <div
-                className="pricing-carousel"
-                ref={pricingScrollRef}
-                onTouchStart={handlePricingTouchStart}
-                onTouchEnd={handlePricingTouchEnd}
-                onMouseDown={handlePricingMouseDown}
-                onMouseUp={handlePricingMouseUp}
-              >
-                {Object.entries(pricingPackages).map(([category, packages]) => (
-                  <div key={category} className="pricing-column">
-                    <div className="column-header">
-                      <h3>{category}</h3>
-                      <div className="column-subtitle">
-                        {category === 'Стартапы' &&
-                          'Идеально для растущего бизнеса'}
-                        {category === 'Средний Бизнес' &&
-                          'Оптимально для устоявшихся компаний'}
-                        {category === 'Корпорации' &&
-                          'Решения корпоративного уровня'}
-                      </div>
-                    </div>
-
-                    <div className="packages-list">
-                      {packages.map((pkg, index) => (
-                        <div key={index} className="package-card">
-                          <div className="package-header">
-                            <h4>{pkg.name}</h4>
-                            <div className="package-price">{pkg.price}</div>
-                          </div>
-
-                          <button
-                            className="details-button"
-                            onClick={() =>
-                              setExpandedPackage(
-                                expandedPackage === `${category}-${index}`
-                                  ? null
-                                  : `${category}-${index}`
-                              )
-                            }
-                          >
-                            Подробнее{' '}
-                            {expandedPackage === `${category}-${index}`
-                              ? '−'
-                              : '+'}
-                          </button>
-
-                          <div
-                            className={`package-details ${expandedPackage === `${category}-${index}` ? 'expanded' : ''}`}
-                          >
-                            <div className="details-content">
-                              {pkg.details.map((detail, i) => (
-                                <div key={i} className="detail-item">
-                                  {detail}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          <button
-                            className="package-cta"
-                            onClick={redirectToTelegram}
-                          >
-                            Начать
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </Section>
 
       {/* Enhanced Awards Section */}
       <Section id="awards" bg="#2d1b3d" className="awards-section">
@@ -1494,6 +1399,161 @@ const AnixAILanding = () => {
                 <span>Фев 2025</span>
               </div>
             </a>
+          </div>
+        </div>
+      </Section>
+
+      {/* Services Section (moved below news) */}
+      <Section id="services" bg="#1a1a33" stickyTransition>
+        <div className="services-section">
+          <div className="container">
+            <h2 className="section-title">{copy.salesVideoTitle}</h2>
+            <div className="services-grid">
+              <div
+                className="service-card"
+                onClick={() => setActiveService(activeService === 0 ? null : 0)}
+              >
+                <div className="service-icon">🎬</div>
+                <h3>Сокращение цикла сделки</h3>
+                <p>
+                  Меньше времени уходит на прогрев, презентации и убеждение.
+                </p>
+                <p>
+                  &quot;Мы теряем клиентов из-за долгих обсуждений и
+                  недопонимания&quot;.
+                </p>
+                <div
+                  className={`service-overlay ${activeService === 0 ? 'show' : ''}`}
+                >
+                  <div className="case-study">
+                    <h4>Превентивная победа</h4>
+                    <p>
+                      Наши клиенты в среднем сократили цикл сделки в 3 раза.
+                    </p>
+                    <div className="metrics">
+                      <span>Доверие: +21 пункт</span>
+                      <span>x2 Меньше возражений</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className="service-card"
+                onClick={() => setActiveService(activeService === 1 ? null : 1)}
+              >
+                <div className="service-icon">⚡</div>
+                <h3>Масштабирование</h3>
+                <p>
+                  Видео легко тиражируется, работает на новых рынках, языках,
+                  партнёрах.
+                </p>
+                <p>
+                  &quot;Хочу выйти в США, но нужен контент под локаль&quot;.
+                </p>
+                <div
+                  className={`service-overlay ${activeService === 1 ? 'show' : ''}`}
+                >
+                  <div className="case-study">
+                    <h4>История успеха</h4>
+                    <p>
+                      Обычно наш клиент увеличивает конверсию в отклик от 10
+                      раз.
+                    </p>
+                    <div className="metrics">
+                      <span>x10 Повышение охватов</span>
+                      <span>+16% Конверсий</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                className="service-card"
+                onClick={() => setActiveService(activeService === 2 ? null : 2)}
+              >
+                <div className="service-icon">🎨</div>
+                <h3>Конкурентная Упаковка</h3>
+                <p>
+                  Продукт визуально и эмоционально выигрывает у конкурентов.
+                </p>
+                <p>
+                  &quot;На фоне других выглядим скучно, нас не запоминают&quot;.
+                </p>
+                <div
+                  className={`service-overlay ${activeService === 2 ? 'show' : ''}`}
+                >
+                  <div className="case-study">
+                    <h4>Вау эффект</h4>
+                    <p>Выделитесь на конференции и лендинге</p>
+                    <div className="metrics">
+                      <span>Лояльность: +30 пунктов</span>
+                      <span>x3 Узнаваемость бренда</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* NDA Cases Section (moved below news) */}
+      <Section id="nda" bg="#0f0f0f" className="nda-cases-section">
+        <div className="container">
+          <h2 className="section-title">{copy.ndaTitle}</h2>
+          <div className="nda-table-wrapper">
+            <table className="nda-table">
+              <thead>
+                <tr>
+                  <th>Сфера применения</th>
+                  <th>Что было до видео</th>
+                  <th>Что стало после видео</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Корпоративная безопасность</td>
+                  <td>3% отклик на тренинги</td>
+                  <td>27% вовлечённость, 2× завершения</td>
+                </tr>
+                <tr>
+                  <td>HR в госкорпорации</td>
+                  <td>непонимание миссии</td>
+                  <td>5 отделов перестроили процессы</td>
+                </tr>
+                <tr>
+                  <td>SaaS в LinkedIn</td>
+                  <td>1–2 ответа на 100</td>
+                  <td>18% reply rate, 12% демо</td>
+                </tr>
+                <tr>
+                  <td>Видео на IT-фестивале</td>
+                  <td>слабый поток</td>
+                  <td>+400% у стенда спикера</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </Section>
+
+      {/* Telegram Subscribe Section (moved below news) */}
+      <Section id="subscribe" bg="#2c2c59" stickyTransition>
+        <div className="telegram-subscribe py-20 bg-gradient-to-r from-[#5f35ff] to-[#4ac9ff] text-white text-center">
+          <div className="container max-w-3xl mx-auto px-4">
+            <h2 className="text-3xl font-bold mb-4">{copy.subscribeTitle}</h2>
+            <p className="text-lg text-[#e0e0e0] mb-6">{copy.subscribeSubtitle}</p>
+
+            <a
+              href="https://t.me/anixpro"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-white text-[#5f35ff] px-6 py-3 rounded-full font-semibold shadow-md hover:scale-105 transition-transform"
+            >
+              {copy.subscribeCTA}
+            </a>
+            <p className="text-sm text-[#B0B0B0] mt-1">{copy.subscribeNote}</p>
           </div>
         </div>
       </Section>
