@@ -939,34 +939,49 @@ const AnixAILanding = () => {
             </h2>
             <div className="difference-grid">
               <div className="difference-card">
-                {t(
-                  'Уникальный подход: бизнес анализ + драматургия + нейросети.',
-                  'Unique blend: business analysis + storytelling + neural networks.'
-                )}
+                <div className="difference-icon">🧩</div>
+                <div className="difference-text">
+                  {t(
+                    'Уникальный подход: бизнес анализ + драматургия + нейросети.',
+                    'Unique blend: business analysis + storytelling + neural networks.'
+                  )}
+                </div>
               </div>
               <div className="difference-card">
-                {t(
-                  'Собственная нейросеть Anix Interpolator. Быстрее и лучше рынка.',
-                  'In-house Anix Interpolator neural network. Faster and better than the market.'
-                )}
+                <div className="difference-icon">🤖</div>
+                <div className="difference-text">
+                  {t(
+                    'Собственная нейросеть Anix Interpolator. Быстрее и лучше рынка.',
+                    'In-house Anix Interpolator neural network. Faster and better than the market.'
+                  )}
+                </div>
               </div>
               <div className="difference-card">
-                {t(
-                  'Глубокое понимание сложных продуктов: IT, фарма, AI, финтех.',
-                  'Deep understanding of complex products: IT, pharma, AI, fintech.'
-                )}
+                <div className="difference-icon">🧬</div>
+                <div className="difference-text">
+                  {t(
+                    'Глубокое понимание сложных продуктов: IT, фарма, AI, финтех.',
+                    'Deep understanding of complex products: IT, pharma, AI, fintech.'
+                  )}
+                </div>
               </div>
               <div className="difference-card">
-                {t(
-                  'Выпускники МФТИ + сильная творческая экспертиза.',
-                  'MIPT alumni + strong creative expertise.'
-                )}
+                <div className="difference-icon">🎓</div>
+                <div className="difference-text">
+                  {t(
+                    'Выпускники МФТИ + сильная творческая экспертиза.',
+                    'MIPT alumni + strong creative expertise.'
+                  )}
+                </div>
               </div>
               <div className="difference-card">
-                {t(
-                  'Работаем под задачу, а не "красиво". Ролики дают результат.',
-                  'We work for outcomes, not “beauty”. Videos deliver results.'
-                )}
+                <div className="difference-icon">🎯</div>
+                <div className="difference-text">
+                  {t(
+                    'Работаем под задачу, а не "красиво". Ролики дают результат.',
+                    'We work for outcomes, not “beauty”. Videos deliver results.'
+                  )}
+                </div>
               </div>
             </div>
             <div className="difference-cta-wrapper">
