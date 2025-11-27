@@ -907,6 +907,45 @@ const AnixAILanding = () => {
     );
   }
 
+  const problemCards = [
+    {
+      icon: '📢',
+      label: t('Проблема №1', 'Problem #1'),
+      description: t(
+        'Люди не читают текст — его никто не понимает.',
+        'People skip the text — nobody understands it.'
+      ),
+      tone: 'ruby',
+    },
+    {
+      icon: '🎬',
+      label: t('Проблема №2', 'Problem #2'),
+      description: t(
+        'В классическом видео теряется логика.',
+        'Traditional video loses the logic.'
+      ),
+      tone: 'indigo',
+    },
+    {
+      icon: '📈',
+      label: t('Проблема №3', 'Problem #3'),
+      description: t(
+        'Customer Acquisition Cost растет ➜ Неэффективные стандартные методы маркетинга.',
+        'Customer Acquisition Cost climbs ➜ standard marketing tactics underperform.'
+      ),
+      tone: 'teal',
+    },
+    {
+      icon: '🛠️',
+      label: t('Проблема №4', 'Problem #4'),
+      description: t(
+        'Нужен инструмент, который объяснит быстро.',
+        'You need a tool that explains quickly.'
+      ),
+      tone: 'aqua',
+    },
+  ];
+
   return (
     <div className="anix-landing">
       {isPageBlurred && <div className="page-blur-overlay"></div>}
@@ -1018,36 +1057,26 @@ const AnixAILanding = () => {
               </h2>
               <p className="problem-description">
                 {t(
-                  'Сегодня маркетологи утонули в одинаковых креативах, отделы продаж — в длинных объяснениях, а клиенты просто не понимают, что им продают. Видео решает эту проблему, но только если оно сделано правильно, с драматургией, понятной визуализацией и фокусом на бизнес результат.',
-                  'Marketers are drowning in lookalike creatives, sales teams spend too long explaining, and customers simply do not understand the offer. Video solves this only when it is built with storytelling, clear visuals, and a focus on business outcomes.'
+                  'Сегодня маркетинг буксует: баннерную слепоту уже ничем не пробить, а CAC растёт каждый месяц. Клиенты не понимают продукт, а отделы продаж тонут в долгих объяснениях.',
+                  'Marketing is stalling: banner blindness is unbreakable, CAC keeps growing, customers do not understand the product, and sales teams drown in lengthy explanations.'
                 )}
               </p>
             </div>
-            <div className="problem-bullets">
-              <div className="problem-bullet">
-                {t(
-                  'Люди не читают текст — его никто не понимает.',
-                  'People skip the text — nobody understands it.'
-                )}
-              </div>
-              <div className="problem-bullet">
-                {t(
-                  'В классическом видео теряется логика.',
-                  'Traditional video loses the logic.'
-                )}
-              </div>
-              <div className="problem-bullet">
-                {t(
-                  'Customer Acquisition Cost растет ➜ Неэффективные креативы.',
-                  'Customer Acquisition Cost climbs ➜ creatives underperform.'
-                )}
-              </div>
-              <div className="problem-bullet">
-                {t(
-                  'Нужен инструмент, который объяснит быстро.',
-                  'You need a tool that explains quickly.'
-                )}
-              </div>
+            <div className="problem-cards">
+              {problemCards.map((card, index) => (
+                <div key={card.label} className={`problem-card ${card.tone}`}>
+                  <div className="problem-icon" aria-hidden="true">
+                    {card.icon}
+                  </div>
+                  <div className="problem-card-text">
+                    <div className="problem-card-label">{card.label}</div>
+                    <div className="problem-card-description">
+                      {card.description}
+                    </div>
+                  </div>
+                  <div className="problem-card-index">{index + 1}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
