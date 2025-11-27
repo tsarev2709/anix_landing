@@ -27,7 +27,7 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -157,12 +157,32 @@ body {
   position: relative;
   z-index: 2;
   text-align: center;
-  max-width: 800px;
-  padding: 0 24px;
+  max-width: 1280px;
+  padding: 24px;
+  margin: 0 auto;
+}
+
+.hero-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: center;
+  align-items: center;
+}
+
+.hero-benefits-panel {
+  width: 100%;
 }
 
 .hero-subtitle {
-  margin: 16px auto 32px;
+  margin: 0 auto;
   color: rgba(255, 255, 255, 0.85);
   font-size: 18px;
   line-height: 1.7;
@@ -172,7 +192,8 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 16px;
-  margin: 32px auto 24px;
+  margin: 8px 0 0;
+  width: 100%;
 }
 
 .hero-benefit-card {
@@ -200,6 +221,39 @@ body {
   max-width: 520px;
   margin: 24px auto 0;
   display: inline-flex;
+}
+
+@media (min-width: 1024px) {
+  .hero-content {
+    text-align: left;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 32px;
+    align-items: center;
+  }
+
+  .hero-text {
+    grid-column: span 7;
+    text-align: left;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .hero-benefits-panel {
+    grid-column: span 5;
+  }
+
+  .hero-benefits-grid {
+    margin: 0;
+  }
+
+  .hero-cta {
+    margin: 0;
+    align-self: flex-start;
+  }
 }
 
 /* Logo Styles */
