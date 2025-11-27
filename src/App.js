@@ -65,18 +65,28 @@ const AnixAILanding = () => {
       audienceTitle: 'К кому мы подходим',
       audienceSubtitle:
         'Мы работаем там, где продукт сложный, объяснения важнее эстетики',
-      audienceSegments: [
-        'Технологические компании',
-        'IT-продукты и SaaS',
-        'Фарм-компании и биотех',
-        'Финтех',
-        'Логистика',
-        'Промышленность',
-        'Стартапы на стадии роста',
-        'Гранты, акселераторы',
-        'PR-отделы',
-        'Отделы продаж',
-        'Маркетинг',
+      audienceCards: [
+        {
+          title: 'Компании с комплексными B2B-решениями',
+          items: [
+            'Технологические компании',
+            'IT-продукты и SaaS',
+            'Фарма, биотех',
+            'Финтех',
+            'Логистика и промышленность',
+          ],
+          theme: 'violet',
+        },
+        {
+          title: 'Команды, выходящие на рост и инвестиции',
+          items: ['Стартапы', 'Гранты', 'Акселераторы'],
+          theme: 'green',
+        },
+        {
+          title: 'Корпоративные подразделения, которым важно объяснять',
+          items: ['PR-отделы', 'Отделы продаж', 'Маркетинг'],
+          theme: 'amber',
+        },
       ],
       teamTitle: 'Команда, которая продаёт вместо вас',
       technologyTitle: 'Технологии, которые делают ваш проект быстрее и лучше',
@@ -161,18 +171,28 @@ const AnixAILanding = () => {
       audienceTitle: 'Who we are a fit for',
       audienceSubtitle:
         'We work where products are complex and clarity matters more than pure aesthetics',
-      audienceSegments: [
-        'Tech companies',
-        'IT products and SaaS',
-        'Pharma and biotech',
-        'Fintech',
-        'Logistics',
-        'Industrial',
-        'Growth-stage startups',
-        'Grants and accelerators',
-        'PR teams',
-        'Sales teams',
-        'Marketing',
+      audienceCards: [
+        {
+          title: 'Companies with complex B2B solutions',
+          items: [
+            'Technology companies',
+            'IT products and SaaS',
+            'Pharma and biotech',
+            'Fintech',
+            'Logistics and manufacturing',
+          ],
+          theme: 'violet',
+        },
+        {
+          title: 'Teams aiming for growth and investment',
+          items: ['Startups', 'Grants', 'Accelerators'],
+          theme: 'green',
+        },
+        {
+          title: 'Corporate teams that need clear explanations',
+          items: ['PR departments', 'Sales teams', 'Marketing'],
+          theme: 'amber',
+        },
       ],
       teamTitle: 'A team that sells instead of you',
       technologyTitle: 'Technologies that make your project faster and better',
@@ -1225,10 +1245,20 @@ const AnixAILanding = () => {
           <h2 className="section-title">{copy.audienceTitle}</h2>
           <p className="audience-subtitle">{copy.audienceSubtitle}</p>
           <div className="audience-grid">
-            {copy.audienceSegments.map((segment, index) => (
-              <div key={index} className="audience-card">
-                <span className="audience-index">{index + 1}</span>
-                <p>{segment}</p>
+            {copy.audienceCards.map((card, index) => (
+              <div
+                key={index}
+                className={`audience-card theme-${card.theme}`}
+                aria-label={card.title}
+              >
+                <div className="audience-card-content">
+                  <h3 className="audience-card-title">{card.title}</h3>
+                  <ul className="audience-list">
+                    {card.items.map((item, itemIndex) => (
+                      <li key={itemIndex}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ))}
           </div>
