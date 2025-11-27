@@ -37,7 +37,8 @@ const AnixAILanding = () => {
       heroBenefits: [
         {
           title: 'Анализируем воронку',
-          description: 'Делаем сценарий, который решает конкретную бизнес-боль.',
+          description:
+            'Делаем сценарий, который решает конкретную бизнес-боль.',
         },
         {
           title: 'Видео, созданное инженерно',
@@ -58,7 +59,8 @@ const AnixAILanding = () => {
       formNameLabel: 'Имя',
       formContactLabel: 'Телефон / Telegram',
       formProductLabel: 'Опишите ваш продукт в 1-2 предложениях',
-      formProductPlaceholder: 'Кто ваша аудитория и какую задачу решает продукт',
+      formProductPlaceholder:
+        'Кто ваша аудитория и какую задачу решает продукт',
       formSubmit: 'Получить анализ бесплатно',
       audienceTitle: 'К кому мы подходим',
       audienceSubtitle:
@@ -131,7 +133,8 @@ const AnixAILanding = () => {
       heroBenefits: [
         {
           title: 'We audit the funnel',
-          description: 'We craft a script that solves a concrete business pain.',
+          description:
+            'We craft a script that solves a concrete business pain.',
         },
         {
           title: 'Engineering-first videos',
@@ -152,7 +155,8 @@ const AnixAILanding = () => {
       formNameLabel: 'Name',
       formContactLabel: 'Phone / Telegram',
       formProductLabel: 'Describe your product in 1–2 sentences',
-      formProductPlaceholder: 'Who is your audience and what problem do you solve?',
+      formProductPlaceholder:
+        'Who is your audience and what problem do you solve?',
       formSubmit: 'Get the audit for free',
       audienceTitle: 'Who we are a fit for',
       audienceSubtitle:
@@ -171,8 +175,7 @@ const AnixAILanding = () => {
         'Marketing',
       ],
       teamTitle: 'A team that sells instead of you',
-      technologyTitle:
-        'Technologies that make your project faster and better',
+      technologyTitle: 'Technologies that make your project faster and better',
       technologyBullets: [
         'Proprietary Anix neural network',
         'Automated artifact search and fixes',
@@ -200,8 +203,7 @@ const AnixAILanding = () => {
           description: 'We deliver in 3–7 days.',
         },
       ],
-      pricingTitle:
-        'Transparent and fair: pricing depends only on your task',
+      pricingTitle: 'Transparent and fair: pricing depends only on your task',
       pricingText:
         'An average project costs 400–900k RUB. For large companies we work month-to-month. Fast-track formats are available.',
       pricingCTA: 'Get an exact quote',
@@ -237,6 +239,7 @@ const AnixAILanding = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [language, setLanguage] = useState('ru');
   const isEnglish = language === 'en';
+  const t = (ru, en) => (isEnglish ? en : ru);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
@@ -358,65 +361,89 @@ const AnixAILanding = () => {
   // Process steps with enhanced data
   const processSteps = [
     {
-      title: 'Анализ Сценария',
+      title: t('Анализ Сценария', 'Script analysis'),
       icon: '📝',
-      description:
+      description: t(
         'ИИ анализирует ваш бриф и создает увлекательное повествование',
-      time: '2 часа',
+        'AI reviews your brief and builds a compelling storyline'
+      ),
+      time: t('2 часа', '2 hours'),
       saved: '75%',
       details: [
-        'Обработка брифа',
-        'Анализ целевой аудитории',
-        'Оптимизация сценария',
+        t('Обработка брифа', 'Brief processing'),
+        t('Анализ целевой аудитории', 'Target audience analysis'),
+        t('Оптимизация сценария', 'Script optimization'),
       ],
       color: '#8b45ff',
       bgGradient: 'linear-gradient(135deg, #8b45ff, #b465ff)',
     },
     {
-      title: 'Генерация Ключевых Кадров',
+      title: t('Генерация Ключевых Кадров', 'Key frame generation'),
       icon: '🎯',
-      description:
+      description: t(
         'Нейронные сети автоматически генерируют идеальные ключевые кадры',
-      time: '4 часа',
+        'Neural networks auto-generate precise key frames'
+      ),
+      time: t('4 часа', '4 hours'),
       saved: '60%',
       details: [
-        'Автоматическое создание ключевых кадров',
-        'Визуальная композиция',
-        'Оптимизация тайминга',
+        t(
+          'Автоматическое создание ключевых кадров',
+          'Automatic key frame creation'
+        ),
+        t('Визуальная композиция', 'Visual composition'),
+        t('Оптимизация тайминга', 'Timing optimization'),
       ],
       color: '#20b2aa',
       bgGradient: 'linear-gradient(135deg, #20b2aa, #48cae4)',
     },
     {
-      title: 'ИИ Анимация',
+      title: t('ИИ Анимация', 'AI animation'),
       icon: '🤖',
-      description: 'Продвинутый ИИ создает плавную, профессиональную анимацию',
-      time: '1 час',
+      description: t(
+        'Продвинутый ИИ создает плавную, профессиональную анимацию',
+        'Advanced AI builds smooth, professional animation'
+      ),
+      time: t('1 час', '1 hour'),
       saved: '90%',
-      details: ['Нейронный рендеринг', 'Синтез движения', 'Перенос стиля'],
+      details: [
+        t('Нейронный рендеринг', 'Neural rendering'),
+        t('Синтез движения', 'Motion synthesis'),
+        t('Перенос стиля', 'Style transfer'),
+      ],
       color: '#ff7f50',
       bgGradient: 'linear-gradient(135deg, #ff7f50, #ff9a76)',
     },
     {
-      title: 'Улучшение',
+      title: t('Улучшение', 'Enhancement'),
       icon: '⚡',
-      description: 'ИИ улучшает качество и добавляет финальные штрихи',
-      time: '30 мин',
+      description: t(
+        'ИИ улучшает качество и добавляет финальные штрихи',
+        'AI polishes quality and adds final touches'
+      ),
+      time: t('30 мин', '30 min'),
       saved: '85%',
-      details: ['Улучшение качества', 'Цветокоррекция', 'Обработка эффектов'],
+      details: [
+        t('Улучшение качества', 'Quality enhancement'),
+        t('Цветокоррекция', 'Color grading'),
+        t('Обработка эффектов', 'Effects processing'),
+      ],
       color: '#9d4edd',
       bgGradient: 'linear-gradient(135deg, #9d4edd, #c77dff)',
     },
     {
-      title: 'Доставка',
+      title: t('Доставка', 'Delivery'),
       icon: '📊',
-      description: 'Финальная оптимизация и интеграция аналитики',
-      time: '15 мин',
+      description: t(
+        'Финальная оптимизация и интеграция аналитики',
+        'Final optimization and analytics integration'
+      ),
+      time: t('15 мин', '15 min'),
       saved: '95%',
       details: [
-        'Оптимизация форматов',
-        'Настройка аналитики',
-        'Отслеживание производительности',
+        t('Оптимизация форматов', 'Format optimization'),
+        t('Настройка аналитики', 'Analytics setup'),
+        t('Отслеживание производительности', 'Performance tracking'),
       ],
       color: '#06ffa5',
       bgGradient: 'linear-gradient(135deg, #06ffa5, #39ff14)',
@@ -427,14 +454,20 @@ const AnixAILanding = () => {
     {
       name: 'Андрей Царёв',
       role: 'Стратег и продюсер B2B-видео',
+      roleEn: 'B2B video strategist and producer',
       benefit: 'Понимает рынок, превращает суть в продающий аргумент',
+      benefitEn:
+        'Understands the market and turns essence into selling arguments',
       image: god,
       tags: ['B2B', 'Продуктовое позиционирование', 'Драматургия', 'Аналитика'],
+      tagsEn: ['B2B', 'Product positioning', 'Storytelling', 'Analytics'],
     },
     {
       name: 'Александра Севостьянова',
       role: 'Сценарист-продажник и режиссёр',
+      roleEn: 'Sales-focused scriptwriter and director',
       benefit: 'Превращает сложное в ясную и цепляющую подачу',
+      benefitEn: 'Turns complexity into clear, engaging storytelling',
       image: bestie,
       tags: [
         'B2B-питчи',
@@ -442,11 +475,19 @@ const AnixAILanding = () => {
         'Продажный текст',
         'Клиентские боли',
       ],
+      tagsEn: [
+        'B2B pitches',
+        'Theatre directing',
+        'Sales copy',
+        'Customer pains',
+      ],
     },
     {
       name: 'Иван Кухарук',
       role: 'Технический директор',
+      roleEn: 'CTO',
       benefit: 'Проектирует процесс и следит, чтобы всё работало',
+      benefitEn: 'Designs the process and keeps everything running',
       image: vanya,
       tags: [
         'Проджект-менеджмент',
@@ -454,11 +495,19 @@ const AnixAILanding = () => {
         'AI-интеграция',
         'Процесс',
       ],
+      tagsEn: [
+        'Project management',
+        'Business analysis',
+        'AI integration',
+        'Process',
+      ],
     },
     {
       name: 'Дарья Косичкина',
       role: 'Нейроаниматор',
+      roleEn: 'Neuro-animator',
       benefit: 'Делает визуал, который объясняет и цепляет',
+      benefitEn: 'Builds visuals that explain and hook',
       image: dasha,
       tags: [
         '2D-анимация',
@@ -466,13 +515,22 @@ const AnixAILanding = () => {
         'Визуальные метафоры',
         'Раскадровка',
       ],
+      tagsEn: [
+        '2D animation',
+        'Motion design',
+        'Visual metaphors',
+        'Storyboarding',
+      ],
     },
     {
       name: 'Лидия Солнышко',
       role: 'Нейроаниматор',
+      roleEn: 'Neuro-animator',
       benefit: 'Собирает AI-видео, чтобы быстро и качественно',
+      benefitEn: 'Assembles AI videos quickly and with quality',
       image: lida,
       tags: ['AI-видео', 'Постпродакшн', 'Алгоритмы', 'Motion pipeline'],
+      tagsEn: ['AI video', 'Post-production', 'Algorithms', 'Motion pipeline'],
     },
   ];
 
@@ -516,6 +574,8 @@ const AnixAILanding = () => {
       company: 'CEO Hemotech AI',
       website: 'https://hemotech.ai/',
       text: 'Запрос: показать ценность биотех-продукта врачам и инвесторам без сложной терминологии. Результат: конверсия холодных лидов выросла на 26%, ролик работает на сайте, в email-посеве и на отраслевых выставках.',
+      textEn:
+        'Goal: show biotech value to doctors and investors without complex jargon. Result: cold-lead conversion grew by 26%; the video works on the site, in email outreach, and at industry expos.',
       videoThumbnail: hemoai,
       videoUrl: 'https://player.vimeo.com/video/1078358021?h=afe067a81f',
       reach: 53,
@@ -525,8 +585,11 @@ const AnixAILanding = () => {
       id: 5,
       name: 'Светлана Красночуб',
       company: 'Исполнительный директор ФЦК МФТИ',
+      companyEn: 'Executive Director, MIPT Endowment',
       website: 'https://fund.mipt.ru/',
       text: 'Запрос: собрать выпускников вокруг фонда и передать дух Физтеха. Результат: регистрации на мероприятие выросли на 45%, ролик транслируется на встречах спонсоров и в закрытых сообществах выпускников.',
+      textEn:
+        'Goal: rally alumni around the fund and convey the MIPT spirit. Result: event registrations grew by 45%; the video plays at sponsor meetings and in private alumni communities.',
       videoThumbnail: 'https://vumbnail.com/1102413873.jpg',
       videoUrl:
         'https://player.vimeo.com/video/1102413873?badge=0&autopause=0&player_id=0&app_id=58479',
@@ -537,8 +600,11 @@ const AnixAILanding = () => {
       id: 6,
       name: 'Алексей Лычке',
       company: 'Генеральный директор, Б в Кубе',
+      companyEn: 'CEO, B v Kube',
       website: 'https://companiab.cu/',
-      text: 'Запрос: выйти на новых клиентов в области охраны труда и донести ценность за 40 секунд. Результат: конверсия в заявки от франшизыи выросла на 19%, ролик транслируется на интерактивных столах в шоуруме компании и в онлайн-демо, помог закрыть контракт с рядом предприятий.',
+      text: 'Запрос: выйти на новых клиентов в области охраны труда и донести ценность за 40 секунд. Результат: конверсия в заявки от франшизы выросла на 19%, ролик транслируется на интерактивных столах в шоуруме компании и в онлайн-демо, помог закрыть контракт с рядом предприятий.',
+      textEn:
+        'Goal: reach new occupational safety clients and deliver value in 40 seconds. Result: franchise application conversion grew by 19%; the video runs on interactive tables in the showroom and online demos, helping close deals with several enterprises.',
       videoThumbnail: 'https://vumbnail.com/1118064088.jpg',
       videoUrl: 'https://player.vimeo.com/video/1118064088',
       reach: 28,
@@ -576,6 +642,35 @@ const AnixAILanding = () => {
       category: 'Общая категория',
       year: '2023',
       image: fiztech,
+    },
+  ];
+
+  const ndaCases = [
+    {
+      area: t('Корпоративная безопасность', 'Corporate security'),
+      before: t('3% отклик на тренинги', '3% engagement with training'),
+      after: t(
+        '27% вовлечённость, 2× завершения',
+        '27% engagement, 2× completions'
+      ),
+    },
+    {
+      area: t('HR в госкорпорации', 'HR in a state corporation'),
+      before: t('непонимание миссии', 'mission unclear to teams'),
+      after: t(
+        '5 отделов перестроили процессы',
+        '5 departments rebuilt their processes'
+      ),
+    },
+    {
+      area: 'SaaS in LinkedIn',
+      before: t('1–2 ответа на 100', '1–2 replies per 100 messages'),
+      after: t('18% reply rate, 12% демо', '18% reply rate, 12% demos'),
+    },
+    {
+      area: t('Видео на IT-фестивале', 'Video for an IT festival'),
+      before: t('слабый поток', 'low booth traffic'),
+      after: t('+400% у стенда спикера', '+400% traffic at the speaker booth'),
     },
   ];
 
@@ -752,7 +847,11 @@ const AnixAILanding = () => {
               <form className="cta-full-form">
                 <label>
                   {copy.formNameLabel}
-                  <input type="text" name="name" placeholder={copy.formNameLabel} />
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder={copy.formNameLabel}
+                  />
                 </label>
                 <label>
                   {copy.formContactLabel}
@@ -786,28 +885,42 @@ const AnixAILanding = () => {
           <div className="container problem-grid">
             <div className="problem-text">
               <h2 className="section-title">
-                Бизнесу трудно продавать, когда продукт сложный
+                {t(
+                  'Бизнесу трудно продавать, когда продукт сложный',
+                  'Selling is hard when the product is complex'
+                )}
               </h2>
               <p className="problem-description">
-                Сегодня маркетологи утонули в одинаковых креативах, отделы
-                продаж — в длинных объяснениях, а клиенты просто не понимают,
-                что им продают. Видео решает эту проблему, но только если оно
-                сделано правильно, с драматургией, понятной визуализацией и
-                фокусом на бизнес результат.
+                {t(
+                  'Сегодня маркетологи утонули в одинаковых креативах, отделы продаж — в длинных объяснениях, а клиенты просто не понимают, что им продают. Видео решает эту проблему, но только если оно сделано правильно, с драматургией, понятной визуализацией и фокусом на бизнес результат.',
+                  'Marketers are drowning in lookalike creatives, sales teams spend too long explaining, and customers simply do not understand the offer. Video solves this only when it is built with storytelling, clear visuals, and a focus on business outcomes.'
+                )}
               </p>
             </div>
             <div className="problem-bullets">
               <div className="problem-bullet">
-                Люди не читают текст — его никто не понимает.
+                {t(
+                  'Люди не читают текст — его никто не понимает.',
+                  'People skip the text — nobody understands it.'
+                )}
               </div>
               <div className="problem-bullet">
-                В классическом видео теряется логика.
+                {t(
+                  'В классическом видео теряется логика.',
+                  'Traditional video loses the logic.'
+                )}
               </div>
               <div className="problem-bullet">
-                Customer Acquisition Cost растет ➜ Неэффективные креативы.
+                {t(
+                  'Customer Acquisition Cost растет ➜ Неэффективные креативы.',
+                  'Customer Acquisition Cost climbs ➜ creatives underperform.'
+                )}
               </div>
               <div className="problem-bullet">
-                Нужен инструмент, который объяснит быстро.
+                {t(
+                  'Нужен инструмент, который объяснит быстро.',
+                  'You need a tool that explains quickly.'
+                )}
               </div>
             </div>
           </div>
@@ -819,23 +932,41 @@ const AnixAILanding = () => {
         <div className="difference-section">
           <div className="container">
             <h2 className="section-title">
-              Anix — это не студия, это инструмент для роста вашей конверсии
+              {t(
+                'Anix — это не студия, это инструмент для роста вашей конверсии',
+                'Anix is not a studio — it is your conversion growth engine'
+              )}
             </h2>
             <div className="difference-grid">
               <div className="difference-card">
-                Уникальный подход: бизнес анализ + драматургия + нейросети.
+                {t(
+                  'Уникальный подход: бизнес анализ + драматургия + нейросети.',
+                  'Unique blend: business analysis + storytelling + neural networks.'
+                )}
               </div>
               <div className="difference-card">
-                Собственная нейросеть Anix Interpolator. Быстрее и лучше рынка.
+                {t(
+                  'Собственная нейросеть Anix Interpolator. Быстрее и лучше рынка.',
+                  'In-house Anix Interpolator neural network. Faster and better than the market.'
+                )}
               </div>
               <div className="difference-card">
-                Глубокое понимание сложных продуктов: IT, фарма, AI, финтех.
+                {t(
+                  'Глубокое понимание сложных продуктов: IT, фарма, AI, финтех.',
+                  'Deep understanding of complex products: IT, pharma, AI, fintech.'
+                )}
               </div>
               <div className="difference-card">
-                Выпускники МФТИ + сильная творческая экспертиза.
+                {t(
+                  'Выпускники МФТИ + сильная творческая экспертиза.',
+                  'MIPT alumni + strong creative expertise.'
+                )}
               </div>
               <div className="difference-card">
-                Работаем под задачу, а не "красиво". Ролики дают результат.
+                {t(
+                  'Работаем под задачу, а не "красиво". Ролики дают результат.',
+                  'We work for outcomes, not “beauty”. Videos deliver results.'
+                )}
               </div>
             </div>
             <div className="difference-cta-wrapper">
@@ -861,30 +992,48 @@ const AnixAILanding = () => {
           <div className="container">
             <h2 className="section-title">Как мы повышаем конверсию</h2>
             <p className="conversion-intro">
-              Мы строим видео, которое работает как элемент воронки, а не просто
-              красиво.
+              {t(
+                'Мы строим видео, которое работает как элемент воронки, а не просто красиво.',
+                'We build video that works as part of the funnel, not just looks pretty.'
+              )}
             </p>
             <div className="conversion-grid">
               <div className="conversion-card">
-                Анализируем воронку и определяем, где видео даст максимальный
-                прирост.
+                {t(
+                  'Анализируем воронку и определяем, где видео даст максимальный прирост.',
+                  'We audit the funnel and spot where video delivers the biggest lift.'
+                )}
               </div>
               <div className="conversion-card">
-                Формируем сценарий в формате решения боли аудитории.
+                {t(
+                  'Формируем сценарий в формате решения боли аудитории.',
+                  'We craft a script that solves the audience’s pain.'
+                )}
               </div>
               <div className="conversion-card">
-                Делаем визуализацию, которая удерживает внимание.
+                {t(
+                  'Делаем визуализацию, которая удерживает внимание.',
+                  'We build visuals that keep attention.'
+                )}
               </div>
               <div className="conversion-card">
-                Используем нейросети там, где нужен темп.
+                {t(
+                  'Используем нейросети там, где нужен темп.',
+                  'We use AI where speed matters most.'
+                )}
               </div>
               <div className="conversion-card">
-                Выдаем рекомендации по внедрению: куда вставить и как
-                использовать.
+                {t(
+                  'Выдаем рекомендации по внедрению: куда вставить и как использовать.',
+                  'We give rollout advice: where to place and how to use the video.'
+                )}
               </div>
             </div>
             <p className="conversion-result">
-              В среднем клиенты получают +15-25% конверсии.
+              {t(
+                'В среднем клиенты получают +15-25% конверсии.',
+                'Clients typically gain +15–25% conversion.'
+              )}
             </p>
           </div>
         </div>
@@ -897,11 +1046,15 @@ const AnixAILanding = () => {
             <h2 className="section-title">Истории Успеха Клиентов</h2>
             <div className="testimonials-grid">
               {testimonials.map((testimonial) => {
+                const baseText =
+                  isEnglish && testimonial.textEn
+                    ? testimonial.textEn
+                    : testimonial.text;
                 const maxLen = isMobile ? 275 : 350;
                 const previewText =
-                  testimonial.text.length > maxLen
-                    ? `${testimonial.text.slice(0, maxLen)}...`
-                    : testimonial.text;
+                  baseText.length > maxLen
+                    ? `${baseText.slice(0, maxLen)}...`
+                    : baseText;
                 return (
                   <div key={testimonial.id} className="testimonial-card">
                     <div
@@ -925,10 +1078,12 @@ const AnixAILanding = () => {
                         <div className="play-icon">▶</div>
                       </div>
                       <div className="ai-indicator">
-                        Повышение охвата: X{testimonial.reach}
+                        {t('Повышение охвата', 'Reach uplift')}: X
+                        {testimonial.reach}
                       </div>
                       <div className="conversion-indicator">
-                        Повышение конверсии +{testimonial.conversion}%
+                        {t('Повышение конверсии', 'Conversion uplift')} +
+                        {testimonial.conversion}%
                       </div>
                     </div>
                     <div className="testimonial-content">
@@ -941,10 +1096,16 @@ const AnixAILanding = () => {
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            {testimonial.company}
+                            {isEnglish && testimonial.companyEn
+                              ? testimonial.companyEn
+                              : testimonial.company}
                           </a>
                         ) : (
-                          <span>{testimonial.company}</span>
+                          <span>
+                            {isEnglish && testimonial.companyEn
+                              ? testimonial.companyEn
+                              : testimonial.company}
+                          </span>
                         )}
                       </div>
                     </div>
@@ -1054,7 +1215,11 @@ const AnixAILanding = () => {
       </Section>
 
       {/* Pricing Overview Section */}
-      <Section id="pricing" bg="#1a1a33" className="transparent-pricing-section">
+      <Section
+        id="pricing"
+        bg="#1a1a33"
+        className="transparent-pricing-section"
+      >
         <div className="container">
           <h2 className="section-title">{copy.pricingTitle}</h2>
           <p className="pricing-description">{copy.pricingText}</p>
@@ -1083,7 +1248,11 @@ const AnixAILanding = () => {
             <form className="cta-full-form">
               <label>
                 {copy.formNameLabel}
-                <input type="text" name="name" placeholder={copy.formNameLabel} />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder={copy.formNameLabel}
+                />
               </label>
               <label>
                 {copy.formContactLabel}
@@ -1148,7 +1317,6 @@ const AnixAILanding = () => {
           В Telegram рассчитаем, сколько дополнительной прибыли принесёт видео.
         </p>
       </div>
-
 
       {/* Enhanced Awards Section */}
       <Section id="awards" bg="#2d1b3d" className="awards-section">
@@ -1502,38 +1670,30 @@ const AnixAILanding = () => {
       <Section id="nda" bg="#0f0f0f" className="nda-cases-section">
         <div className="container">
           <h2 className="section-title">{copy.ndaTitle}</h2>
-          <div className="nda-table-wrapper">
-            <table className="nda-table">
-              <thead>
-                <tr>
-                  <th>Сфера применения</th>
-                  <th>Что было до видео</th>
-                  <th>Что стало после видео</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Корпоративная безопасность</td>
-                  <td>3% отклик на тренинги</td>
-                  <td>27% вовлечённость, 2× завершения</td>
-                </tr>
-                <tr>
-                  <td>HR в госкорпорации</td>
-                  <td>непонимание миссии</td>
-                  <td>5 отделов перестроили процессы</td>
-                </tr>
-                <tr>
-                  <td>SaaS в LinkedIn</td>
-                  <td>1–2 ответа на 100</td>
-                  <td>18% reply rate, 12% демо</td>
-                </tr>
-                <tr>
-                  <td>Видео на IT-фестивале</td>
-                  <td>слабый поток</td>
-                  <td>+400% у стенда спикера</td>
-                </tr>
-              </tbody>
-            </table>
+          <div className="nda-grid">
+            {ndaCases.map((item, index) => (
+              <div key={index} className="nda-card">
+                <div className="nda-card-header">
+                  <p className="nda-area">{item.area}</p>
+                  <span className="nda-pill">
+                    {t('Было → Стало', 'Before → After')}
+                  </span>
+                </div>
+                <div className="nda-card-body">
+                  <div className="nda-stat">
+                    <p className="nda-label">{t('До', 'Before')}</p>
+                    <p className="nda-value">{item.before}</p>
+                  </div>
+                  <div className="nda-divider" aria-hidden="true"></div>
+                  <div className="nda-stat">
+                    <p className="nda-label nda-label-strong">
+                      {t('После', 'After')}
+                    </p>
+                    <p className="nda-value nda-value-strong">{item.after}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </Section>
@@ -1543,7 +1703,9 @@ const AnixAILanding = () => {
         <div className="telegram-subscribe py-20 bg-gradient-to-r from-[#5f35ff] to-[#4ac9ff] text-white text-center">
           <div className="container max-w-3xl mx-auto px-4">
             <h2 className="text-3xl font-bold mb-4">{copy.subscribeTitle}</h2>
-            <p className="text-lg text-[#e0e0e0] mb-6">{copy.subscribeSubtitle}</p>
+            <p className="text-lg text-[#e0e0e0] mb-6">
+              {copy.subscribeSubtitle}
+            </p>
 
             <a
               href="https://t.me/anixpro"
