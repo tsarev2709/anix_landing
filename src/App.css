@@ -673,7 +673,18 @@ body {
 /* Conversion Section */
 .conversion-section {
   padding: 120px 0;
-  background: #0f0f1f;
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(50, 129, 255, 0.05),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 10%,
+      rgba(0, 255, 213, 0.08),
+      transparent 30%
+    ),
+    #0f0f1f;
 }
 
 .conversion-intro {
@@ -686,26 +697,140 @@ body {
 
 .conversion-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin: 24px auto 32px;
+  max-width: 1100px;
 }
 
 .conversion-card {
-  background: rgba(255, 255, 255, 0.05);
+  position: relative;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.02)
+    ),
+    rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
+  border-radius: 18px;
   padding: 18px 20px;
   color: #f3f3f3;
   line-height: 1.6;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.conversion-card::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+}
+
+.conversion-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #00ffd5, #00b2ff);
+  color: #0e1223;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  box-shadow: 0 18px 30px rgba(0, 191, 255, 0.35);
+}
+
+.conversion-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.conversion-text {
+  display: grid;
+  gap: 4px;
+}
+
+.conversion-card-title {
+  color: #00ffd5;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.conversion-card-desc {
+  color: rgba(255, 255, 255, 0.82);
   font-weight: 600;
 }
 
-.conversion-result {
-  text-align: center;
-  color: #20b2aa;
-  font-size: 18px;
-  font-weight: 700;
+.conversion-boost {
+  margin: 24px auto 0;
+  width: min(380px, 100%);
+  background: linear-gradient(135deg, #00ffd5, #00b2ff);
+  border-radius: 18px;
+  padding: 16px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #0d1326;
+  font-weight: 800;
+  box-shadow: 0 20px 40px rgba(0, 191, 255, 0.25);
+}
+
+.conversion-boost-value {
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.conversion-boost-label {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .conversion-section {
+    padding: 80px 0;
+  }
+
+  .conversion-intro {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .conversion-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .conversion-card {
+    padding: 16px 18px;
+  }
+
+  .conversion-card:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 30px;
+    bottom: -24px;
+    width: 2px;
+    height: 24px;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 255, 213, 0.7),
+      rgba(0, 178, 255, 0.1)
+    );
+  }
+
+  .conversion-icon {
+    width: 54px;
+    height: 54px;
+  }
+
+  .conversion-card-title {
+    font-size: 16px;
+  }
 }
 
 /* Team Section */

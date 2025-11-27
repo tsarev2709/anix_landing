@@ -612,6 +612,112 @@ const AnixAILanding = () => {
     },
   ];
 
+  const conversionSteps = [
+    {
+      title: t('Анализируем воронку', 'We audit the funnel'),
+      description: t(
+        'Определяем, где видео даст максимальный прирост.',
+        'We identify where video will create the biggest uplift.'
+      ),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+          <path
+            d="M12 30.5V34a2 2 0 0 0 2 2h20"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+          <path
+            d="M20 14v12M28 18v8M36 22v4"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M12 22.5c2-1.5 5-1.5 7 0s5 1.5 7 0 5-1.5 7 0"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.7"
+          />
+        </svg>
+      ),
+    },
+    {
+      title: t('Формируем сценарий', 'We craft the script'),
+      description: t(
+        'В формате решения боли аудитории.',
+        'Built to address audience pain points.'
+      ),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+          <rect
+            x="12"
+            y="10"
+            width="24"
+            height="28"
+            rx="3"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+          <path
+            d="M18 18h12M18 24h8M18 30h12"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+          <path
+            d="M28 10v-2a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+        </svg>
+      ),
+    },
+    {
+      title: t('Делаем визуализацию', 'We build visuals'),
+      description: t(
+        'Которая удерживает внимание.',
+        'That keeps the audience engaged.'
+      ),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+          <circle
+            cx="24"
+            cy="24"
+            r="12"
+            stroke="currentColor"
+            strokeWidth="2"
+          />
+          <path
+            d="M18 24.5h4l2 3 2-7 2 4h4"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M14 14 10 10M34 14l4-4M14 34l-4 4M34 34l4 4"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+        </svg>
+      ),
+    },
+    {
+      title: t('Используем нейросети', 'We use neural networks'),
+      description: t('Там, где нужен темп.', 'Where speed is critical.'),
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+          <path d="m22 6-8 18h8l-4 18 14-22h-8l6-14H22Z" fill="currentColor" />
+        </svg>
+      ),
+    },
+  ];
+
   const awards = [
     {
       title: 'ТОП-25 проектов акселератора 2024',
@@ -1013,43 +1119,24 @@ const AnixAILanding = () => {
               )}
             </p>
             <div className="conversion-grid">
-              <div className="conversion-card">
-                {t(
-                  'Анализируем воронку и определяем, где видео даст максимальный прирост.',
-                  'We audit the funnel and spot where video delivers the biggest lift.'
-                )}
-              </div>
-              <div className="conversion-card">
-                {t(
-                  'Формируем сценарий в формате решения боли аудитории.',
-                  'We craft a script that solves the audience’s pain.'
-                )}
-              </div>
-              <div className="conversion-card">
-                {t(
-                  'Делаем визуализацию, которая удерживает внимание.',
-                  'We build visuals that keep attention.'
-                )}
-              </div>
-              <div className="conversion-card">
-                {t(
-                  'Используем нейросети там, где нужен темп.',
-                  'We use AI where speed matters most.'
-                )}
-              </div>
-              <div className="conversion-card">
-                {t(
-                  'Выдаем рекомендации по внедрению: куда вставить и как использовать.',
-                  'We give rollout advice: where to place and how to use the video.'
-                )}
-              </div>
+              {conversionSteps.map((step, index) => (
+                <div className="conversion-card" key={index}>
+                  <div className="conversion-icon">{step.icon}</div>
+                  <div className="conversion-text">
+                    <div className="conversion-card-title">{step.title}</div>
+                    <div className="conversion-card-desc">
+                      {step.description}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <p className="conversion-result">
-              {t(
-                'В среднем клиенты получают +15-25% конверсии.',
-                'Clients typically gain +15–25% conversion.'
-              )}
-            </p>
+            <div className="conversion-boost">
+              <span className="conversion-boost-value">+15–25%</span>
+              <span className="conversion-boost-label">
+                {t('конверсии', 'conversion uplift')}
+              </span>
+            </div>
           </div>
         </div>
       </Section>
