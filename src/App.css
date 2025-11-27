@@ -3100,6 +3100,141 @@ a:focus {
   outline-offset: 2px;
 }
 
+.language-toggle {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.language-toggle-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.35);
+  color: #b0b0b0;
+  transition: all 0.2s ease;
+}
+
+.language-toggle-button span.active {
+  color: #fff;
+  font-weight: 700;
+}
+
+.language-toggle-button .toggle-knob {
+  width: 28px;
+  height: 14px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #6e0fd8, #4ac9ff);
+  box-shadow: 0 0 12px rgba(74, 201, 255, 0.35);
+}
+
+.audience-section {
+  padding: 80px 0;
+}
+
+.audience-subtitle {
+  color: #b0b0b0;
+  text-align: center;
+  max-width: 780px;
+  margin: 12px auto 32px;
+}
+
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.audience-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(111, 53, 255, 0.08), rgba(74, 201, 255, 0.08));
+  padding: 16px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+}
+
+.audience-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: rgba(110, 15, 216, 0.2);
+  color: #fff;
+  font-weight: 700;
+}
+
+.technology-section {
+  padding: 80px 0;
+}
+
+.technology-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.technology-card {
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(135deg, rgba(110, 15, 216, 0.12), rgba(74, 201, 255, 0.12));
+  color: #fff;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.technology-icon {
+  font-size: 20px;
+}
+
+.risk-section {
+  padding: 80px 0;
+}
+
+.risk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.risk-card {
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+}
+
+.risk-link {
+  color: #4ac9ff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.risk-link:hover {
+  text-decoration: underline;
+}
+
+.transparent-pricing-section {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.pricing-description {
+  color: #b0b0b0;
+  max-width: 640px;
+  margin: 12px auto 24px;
+}
+
 @media (min-width: 769px) {
   .pricing-nav {
     display: none;
