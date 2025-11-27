@@ -26,13 +26,6 @@ const CookieBanner = React.lazy(() => import('./components/CookieBanner'));
 const makeSrcSet = (src) => `${src} 1x, ${src} 2x`;
 const responsiveSizes = '(max-width: 768px) 100vw, 600px';
 
-const HERO_MESSAGES = [
-  'Увеличиваем конверсию на любом этапе воронки в среднем на 15% с помощью анимации',
-  'Делаем сложные продукты понятными',
-  'Повышаем охваты на конференции',
-  'Повышаем конверсию в заявку',
-];
-
 const AnixAILanding = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(-1);
@@ -45,7 +38,6 @@ const AnixAILanding = () => {
   const [processInView, setProcessInView] = useState(false);
   const [processStarted, setProcessStarted] = useState(false);
   const [isPageBlurred, setIsPageBlurred] = useState(false);
-  const [heroMessageIndex, setHeroMessageIndex] = useState(0);
   const processRef = useRef(null);
   const awardsScrollRef = useRef(null);
   const pricingScrollRef = useRef(null);
@@ -59,16 +51,6 @@ const AnixAILanding = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile, { passive: true });
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHeroMessageIndex(
-        (prevIndex) => (prevIndex + 1) % HERO_MESSAGES.length
-      );
-    }, 4500);
-
-    return () => clearInterval(interval);
   }, []);
 
   // Lead magnet popup removed
@@ -664,22 +646,41 @@ const AnixAILanding = () => {
           </div>
           <div className="hero-content">
             <h1 className="hero-title">
-              <span key={heroMessageIndex} className="title-line hero-message">
-                {HERO_MESSAGES[heroMessageIndex]}
-              </span>
+              Креативные видео, которые повышают ваши продажи уже в первый месяц
             </h1>
+            <p className="hero-subtitle">
+              Мы объясняем ваши сложные продукты простым визуальным языком,
+              который удерживает внимание, пробивает банерную слепоту и улучшает
+              конверсию на всех этапах воронки. Быстро, точно и под вашу цель.
+            </p>
+            <div className="hero-benefits-grid">
+              <div className="hero-benefit-card">
+                <h3>Анализируем воронку</h3>
+                <p>Делаем сценарий, который решает конкретную бизнес-боль.</p>
+              </div>
+              <div className="hero-benefit-card">
+                <h3>Видео, созданное инженерно</h3>
+                <p>Драматургия + нейросети + композиция.</p>
+              </div>
+              <div className="hero-benefit-card">
+                <h3>Результат за 3,7 дня</h3>
+                <p>Без артефактов и с высокой визуальной точностью.</p>
+              </div>
+              <div className="hero-benefit-card">
+                <h3>+15-25% конверсии</h3>
+                <p>Средний прирост у клиентов.</p>
+              </div>
+            </div>
             <a
               href="https://t.me/m/i23MvBuLOGJi"
               target="_blank"
               rel="noopener noreferrer"
-              className="cta-button primary block w-full md:w-auto text-base md:text-lg"
+              className="cta-button primary hero-cta"
               onMouseEnter={() => setIsPageBlurred(true)}
               onMouseLeave={() => setIsPageBlurred(false)}
             >
               <span>
-                {isMobile
-                  ? '📈 Повысить продажи в Telegram'
-                  : '🎯 Заказать анимацию для продаж'}
+                Получить анализ вашей воронки и 3 точки роста за 15 минут
               </span>
               <div className="button-glow"></div>
             </a>
@@ -687,23 +688,157 @@ const AnixAILanding = () => {
         </div>
       </Section>
 
-      {/* Pain Section */}
-      <Section id="pain" bg="#141429" stickyTransition>
-        <div className="pain-section">
+      {/* Full CTA Section */}
+      <Section id="cta" bg="#0f0f1f" stickyTransition>
+        <div className="cta-full-section">
+          <div className="container">
+            <div className="cta-full-content">
+              <div>
+                <h2 className="cta-full-title">
+                  Получите анализ вашей воронки ➜ 3 точки роста за 15 минут
+                </h2>
+                <p className="cta-full-subtitle">
+                  Мы разберем вашу текущую коммуникацию, найдем узкие места и
+                  предложим решение с прогнозом, как изменится конверсия после
+                  внедрения видео.
+                </p>
+              </div>
+              <form className="cta-full-form">
+                <label>
+                  Имя
+                  <input type="text" name="name" placeholder="Имя" />
+                </label>
+                <label>
+                  Телефон / Telegram
+                  <input
+                    type="text"
+                    name="contact"
+                    placeholder="+7 (999) 999-99-99 / @username"
+                  />
+                </label>
+                <label>
+                  Опишите ваш продукт в 1-2 предложениях
+                  <textarea
+                    name="product"
+                    rows="3"
+                    placeholder="Кто ваша аудитория и какую задачу решает продукт"
+                  ></textarea>
+                </label>
+                <button type="submit" className="cta-button primary">
+                  Получить анализ бесплатно
+                  <div className="button-glow"></div>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* Problem Solution Section */}
+      <Section id="problem" bg="#141429" stickyTransition>
+        <div className="problem-section">
+          <div className="container problem-grid">
+            <div className="problem-text">
+              <h2 className="section-title">
+                Бизнесу трудно продавать, когда продукт сложный
+              </h2>
+              <p className="problem-description">
+                Сегодня маркетологи утонули в одинаковых креативах, отделы
+                продаж — в длинных объяснениях, а клиенты просто не понимают,
+                что им продают. Видео решает эту проблему, но только если оно
+                сделано правильно, с драматургией, понятной визуализацией и
+                фокусом на бизнес результат.
+              </p>
+            </div>
+            <div className="problem-bullets">
+              <div className="problem-bullet">
+                Люди не читают текст — его никто не понимает.
+              </div>
+              <div className="problem-bullet">
+                В классическом видео теряется логика.
+              </div>
+              <div className="problem-bullet">
+                Customer Acquisition Cost растет ➜ Неэффективные креативы.
+              </div>
+              <div className="problem-bullet">
+                Нужен инструмент, который объяснит быстро.
+              </div>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* Anix Difference Section */}
+      <Section id="difference" bg="#1a1a33" stickyTransition>
+        <div className="difference-section">
           <div className="container">
             <h2 className="section-title">
-              Пока вы объясняете, кто-то уже продал
+              Anix — это не студия, это инструмент для роста вашей конверсии
             </h2>
-            <ul className="pain-list">
-              <li>❌ Ваш продукт классный. Но его не понимают.</li>
-              <li>❌ Вы делаете демо — а до него доходят 3% лидов.</li>
-              <li>
-                ❌ Вас сравнивают с конкурентами, не понимая вашей ценности.
-              </li>
-            </ul>
-            <p className="pain-summary">
-              🎯 Мы — ваша презентация, упаковка и sales-инструмент в одном
-              видео. Объясняем продукт так, что его начинают покупать.
+            <div className="difference-grid">
+              <div className="difference-card">
+                Уникальный подход: бизнес анализ + драматургия + нейросети.
+              </div>
+              <div className="difference-card">
+                Собственная нейросеть Anix Interpolator. Быстрее и лучше рынка.
+              </div>
+              <div className="difference-card">
+                Глубокое понимание сложных продуктов: IT, фарма, AI, финтех.
+              </div>
+              <div className="difference-card">
+                Выпускники МФТИ + сильная творческая экспертиза.
+              </div>
+              <div className="difference-card">
+                Работаем под задачу, а не "красиво". Ролики дают результат.
+              </div>
+            </div>
+            <div className="difference-cta-wrapper">
+              <a
+                href="https://t.me/m/i23MvBuLOGJi"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cta-button primary"
+                onMouseEnter={() => setIsPageBlurred(true)}
+                onMouseLeave={() => setIsPageBlurred(false)}
+              >
+                <span>Узнать, чем мы отличаемся от других</span>
+                <div className="button-glow"></div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* Conversion Section */}
+      <Section id="conversion" bg="#0f0f1f" stickyTransition>
+        <div className="conversion-section">
+          <div className="container">
+            <h2 className="section-title">Как мы повышаем конверсию</h2>
+            <p className="conversion-intro">
+              Мы строим видео, которое работает как элемент воронки, а не просто
+              красиво.
+            </p>
+            <div className="conversion-grid">
+              <div className="conversion-card">
+                Анализируем воронку и определяем, где видео даст максимальный
+                прирост.
+              </div>
+              <div className="conversion-card">
+                Формируем сценарий в формате решения боли аудитории.
+              </div>
+              <div className="conversion-card">
+                Делаем визуализацию, которая удерживает внимание.
+              </div>
+              <div className="conversion-card">
+                Используем нейросети там, где нужен темп.
+              </div>
+              <div className="conversion-card">
+                Выдаем рекомендации по внедрению: куда вставить и как
+                использовать.
+              </div>
+            </div>
+            <p className="conversion-result">
+              В среднем клиенты получают +15-25% конверсии.
             </p>
           </div>
         </div>
