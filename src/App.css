@@ -3788,7 +3788,7 @@ a:focus {
 
 .technology-copy h3 {
   margin: 0 0 8px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
   letter-spacing: -0.01em;
 }
@@ -3798,6 +3798,27 @@ a:focus {
   color: #d8ddff;
   line-height: 1.55;
   font-size: 15px;
+}
+
+.technology-stack
+  .technology-card:not(.technology-card--hero)
+  .technology-copy
+  h3 {
+  font-size: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.technology-stack
+  .technology-card:not(.technology-card--hero)
+  .technology-copy
+  p {
+  font-size: 14px;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @media (min-width: 768px) {
@@ -3885,12 +3906,11 @@ a:focus {
     .technology-card:not(.technology-card--hero)
     .technology-copy
     p {
-    line-height: 1.35;
-    max-height: 2.7em;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    font-size: 13px;
+    line-height: 1.3;
+    white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 

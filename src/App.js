@@ -102,25 +102,25 @@ const AnixAILanding = () => {
           size: 'large',
         },
         {
-          title: 'Автоматизация поиска и исправления артефактов',
+          title: 'Поиск и исправление артефактов',
           description:
             'Скрипты для очистки, inpainting и правок без ручного ретуша.',
           icon: '🛠️',
         },
         {
-          title: 'Инструменты для ускорения продакшена',
+          title: 'Ускорение продакшена',
           description:
             'Пайплайны, которые сокращают сборку ролика с недель до дней.',
           icon: '⚡',
         },
         {
-          title: 'Искусственный контроль качества',
+          title: 'Контроль качества',
           description:
             'Алгоритмы, отслеживающие целостность анимации и деталей.',
           icon: '🛰️',
         },
         {
-          title: 'Дип-композиция и цветокоррекция',
+          title: 'Композиция и цвет',
           description: 'Физичная глубина, CG-эффекты и тонкая работа с цветом.',
           icon: '🎛️',
         },
@@ -236,25 +236,25 @@ const AnixAILanding = () => {
           size: 'large',
         },
         {
-          title: 'Automated artifact detection and fixing',
+          title: 'Artifact detection and fixing',
           description:
             'Scripts for cleanup, inpainting, and corrections without manual retouch.',
           icon: '🛠️',
         },
         {
-          title: 'Production acceleration tools',
+          title: 'Production acceleration',
           description:
             'Pipelines that cut video assembly from weeks down to days.',
           icon: '⚡',
         },
         {
-          title: 'AI-driven quality control',
+          title: 'Quality control',
           description:
             'Algorithms tracking animation integrity and fine details.',
           icon: '🛰️',
         },
         {
-          title: 'Deep compositing and color grading',
+          title: 'Compositing and color',
           description: 'Physical depth, CG effects, and precise color work.',
           icon: '🎛️',
         },
