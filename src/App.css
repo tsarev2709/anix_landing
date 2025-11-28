@@ -3639,6 +3639,8 @@ a:focus {
 }
 
 .technology-card {
+  --tech-gradient-start: #2c2541;
+  --tech-gradient-end: #191a2c;
   width: 100%;
   color: #fff;
   display: grid;
@@ -3646,23 +3648,25 @@ a:focus {
   gap: 16px;
   align-items: flex-start;
   padding: 26px 26px;
-  border-radius: 26px;
+  border-radius: 28px;
   background:
+    linear-gradient(140deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0)),
+    linear-gradient(180deg, rgba(10, 10, 18, 0.5), rgba(13, 13, 24, 0.2)),
     linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.04),
-      rgba(255, 255, 255, 0.02)
-    ),
-    rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+      var(--tech-gradient-start),
+      var(--tech-gradient-end)
+    );
+  border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow:
-    0 22px 60px rgba(0, 0, 0, 0.45),
-    0 12px 28px rgba(65, 134, 255, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 26px 70px rgba(0, 0, 0, 0.48),
+    0 16px 36px rgba(40, 90, 200, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
     inset 0 -18px 34px rgba(12, 19, 43, 0.65);
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(14px);
+  margin-bottom: 40px;
 }
 
 .technology-card::before {
@@ -3673,6 +3677,7 @@ a:focus {
   opacity: 0.6;
   mix-blend-mode: soft-light;
   pointer-events: none;
+  border-radius: inherit;
 }
 
 .technology-card::after {
@@ -3697,6 +3702,7 @@ a:focus {
     );
   mix-blend-mode: screen;
   pointer-events: none;
+  border-radius: inherit;
 }
 
 .technology-card__glow {
@@ -3708,36 +3714,54 @@ a:focus {
     transparent 45%
   );
   pointer-events: none;
+  border-radius: inherit;
 }
 
 .technology-card--hero {
   padding: 28px 28px;
-  min-height: 148px;
-  margin-bottom: 44px;
+  min-height: 210px;
+  margin-bottom: 48px;
 }
 
 .technology-card--step {
-  min-height: 128px;
+  min-height: 158px;
   padding: 26px 26px;
-}
-
-.technology-stack .technology-card:nth-child(2) {
-  margin-bottom: 30px;
-}
-
-.technology-stack .technology-card:nth-child(3) {
-  margin-bottom: 44px;
 }
 
 .technology-card--lift {
-  min-height: 138px;
+  min-height: 190px;
   padding: 27px 28px;
-  margin-bottom: 32px;
+  margin-bottom: 46px;
 }
 
 .technology-card--medium {
-  min-height: 124px;
+  min-height: 168px;
   padding: 26px 26px;
+}
+
+.technology-stack .technology-card:nth-child(1) {
+  --tech-gradient-start: #7b48ff;
+  --tech-gradient-end: #a56bff;
+}
+
+.technology-stack .technology-card:nth-child(2) {
+  --tech-gradient-start: #23e3c7;
+  --tech-gradient-end: #45a1ff;
+}
+
+.technology-stack .technology-card:nth-child(3) {
+  --tech-gradient-start: #ffd875;
+  --tech-gradient-end: #ffb24c;
+}
+
+.technology-stack .technology-card:nth-child(4) {
+  --tech-gradient-start: #4250ff;
+  --tech-gradient-end: #7a8bff;
+}
+
+.technology-stack .technology-card:nth-child(5) {
+  --tech-gradient-start: #ff5acd;
+  --tech-gradient-end: #b45cff;
 }
 
 .technology-icon {
