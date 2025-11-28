@@ -1391,8 +1391,8 @@ const AnixAILanding = () => {
       </Section>
 
       {/* Technology Section */}
-      <Section id="technology" bg="#141429" className="technology-section">
-        <div className="container technology-container">
+      <Section id="technology" bg="#0f0f1f" className="technology-section">
+        <div className="technology-container">
           <div className="technology-title-wrapper">
             <h2 className="technology-title">
               {copy.technologyTitleLines.map((line, index) => (
@@ -1404,30 +1404,27 @@ const AnixAILanding = () => {
             </h2>
           </div>
 
-          <div className="technology-layout">
-            {copy.technologyFeatures?.[0] && (
-              <div className="technology-card technology-card--main">
-                <div className="technology-icon">
-                  {copy.technologyFeatures[0].icon}
-                </div>
-                <div className="technology-copy">
-                  <h3>{copy.technologyFeatures[0].title}</h3>
-                  <p>{copy.technologyFeatures[0].description}</p>
-                </div>
-              </div>
-            )}
+          <div className="technology-stack">
+            {copy.technologyFeatures?.map((item, index) => {
+              const rhythm = ['hero', 'step', 'step', 'lift', 'medium'];
+              const tierClass = rhythm[index] || 'medium';
 
-            <div className="technology-grid">
-              {copy.technologyFeatures?.slice(1).map((item, index) => (
-                <div key={index} className="technology-card">
-                  <div className="technology-icon">{item.icon}</div>
+              return (
+                <div
+                  key={`${item.title}-${index}`}
+                  className={`technology-card technology-card--${tierClass}`}
+                >
+                  <span className="technology-card__glow" aria-hidden="true" />
+                  <div className="technology-icon" aria-hidden="true">
+                    <span className="technology-icon-symbol">{item.icon}</span>
+                  </div>
                   <div className="technology-copy">
                     <h3>{item.title}</h3>
                     <p>{item.description}</p>
                   </div>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </div>
       </Section>
