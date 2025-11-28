@@ -311,14 +311,9 @@ const AnixAILanding = () => {
   const processRef = useRef(null);
   const awardsScrollRef = useRef(null);
   const swipeStart = useRef(0);
-  const swipeDeckStart = useRef(null);
   const [activeService, setActiveService] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [language, setLanguage] = useState('ru');
-  const [activeBubbleIndex, setActiveBubbleIndex] = useState(0);
-  const [stackActiveIndex, setStackActiveIndex] = useState(0);
-  const [wheelActiveIndex, setWheelActiveIndex] = useState(0);
-  const [parallaxShift, setParallaxShift] = useState({ x: 0, y: 0 });
   const isEnglish = language === 'en';
   const t = (ru, en) => (isEnglish ? en : ru);
 
@@ -327,23 +322,6 @@ const AnixAILanding = () => {
     checkMobile();
     window.addEventListener('resize', checkMobile, { passive: true });
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  useEffect(() => {
-    setActiveBubbleIndex(0);
-    setStackActiveIndex(0);
-    setWheelActiveIndex(0);
-  }, [language]);
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 6;
-      const y = (e.clientY / window.innerHeight - 0.5) * 6;
-      setParallaxShift({ x, y });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   // Lead magnet popup removed
@@ -366,32 +344,6 @@ const AnixAILanding = () => {
     const deltaX = e.clientX - swipeStart.current;
     if (deltaX > 50) scrollAwards('left');
     if (deltaX < -50) scrollAwards('right');
-  };
-
-  const handleDeckTouchStart = (e) => {
-    swipeDeckStart.current = e.touches[0].clientY;
-  };
-
-  const handleDeckTouchEnd = (e) => {
-    if (swipeDeckStart.current === null) return;
-    const deltaY = e.changedTouches[0].clientY - swipeDeckStart.current;
-    if (deltaY < -40) {
-      setStackActiveIndex((prev) => (prev + 1) % copy.riskBullets.length);
-    }
-    swipeDeckStart.current = null;
-  };
-
-  const handleDeckMouseDown = (e) => {
-    swipeDeckStart.current = e.clientY;
-  };
-
-  const handleDeckMouseUp = (e) => {
-    if (swipeDeckStart.current === null) return;
-    const deltaY = e.clientY - swipeDeckStart.current;
-    if (deltaY < -40) {
-      setStackActiveIndex((prev) => (prev + 1) % copy.riskBullets.length);
-    }
-    swipeDeckStart.current = null;
   };
 
   // Animated counter effect
@@ -1477,206 +1429,28 @@ const AnixAILanding = () => {
         </div>
       </Section>
 
-      {/* Risk Handling Section - Bubble Cloud UI */}
+      {/* Risk Handling Section */}
       <Section id="risk" bg="#0f0f1f" className="risk-section">
         <div className="container">
           <h2 className="section-title">{copy.riskTitle}</h2>
-
-          <div className="bubble-cloud-wrapper">
-            <div className="bubble-cloud">
-              {copy.riskBullets.map((risk, index) => {
-                const bubbleSizes = [220, 140, 170, 130];
-                const positions = [
-                  { top: '30%', left: '24%' },
-                  { top: '18%', left: '62%' },
-                  { top: '58%', left: '38%' },
-                  { top: '60%', left: '68%' },
-                ];
-                const isActive = activeBubbleIndex === index;
-
-                return (
-                  <button
-                    key={risk.title}
-                    className={`risk-bubble ${isActive ? 'active' : ''}`}
-                    style={{
-                      width: bubbleSizes[index],
-                      height: bubbleSizes[index],
-                      top: isActive ? '50%' : positions[index].top,
-                      left: isActive ? '50%' : positions[index].left,
-                      '--px': `${parallaxShift.x}px`,
-                      '--py': `${parallaxShift.y}px`,
-                      '--scale': isActive ? 1.2 : 1,
-                    }}
-                    onClick={() => setActiveBubbleIndex(index)}
-                    aria-pressed={isActive}
-                    aria-label={risk.title}
-                  >
-                    <span className="bubble-title">{risk.title}</span>
-                  </button>
-                );
-              })}
-              <div className="bubble-backdrop" aria-hidden="true" />
-            </div>
-          </div>
-
-          <div className="bubble-answer-panel">
-            <div className="bubble-answer-header">
-              <span className="bubble-answer-label">
-                {t('Ответ', 'Answer')}
-              </span>
-              <h3>{copy.riskBullets[activeBubbleIndex]?.title}</h3>
-            </div>
-            <div className="bubble-answer-body">
-              <p>
-                {copy.riskBullets[activeBubbleIndex]?.link ? (
-                  <>
-                    {copy.riskBullets[activeBubbleIndex]?.description}{' '}
-                    <a
-                      href={copy.riskBullets[activeBubbleIndex]?.link}
-                      className="risk-link"
-                    >
-                      →
-                    </a>
-                  </>
-                ) : (
-                  copy.riskBullets[activeBubbleIndex]?.description
-                )}
-              </p>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Stacked Swipe Deck Section */}
-      <Section id="risk-stack" bg="#0c0c1a" className="risk-stack-section">
-        <div className="container">
-          <div className="stacked-header">
-            <span className="stacked-label">Swipe deck</span>
-            <h3 className="section-title mini-title">{copy.riskTitle}</h3>
-          </div>
-          <div
-            className="stacked-cards"
-            onTouchStart={handleDeckTouchStart}
-            onTouchEnd={handleDeckTouchEnd}
-            onMouseDown={handleDeckMouseDown}
-            onMouseUp={handleDeckMouseUp}
-          >
-            {copy.riskBullets.map((card, index) => {
-              const positionIndex =
-                (index - stackActiveIndex + copy.riskBullets.length) %
-                copy.riskBullets.length;
-              const isTop = positionIndex === 0;
-              const depth = Math.min(positionIndex, 3);
-              return (
-                <div
-                  key={card.title}
-                  className={`stack-card ${isTop ? 'active' : ''}`}
-                  style={{
-                    transform: `translateY(${depth * 16}px) scale(${1 - depth * 0.05})`,
-                    zIndex: 10 - depth,
-                    opacity: depth > 2 ? 0 : 1,
-                  }}
-                >
-                  <div className="stack-card-sheen" aria-hidden="true" />
-                  <div className="stack-card-content">
-                    <div className="stack-card-title-row">
-                      <div className="stack-chip">{card.title}</div>
-                      <span className="stack-index">{index + 1}/4</span>
-                    </div>
-                    <p className="stack-card-text">
-                      {card.link ? (
-                        <>
-                          {card.description}{' '}
-                          <a href={card.link} className="risk-link">
-                            →
-                          </a>
-                        </>
-                      ) : (
-                        card.description
-                      )}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          <div className="stack-progress">
-            {copy.riskBullets.map((_, index) => (
-              <span
-                key={index}
-                className={`stack-dot ${stackActiveIndex === index ? 'active' : ''}`}
-              ></span>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* Radial Wheel UI */}
-      <Section id="risk-wheel" bg="#0f0f1f" className="radial-wheel-section">
-        <div className="container">
-          <div className="wheel-header">
-            <span className="wheel-label">Radial menu</span>
-            <h3 className="section-title mini-title">{copy.riskTitle}</h3>
-          </div>
-          <div className="wheel-layout">
-            <div className="wheel" role="tablist" aria-label="Risk wheel">
-              {copy.riskBullets.map((risk, index) => {
-                const gradients = [
-                  'linear-gradient(135deg, rgba(118,77,255,0.9), rgba(90,228,255,0.8))',
-                  'linear-gradient(135deg, rgba(255,108,182,0.9), rgba(255,180,92,0.8))',
-                  'linear-gradient(135deg, rgba(78,255,204,0.9), rgba(94,165,255,0.8))',
-                  'linear-gradient(135deg, rgba(130,96,255,0.9), rgba(80,234,255,0.8))',
-                ];
-
-                return (
-                  <button
-                    key={risk.title}
-                    className={`wheel-segment ${wheelActiveIndex === index ? 'active' : ''}`}
-                    style={{
-                      background: gradients[index],
-                      transform: `rotate(${index * 90}deg) skewY(-30deg) ${
-                        wheelActiveIndex === index
-                          ? 'translateX(12px) scale(1.08)'
-                          : ''
-                      }`,
-                    }}
-                    onClick={() => setWheelActiveIndex(index)}
-                    role="tab"
-                    aria-selected={wheelActiveIndex === index}
-                    aria-label={risk.title}
-                  >
-                    <div className="wheel-segment-content">
-                      <span className="wheel-icon" aria-hidden="true">
-                        {['🧠', '💎', '🌐', '⏱️'][index]}
-                      </span>
-                      <span className="wheel-title">{risk.title}</span>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-            <div className="wheel-answer" role="tabpanel">
-              <div className="wheel-answer-glass">
-                <div className="wheel-answer-title">
-                  {copy.riskBullets[wheelActiveIndex]?.title}
-                </div>
-                <p className="wheel-answer-text">
-                  {copy.riskBullets[wheelActiveIndex]?.link ? (
+          <div className="risk-grid">
+            {copy.riskBullets.map((risk, index) => (
+              <div key={index} className="risk-card">
+                <h3>{risk.title}</h3>
+                <p>
+                  {risk.link ? (
                     <>
-                      {copy.riskBullets[wheelActiveIndex]?.description}{' '}
-                      <a
-                        href={copy.riskBullets[wheelActiveIndex]?.link}
-                        className="risk-link"
-                      >
+                      {risk.description}{' '}
+                      <a href={risk.link} className="risk-link">
                         →
                       </a>
                     </>
                   ) : (
-                    copy.riskBullets[wheelActiveIndex]?.description
+                    risk.description
                   )}
                 </p>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </Section>
