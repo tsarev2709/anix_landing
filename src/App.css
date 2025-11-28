@@ -3805,9 +3805,10 @@ a:focus {
   .technology-copy
   h3 {
   font-size: 18px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  word-break: break-word;
 }
 
 .technology-stack
@@ -3816,9 +3817,10 @@ a:focus {
   p {
   font-size: 14px;
   line-height: 1.35;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  word-break: break-word;
 }
 
 @media (min-width: 768px) {
@@ -3908,9 +3910,19 @@ a:focus {
     p {
     font-size: 13px;
     line-height: 1.3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    word-break: break-word;
+  }
+
+  .technology-stack .technology-card {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .technology-icon {
+    display: none;
   }
 }
 
