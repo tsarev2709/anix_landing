@@ -3810,6 +3810,90 @@ a:focus {
   }
 }
 
+@media (max-width: 767px) {
+  .technology-section {
+    padding: 56px 0 60px;
+  }
+
+  .technology-container {
+    gap: 22px;
+  }
+
+  .technology-stack {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 11px;
+    row-gap: 13px;
+    align-items: stretch;
+  }
+
+  .technology-stack .technology-card:nth-child(1) {
+    grid-column: 1 / -1;
+    margin-bottom: 5px;
+  }
+
+  .technology-stack .technology-card:not(:first-child) {
+    margin-bottom: 0;
+    min-height: 0;
+    padding: 15px 16px;
+  }
+
+  .technology-stack .technology-card:nth-child(2),
+  .technology-stack .technology-card:nth-child(4) {
+    grid-column: 1 / 2;
+  }
+
+  .technology-stack .technology-card:nth-child(3),
+  .technology-stack .technology-card:nth-child(5) {
+    grid-column: 2 / 3;
+  }
+
+  .technology-card--hero {
+    min-height: 194px;
+    padding: 26px 24px;
+    margin-bottom: 0;
+  }
+
+  .technology-card--step,
+  .technology-card--lift,
+  .technology-card--medium {
+    min-height: 128px;
+  }
+
+  .technology-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .technology-icon-symbol {
+    font-size: 24px;
+  }
+
+  .technology-card--hero .technology-copy h3 {
+    font-size: 18px;
+  }
+
+  .technology-stack
+    .technology-card:not(.technology-card--hero)
+    .technology-copy
+    h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+
+  .technology-stack
+    .technology-card:not(.technology-card--hero)
+    .technology-copy
+    p {
+    line-height: 1.35;
+    max-height: 2.7em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
 .risk-section {
   padding: 80px 0;
 }
