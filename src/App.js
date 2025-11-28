@@ -89,13 +89,41 @@ const AnixAILanding = () => {
         },
       ],
       teamTitle: 'Команда, которая продаёт вместо вас',
-      technologyTitle: 'Технологии, которые делают ваш проект быстрее и лучше',
-      technologyBullets: [
-        'Собственная нейросеть Anix',
-        'Автоматизация поиска и исправления артефактов',
-        'Инструменты для ускорения продакшена',
-        'Искусственный контроль качества',
-        'Дип-композиция и цветокоррекция',
+      technologyTitleLines: [
+        'Технологии Anix',
+        'которые делают ваш проект быстрее и лучше',
+      ],
+      technologyFeatures: [
+        {
+          title: 'Собственная нейросеть Anix',
+          description:
+            'Модульная генерация кадров с контролем стиля и динамики.',
+          icon: '🧠',
+          size: 'large',
+        },
+        {
+          title: 'Автоматизация поиска и исправления артефактов',
+          description:
+            'Скрипты для очистки, inpainting и правок без ручного ретуша.',
+          icon: '🛠️',
+        },
+        {
+          title: 'Инструменты для ускорения продакшена',
+          description:
+            'Пайплайны, которые сокращают сборку ролика с недель до дней.',
+          icon: '⚡',
+        },
+        {
+          title: 'Искусственный контроль качества',
+          description:
+            'Алгоритмы, отслеживающие целостность анимации и деталей.',
+          icon: '🛰️',
+        },
+        {
+          title: 'Дип-композиция и цветокоррекция',
+          description: 'Физичная глубина, CG-эффекты и тонкая работа с цветом.',
+          icon: '🎛️',
+        },
       ],
       riskTitle: 'Снимаем риски до старта',
       riskBullets: [
@@ -195,13 +223,41 @@ const AnixAILanding = () => {
         },
       ],
       teamTitle: 'A team that sells instead of you',
-      technologyTitle: 'Technologies that make your project faster and better',
-      technologyBullets: [
-        'Proprietary Anix neural network',
-        'Automated artifact search and fixes',
-        'Acceleration tools for production',
-        'AI-driven quality control',
-        'Deep composition and color grading',
+      technologyTitleLines: [
+        'Anix Technologies',
+        'built to make your project faster and better',
+      ],
+      technologyFeatures: [
+        {
+          title: 'Proprietary Anix neural network',
+          description:
+            'Modular frame generation with controllable style and motion.',
+          icon: '🧠',
+          size: 'large',
+        },
+        {
+          title: 'Automated artifact detection and fixing',
+          description:
+            'Scripts for cleanup, inpainting, and corrections without manual retouch.',
+          icon: '🛠️',
+        },
+        {
+          title: 'Production acceleration tools',
+          description:
+            'Pipelines that cut video assembly from weeks down to days.',
+          icon: '⚡',
+        },
+        {
+          title: 'AI-driven quality control',
+          description:
+            'Algorithms tracking animation integrity and fine details.',
+          icon: '🛰️',
+        },
+        {
+          title: 'Deep compositing and color grading',
+          description: 'Physical depth, CG effects, and precise color work.',
+          icon: '🎛️',
+        },
       ],
       riskTitle: 'De-risking before launch',
       riskBullets: [
@@ -1336,15 +1392,42 @@ const AnixAILanding = () => {
 
       {/* Technology Section */}
       <Section id="technology" bg="#141429" className="technology-section">
-        <div className="container">
-          <h2 className="section-title">{copy.technologyTitle}</h2>
-          <div className="technology-grid">
-            {copy.technologyBullets.map((item, index) => (
-              <div key={index} className="technology-card">
-                <div className="technology-icon">⚙️</div>
-                <p>{item}</p>
+        <div className="container technology-container">
+          <div className="technology-title-wrapper">
+            <h2 className="technology-title">
+              {copy.technologyTitleLines.map((line, index) => (
+                <span key={index} className="technology-title-line">
+                  {line}
+                  {index === 0 && <br />}
+                </span>
+              ))}
+            </h2>
+          </div>
+
+          <div className="technology-layout">
+            {copy.technologyFeatures?.[0] && (
+              <div className="technology-card technology-card--main">
+                <div className="technology-icon">
+                  {copy.technologyFeatures[0].icon}
+                </div>
+                <div className="technology-copy">
+                  <h3>{copy.technologyFeatures[0].title}</h3>
+                  <p>{copy.technologyFeatures[0].description}</p>
+                </div>
               </div>
-            ))}
+            )}
+
+            <div className="technology-grid">
+              {copy.technologyFeatures?.slice(1).map((item, index) => (
+                <div key={index} className="technology-card">
+                  <div className="technology-icon">{item.icon}</div>
+                  <div className="technology-copy">
+                    <h3>{item.title}</h3>
+                    <p>{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </Section>
