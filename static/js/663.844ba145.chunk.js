@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkanix_landing=self.webpackChunkanix_landing||[]).push([[663],{3663:(n,a,e)=>{e.r(a),e.d(a,{default:()=>s});const s={}}}]);
