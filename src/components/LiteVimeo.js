@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 /**
- * Lightweight Vimeo facade that defers player loading until user interaction
- * or idle time on mobile devices.
+ * Lightweight Vimeo facade that autoloads the player while keeping the DOM footprint small.
  */
 export default function LiteVimeo({ videoId, className = '' }) {
   const containerRef = useRef(null);
@@ -26,27 +25,8 @@ export default function LiteVimeo({ videoId, className = '' }) {
   };
 
   useEffect(() => {
-    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-    const reduceData =
-      navigator.connection?.saveData ||
-      (typeof window !== 'undefined' &&
-        window.matchMedia &&
-        window.matchMedia('(prefers-reduced-data: reduce)').matches);
-
-    if (!isMobile || reduceData || loaded) return;
-
-    const onIdle = () => {
-      if (document.visibilityState === 'visible') {
-        insertIframe();
-      }
-    };
-
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(onIdle);
-    } else {
-      setTimeout(onIdle, 3000);
-    }
-  }, [loaded]);
+    insertIframe();
+  }, [loaded, videoId]);
 
   return (
     <div
