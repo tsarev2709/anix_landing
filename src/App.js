@@ -5,6 +5,7 @@ import LiteVimeo from './components/LiteVimeo';
 const AnixLandingPage = React.lazy(
   () => import('./components/AnixLandingPage')
 );
+import { SectionAnixTech } from './components/SectionAnixTech';
 import god from './images/god.jpg';
 import bestie from './images/bestie.jpg';
 import vanya from './images/vanya.JPG';
@@ -1391,43 +1392,10 @@ const AnixAILanding = () => {
       </Section>
 
       {/* Technology Section */}
-      <Section id="technology" bg="#0f0f1f" className="technology-section">
-        <div className="technology-container">
-          <div className="technology-title-wrapper">
-            <h2 className="technology-title">
-              {copy.technologyTitleLines.map((line, index) => (
-                <span key={index} className="technology-title-line">
-                  {line}
-                  {index === 0 && <br />}
-                </span>
-              ))}
-            </h2>
-          </div>
-
-          <div className="technology-stack">
-            {copy.technologyFeatures?.map((item, index) => {
-              const rhythm = ['hero', 'step', 'step', 'lift', 'medium'];
-              const tierClass = rhythm[index] || 'medium';
-
-              return (
-                <div
-                  key={`${item.title}-${index}`}
-                  className={`technology-card technology-card--${tierClass}`}
-                >
-                  <span className="technology-card__glow" aria-hidden="true" />
-                  <div className="technology-icon" aria-hidden="true">
-                    <span className="technology-icon-symbol">{item.icon}</span>
-                  </div>
-                  <div className="technology-copy">
-                    <h3>{item.title}</h3>
-                    <p>{item.description}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </Section>
+      <SectionAnixTech
+        titleLines={copy.technologyTitleLines}
+        features={copy.technologyFeatures}
+      />
 
       {/* Risk Handling Section */}
       <Section id="risk" bg="#0f0f1f" className="risk-section">
