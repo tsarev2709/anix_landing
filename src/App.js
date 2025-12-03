@@ -618,6 +618,8 @@ const AnixAILanding = () => {
       company: 'CMO Kolobox',
       website: 'https://kolo-box.ru/',
       text: 'Запрос: объяснить продут пользователю быстро и просто. Результат: демо-просмотры выросли на 22%, ролик включили во все рекламные акции.',
+      textEn:
+        'Goal: explain the product to users quickly and clearly. Result: demo views grew by 22%, and the video was included in all promo campaigns.',
       videoThumbnail: kolbox,
       videoUrl: 'https://player.vimeo.com/video/1078357836?h=a4d72de864',
       reach: 25,
@@ -629,6 +631,8 @@ const AnixAILanding = () => {
       company: 'генеральный директор ТПЭС',
       website: 'https://tpes-iest.com/',
       text: 'Запрос: произвести впечатление на консервативное производство и прогреть ЛПРов. Результат: конверсия встреч выросла на 35%, ролик показали на LED-экране стенда и в follow-up рассылке, собрали 12 стратегических созвонов.',
+      textEn:
+        'Goal: impress a conservative manufacturing audience and warm up decision makers. Result: meeting conversion grew by 35%; the video was shown on the booth LED screen and in follow-up emails, bringing 12 strategic calls.',
       videoThumbnail: TPES,
       videoUrl: 'https://player.vimeo.com/video/1078354208',
       reach: 30,
@@ -640,6 +644,8 @@ const AnixAILanding = () => {
       company: 'CEO Clappy',
       website: 'https://clappy.ru/',
       text: 'Запрос: понятно рассказать про новое ЭКО решение без участия фаундера. Результат: конверсия лендинга выросла на 18%, ролик используют на питчах, демо и в онбординге партнёров.',
+      textEn:
+        'Goal: clearly present a new IVF solution without the founder. Result: landing page conversion grew by 18%; the video is used in pitches, demos, and partner onboarding.',
       videoThumbnail: clappy,
       videoUrl: 'https://player.vimeo.com/video/1078358379?h=8fc297f159',
       reach: 40,
@@ -860,48 +866,75 @@ const AnixAILanding = () => {
   const faqData = [
     {
       question: 'Как именно нейросети помогают в создании ролика?',
+      questionEn: 'How exactly do neural networks help create the video?',
       answer:
         'Нейросети ускоряют визуальное производство: мы превращаем сценарий в готовую анимацию за 10 дней вместо 2–3 месяцев, не теряя в качестве. Итог: быстрее запуск, меньше бюджет, больше тестов.',
+      answerEn:
+        'Neural networks speed up production: we turn a script into finished animation in 10 days instead of 2–3 months without losing quality. The result: faster launch, lower budget, more tests.',
     },
     {
       question: 'Сколько стоит ваш ролик?',
+      questionEn: 'How much does a video cost?',
       answer:
         'Диапазон — от 200\u00a0000 до 1,5 млн ₽. Цены зависят от длительности, визуального уровня и задач. Мы гибкие: подходим как для стартапов, так и корпораций. В любом случае — ролик себя окупает.',
+      answerEn:
+        'Range: from 200,000 to 1.5M RUB. Pricing depends on duration, visual level, and goals. We are flexible for startups and enterprises alike, and the video pays for itself.',
     },
     {
       question: 'Сможем ли мы вносить правки?',
+      questionEn: 'Can we request revisions?',
       answer:
         'Да. Мы закладываем итерации правок на ключевых этапах: сценарий, раскадровка, визуал. Это коллаборация, а не чёрный ящик.',
+      answerEn:
+        'Yes. We include revision rounds at key stages: script, storyboard, visuals. It is a collaboration, not a black box.',
     },
     {
       question: 'Сколько времени уходит на создание ролика?',
+      questionEn: 'How long does it take to produce a video?',
       answer:
         'Типовой цикл — 7–14 дней. Быстрее, если есть чёткое понимание задач. Работаем итерационно: сценарий — раскадровка — визуал — продакшн.',
+      answerEn:
+        'Typical timeline is 7–14 days, faster if the goals are clear. We work iteratively: script → storyboard → visuals → production.',
     },
     {
       question: 'А вы делали что-то подобное в нашей отрасли?',
+      questionEn: 'Have you done something similar in our industry?',
       answer:
         'Скорее всего — да. Мы специализируемся на сложных B2B-продуктах: нейронки, биотех, промышленность, GovTech, SaaS, хардвер. Но если кейса нет — мы быстро вкапываемся и делаем ролик, который звучит с первого кадра.',
+      answerEn:
+        'Most likely — yes. We focus on complex B2B products: AI, biotech, industry, GovTech, SaaS, hardware. If we have no case yet, we dive in fast and craft a video that resonates from the first frame.',
     },
     {
       question: 'Нам нужен строгий стиль, всё по брендбуку — вы сможете?',
+      questionEn: 'We need a strict brandbook style — can you do it?',
       answer:
         'Да. Работаем строго в фирменном стиле, если он есть. Если нет — подбираем стиль, который логично ляжет в вашу коммуникацию (и отдел маркетинга скажет спасибо).',
+      answerEn:
+        'Yes. We follow your brand style if it exists. If not, we select a style that fits your communication (your marketing team will thank you).',
     },
     {
       question: 'Чем вы отличаетесь от обычной студии или фрилансеров?',
+      questionEn: 'How are you different from a typical studio or freelancers?',
       answer:
         'У нас нет креатива ради креатива. Мы думаем в логике продаж: ролик — это инструмент. Сценарий пишет продюсер с опытом в продажах. А продакшн строим на AI и своих автоматизациях — это быстро, гибко.',
+      answerEn:
+        'We do not create for creativity’s sake. We think in sales logic: the video is a tool. The script is written by a producer with sales experience, and production is built on AI and our automations — fast and flexible.',
     },
     {
       question: 'Можно ли использовать один ролик в разных каналах?',
+      questionEn: 'Can we reuse one video across multiple channels?',
       answer:
         'Да, это наша сильная сторона. Мы сразу продумываем сценарий так, чтобы ролик работал в нескольких форматах: сайт, соцсети, питч, презентация.',
+      answerEn:
+        'Yes, that is our strength. We design the script to work across formats: website, social, pitch, and presentations.',
     },
     {
       question: 'Что нужно, чтобы начать?',
+      questionEn: 'What do we need to start?',
       answer:
         'Заполнить короткий бриф — это займёт 3–5 минут. Дальше мы сами соберём всё остальное и предложим концепцию. Если ок — двигаемся.',
+      answerEn:
+        'Fill out a short brief — it takes 3–5 minutes. We handle the rest and propose a concept; if it fits, we proceed.',
     },
   ];
 
@@ -958,7 +991,12 @@ const AnixAILanding = () => {
             <div className="neural-pulse"></div>
             <div className="neural-pulse"></div>
           </div>
-          <h2 className="loading-text">Инициализация нейронных сетей...</h2>
+          <h2 className="loading-text">
+            {t(
+              'Инициализация нейронных сетей...',
+              'Initializing neural networks...'
+            )}
+          </h2>
         </div>
       </div>
     );
@@ -1205,7 +1243,12 @@ const AnixAILanding = () => {
                 onMouseEnter={() => setIsPageBlurred(true)}
                 onMouseLeave={() => setIsPageBlurred(false)}
               >
-                <span>Узнать, чем мы отличаемся от других</span>
+                <span>
+                  {t(
+                    'Узнать, чем мы отличаемся от других',
+                    'See how we stand out'
+                  )}
+                </span>
                 <div className="button-glow"></div>
               </a>
             </div>
@@ -1217,7 +1260,9 @@ const AnixAILanding = () => {
       <Section id="conversion" bg="#0f0f1f" stickyTransition>
         <div className="conversion-section">
           <div className="container">
-            <h2 className="section-title">Как мы повышаем конверсию</h2>
+            <h2 className="section-title">
+              {t('Как мы повышаем конверсию', 'How we boost conversion')}
+            </h2>
             <p className="conversion-intro">
               {t(
                 'Мы строим видео, которое работает как элемент воронки, а не просто красиво.',
@@ -1251,7 +1296,9 @@ const AnixAILanding = () => {
       <Section id="cases" bg="#202040" stickyTransition>
         <div className="testimonials-section">
           <div className="container">
-            <h2 className="section-title">Истории Успеха Клиентов</h2>
+            <h2 className="section-title">
+              {t('Истории Успеха Клиентов', 'Client success stories')}
+            </h2>
             <div className="testimonials-grid">
               {testimonials.map((testimonial) => {
                 const baseText =
@@ -1363,7 +1410,10 @@ const AnixAILanding = () => {
                     src={member.image}
                     srcSet={makeSrcSet(member.image)}
                     sizes={responsiveSizes}
-                    alt="анимационный ролик объясняющий B2B продукт"
+                    alt={t(
+                      'анимационный ролик объясняющий B2B продукт',
+                      'animated video explaining a B2B product'
+                    )}
                     width="400"
                     height="400"
                     className="team-image"
@@ -1372,7 +1422,10 @@ const AnixAILanding = () => {
                   />
                   <div className="team-overlay">
                     <div className="expertise-badges">
-                      {member.tags.map((tag, i) => (
+                      {(isEnglish && member.tagsEn
+                        ? member.tagsEn
+                        : member.tags
+                      ).map((tag, i) => (
                         <span key={i} className="expertise-badge">
                           {tag}
                         </span>
@@ -1382,8 +1435,14 @@ const AnixAILanding = () => {
                 </div>
                 <div className="team-info">
                   <h3>{member.name}</h3>
-                  <p className="role">{member.role}</p>
-                  <p className="benefit">{member.benefit}</p>
+                  <p className="role">
+                    {isEnglish && member.roleEn ? member.roleEn : member.role}
+                  </p>
+                  <p className="benefit">
+                    {isEnglish && member.benefitEn
+                      ? member.benefitEn
+                      : member.benefit}
+                  </p>
                 </div>
               </div>
             ))}
@@ -1497,11 +1556,19 @@ const AnixAILanding = () => {
           onMouseEnter={() => setIsPageBlurred(true)}
           onMouseLeave={() => setIsPageBlurred(false)}
         >
-          <span>🧠 Разобрать мой продукт в Telegram</span>
+          <span>
+            {t(
+              '🧠 Разобрать мой продукт в Telegram',
+              '🧠 Break down my product in Telegram'
+            )}
+          </span>
           <div className="button-glow"></div>
         </a>
         <p className="text-sm md:text-base text-[#B0B0B0] mt-1">
-          В Telegram обсудим ваш продукт и подберём лучший формат видео.
+          {t(
+            'В Telegram обсудим ваш продукт и подберём лучший формат видео.',
+            'On Telegram we will discuss your product and pick the best video format.'
+          )}
         </p>
       </div>
 
@@ -1510,32 +1577,17 @@ const AnixAILanding = () => {
         <AnixLandingPage />
       </Suspense>
 
-      <div className="container text-center my-12 md:my-16">
-        <a
-          href="https://t.me/m/i23MvBuLOGJi"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cta-button primary block w-full md:w-auto text-base md:text-lg"
-          onMouseEnter={() => setIsPageBlurred(true)}
-          onMouseLeave={() => setIsPageBlurred(false)}
-        >
-          <span>🚀 Узнать доход от видео в Telegram</span>
-          <div className="button-glow"></div>
-        </a>
-        <p className="text-sm md:text-base text-[#B0B0B0] mt-1">
-          В Telegram рассчитаем, сколько дополнительной прибыли принесёт видео.
-        </p>
-      </div>
-
       {/* Enhanced Awards Section */}
       <Section id="awards" bg="#2d1b3d" className="awards-section">
         <div className="container">
-          <h2 className="section-title">Признание Индустрии</h2>
+          <h2 className="section-title">
+            {t('Признание Индустрии', 'Industry recognition')}
+          </h2>
 
           <div className="awards-scroll-container">
             <button
               className="scroll-button left"
-              aria-label="Предыдущая награда"
+              aria-label={t('Предыдущая награда', 'Previous award')}
               onClick={() => scrollAwards('left')}
             >
               ◀
@@ -1578,7 +1630,7 @@ const AnixAILanding = () => {
 
             <button
               className="scroll-button right"
-              aria-label="Следующая награда"
+              aria-label={t('Следующая награда', 'Next award')}
               onClick={() => scrollAwards('right')}
             >
               ▶
@@ -1591,7 +1643,9 @@ const AnixAILanding = () => {
       <Section id="faq" bg="#404080" stickyTransition>
         <div className="faq-section">
           <div className="container">
-            <h2 className="section-title">Часто Задаваемые Вопросы</h2>
+            <h2 className="section-title">
+              {t('Часто Задаваемые Вопросы', 'Frequently asked questions')}
+            </h2>
             <div className="faq-list">
               {faqData.map((faq, index) => (
                 <div key={index} className="faq-item">
@@ -1601,7 +1655,11 @@ const AnixAILanding = () => {
                       setActiveFAQ(activeFAQ === index ? null : index)
                     }
                   >
-                    <span>{faq.question}</span>
+                    <span>
+                      {isEnglish && faq.questionEn
+                        ? faq.questionEn
+                        : faq.question}
+                    </span>
                     <div className="faq-icon">
                       {activeFAQ === index ? '−' : '+'}
                     </div>
@@ -1610,7 +1668,9 @@ const AnixAILanding = () => {
                     className={`faq-answer ${activeFAQ === index ? 'expanded' : ''}`}
                   >
                     <div className="faq-answer-content">
-                      <p>{faq.answer}</p>
+                      <p>
+                        {isEnglish && faq.answerEn ? faq.answerEn : faq.answer}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -1647,20 +1707,29 @@ const AnixAILanding = () => {
       {/* Contact Section */}
       <Section id="contact" bg="#2d1b3d" className="contact-section">
         <div className="container">
-          <h2 className="section-title">Свяжитесь с Нами</h2>
+          <h2 className="section-title">
+            {t('Свяжитесь с Нами', 'Contact us')}
+          </h2>
           <div className="contact-grid">
             <div className="contact-info">
-              <h3>Готовы прокачать вашу воронку продаж?</h3>
+              <h3>
+                {t(
+                  'Готовы прокачать вашу воронку продаж?',
+                  'Ready to level up your funnel?'
+                )}
+              </h3>
               <p>
-                Свяжитесь с нами любым удобным способом. Мы ответим в течение
-                часа!
+                {t(
+                  'Свяжитесь с нами любым удобным способом. Мы ответим в течение часа!',
+                  'Reach out in any way you like. We will reply within an hour!'
+                )}
               </p>
 
               <div className="contact-methods">
                 <div className="contact-method">
                   <div className="contact-icon">📞</div>
                   <div className="contact-details">
-                    <strong>Телефон</strong>
+                    <strong>{t('Телефон', 'Phone')}</strong>
                     <a href="tel:+79770890309">+7(977)-089-03-09</a>
                   </div>
                 </div>
@@ -1705,14 +1774,22 @@ const AnixAILanding = () => {
       {/* Blog Section */}
       <Section id="blog" bg="#1a1a1a" className="blog-section">
         <div className="container">
-          <h2 className="section-title">Последние Новости</h2>
+          <h2 className="section-title">
+            {t('Последние Новости', 'Latest news')}
+          </h2>
           <div className="blog-grid">
             <Suspense fallback={null}>
               <BlogCard
                 url="https://vc.ru/ai/2028376-startap-anix-iz-mfti-2d-animatsiya"
-                category="Новости"
-                headline="Стартап Anix из МФТИ автоматизирует 2D‑анимацию"
-                description="VC.ru рассказывает об образовательных корнях проекта и его ИИ‑технологиях."
+                category={t('Новости', 'News')}
+                headline={t(
+                  'Стартап Anix из МФТИ автоматизирует 2D‑анимацию',
+                  'Anix startup from MIPT automates 2D animation'
+                )}
+                description={t(
+                  'VC.ru рассказывает об образовательных корнях проекта и его ИИ‑технологиях.',
+                  'VC.ru covers the project’s educational roots and its AI technology.'
+                )}
                 date="2025-05-01"
                 image="%PUBLIC_URL%/3.png"
               />
@@ -1725,16 +1802,25 @@ const AnixAILanding = () => {
               className="blog-card"
             >
               <div className="blog-category">
-                <span className="category-tag">#Маркетинг</span>
+                <span className="category-tag">
+                  {t('#Маркетинг', '#Marketing')}
+                </span>
               </div>
-              <h3>Контент‑маркетинг с анимацией: практические советы</h3>
+              <h3>
+                {t(
+                  'Контент‑маркетинг с анимацией: практические советы',
+                  'Content marketing with animation: practical tips'
+                )}
+              </h3>
               <p>
-                Материал о том, как использовать ролики для усиления воронки
-                продаж.
+                {t(
+                  'Материал о том, как использовать ролики для усиления воронки продаж.',
+                  'Article on using videos to strengthen your sales funnel.'
+                )}
               </p>
               <div className="blog-meta">
-                <span>4 мин чтения</span>
-                <span>Апр 2025</span>
+                <span>{t('4 мин чтения', '4 min read')}</span>
+                <span>{t('Апр 2025', 'Apr 2025')}</span>
               </div>
             </a>
 
@@ -1747,14 +1833,21 @@ const AnixAILanding = () => {
               <div className="blog-category">
                 <span className="category-tag">#MEF2025</span>
               </div>
-              <h3>Anix выступил на сессии молодых предпринимателей MEF</h3>
+              <h3>
+                {t(
+                  'Anix выступил на сессии молодых предпринимателей MEF',
+                  'Anix spoke at the MEF young entrepreneurs session'
+                )}
+              </h3>
               <p>
-                На Московском экономическом форуме команда поделилась опытом
-                нейроанимации.
+                {t(
+                  'На Московском экономическом форуме команда поделилась опытом нейроанимации.',
+                  'At the Moscow Economic Forum the team shared its neuro-animation expertise.'
+                )}
               </p>
               <div className="blog-meta">
-                <span>2 мин чтения</span>
-                <span>Мар 2025</span>
+                <span>{t('2 мин чтения', '2 min read')}</span>
+                <span>{t('Мар 2025', 'Mar 2025')}</span>
               </div>
             </a>
 
@@ -1765,112 +1858,27 @@ const AnixAILanding = () => {
               className="blog-card"
             >
               <div className="blog-category">
-                <span className="category-tag">#B2BВидео</span>
+                <span className="category-tag">
+                  {t('#B2BВидео', '#B2BVideo')}
+                </span>
               </div>
-              <h3>Как B2B‑компаниям создать успешный анимационный ролик</h3>
+              <h3>
+                {t(
+                  'Как B2B‑компаниям создать успешный анимационный ролик',
+                  'How B2B companies can create a winning animated video'
+                )}
+              </h3>
               <p>
-                Подробный гид по выбору формата и ключевым этапам производства.
+                {t(
+                  'Подробный гид по выбору формата и ключевым этапам производства.',
+                  'A detailed guide to choosing the format and key production stages.'
+                )}
               </p>
               <div className="blog-meta">
-                <span>6 мин чтения</span>
-                <span>Фев 2025</span>
+                <span>{t('6 мин чтения', '6 min read')}</span>
+                <span>{t('Фев 2025', 'Feb 2025')}</span>
               </div>
             </a>
-          </div>
-        </div>
-      </Section>
-
-      {/* Services Section (moved below news) */}
-      <Section id="services" bg="#1a1a33" stickyTransition>
-        <div className="services-section">
-          <div className="container">
-            <h2 className="section-title">{copy.salesVideoTitle}</h2>
-            <div className="services-grid">
-              <div
-                className="service-card"
-                onClick={() => setActiveService(activeService === 0 ? null : 0)}
-              >
-                <div className="service-icon">🎬</div>
-                <h3>Сокращение цикла сделки</h3>
-                <p>
-                  Меньше времени уходит на прогрев, презентации и убеждение.
-                </p>
-                <p>
-                  &quot;Мы теряем клиентов из-за долгих обсуждений и
-                  недопонимания&quot;.
-                </p>
-                <div
-                  className={`service-overlay ${activeService === 0 ? 'show' : ''}`}
-                >
-                  <div className="case-study">
-                    <h4>Превентивная победа</h4>
-                    <p>
-                      Наши клиенты в среднем сократили цикл сделки в 3 раза.
-                    </p>
-                    <div className="metrics">
-                      <span>Доверие: +21 пункт</span>
-                      <span>x2 Меньше возражений</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className="service-card"
-                onClick={() => setActiveService(activeService === 1 ? null : 1)}
-              >
-                <div className="service-icon">⚡</div>
-                <h3>Масштабирование</h3>
-                <p>
-                  Видео легко тиражируется, работает на новых рынках, языках,
-                  партнёрах.
-                </p>
-                <p>
-                  &quot;Хочу выйти в США, но нужен контент под локаль&quot;.
-                </p>
-                <div
-                  className={`service-overlay ${activeService === 1 ? 'show' : ''}`}
-                >
-                  <div className="case-study">
-                    <h4>История успеха</h4>
-                    <p>
-                      Обычно наш клиент увеличивает конверсию в отклик от 10
-                      раз.
-                    </p>
-                    <div className="metrics">
-                      <span>x10 Повышение охватов</span>
-                      <span>+16% Конверсий</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div
-                className="service-card"
-                onClick={() => setActiveService(activeService === 2 ? null : 2)}
-              >
-                <div className="service-icon">🎨</div>
-                <h3>Конкурентная Упаковка</h3>
-                <p>
-                  Продукт визуально и эмоционально выигрывает у конкурентов.
-                </p>
-                <p>
-                  &quot;На фоне других выглядим скучно, нас не запоминают&quot;.
-                </p>
-                <div
-                  className={`service-overlay ${activeService === 2 ? 'show' : ''}`}
-                >
-                  <div className="case-study">
-                    <h4>Вау эффект</h4>
-                    <p>Выделитесь на конференции и лендинге</p>
-                    <div className="metrics">
-                      <span>Лояльность: +30 пунктов</span>
-                      <span>x3 Узнаваемость бренда</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </Section>
@@ -1941,7 +1949,12 @@ const AnixAILanding = () => {
         onClick={redirectToTelegram}
       >
         <div className="telegram-icon">✈</div>
-        <span>🔮 Получить расчёт под мой проект</span>
+        <span>
+          {t(
+            '🔮 Получить расчёт под мой проект',
+            '🔮 Get a quote for my project'
+          )}
+        </span>
         <div className="telegram-glow"></div>
 
         {showQRCode && (
@@ -1950,7 +1963,10 @@ const AnixAILanding = () => {
               src={generateQRCode()}
               srcSet={`${generateQRCode()} 1x, ${generateQRCode()} 2x`}
               sizes={responsiveSizes}
-              alt="анимационный ролик объясняющий B2B продукт"
+              alt={t(
+                'анимационный ролик объясняющий B2B продукт',
+                'animated video explaining a B2B product'
+              )}
               width="180"
               height="180"
               loading="lazy"
@@ -1983,11 +1999,16 @@ const AnixAILanding = () => {
                   frameBorder="0"
                   allow="autoplay; fullscreen; picture-in-picture"
                   allowFullScreen
-                  title={`Видео от ${selectedVideo.name}`}
+                  title={t(
+                    `Видео от ${selectedVideo.name}`,
+                    `Video from ${selectedVideo.name}`
+                  )}
                   loading="lazy"
                 ></iframe>
                 <div className="progress-bar-container">
-                  <div className="progress-label">Повышение охвата</div>
+                  <div className="progress-label">
+                    {t('Повышение охвата', 'Reach increase')}
+                  </div>
                   <div className="progress-bar">
                     <div
                       className="progress-fill"
@@ -1999,7 +2020,9 @@ const AnixAILanding = () => {
                   </div>
                 </div>
                 <div className="progress-bar-container">
-                  <div className="progress-label">Повышение конверсии</div>
+                  <div className="progress-label">
+                    {t('Повышение конверсии', 'Conversion increase')}
+                  </div>
                   <div className="progress-bar">
                     <div
                       className="progress-fill"
@@ -2012,8 +2035,18 @@ const AnixAILanding = () => {
                 </div>
                 <div className="modal-info">
                   <h3>{selectedVideo.name}</h3>
-                  <p>{selectedVideo.company}</p>
-                  <p>&quot;{selectedVideo.text}&quot;</p>
+                  <p>
+                    {isEnglish && selectedVideo.companyEn
+                      ? selectedVideo.companyEn
+                      : selectedVideo.company}
+                  </p>
+                  <p>
+                    &quot;
+                    {isEnglish && selectedVideo.textEn
+                      ? selectedVideo.textEn
+                      : selectedVideo.text}
+                    &quot;
+                  </p>
                 </div>
               </div>
             )}
