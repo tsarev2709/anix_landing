@@ -78,7 +78,7 @@ export function SectionAnixTech({
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(126,87,255,0.15),transparent_35%),radial-gradient(circle_at_80%_20%,rgba(95,226,255,0.12),transparent_30%),radial-gradient(circle_at_50%_90%,rgba(255,122,158,0.12),transparent_35%)]" />
 
-      <div className="relative mx-auto flex min-h-screen max-h-screen flex-col justify-between px-4 py-10 sm:max-h-none sm:py-12 md:py-16 lg:py-20">
+      <div className="relative mx-auto flex min-h-screen flex-col gap-12 px-4 py-10 sm:py-12 md:py-16 lg:py-20">
         <div className="text-center space-y-3">
           <h2 className="font-heading font-bold text-white leading-tight text-[clamp(18px,4vw,26px)] md:text-4xl lg:text-5xl">
             {heading}
