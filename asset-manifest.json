@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.35a4d593.css",
-    "main.js": "/static/js/main.3841f943.js",
+    "main.css": "/static/css/main.9ee6d49e.css",
+    "main.js": "/static/js/main.492dc393.js",
     "static/css/663.acb38cc5.chunk.css": "/static/css/663.acb38cc5.chunk.css",
     "static/js/663.844ba145.chunk.js": "/static/js/663.844ba145.chunk.js",
     "static/js/225.53d180fc.chunk.js": "/static/js/225.53d180fc.chunk.js",
@@ -16,11 +16,16 @@
     "static/media/1.png": "/static/media/1.4a3c1caf2965ec660799.png",
     "static/media/bestie.jpg": "/static/media/bestie.7dadafc24b228d239686.jpg",
     "static/media/lida.jpg": "/static/media/lida.9c839e0161d1698f3f86.jpg",
+    "static/media/hse-hero.jpg": "/static/media/hse-hero.98902ec35d115bd2829e.jpg",
     "static/media/hemoai.png": "/static/media/hemoai.ef667ac8009226c70baa.png",
+    "static/media/hse-rule-lab.jpg": "/static/media/hse-rule-lab.5dc8529e78fe92967742.jpg",
     "static/media/vanya.JPG": "/static/media/vanya.350150ccfa520e8229c6.JPG",
+    "static/media/hse-ventilation.jpg": "/static/media/hse-ventilation.a81d00c00a11208a1893.jpg",
     "static/media/kolbox.png": "/static/media/kolbox.dd70a6a8ce28a39724f4.png",
     "static/media/clappy.png": "/static/media/clappy.fdc6e8060c9eff547982.png",
     "static/media/TPES.png": "/static/media/TPES.7505ba4a6840fb8fbd72.png",
+    "static/media/hse-onboarding.jpg": "/static/media/hse-onboarding.c0cdd65961e777929f07.jpg",
+    "static/media/hse-rule-tara.jpg": "/static/media/hse-rule-tara.9952ba783b5ff9a589b4.jpg",
     "static/media/dasha.jpg": "/static/media/dasha.c5016a9fdfc97775d16d.jpg",
     "static/media/god.jpg": "/static/media/god.04d9267b91731f1dd2cd.jpg",
     "static/media/fiztech.png": "/static/media/fiztech.b9763fe7bb748d9d819c.png",
@@ -29,7 +34,7 @@
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.35a4d593.css",
-    "static/js/main.3841f943.js"
+    "static/css/main.9ee6d49e.css",
+    "static/js/main.492dc393.js"
   ]
 }
