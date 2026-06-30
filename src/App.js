@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef, Suspense } from 'react';
 import './App.css';
 import Section from './components/Section';
 import LiteVimeo from './components/LiteVimeo';
+const AnixLandingPage = React.lazy(
+  () => import('./components/AnixLandingPage')
+);
 import { SectionAnixTech } from './components/SectionAnixTech';
 import god from './images/god.jpg';
 import bestie from './images/bestie.jpg';
@@ -60,7 +63,7 @@ const AnixAILanding = () => {
       formProductPlaceholder:
         'Кто ваша аудитория и какую задачу решает продукт',
       formSubmit: 'Получить анализ бесплатно',
-      audienceTitle: 'Кому мы подходим',
+      audienceTitle: 'К кому мы подходим',
       audienceSubtitle:
         'Мы работаем там, где продукт сложный, объяснения важнее эстетики',
       audienceCards: [
@@ -1369,38 +1372,6 @@ const AnixAILanding = () => {
         </div>
       </Section>
 
-      {/* NDA Cases Section */}
-      <Section id="nda" bg="#0f0f0f" className="nda-cases-section">
-        <div className="container">
-          <h2 className="section-title">{copy.ndaTitle}</h2>
-          <div className="nda-grid">
-            {ndaCases.map((item, index) => (
-              <div key={index} className="nda-card">
-                <div className="nda-card-header">
-                  <p className="nda-area">{item.area}</p>
-                  <span className="nda-pill">
-                    {t('Было → Стало', 'Before → After')}
-                  </span>
-                </div>
-                <div className="nda-card-body">
-                  <div className="nda-stat">
-                    <p className="nda-label">{t('До', 'Before')}</p>
-                    <p className="nda-value">{item.before}</p>
-                  </div>
-                  <div className="nda-divider" aria-hidden="true"></div>
-                  <div className="nda-stat">
-                    <p className="nda-label nda-label-strong">
-                      {t('После', 'After')}
-                    </p>
-                    <p className="nda-value nda-value-strong">{item.after}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Section>
-
       {/* Audience Fit Section */}
       <Section id="audience" bg="#0f0f1f" className="audience-section">
         <div className="container">
@@ -1600,6 +1571,11 @@ const AnixAILanding = () => {
           )}
         </p>
       </div>
+
+      {/*  👉 ставим Roadmap ЗА пределами .container */}
+      <Suspense fallback={null}>
+        <AnixLandingPage />
+      </Suspense>
 
       {/* Enhanced Awards Section */}
       <Section id="awards" bg="#2d1b3d" className="awards-section">
@@ -1903,6 +1879,38 @@ const AnixAILanding = () => {
                 <span>{t('Фев 2025', 'Feb 2025')}</span>
               </div>
             </a>
+          </div>
+        </div>
+      </Section>
+
+      {/* NDA Cases Section (moved below news) */}
+      <Section id="nda" bg="#0f0f0f" className="nda-cases-section">
+        <div className="container">
+          <h2 className="section-title">{copy.ndaTitle}</h2>
+          <div className="nda-grid">
+            {ndaCases.map((item, index) => (
+              <div key={index} className="nda-card">
+                <div className="nda-card-header">
+                  <p className="nda-area">{item.area}</p>
+                  <span className="nda-pill">
+                    {t('Было → Стало', 'Before → After')}
+                  </span>
+                </div>
+                <div className="nda-card-body">
+                  <div className="nda-stat">
+                    <p className="nda-label">{t('До', 'Before')}</p>
+                    <p className="nda-value">{item.before}</p>
+                  </div>
+                  <div className="nda-divider" aria-hidden="true"></div>
+                  <div className="nda-stat">
+                    <p className="nda-label nda-label-strong">
+                      {t('После', 'After')}
+                    </p>
+                    <p className="nda-value nda-value-strong">{item.after}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </Section>

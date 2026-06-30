@@ -8,6 +8,7 @@ import App from './App';
 import NotFound from './components/NotFound';
 import AppLayout from './AppLayout';
 import WhyItWorksPage from './components/WhyItWorksPage';
+import MedicinePage from './components/MedicinePage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const base = process.env.PUBLIC_URL || '';
@@ -35,6 +36,9 @@ switch (normalizedPath) {
     break;
   case '/why_it_works':
     renderInLayout(<WhyItWorksPage />);
+    break;
+  case '/medicine':
+    renderInLayout(<MedicinePage />);
     break;
   default:
     root.render(<NotFound />);
