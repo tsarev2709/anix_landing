@@ -1,2060 +1,593 @@
-import React, { useState, useEffect, useRef, Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
+import { Helmet } from 'react-helmet';
+import {
+  ArrowRight,
+  BadgeCheck,
+  BarChart3,
+  Brain,
+  Camera,
+  ExternalLink,
+  FileVideo,
+  HardHat,
+  Mail,
+  MessageCircle,
+  MonitorPlay,
+  Pill,
+  PlayCircle,
+  Scissors,
+  ShieldCheck,
+  Sparkles,
+  Stethoscope,
+  Video,
+  Workflow,
+} from 'lucide-react';
 import './App.css';
-import Section from './components/Section';
-import LiteVimeo from './components/LiteVimeo';
-const AnixLandingPage = React.lazy(
-  () => import('./components/AnixLandingPage')
-);
-import { SectionAnixTech } from './components/SectionAnixTech';
-import god from './images/god.jpg';
-import bestie from './images/bestie.jpg';
-import vanya from './images/vanya.JPG';
-import sber from './images/sber.png';
-import yandex from './images/yandex.png';
-import inno from './images/inno.png';
-import moscow from './images/moscow.png';
-import fiztech from './images/fiztech.png';
-import clappy from './images/clappy.png';
-import hemoai from './images/hemoai.png';
-import kolbox from './images/kolbox.png';
-import lida from './images/lida.jpg';
-import dasha from './images/dasha.jpg';
-import TPES from './images/TPES.png';
-const BlogCard = React.lazy(() => import('./components/BlogCard'));
+import './StudioLanding.css';
+import logo from './images/logoanix.png';
+import clappyImage from './images/clappy.png';
+import hemoImage from './images/hemoai.png';
+import tpesImage from './images/TPES.png';
+import fiztechImage from './images/fiztech.png';
+import hseHeroImage from './images/hse/hse-hero.jpg';
+import visualThree from './images/3.png';
+
 const CookieBanner = React.lazy(() => import('./components/CookieBanner'));
 
-// Helper for responsive img attributes
-const makeSrcSet = (src) => `${src} 1x, ${src} 2x`;
-const responsiveSizes = '(max-width: 768px) 100vw, 600px';
+const telegramUrl = 'https://t.me/anix_helper';
+const showreelUrl =
+  'https://vkvideo.ru/video_ext.php?oid=-174933827&id=456239051&hash=8a2d51037c33a713&hd=3&autoplay=1';
+const videoFolderUrl =
+  'https://drive.google.com/drive/folders/1XzaVX00V5xukMZwEF9Vb_WCbco2M7erA';
 
-const AnixAILanding = () => {
-  const translations = {
-    ru: {
-      heroTitle:
-        'Креативные видео, которые повышают ваши продажи уже в первый месяц',
-      heroSubtitle:
-        'Мы объясняем ваши сложные продукты простым визуальным языком, который удерживает внимание, пробивает баннерную слепоту и улучшает конверсию на всех этапах воронки. Быстро, точно и под вашу цель.',
-      heroCTA: 'Получить анализ вашей воронки и 3 точки роста за 15 минут',
-      heroBenefits: [
-        {
-          title: 'Анализируем воронку',
-          description:
-            'Делаем сценарий, который решает конкретную бизнес-боль.',
-        },
-        {
-          title: 'Видео, созданное инженерно',
-          description: 'Драматургия + нейросети + композиция.',
-        },
-        {
-          title: 'Результат за 3,7 дня',
-          description: 'Без артефактов и с высокой визуальной точностью.',
-        },
-        {
-          title: '+15-25% конверсии',
-          description: 'Средний прирост у клиентов.',
-        },
-      ],
-      ctaFullTitle: 'Получите анализ вашей воронки ➜ 3 точки роста за 15 минут',
-      ctaFullSubtitle:
-        'Мы разберем вашу текущую коммуникацию, найдем узкие места и предложим решение с прогнозом, как изменится конверсия после внедрения видео.',
-      formNameLabel: 'Имя',
-      formContactLabel: 'Телефон / Telegram',
-      formProductLabel: 'Опишите ваш продукт в 1-2 предложениях',
-      formProductPlaceholder:
-        'Кто ваша аудитория и какую задачу решает продукт',
-      formSubmit: 'Получить анализ бесплатно',
-      audienceTitle: 'К кому мы подходим',
-      audienceSubtitle:
-        'Мы работаем там, где продукт сложный, объяснения важнее эстетики',
-      audienceCards: [
-        {
-          title: 'Компании с комплексными B2B-решениями',
-          items: [
-            'Технологические компании',
-            'IT-продукты и SaaS',
-            'Фарма, биотех',
-            'Финтех',
-            'Логистика и промышленность',
-          ],
-          theme: 'violet',
-        },
-        {
-          title: 'Команды, выходящие на рост и инвестиции',
-          items: ['Стартапы', 'Гранты', 'Акселераторы'],
-          theme: 'green',
-        },
-        {
-          title: 'Корпоративные подразделения, которым важно объяснять',
-          items: ['PR-отделы', 'Отделы продаж', 'Маркетинг'],
-          theme: 'amber',
-        },
-      ],
-      teamTitle: 'Команда, которая продаёт вместо вас',
-      technologyTitleLines: [
-        'Технологии Anix',
-        'которые делают ваш проект быстрее и лучше',
-      ],
-      technologyFeatures: [
-        {
-          title: 'Собственная нейросеть Anix',
-          description:
-            'Модульная генерация кадров с контролем стиля и динамики.',
-          icon: '🧠',
-          size: 'large',
-        },
-        {
-          title: 'Поиск и исправление артефактов',
-          description:
-            'Скрипты для очистки, inpainting и правок без ручного ретуша.',
-          icon: '🛠️',
-        },
-        {
-          title: 'Ускорение продакшена',
-          description:
-            'Пайплайны, которые сокращают сборку ролика с недель до дней.',
-          icon: '⚡',
-        },
-        {
-          title: 'Контроль качества',
-          description:
-            'Алгоритмы, отслеживающие целостность анимации и деталей.',
-          icon: '🛰️',
-        },
-        {
-          title: 'Композиция и цвет',
-          description: 'Физичная глубина, CG-эффекты и тонкая работа с цветом.',
-          icon: '🎛️',
-        },
-      ],
-      riskTitle: 'Снимаем ключевые риски до старта работы',
-      riskBullets: [
-        {
-          title: 'Не сработает?',
-          description: 'Показываем сегментные кейсы',
-          link: '#cases',
-        },
-        {
-          title: 'Дорого?',
-          description: 'Видео — актив, который работает месяцами.',
-        },
-        {
-          title: 'Для моего рынка подходит?',
-          description: 'Делаем видео для сложных сегментов.',
-        },
-        {
-          title: 'Нет времени?',
-          description: 'Собираем ролики за 3–7 дней.',
-        },
-      ],
-      pricingTitle:
-        'Прозрачный и честный: стоимость зависит только от вашей задачи',
-      pricingText:
-        'Средний проект стоит от 400 до 900 тысяч рублей. Для крупных компаний — помесячная работа. Есть быстрые форматы.',
-      pricingCTA: 'Получить точный расчёт стоимости',
-      finalCTATitle:
-        'Получите анализ вашей воронки, росты конверсий за 15 минут',
-      finalCTADescription:
-        'Форма как в первом блоке: оставьте контакты, расскажите о продукте — мы вернёмся с точками роста.',
-      subscribeTitle: 'Хотите видеть, как мы собираем видео изнутри?',
-      subscribeSubtitle:
-        'В Telegram — backstage, советы и примеры лучших роликов Anix',
-      subscribeCTA: '💬 Подписаться в Telegram → @anixpro',
-      subscribeNote:
-        'Перейдёте в наш Telegram-канал с бэкстейджем, советами и примерами лучших роликов.',
-      salesVideoTitle: 'Видео, которое помогает продавать',
-      ndaTitle: 'Что мы уже сделали (и не всегда можем назвать)',
-    },
-    en: {
-      heroTitle: 'Creative videos that boost your sales from month one',
-      heroSubtitle:
-        'We explain complex products with clear visuals that keep attention, fight banner blindness, and improve conversion across the funnel. Fast, precise, and goal-focused.',
-      heroCTA: 'Get a funnel audit and 3 growth points in 15 minutes',
-      heroBenefits: [
-        {
-          title: 'We audit the funnel',
-          description:
-            'We craft a script that solves a concrete business pain.',
-        },
-        {
-          title: 'Engineering-first videos',
-          description: 'Storytelling + neural networks + composition.',
-        },
-        {
-          title: 'Results in 3–7 days',
-          description: 'No artifacts and with high visual accuracy.',
-        },
-        {
-          title: '+15–25% conversion',
-          description: 'Average uplift for our clients.',
-        },
-      ],
-      ctaFullTitle: 'Get a funnel audit ➜ 3 growth ideas in 15 minutes',
-      ctaFullSubtitle:
-        'We review your communication, find bottlenecks, and propose a solution with an expected conversion impact.',
-      formNameLabel: 'Name',
-      formContactLabel: 'Phone / Telegram',
-      formProductLabel: 'Describe your product in 1–2 sentences',
-      formProductPlaceholder:
-        'Who is your audience and what problem do you solve?',
-      formSubmit: 'Get the audit for free',
-      audienceTitle: 'Who we are a fit for',
-      audienceSubtitle:
-        'We work where products are complex and clarity matters more than pure aesthetics',
-      audienceCards: [
-        {
-          title: 'Companies with complex B2B solutions',
-          items: [
-            'Technology companies',
-            'IT products and SaaS',
-            'Pharma and biotech',
-            'Fintech',
-            'Logistics and manufacturing',
-          ],
-          theme: 'violet',
-        },
-        {
-          title: 'Teams aiming for growth and investment',
-          items: ['Startups', 'Grants', 'Accelerators'],
-          theme: 'green',
-        },
-        {
-          title: 'Corporate teams that need clear explanations',
-          items: ['PR departments', 'Sales teams', 'Marketing'],
-          theme: 'amber',
-        },
-      ],
-      teamTitle: 'A team that sells instead of you',
-      technologyTitleLines: [
-        'Anix Technologies',
-        'built to make your project faster and better',
-      ],
-      technologyFeatures: [
-        {
-          title: 'Proprietary Anix neural network',
-          description:
-            'Modular frame generation with controllable style and motion.',
-          icon: '🧠',
-          size: 'large',
-        },
-        {
-          title: 'Artifact detection and fixing',
-          description:
-            'Scripts for cleanup, inpainting, and corrections without manual retouch.',
-          icon: '🛠️',
-        },
-        {
-          title: 'Production acceleration',
-          description:
-            'Pipelines that cut video assembly from weeks down to days.',
-          icon: '⚡',
-        },
-        {
-          title: 'Quality control',
-          description:
-            'Algorithms tracking animation integrity and fine details.',
-          icon: '🛰️',
-        },
-        {
-          title: 'Compositing and color',
-          description: 'Physical depth, CG effects, and precise color work.',
-          icon: '🎛️',
-        },
-      ],
-      riskTitle: 'De-risking before launch',
-      riskBullets: [
-        {
-          title: "Won't work?",
-          description: 'We show segment-specific cases',
-          link: '#cases',
-        },
-        {
-          title: 'Too expensive?',
-          description: 'Video is an asset that works for months.',
-        },
-        {
-          title: 'Will it fit my market?',
-          description: 'We build videos for complex segments.',
-        },
-        {
-          title: 'No time?',
-          description: 'We deliver in 3–7 days.',
-        },
-      ],
-      pricingTitle: 'Transparent and fair: pricing depends only on your task',
-      pricingText:
-        'An average project costs 400–900k RUB. For large companies we work month-to-month. Fast-track formats are available.',
-      pricingCTA: 'Get an exact quote',
-      finalCTATitle:
-        'Get a funnel audit and conversion growth plan in 15 minutes',
-      finalCTADescription:
-        'Same form as the first CTA: leave contacts and product details — we will reply with growth points.',
-      subscribeTitle: 'Want to see how we assemble videos from the inside?',
-      subscribeSubtitle:
-        'Telegram has backstage, tips, and the best Anix video examples',
-      subscribeCTA: '💬 Subscribe on Telegram → @anixpro',
-      subscribeNote:
-        'You will jump to our Telegram channel with backstage, tips, and top videos.',
-      salesVideoTitle: 'A video that helps you sell',
-      ndaTitle: 'What we have already built (even under NDA)',
-    },
-  };
+const directions = [
+  {
+    title: 'Продажи сложных B2B-продуктов',
+    text: 'Explainer-ролики, visual sales kits и контент для первого касания, демо, конференций и follow-up.',
+    icon: Workflow,
+    href: '#cases',
+  },
+  {
+    title: 'Фарма, MedTech и biotech',
+    text: 'Механизм действия, доверие врачей, маскоты препаратов, конференционные ролики и серии материалов.',
+    icon: Pill,
+    href: '/medicine/',
+  },
+  {
+    title: 'Охрана труда и HSE',
+    text: 'Видео-onboarding, Life Saving Rules, QR-сценарии, карточки, маскоты и кампании для сотрудников.',
+    icon: HardHat,
+    href: '/hse/',
+  },
+  {
+    title: 'Режиссура событий и AI-ролики',
+    text: 'Единая концепция мероприятия: съемка, звук, монтаж, экранный контент и AI-визуалы.',
+    icon: Camera,
+    href: '#rch',
+  },
+];
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [currentStep, setCurrentStep] = useState(-1);
-  const [counters, setCounters] = useState({ projects: 0, hours: 0 });
-  const [showVideoModal, setShowVideoModal] = useState(false);
-  const [selectedVideo, setSelectedVideo] = useState(null);
-  const [showQRCode, setShowQRCode] = useState(false);
-  const [activeFAQ, setActiveFAQ] = useState(null);
-  const [processInView, setProcessInView] = useState(false);
-  const [processStarted, setProcessStarted] = useState(false);
-  const [isPageBlurred, setIsPageBlurred] = useState(false);
-  const processRef = useRef(null);
-  const awardsScrollRef = useRef(null);
-  const swipeStart = useRef(0);
-  const [activeService, setActiveService] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
-  const [language, setLanguage] = useState('ru');
-  const isEnglish = language === 'en';
-  const t = (ru, en) => (isEnglish ? en : ru);
+const proofMetrics = [
+  { value: '15%+', label: 'средний рост конверсии в КП' },
+  { value: 'x10', label: 'ERV у ролика фонда МФТИ' },
+  { value: '30%', label: 'рост отклика в кейсе ТПЭС' },
+  { value: '3-7 дней', label: 'для быстрых форматов' },
+];
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile, { passive: true });
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+const services = [
+  {
+    title: 'Стратегия и драматургия',
+    text: 'Разбираем воронку, аудитории, возражения и один ключевой сценарий, который должен стать понятным.',
+    icon: Brain,
+  },
+  {
+    title: 'AI-продакшен и анимация',
+    text: 'Собираем визуальный язык, ролик, монтаж, звук, адаптации и материалы вокруг основного видео.',
+    icon: Sparkles,
+  },
+  {
+    title: 'Запуск в каналах',
+    text: 'Готовим версии для сайта, конференции, рассылки, Telegram, экранов, QR-точек и презентаций.',
+    icon: MonitorPlay,
+  },
+  {
+    title: 'Метрики и повтор',
+    text: 'Смотрим отклик, досмотры, охваты, лиды и усиливаем те связки, которые реально двигают сделку.',
+    icon: BarChart3,
+  },
+];
 
-  // Lead magnet popup removed
+const featuredCases = [
+  {
+    name: 'Clappy',
+    area: 'B2B2C explainer',
+    result: 'отклик вырос в несколько десятков раз',
+    text: 'Сложный продукт для пользователей и производств превратили в короткую понятную историю. После запуска появились первые пилоты.',
+    image: clappyImage,
+    href: 'https://drive.google.com/file/d/1EYWBYlhSgIK4Wd4F0nTKR1kQxYhXGc5j/view',
+  },
+  {
+    name: 'Hemotech AI',
+    area: 'MedTech / AI-диагностика',
+    result: 'ролик стал частью бренда',
+    text: 'Снизили недоверие к инновационному продукту через минималистичный ролик-визитку для врачей, клиник и конференций.',
+    image: hemoImage,
+    href: 'https://drive.google.com/file/d/1Q6RQlNbAKBGugpo-MH1-_6omwwnmPQ8E/view',
+  },
+  {
+    name: 'ТПЭС',
+    area: 'Промышленный B2B',
+    result: '+30% к отклику',
+    text: 'Заменили 50-страничные презентации роликом, который быстро показывает проблему, решение и миссию энергоэффективности.',
+    image: tpesImage,
+    href: 'https://drive.google.com/file/d/1BgJs_mKyvEVtDlWeaXGY9rmFjPKrTes5/view',
+  },
+  {
+    name: 'Эндаумент-фонд МФТИ',
+    area: 'PR и узнаваемость',
+    result: 'Telegram x2, сайт x3, ERV x10',
+    text: 'Перевели реальные фотографии МФТИ в теплую анимационную систему, которая стала инфоповодом и частью коммуникаций фонда.',
+    image: fiztechImage,
+    href: '#cases',
+  },
+  {
+    name: 'Мосфарма',
+    area: 'Фарма / ТВ-реклама',
+    result: 'ролик прошел требования Первого канала',
+    text: 'Сохранили бренд-персонажей, но сделали их живее и теплее, чтобы реклама препарата вызывала доверие.',
+    image: visualThree,
+    href: 'https://drive.google.com/file/d/1Uw9e-ZFzg9AVK8NnoN_EHwfR0ZPvD_M0/view',
+  },
+  {
+    name: 'Мултон Партнерс',
+    area: 'HSE / Life Saving Rules',
+    result: 'маскот и карточки стали системой',
+    text: 'С нуля разработали персонажа кампании и визуальный формат, который делает правила охраны труда заметнее и живее.',
+    image: hseHeroImage,
+    href: '/hse/',
+  },
+];
 
-  const handleTouchStart = (e) => {
-    swipeStart.current = e.touches[0].clientX;
-  };
+const compactCases = [
+  {
+    name: 'Kolobox',
+    text: 'Переупаковали спорное восприятие доставки излишков еды в дружелюбный, яркий образ.',
+    href: 'https://drive.google.com/file/d/1eI5mODOu-mJ54QLPM_q0YuUP9bWjLN5k/view',
+  },
+  {
+    name: 'ЮРРОБОТ',
+    text: '15-секундный ролик для Telegram-чатов юристов с прогнозом сильной конверсии в заявку.',
+    href: 'https://drive.google.com/file/d/1bwItNtWXY-IfIrG910jVYGbsOH9BJukR/view',
+  },
+  {
+    name: 'Little Prince',
+    text: 'Имиджевый ролик-фантазия за один день, который собрал сотни отзывов от индустрии.',
+    href: 'https://drive.google.com/file/d/1xIOgHxhhloGtBRtrnwp3xpV9AkShUNqT/view',
+  },
+  {
+    name: 'АгроТех',
+    text: 'Сюжетный ролик для хакатона, который победил в зрительском голосовании.',
+    href: '#cases',
+  },
+  {
+    name: 'Стартех',
+    text: 'Переупаковка продукта под региональные B2B-компании и ролик для продаж.',
+    href: '#cases',
+  },
+  {
+    name: 'Бондарчук',
+    text: 'За 4 часа собрали кинематографичный прототип сцены с актерскими лицами.',
+    href: 'https://drive.google.com/file/d/1wnRsoYIgio_MilkNFRlEBuTfgJfzx25d/view',
+  },
+  {
+    name: 'Бородино',
+    text: 'Исторически подготовленный ультрареалистичный ролик с вниманием к костюмам, быту и атмосфере.',
+    href: 'https://drive.google.com/file/d/1d2iXB33lqPgG3Y0M4e216nzw2QYGmssP/view',
+  },
+  {
+    name: 'Factory Director',
+    text: 'Конференционный ролик на базе маскота, который стал визитной карточкой бренда.',
+    href: '#cases',
+  },
+];
 
-  const handleTouchEnd = (e) => {
-    const deltaX = e.changedTouches[0].clientX - swipeStart.current;
-    if (deltaX > 50) scrollAwards('left');
-    if (deltaX < -50) scrollAwards('right');
-  };
+const rchStack = [
+  {
+    title: 'Режиссерская концепция',
+    text: 'Собрали событие как цельное высказывание, а не набор разрозненных роликов и экранов.',
+    icon: FileVideo,
+  },
+  {
+    title: 'Съемка и звук',
+    text: 'Сняли материалы в высоком качестве, продумали звук, темп и ощущение присутствия.',
+    icon: Video,
+  },
+  {
+    title: 'Монтаж и AI-визуалы',
+    text: 'Собрали ролики, монтажные связки и AI-части так, чтобы они работали на одну драматургию.',
+    icon: Scissors,
+  },
+];
 
-  const handleMouseDown = (e) => {
-    swipeStart.current = e.clientX;
-  };
+const process = [
+  'Находим, где аудитория теряет смысл: в письме, демо, конференции, инструкции или внутренней коммуникации.',
+  'Фиксируем одну управляемую задачу: продуктовый сценарий, препарат, правило безопасности, событие или PR-инфоповод.',
+  'Пишем драматургию, визуальный язык и формат выдачи до продакшена, чтобы не раздувать scope.',
+  'Производим ролик и адаптации: горизонталь, вертикаль, экран, рассылка, презентация, QR-страница или карточки.',
+  'Помогаем встроить материал в канал и смотрим, где он дает отклик, лиды, досмотр или вовлечение.',
+];
 
-  const handleMouseUp = (e) => {
-    const deltaX = e.clientX - swipeStart.current;
-    if (deltaX > 50) scrollAwards('left');
-    if (deltaX < -50) scrollAwards('right');
-  };
+const partnerPages = [
+  {
+    title: 'ANIX Medicine',
+    text: 'Отдельная страница для фармы, MedTech, biotech, врачей, препаратов, маскотов и visual sales kits.',
+    href: '/medicine/',
+    icon: Stethoscope,
+  },
+  {
+    title: 'ANIX HSE',
+    text: 'Отдельная страница для охраны труда: video-onboarding, LSR, QR, тесты, карточки и кампании.',
+    href: '/hse/',
+    icon: ShieldCheck,
+  },
+];
 
-  // Animated counter effect
-  useEffect(() => {
-    const animateCounters = () => {
-      const duration = 2000;
-      const projectsTarget = 150;
-      const hoursTarget = 5000;
-
-      const startTime = Date.now();
-
-      const updateCounters = () => {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-
-        setCounters({
-          projects: Math.floor(projectsTarget * easeOut),
-          hours: Math.floor(hoursTarget * easeOut),
-        });
-
-        if (progress < 1) {
-          requestAnimationFrame(updateCounters);
-        }
-      };
-
-      updateCounters();
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          animateCounters();
-        }
-      });
-    });
-
-    if (processRef.current) {
-      observer.observe(processRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Enhanced Process Animation System
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !processStarted) {
-            setProcessInView(true);
-            setProcessStarted(true);
-
-            // Reset and start the animation sequence
-            setCurrentStep(-1);
-
-            const startProcessAnimation = () => {
-              // Initial delay before starting
-              setTimeout(() => {
-                let stepIndex = 0;
-
-                const animateStep = () => {
-                  if (stepIndex < processSteps.length) {
-                    setCurrentStep(stepIndex);
-                    stepIndex++;
-
-                    // Longer delay between steps for dramatic effect
-                    setTimeout(animateStep, 2000);
-                  }
-                };
-
-                animateStep();
-              }, 800);
-            };
-
-            startProcessAnimation();
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-
-    if (processRef.current) {
-      observer.observe(processRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, [processStarted]);
-
-  // Process steps with enhanced data
-  const processSteps = [
-    {
-      title: t('Анализ Сценария', 'Script analysis'),
-      icon: '📝',
-      description: t(
-        'ИИ анализирует ваш бриф и создает увлекательное повествование',
-        'AI reviews your brief and builds a compelling storyline'
-      ),
-      time: t('2 часа', '2 hours'),
-      saved: '75%',
-      details: [
-        t('Обработка брифа', 'Brief processing'),
-        t('Анализ целевой аудитории', 'Target audience analysis'),
-        t('Оптимизация сценария', 'Script optimization'),
-      ],
-      color: '#8b45ff',
-      bgGradient: 'linear-gradient(135deg, #8b45ff, #b465ff)',
-    },
-    {
-      title: t('Генерация Ключевых Кадров', 'Key frame generation'),
-      icon: '🎯',
-      description: t(
-        'Нейронные сети автоматически генерируют идеальные ключевые кадры',
-        'Neural networks auto-generate precise key frames'
-      ),
-      time: t('4 часа', '4 hours'),
-      saved: '60%',
-      details: [
-        t(
-          'Автоматическое создание ключевых кадров',
-          'Automatic key frame creation'
-        ),
-        t('Визуальная композиция', 'Visual composition'),
-        t('Оптимизация тайминга', 'Timing optimization'),
-      ],
-      color: '#20b2aa',
-      bgGradient: 'linear-gradient(135deg, #20b2aa, #48cae4)',
-    },
-    {
-      title: t('ИИ Анимация', 'AI animation'),
-      icon: '🤖',
-      description: t(
-        'Продвинутый ИИ создает плавную, профессиональную анимацию',
-        'Advanced AI builds smooth, professional animation'
-      ),
-      time: t('1 час', '1 hour'),
-      saved: '90%',
-      details: [
-        t('Нейронный рендеринг', 'Neural rendering'),
-        t('Синтез движения', 'Motion synthesis'),
-        t('Перенос стиля', 'Style transfer'),
-      ],
-      color: '#ff7f50',
-      bgGradient: 'linear-gradient(135deg, #ff7f50, #ff9a76)',
-    },
-    {
-      title: t('Улучшение', 'Enhancement'),
-      icon: '⚡',
-      description: t(
-        'ИИ улучшает качество и добавляет финальные штрихи',
-        'AI polishes quality and adds final touches'
-      ),
-      time: t('30 мин', '30 min'),
-      saved: '85%',
-      details: [
-        t('Улучшение качества', 'Quality enhancement'),
-        t('Цветокоррекция', 'Color grading'),
-        t('Обработка эффектов', 'Effects processing'),
-      ],
-      color: '#9d4edd',
-      bgGradient: 'linear-gradient(135deg, #9d4edd, #c77dff)',
-    },
-    {
-      title: t('Доставка', 'Delivery'),
-      icon: '📊',
-      description: t(
-        'Финальная оптимизация и интеграция аналитики',
-        'Final optimization and analytics integration'
-      ),
-      time: t('15 мин', '15 min'),
-      saved: '95%',
-      details: [
-        t('Оптимизация форматов', 'Format optimization'),
-        t('Настройка аналитики', 'Analytics setup'),
-        t('Отслеживание производительности', 'Performance tracking'),
-      ],
-      color: '#06ffa5',
-      bgGradient: 'linear-gradient(135deg, #06ffa5, #39ff14)',
-    },
-  ];
-
-  const teamMembers = [
-    {
-      name: 'Андрей Царёв',
-      role: 'Стратег и продюсер B2B-видео',
-      roleEn: 'B2B video strategist and producer',
-      benefit: 'Понимает рынок, превращает суть в продающий аргумент',
-      benefitEn:
-        'Understands the market and turns essence into selling arguments',
-      image: god,
-      tags: ['B2B', 'Продуктовое позиционирование', 'Драматургия', 'Аналитика'],
-      tagsEn: ['B2B', 'Product positioning', 'Storytelling', 'Analytics'],
-    },
-    {
-      name: 'Александра Севостьянова',
-      role: 'Сценарист-продажник и режиссёр',
-      roleEn: 'Sales-focused scriptwriter and director',
-      benefit: 'Превращает сложное в ясную и цепляющую подачу',
-      benefitEn: 'Turns complexity into clear, engaging storytelling',
-      image: bestie,
-      tags: [
-        'B2B-питчи',
-        'Театральная режиссура',
-        'Продажный текст',
-        'Клиентские боли',
-      ],
-      tagsEn: [
-        'B2B pitches',
-        'Theatre directing',
-        'Sales copy',
-        'Customer pains',
-      ],
-    },
-    {
-      name: 'Иван Кухарук',
-      role: 'Технический директор',
-      roleEn: 'CTO',
-      benefit: 'Проектирует процесс и следит, чтобы всё работало',
-      benefitEn: 'Designs the process and keeps everything running',
-      image: vanya,
-      tags: [
-        'Проджект-менеджмент',
-        'Бизнес-анализ',
-        'AI-интеграция',
-        'Процесс',
-      ],
-      tagsEn: [
-        'Project management',
-        'Business analysis',
-        'AI integration',
-        'Process',
-      ],
-    },
-    {
-      name: 'Дарья Косичкина',
-      role: 'Нейроаниматор',
-      roleEn: 'Neuro-animator',
-      benefit: 'Делает визуал, который объясняет и цепляет',
-      benefitEn: 'Builds visuals that explain and hook',
-      image: dasha,
-      tags: [
-        '2D-анимация',
-        'Моушн-дизайн',
-        'Визуальные метафоры',
-        'Раскадровка',
-      ],
-      tagsEn: [
-        '2D animation',
-        'Motion design',
-        'Visual metaphors',
-        'Storyboarding',
-      ],
-    },
-    {
-      name: 'Лидия Солнышко',
-      role: 'Нейроаниматор',
-      roleEn: 'Neuro-animator',
-      benefit: 'Собирает AI-видео, чтобы быстро и качественно',
-      benefitEn: 'Assembles AI videos quickly and with quality',
-      image: lida,
-      tags: ['AI-видео', 'Постпродакшн', 'Алгоритмы', 'Motion pipeline'],
-      tagsEn: ['AI video', 'Post-production', 'Algorithms', 'Motion pipeline'],
-    },
-  ];
-
-  const testimonials = [
-    {
-      id: 1,
-      name: 'Мария Воронова',
-      company: 'CMO Kolobox',
-      website: 'https://kolo-box.ru/',
-      text: 'Запрос: объяснить продут пользователю быстро и просто. Результат: демо-просмотры выросли на 22%, ролик включили во все рекламные акции.',
-      textEn:
-        'Goal: explain the product to users quickly and clearly. Result: demo views grew by 22%, and the video was included in all promo campaigns.',
-      videoThumbnail: kolbox,
-      videoUrl: 'https://player.vimeo.com/video/1078357836?h=a4d72de864',
-      reach: 25,
-      conversion: 18,
-    },
-    {
-      id: 2,
-      name: 'Дмитрий Потапов',
-      company: 'генеральный директор ТПЭС',
-      website: 'https://tpes-iest.com/',
-      text: 'Запрос: произвести впечатление на консервативное производство и прогреть ЛПРов. Результат: конверсия встреч выросла на 35%, ролик показали на LED-экране стенда и в follow-up рассылке, собрали 12 стратегических созвонов.',
-      textEn:
-        'Goal: impress a conservative manufacturing audience and warm up decision makers. Result: meeting conversion grew by 35%; the video was shown on the booth LED screen and in follow-up emails, bringing 12 strategic calls.',
-      videoThumbnail: TPES,
-      videoUrl: 'https://player.vimeo.com/video/1078354208',
-      reach: 30,
-      conversion: 30,
-    },
-    {
-      id: 3,
-      name: 'Татьяна Куркина',
-      company: 'CEO Clappy',
-      website: 'https://clappy.ru/',
-      text: 'Запрос: понятно рассказать про новое ЭКО решение без участия фаундера. Результат: конверсия лендинга выросла на 18%, ролик используют на питчах, демо и в онбординге партнёров.',
-      textEn:
-        'Goal: clearly present a new IVF solution without the founder. Result: landing page conversion grew by 18%; the video is used in pitches, demos, and partner onboarding.',
-      videoThumbnail: clappy,
-      videoUrl: 'https://player.vimeo.com/video/1078358379?h=8fc297f159',
-      reach: 40,
-      conversion: 16,
-    },
-    {
-      id: 4,
-      name: 'Екатерина Поликер',
-      company: 'CEO Hemotech AI',
-      website: 'https://hemotech.ai/',
-      text: 'Запрос: показать ценность биотех-продукта врачам и инвесторам без сложной терминологии. Результат: конверсия холодных лидов выросла на 26%, ролик работает на сайте, в email-посеве и на отраслевых выставках.',
-      textEn:
-        'Goal: show biotech value to doctors and investors without complex jargon. Result: cold-lead conversion grew by 26%; the video works on the site, in email outreach, and at industry expos.',
-      videoThumbnail: hemoai,
-      videoUrl: 'https://player.vimeo.com/video/1078358021?h=afe067a81f',
-      reach: 53,
-      conversion: 22,
-    },
-    {
-      id: 5,
-      name: 'Светлана Красночуб',
-      company: 'Исполнительный директор ФЦК МФТИ',
-      companyEn: 'Executive Director, MIPT Endowment',
-      website: 'https://fund.mipt.ru/',
-      text: 'Запрос: собрать выпускников вокруг фонда и передать дух Физтеха. Результат: регистрации на мероприятие выросли на 45%, ролик транслируется на встречах спонсоров и в закрытых сообществах выпускников.',
-      textEn:
-        'Goal: rally alumni around the fund and convey the MIPT spirit. Result: event registrations grew by 45%; the video plays at sponsor meetings and in private alumni communities.',
-      videoThumbnail: 'https://vumbnail.com/1102413873.jpg',
-      videoUrl:
-        'https://player.vimeo.com/video/1102413873?badge=0&autopause=0&player_id=0&app_id=58479',
-      reach: 100,
-      conversion: 10,
-    },
-    {
-      id: 6,
-      name: 'Алексей Лычке',
-      company: 'Генеральный директор, Б в Кубе',
-      companyEn: 'CEO, B v Kube',
-      website: 'https://companiab.cu/',
-      text: 'Запрос: выйти на новых клиентов в области охраны труда и донести ценность за 40 секунд. Результат: конверсия в заявки от франшизы выросла на 19%, ролик транслируется на интерактивных столах в шоуруме компании и в онлайн-демо, помог закрыть контракт с рядом предприятий.',
-      textEn:
-        'Goal: reach new occupational safety clients and deliver value in 40 seconds. Result: franchise application conversion grew by 19%; the video runs on interactive tables in the showroom and online demos, helping close deals with several enterprises.',
-      videoThumbnail: 'https://vumbnail.com/1118064088.jpg',
-      videoUrl: 'https://player.vimeo.com/video/1118064088',
-      reach: 28,
-      conversion: 19,
-    },
-  ];
-
-  const conversionSteps = [
-    {
-      title: t('Анализируем воронку', 'We audit the funnel'),
-      description: t(
-        'Определяем, где видео даст максимальный прирост.',
-        'We identify where video will create the biggest uplift.'
-      ),
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
-          <path
-            d="M12 30.5V34a2 2 0 0 0 2 2h20"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <path
-            d="M20 14v12M28 18v8M36 22v4"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M12 22.5c2-1.5 5-1.5 7 0s5 1.5 7 0 5-1.5 7 0"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            opacity="0.7"
-          />
-        </svg>
-      ),
-    },
-    {
-      title: t('Формируем сценарий', 'We craft the script'),
-      description: t(
-        'В формате решения боли аудитории.',
-        'Built to address audience pain points.'
-      ),
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
-          <rect
-            x="12"
-            y="10"
-            width="24"
-            height="28"
-            rx="3"
-            stroke="currentColor"
-            strokeWidth="2"
-          />
-          <path
-            d="M18 18h12M18 24h8M18 30h12"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <path
-            d="M28 10v-2a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"
-            stroke="currentColor"
-            strokeWidth="2"
-          />
-        </svg>
-      ),
-    },
-    {
-      title: t('Делаем визуализацию', 'We build visuals'),
-      description: t(
-        'Которая удерживает внимание.',
-        'That keeps the audience engaged.'
-      ),
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
-          <circle
-            cx="24"
-            cy="24"
-            r="12"
-            stroke="currentColor"
-            strokeWidth="2"
-          />
-          <path
-            d="M18 24.5h4l2 3 2-7 2 4h4"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M14 14 10 10M34 14l4-4M14 34l-4 4M34 34l4 4"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-        </svg>
-      ),
-    },
-    {
-      title: t('Используем нейросети', 'We use neural networks'),
-      description: t('Там, где нужен темп.', 'Where speed is critical.'),
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
-          <path d="m22 6-8 18h8l-4 18 14-22h-8l6-14H22Z" fill="currentColor" />
-        </svg>
-      ),
-    },
-  ];
-
-  const awards = [
-    {
-      title: 'ТОП-25 проектов акселератора 2024',
-      category: 'Инновации',
-      year: '2024',
-      image: sber,
-    },
-    {
-      title: 'Победители в номинации "Маркетинг"',
-      category: 'Маркетинг',
-      year: '2024',
-      image: yandex,
-    },
-    {
-      title: 'Победители "Меняющие реальность"',
-      category: 'Социальное Воздействие',
-      year: '2024',
-      image: inno,
-    },
-    {
-      title: 'Победители второго потока',
-      category: 'Акселератор',
-      year: '2024',
-      image: moscow,
-    },
-    {
-      title: 'Победители',
-      category: 'Общая категория',
-      year: '2023',
-      image: fiztech,
-    },
-  ];
-
-  const ndaCases = [
-    {
-      area: t('Корпоративная безопасность', 'Corporate security'),
-      before: t('3% отклик на тренинги', '3% engagement with training'),
-      after: t(
-        '27% вовлечённость, 2× завершения',
-        '27% engagement, 2× completions'
-      ),
-    },
-    {
-      area: t('HR в госкорпорации', 'HR in a state corporation'),
-      before: t('непонимание миссии', 'mission unclear to teams'),
-      after: t(
-        '5 отделов перестроили процессы',
-        '5 departments rebuilt their processes'
-      ),
-    },
-    {
-      area: 'SaaS in LinkedIn',
-      before: t('1–2 ответа на 100', '1–2 replies per 100 messages'),
-      after: t('18% reply rate, 12% демо', '18% reply rate, 12% demos'),
-    },
-    {
-      area: t('Видео на IT-фестивале', 'Video for an IT festival'),
-      before: t('слабый поток', 'low booth traffic'),
-      after: t('+400% у стенда спикера', '+400% traffic at the speaker booth'),
-    },
-  ];
-
-  const faqData = [
-    {
-      question: 'Как именно нейросети помогают в создании ролика?',
-      questionEn: 'How exactly do neural networks help create the video?',
-      answer:
-        'Нейросети ускоряют визуальное производство: мы превращаем сценарий в готовую анимацию за 10 дней вместо 2–3 месяцев, не теряя в качестве. Итог: быстрее запуск, меньше бюджет, больше тестов.',
-      answerEn:
-        'Neural networks speed up production: we turn a script into finished animation in 10 days instead of 2–3 months without losing quality. The result: faster launch, lower budget, more tests.',
-    },
-    {
-      question: 'Сколько стоит ваш ролик?',
-      questionEn: 'How much does a video cost?',
-      answer:
-        'Диапазон — от 200\u00a0000 до 1,5 млн ₽. Цены зависят от длительности, визуального уровня и задач. Мы гибкие: подходим как для стартапов, так и корпораций. В любом случае — ролик себя окупает.',
-      answerEn:
-        'Range: from 200,000 to 1.5M RUB. Pricing depends on duration, visual level, and goals. We are flexible for startups and enterprises alike, and the video pays for itself.',
-    },
-    {
-      question: 'Сможем ли мы вносить правки?',
-      questionEn: 'Can we request revisions?',
-      answer:
-        'Да. Мы закладываем итерации правок на ключевых этапах: сценарий, раскадровка, визуал. Это коллаборация, а не чёрный ящик.',
-      answerEn:
-        'Yes. We include revision rounds at key stages: script, storyboard, visuals. It is a collaboration, not a black box.',
-    },
-    {
-      question: 'Сколько времени уходит на создание ролика?',
-      questionEn: 'How long does it take to produce a video?',
-      answer:
-        'Типовой цикл — 7–14 дней. Быстрее, если есть чёткое понимание задач. Работаем итерационно: сценарий — раскадровка — визуал — продакшн.',
-      answerEn:
-        'Typical timeline is 7–14 days, faster if the goals are clear. We work iteratively: script → storyboard → visuals → production.',
-    },
-    {
-      question: 'А вы делали что-то подобное в нашей отрасли?',
-      questionEn: 'Have you done something similar in our industry?',
-      answer:
-        'Скорее всего — да. Мы специализируемся на сложных B2B-продуктах: нейронки, биотех, промышленность, GovTech, SaaS, хардвер. Но если кейса нет — мы быстро вкапываемся и делаем ролик, который звучит с первого кадра.',
-      answerEn:
-        'Most likely — yes. We focus on complex B2B products: AI, biotech, industry, GovTech, SaaS, hardware. If we have no case yet, we dive in fast and craft a video that resonates from the first frame.',
-    },
-    {
-      question: 'Нам нужен строгий стиль, всё по брендбуку — вы сможете?',
-      questionEn: 'We need a strict brandbook style — can you do it?',
-      answer:
-        'Да. Работаем строго в фирменном стиле, если он есть. Если нет — подбираем стиль, который логично ляжет в вашу коммуникацию (и отдел маркетинга скажет спасибо).',
-      answerEn:
-        'Yes. We follow your brand style if it exists. If not, we select a style that fits your communication (your marketing team will thank you).',
-    },
-    {
-      question: 'Чем вы отличаетесь от обычной студии или фрилансеров?',
-      questionEn: 'How are you different from a typical studio or freelancers?',
-      answer:
-        'У нас нет креатива ради креатива. Мы думаем в логике продаж: ролик — это инструмент. Сценарий пишет продюсер с опытом в продажах. А продакшн строим на AI и своих автоматизациях — это быстро, гибко.',
-      answerEn:
-        'We do not create for creativity’s sake. We think in sales logic: the video is a tool. The script is written by a producer with sales experience, and production is built on AI and our automations — fast and flexible.',
-    },
-    {
-      question: 'Можно ли использовать один ролик в разных каналах?',
-      questionEn: 'Can we reuse one video across multiple channels?',
-      answer:
-        'Да, это наша сильная сторона. Мы сразу продумываем сценарий так, чтобы ролик работал в нескольких форматах: сайт, соцсети, питч, презентация.',
-      answerEn:
-        'Yes, that is our strength. We design the script to work across formats: website, social, pitch, and presentations.',
-    },
-    {
-      question: 'Что нужно, чтобы начать?',
-      questionEn: 'What do we need to start?',
-      answer:
-        'Заполнить короткий бриф — это займёт 3–5 минут. Дальше мы сами соберём всё остальное и предложим концепцию. Если ок — двигаемся.',
-      answerEn:
-        'Fill out a short brief — it takes 3–5 minutes. We handle the rest and propose a concept; if it fits, we proceed.',
-    },
-  ];
-
-  const redirectToTelegram = () => {
-    window.open('https://t.me/anix_helper', '_blank');
-  };
-
-  const generateQRCode = () => {
-    return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://t.me/anix_helper`;
-  };
-
-  const scrollAwards = (direction) => {
-    if (awardsScrollRef.current) {
-      requestAnimationFrame(() => {
-        const container = awardsScrollRef.current;
-        const card = container.querySelector('.award-card');
-        const cardWidth =
-          window.innerWidth <= 768
-            ? container.clientWidth
-            : card
-              ? card.offsetWidth + 32
-              : 300;
-        const maxScroll = container.scrollWidth - container.clientWidth;
-
-        if (direction === 'left') {
-          if (container.scrollLeft <= 0) {
-            container.scrollTo({ left: maxScroll, behavior: 'smooth' });
-          } else {
-            container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
-          }
-        } else {
-          if (container.scrollLeft >= maxScroll) {
-            container.scrollTo({ left: 0, behavior: 'smooth' });
-          } else {
-            container.scrollBy({ left: cardWidth, behavior: 'smooth' });
-          }
-        }
-      });
-    }
-  };
-
-  useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1500);
-  }, []);
-
-  const copy = translations[language];
-
-  if (isLoading) {
-    return (
-      <div className="loading-screen">
-        <div className="loading-content">
-          <div className="neural-loader">
-            <div className="neural-pulse"></div>
-            <div className="neural-pulse"></div>
-            <div className="neural-pulse"></div>
-          </div>
-          <h2 className="loading-text">
-            {t(
-              'Инициализация нейронных сетей...',
-              'Initializing neural networks...'
-            )}
-          </h2>
-        </div>
-      </div>
-    );
-  }
-
-  const problemCards = [
-    {
-      icon: '📢',
-      label: t('Проблема №1', 'Problem #1'),
-      description: t(
-        'Люди не читают текст — его никто не понимает.',
-        'People skip the text — nobody understands it.'
-      ),
-      tone: 'ruby',
-    },
-    {
-      icon: '🎬',
-      label: t('Проблема №2', 'Problem #2'),
-      description: t(
-        'В классическом видео теряется логика.',
-        'Traditional video loses the logic.'
-      ),
-      tone: 'indigo',
-    },
-    {
-      icon: '📈',
-      label: t('Проблема №3', 'Problem #3'),
-      description: t(
-        'Customer Acquisition Cost растет ➜ Неэффективные стандартные методы маркетинга.',
-        'Customer Acquisition Cost climbs ➜ standard marketing tactics underperform.'
-      ),
-      tone: 'teal',
-    },
-    {
-      icon: '🛠️',
-      label: t('Проблема №4', 'Problem #4'),
-      description: t(
-        'Нужен инструмент, который объяснит быстро.',
-        'You need a tool that explains quickly.'
-      ),
-      tone: 'aqua',
-    },
-  ];
+function DirectionCard({ item }) {
+  const Icon = item.icon;
 
   return (
-    <div className="anix-landing">
-      {isPageBlurred && <div className="page-blur-overlay"></div>}
+    <a className="sr-direction" href={item.href}>
+      <Icon aria-hidden="true" />
+      <span>{item.title}</span>
+      <p>{item.text}</p>
+      <ArrowRight aria-hidden="true" />
+    </a>
+  );
+}
 
-      {/* Hero Section */}
-      <Section id="hero" bg="#0f0f1f" stickyTransition>
-        <div className="hero-section">
-          <div className="hero-background">
-            <LiteVimeo videoId="1102413873" />
-            <div className="hero-overlay"></div>
+function FeaturedCase({ item }) {
+  return (
+    <article className="sr-case">
+      <a className="sr-case-media" href={item.href}>
+        <img src={item.image} alt={`Кейс ANIX: ${item.name}`} loading="lazy" />
+      </a>
+      <div className="sr-case-copy">
+        <p>{item.area}</p>
+        <h3>{item.name}</h3>
+        <strong>{item.result}</strong>
+        <span>{item.text}</span>
+      </div>
+    </article>
+  );
+}
+
+function App() {
+  const [isShowreelOpen, setIsShowreelOpen] = useState(false);
+
+  return (
+    <main className="studio-refresh">
+      <Helmet>
+        <title>ANIX Studio - AI-видео, фарма, HSE и режиссура событий</title>
+        <meta
+          name="description"
+          content="ANIX Studio создает AI-видео, ролики для сложных B2B-продуктов, фармы, MedTech, охраны труда, событий и внутренних коммуникаций."
+        />
+        <link rel="canonical" href="https://studio.anix-ai.pro/" />
+        <meta property="og:title" content="ANIX Studio" />
+        <meta
+          property="og:description"
+          content="Шоурил, кейсы и направления ANIX: sales enablement, фарма, MedTech, HSE и режиссура событий."
+        />
+        <meta property="og:url" content="https://studio.anix-ai.pro/" />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
+      <section className="sr-hero" id="top">
+        <div className="sr-hero-shade" aria-hidden="true" />
+
+        <nav className="sr-nav" aria-label="Навигация ANIX">
+          <a className="sr-logo" href="#top" aria-label="ANIX Studio">
+            <img src={logo} alt="ANIX" />
+          </a>
+          <div className="sr-nav-links">
+            <a href="#cases">Кейсы</a>
+            <a href="/medicine/">Medicine</a>
+            <a href="/hse/">HSE</a>
+            <a href="#contact">Контакты</a>
           </div>
-          <div className="hero-content">
-            <div className="language-toggle" aria-label="language switcher">
-              <button
-                type="button"
-                className={`language-toggle-button ${isEnglish ? 'active' : ''}`}
-                onClick={() => setLanguage(isEnglish ? 'ru' : 'en')}
-              >
-                <span className={!isEnglish ? 'active' : ''}>RU</span>
-                <div className="toggle-knob" />
-                <span className={isEnglish ? 'active' : ''}>EN</span>
-              </button>
-            </div>
-            <div className="hero-grid">
-              <div className="hero-text">
-                <h1 className="hero-title">{copy.heroTitle}</h1>
-                <p className="hero-subtitle">{copy.heroSubtitle}</p>
-                <a
-                  href="https://t.me/m/i23MvBuLOGJi"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="cta-button primary hero-cta"
-                  onMouseEnter={() => setIsPageBlurred(true)}
-                  onMouseLeave={() => setIsPageBlurred(false)}
+        </nav>
+
+        <div className="sr-hero-content">
+          <p className="sr-eyebrow">
+            AI video production / creative direction / sales enablement
+          </p>
+          <h1>ANIX Studio</h1>
+          <p className="sr-hero-lead">
+            Превращаем сложные продукты, препараты, правила безопасности и
+            события в визуальные истории, которые быстро понимают клиенты,
+            врачи, сотрудники, партнеры и участники мероприятий.
+          </p>
+          <div className="sr-actions">
+            <a
+              className="sr-button sr-button-primary"
+              href={telegramUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <MessageCircle aria-hidden="true" />
+              Обсудить проект
+            </a>
+            <a
+              className="sr-button sr-button-ghost"
+              href={videoFolderUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <PlayCircle aria-hidden="true" />
+              Все видео-кейсы
+            </a>
+          </div>
+          <div className="sr-showreel-panel" aria-label="Главный showreel ANIX">
+            <div className="sr-showreel-frame">
+              {isShowreelOpen ? (
+                <iframe
+                  src={showreelUrl}
+                  width="1280"
+                  height="720"
+                  title="ANIX showreel"
+                  allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+                  frameBorder="0"
+                  allowFullScreen
+                />
+              ) : (
+                <button
+                  className="sr-showreel-poster"
+                  type="button"
+                  onClick={() => setIsShowreelOpen(true)}
                 >
-                  <span>{copy.heroCTA}</span>
-                  <div className="button-glow"></div>
-                </a>
-              </div>
-              <div className="hero-benefits-panel">
-                <div className="hero-benefits-grid">
-                  {copy.heroBenefits.map((benefit, index) => (
-                    <div key={index} className="hero-benefit-card">
-                      <h3>{benefit.title}</h3>
-                      <p>{benefit.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Full CTA Section */}
-      <Section id="cta" bg="#0f0f1f" stickyTransition>
-        <div className="cta-full-section">
-          <div className="container">
-            <div className="cta-full-content">
-              <div>
-                <h2 className="cta-full-title">{copy.ctaFullTitle}</h2>
-                <p className="cta-full-subtitle">{copy.ctaFullSubtitle}</p>
-              </div>
-              <form className="cta-full-form">
-                <label>
-                  {copy.formNameLabel}
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder={copy.formNameLabel}
-                  />
-                </label>
-                <label>
-                  {copy.formContactLabel}
-                  <input
-                    type="text"
-                    name="contact"
-                    placeholder="+7 (999) 999-99-99 / @username"
-                  />
-                </label>
-                <label>
-                  {copy.formProductLabel}
-                  <textarea
-                    name="product"
-                    rows="3"
-                    placeholder={copy.formProductPlaceholder}
-                  ></textarea>
-                </label>
-                <button type="submit" className="cta-button primary">
-                  {copy.formSubmit}
-                  <div className="button-glow"></div>
+                  <PlayCircle aria-hidden="true" />
+                  <span>Смотреть showreel</span>
                 </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Problem Solution Section */}
-      <Section id="problem" bg="#141429" stickyTransition>
-        <div className="problem-section">
-          <div className="container problem-grid">
-            <div className="problem-text">
-              <h2 className="section-title">
-                {t(
-                  'Бизнесу трудно продавать, когда продукт сложный',
-                  'Selling is hard when the product is complex'
-                )}
-              </h2>
-              <p className="problem-description">
-                {t(
-                  'Сегодня маркетинг буксует: баннерную слепоту уже ничем не пробить, а CAC растёт каждый месяц. Клиенты не понимают продукт, а отделы продаж тонут в долгих объяснениях.',
-                  'Marketing is stalling: banner blindness is unbreakable, CAC keeps growing, customers do not understand the product, and sales teams drown in lengthy explanations.'
-                )}
-              </p>
-            </div>
-            <div className="problem-cards">
-              {problemCards.map((card, index) => (
-                <div key={card.label} className={`problem-card ${card.tone}`}>
-                  <div className="problem-icon" aria-hidden="true">
-                    {card.icon}
-                  </div>
-                  <div className="problem-card-text">
-                    <div className="problem-card-label">{card.label}</div>
-                    <div className="problem-card-description">
-                      {card.description}
-                    </div>
-                  </div>
-                  <div className="problem-card-index">{index + 1}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Anix Difference Section */}
-      <Section id="difference" bg="#1a1a33" stickyTransition>
-        <div className="difference-section">
-          <div className="container">
-            <h2 className="section-title">
-              {t(
-                'Anix — это не студия, это инструмент для роста вашей конверсии',
-                'Anix is not a studio — it is your conversion growth engine'
               )}
-            </h2>
-            <div className="difference-grid">
-              <div className="difference-card">
-                <div className="difference-icon">🧩</div>
-                <div className="difference-text">
-                  {t(
-                    'Уникальный подход: бизнес анализ + драматургия + нейросети.',
-                    'Unique blend: business analysis + storytelling + neural networks.'
-                  )}
-                </div>
-              </div>
-              <div className="difference-card">
-                <div className="difference-icon">🤖</div>
-                <div className="difference-text">
-                  {t(
-                    'Собственная нейросеть Anix Interpolator. Быстрее и лучше рынка.',
-                    'In-house Anix Interpolator neural network. Faster and better than the market.'
-                  )}
-                </div>
-              </div>
-              <div className="difference-card">
-                <div className="difference-icon">🧬</div>
-                <div className="difference-text">
-                  {t(
-                    'Глубокое понимание сложных продуктов: IT, фарма, AI, финтех.',
-                    'Deep understanding of complex products: IT, pharma, AI, fintech.'
-                  )}
-                </div>
-              </div>
-              <div className="difference-card">
-                <div className="difference-icon">🎓</div>
-                <div className="difference-text">
-                  {t(
-                    'Выпускники МФТИ + сильная творческая экспертиза.',
-                    'MIPT alumni + strong creative expertise.'
-                  )}
-                </div>
-              </div>
-              <div className="difference-card">
-                <div className="difference-icon">🎯</div>
-                <div className="difference-text">
-                  {t(
-                    'Работаем под задачу, а не "красиво". Ролики дают результат.',
-                    'We work for outcomes, not “beauty”. Videos deliver results.'
-                  )}
-                </div>
-              </div>
             </div>
-            <div className="difference-cta-wrapper">
+            <div className="sr-showreel-caption">
+              <span>Showreel</span>
+              <p>Единый срез: AI-видео, анимация, маскоты, фарма, HSE и режиссура событий.</p>
+            </div>
+          </div>
+          <div className="sr-proof-row" aria-label="Ключевые результаты">
+            {proofMetrics.map((item) => (
+              <div key={item.value}>
+                <strong>{item.value}</strong>
+                <span>{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-direction-band" aria-label="Направления ANIX">
+        <div className="sr-container sr-direction-grid">
+          {directions.map((item) => (
+            <DirectionCard item={item} key={item.title} />
+          ))}
+        </div>
+      </section>
+
+      <section className="sr-band sr-intro">
+        <div className="sr-container sr-two-col">
+          <div>
+            <p className="sr-eyebrow">Что изменилось</p>
+            <h2>ANIX больше не только про поддержку продаж</h2>
+          </div>
+          <div className="sr-rich-copy">
+            <p>
+              Продажи сложных продуктов остаются сильным ядром. Но портфель уже
+              шире: фармкомпании, medtech, охрана труда, образовательные
+              кампании, PR-инфоповоды, маскоты, кино-прототипы и режиссура
+              событий.
+            </p>
+            <p>
+              Поэтому новая главная страница показывает ANIX как студию новой
+              анимации и AI-продакшена: от смысла и драматургии до ролика,
+              адаптаций, запуска и измеримого эффекта.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-band sr-services">
+        <div className="sr-container">
+          <div className="sr-section-head">
+            <p className="sr-eyebrow">Какой продукт покупает клиент</p>
+            <h2>Не просто красивое видео, а готовый visual asset под задачу</h2>
+          </div>
+          <div className="sr-service-grid">
+            {services.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article className="sr-service" key={item.title}>
+                  <Icon aria-hidden="true" />
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-band sr-cases" id="cases">
+        <div className="sr-container">
+          <div className="sr-section-head sr-section-head-row">
+            <div>
+              <p className="sr-eyebrow">Портфолио</p>
+              <h2>Кейсы, где видео меняло понимание, доверие или отклик</h2>
+            </div>
+            <a
+              className="sr-button sr-button-secondary"
+              href={videoFolderUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <ExternalLink aria-hidden="true" />
+              Папка с видео
+            </a>
+          </div>
+          <div className="sr-case-grid">
+            {featuredCases.map((item) => (
+              <FeaturedCase item={item} key={item.name} />
+            ))}
+          </div>
+          <div className="sr-compact-grid">
+            {compactCases.map((item) => (
+              <a className="sr-compact-case" href={item.href} key={item.name}>
+                <span>{item.name}</span>
+                <p>{item.text}</p>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-band sr-rch" id="rch">
+        <div className="sr-container sr-rch-layout">
+          <div className="sr-rch-copy">
+            <p className="sr-eyebrow">Необычный кейс</p>
+            <h2>РЧК: мероприятие как единая режиссерская система</h2>
+            <p>
+              В этом проекте ANIX работал не как подрядчик на один ролик. Мы
+              режиссировали событие: собрали общую концепцию, сняли материалы,
+              продумали звук, монтаж, AI-ролики и экранный контент так, чтобы
+              все элементы звучали как одна история.
+            </p>
+            <div className="sr-actions">
               <a
-                href="https://t.me/m/i23MvBuLOGJi"
+                className="sr-button sr-button-primary"
+                href={telegramUrl}
                 target="_blank"
-                rel="noopener noreferrer"
-                className="cta-button primary"
-                onMouseEnter={() => setIsPageBlurred(true)}
-                onMouseLeave={() => setIsPageBlurred(false)}
+                rel="noreferrer"
               >
-                <span>
-                  {t(
-                    'Узнать, чем мы отличаемся от других',
-                    'See how we stand out'
-                  )}
-                </span>
-                <div className="button-glow"></div>
+                <MessageCircle aria-hidden="true" />
+                Обсудить событие
+              </a>
+              <a className="sr-button sr-button-ghost" href="#top">
+                <PlayCircle aria-hidden="true" />
+                Вернуться к шоурилу
               </a>
             </div>
           </div>
+          <div className="sr-rch-stack">
+            {rchStack.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article className="sr-rch-item" key={item.title}>
+                  <Icon aria-hidden="true" />
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
         </div>
-      </Section>
+      </section>
 
-      {/* Conversion Section */}
-      <Section id="conversion" bg="#0f0f1f" stickyTransition>
-        <div className="conversion-section">
-          <div className="container">
-            <h2 className="section-title">
-              {t('Как мы повышаем конверсию', 'How we boost conversion')}
-            </h2>
-            <p className="conversion-intro">
-              {t(
-                'Мы строим видео, которое работает как элемент воронки, а не просто красиво.',
-                'We build video that works as part of the funnel, not just looks pretty.'
-              )}
+      <section className="sr-band sr-pages">
+        <div className="sr-container">
+          <div className="sr-section-head">
+            <p className="sr-eyebrow">Соседние страницы</p>
+            <h2>Для новых направлений есть отдельные посадочные страницы</h2>
+          </div>
+          <div className="sr-page-grid">
+            {partnerPages.map((item) => {
+              const Icon = item.icon;
+              return (
+                <a className="sr-page-card" href={item.href} key={item.title}>
+                  <Icon aria-hidden="true" />
+                  <span>{item.title}</span>
+                  <p>{item.text}</p>
+                  <ArrowRight aria-hidden="true" />
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-band sr-process">
+        <div className="sr-container sr-two-col">
+          <div>
+            <p className="sr-eyebrow">Процесс</p>
+            <h2>Ограничиваем scope заранее, чтобы быстро доводить до результата</h2>
+            <p className="sr-muted">
+              Это особенно важно в фарме, HSE и корпоративных проектах: есть
+              согласующие, эксперты, правила, каналы и риск бесконечных правок.
             </p>
-            <div className="conversion-grid">
-              {conversionSteps.map((step, index) => (
-                <div className="conversion-card" key={index}>
-                  <div className="conversion-icon">{step.icon}</div>
-                  <div className="conversion-text">
-                    <div className="conversion-card-title">{step.title}</div>
-                    <div className="conversion-card-desc">
-                      {step.description}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="conversion-boost">
-              <span className="conversion-boost-value">+15–25%</span>
-              <span className="conversion-boost-label">
-                {t('конверсии', 'conversion uplift')}
-              </span>
-            </div>
           </div>
-        </div>
-      </Section>
-
-      {/* Testimonials */}
-      <Section id="cases" bg="#202040" stickyTransition>
-        <div className="testimonials-section">
-          <div className="container">
-            <h2 className="section-title">
-              {t('Истории Успеха Клиентов', 'Client success stories')}
-            </h2>
-            <div className="testimonials-grid">
-              {testimonials.map((testimonial) => {
-                const baseText =
-                  isEnglish && testimonial.textEn
-                    ? testimonial.textEn
-                    : testimonial.text;
-                const maxLen = isMobile ? 275 : 350;
-                const previewText =
-                  baseText.length > maxLen
-                    ? `${baseText.slice(0, maxLen)}...`
-                    : baseText;
-                return (
-                  <div key={testimonial.id} className="testimonial-card">
-                    <div
-                      className="video-preview"
-                      onClick={() => {
-                        setSelectedVideo(testimonial);
-                        setShowVideoModal(true);
-                      }}
-                    >
-                      <img
-                        src={testimonial.videoThumbnail}
-                        srcSet={makeSrcSet(testimonial.videoThumbnail)}
-                        sizes={responsiveSizes}
-                        alt="анимационный ролик объясняющий B2B продукт"
-                        width="600"
-                        height="338"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <div className="video-play-button">
-                        <div className="play-icon">▶</div>
-                      </div>
-                      <div className="ai-indicator">
-                        {t('Повышение охвата', 'Reach uplift')}: X
-                        {testimonial.reach}
-                      </div>
-                      <div className="conversion-indicator">
-                        {t('Повышение конверсии', 'Conversion uplift')} +
-                        {testimonial.conversion}%
-                      </div>
-                    </div>
-                    <div className="testimonial-content">
-                      <p>{previewText}</p>
-                      <div className="testimonial-author">
-                        <strong>{testimonial.name}</strong>
-                        {testimonial.website ? (
-                          <a
-                            href={testimonial.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {isEnglish && testimonial.companyEn
-                              ? testimonial.companyEn
-                              : testimonial.company}
-                          </a>
-                        ) : (
-                          <span>
-                            {isEnglish && testimonial.companyEn
-                              ? testimonial.companyEn
-                              : testimonial.company}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Audience Fit Section */}
-      <Section id="audience" bg="#0f0f1f" className="audience-section">
-        <div className="container">
-          <h2 className="section-title">{copy.audienceTitle}</h2>
-          <p className="audience-subtitle">{copy.audienceSubtitle}</p>
-          <div className="audience-grid">
-            {copy.audienceCards.map((card, index) => (
-              <div
-                key={index}
-                className={`audience-card theme-${card.theme}`}
-                aria-label={card.title}
-              >
-                <div className="audience-card-content">
-                  <h3 className="audience-card-title">{card.title}</h3>
-                  <ul className="audience-list">
-                    {card.items.map((item, itemIndex) => (
-                      <li key={itemIndex}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+          <ol className="sr-process-list">
+            {process.map((item, index) => (
+              <li key={item}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <p>{item}</p>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
-      </Section>
+      </section>
 
-      {/* Team Section */}
-      <Section id="team" bg="#1a1a1a" className="team-section">
-        <div className="container">
-          <h2 className="section-title">{copy.teamTitle}</h2>
-          <div className="team-grid">
-            {teamMembers.map((member, index) => (
-              <div key={index} className="team-card">
-                <div className="team-image-container">
-                  <img
-                    src={member.image}
-                    srcSet={makeSrcSet(member.image)}
-                    sizes={responsiveSizes}
-                    alt={t(
-                      'анимационный ролик объясняющий B2B продукт',
-                      'animated video explaining a B2B product'
-                    )}
-                    width="400"
-                    height="400"
-                    className="team-image"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="team-overlay">
-                    <div className="expertise-badges">
-                      {(isEnglish && member.tagsEn
-                        ? member.tagsEn
-                        : member.tags
-                      ).map((tag, i) => (
-                        <span key={i} className="expertise-badge">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="team-info">
-                  <h3>{member.name}</h3>
-                  <p className="role">
-                    {isEnglish && member.roleEn ? member.roleEn : member.role}
-                  </p>
-                  <p className="benefit">
-                    {isEnglish && member.benefitEn
-                      ? member.benefitEn
-                      : member.benefit}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* Technology Section */}
-      <SectionAnixTech
-        titleLines={copy.technologyTitleLines}
-        features={copy.technologyFeatures}
-      />
-
-      {/* Risk Handling Section */}
-      <Section id="risk" bg="#0f0f1f" className="risk-section">
-        <div className="container">
-          <h2 className="section-title">{copy.riskTitle}</h2>
-          <div className="risk-grid">
-            {copy.riskBullets.map((risk, index) => (
-              <div key={index} className="risk-card">
-                <h3>{risk.title}</h3>
-                <p>
-                  {risk.link ? (
-                    <>
-                      {risk.description}{' '}
-                      <a href={risk.link} className="risk-link">
-                        →
-                      </a>
-                    </>
-                  ) : (
-                    risk.description
-                  )}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* Pricing Overview Section */}
-      <Section
-        id="pricing"
-        bg="#1a1a33"
-        className="transparent-pricing-section"
-      >
-        <div className="container">
-          <h2 className="section-title">{copy.pricingTitle}</h2>
-          <p className="pricing-description">{copy.pricingText}</p>
-          <a
-            href="https://t.me/m/i23MvBuLOGJi"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cta-button primary"
-            onMouseEnter={() => setIsPageBlurred(true)}
-            onMouseLeave={() => setIsPageBlurred(false)}
-          >
-            <span>{copy.pricingCTA}</span>
-            <div className="button-glow"></div>
-          </a>
-        </div>
-      </Section>
-
-      {/* Final CTA Section */}
-      <Section id="final-cta" bg="#0f0f1f" className="cta-full-section">
-        <div className="container">
-          <div className="cta-full-content">
-            <div>
-              <h2 className="cta-full-title">{copy.finalCTATitle}</h2>
-              <p className="cta-full-subtitle">{copy.finalCTADescription}</p>
-            </div>
-            <form className="cta-full-form">
-              <label>
-                {copy.formNameLabel}
-                <input
-                  type="text"
-                  name="name"
-                  placeholder={copy.formNameLabel}
-                />
-              </label>
-              <label>
-                {copy.formContactLabel}
-                <input
-                  type="text"
-                  name="contact"
-                  placeholder="+7 (999) 999-99-99 / @username"
-                />
-              </label>
-              <label>
-                {copy.formProductLabel}
-                <textarea
-                  name="product"
-                  rows="3"
-                  placeholder={copy.formProductPlaceholder}
-                ></textarea>
-              </label>
-              <button type="submit" className="cta-button primary">
-                {copy.formSubmit}
-                <div className="button-glow"></div>
-              </button>
-            </form>
-          </div>
-        </div>
-      </Section>
-
-      <div className="container text-center my-12 md:my-16">
-        <a
-          href="https://t.me/m/i23MvBuLOGJi"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="cta-button primary block w-full md:w-auto text-base md:text-lg"
-          onMouseEnter={() => setIsPageBlurred(true)}
-          onMouseLeave={() => setIsPageBlurred(false)}
-        >
-          <span>
-            {t(
-              '🧠 Разобрать мой продукт в Telegram',
-              '🧠 Break down my product in Telegram'
-            )}
-          </span>
-          <div className="button-glow"></div>
-        </a>
-        <p className="text-sm md:text-base text-[#B0B0B0] mt-1">
-          {t(
-            'В Telegram обсудим ваш продукт и подберём лучший формат видео.',
-            'On Telegram we will discuss your product and pick the best video format.'
-          )}
-        </p>
-      </div>
-
-      {/*  👉 ставим Roadmap ЗА пределами .container */}
-      <Suspense fallback={null}>
-        <AnixLandingPage />
-      </Suspense>
-
-      {/* Enhanced Awards Section */}
-      <Section id="awards" bg="#2d1b3d" className="awards-section">
-        <div className="container">
-          <h2 className="section-title">
-            {t('Признание Индустрии', 'Industry recognition')}
-          </h2>
-
-          <div className="awards-scroll-container">
-            <button
-              className="scroll-button left"
-              aria-label={t('Предыдущая награда', 'Previous award')}
-              onClick={() => scrollAwards('left')}
-            >
-              ◀
-            </button>
-
-            <div
-              className="awards-scroll"
-              ref={awardsScrollRef}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-            >
-              {awards.map((award, index) => (
-                <div
-                  key={index}
-                  className="award-card w-full max-w-xs flex-none"
-                >
-                  <div className="award-trophy">
-                    <img
-                      src={award.image}
-                      srcSet={makeSrcSet(award.image)}
-                      sizes={responsiveSizes}
-                      alt="анимационный ролик объясняющий B2B продукт"
-                      width="200"
-                      height="200"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <div className="trophy-glow"></div>
-                  </div>
-                  <div className="award-info">
-                    <h3>{award.title}</h3>
-                    <p className="award-category">{award.category}</p>
-                    <span className="award-year">{award.year}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <button
-              className="scroll-button right"
-              aria-label={t('Следующая награда', 'Next award')}
-              onClick={() => scrollAwards('right')}
-            >
-              ▶
-            </button>
-          </div>
-        </div>
-      </Section>
-
-      {/* FAQ Section */}
-      <Section id="faq" bg="#404080" stickyTransition>
-        <div className="faq-section">
-          <div className="container">
-            <h2 className="section-title">
-              {t('Часто Задаваемые Вопросы', 'Frequently asked questions')}
-            </h2>
-            <div className="faq-list">
-              {faqData.map((faq, index) => (
-                <div key={index} className="faq-item">
-                  <button
-                    className={`faq-question ${activeFAQ === index ? 'active' : ''}`}
-                    onClick={() =>
-                      setActiveFAQ(activeFAQ === index ? null : index)
-                    }
-                  >
-                    <span>
-                      {isEnglish && faq.questionEn
-                        ? faq.questionEn
-                        : faq.question}
-                    </span>
-                    <div className="faq-icon">
-                      {activeFAQ === index ? '−' : '+'}
-                    </div>
-                  </button>
-                  <div
-                    className={`faq-answer ${activeFAQ === index ? 'expanded' : ''}`}
-                  >
-                    <div className="faq-answer-content">
-                      <p>
-                        {isEnglish && faq.answerEn ? faq.answerEn : faq.answer}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Brief Section (temporarily hidden) */}
-      {/*
-      <section className="brief-section">
-        <div className="container subscribe-container">
-          <h3>
-            Хотите заполнить бриф? Можете сделать это в нашем телеграм-боте
-            текстом или голосовыми сообщениями
-          </h3>
-          <a
-            href="https://t.me/AnixBriefBot"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="subscribe-btn"
-            onMouseEnter={() => setIsPageBlurred(true)}
-            onMouseLeave={() => setIsPageBlurred(false)}
-          >
-            Заполнить бриф
-            <span className="sparkles" />
-          </a>
-        </div>
-        </div>
-      </Section>
-      */}
-
-      {/* Contact Section */}
-      <Section id="contact" bg="#2d1b3d" className="contact-section">
-        <div className="container">
-          <h2 className="section-title">
-            {t('Свяжитесь с Нами', 'Contact us')}
-          </h2>
-          <div className="contact-grid">
-            <div className="contact-info">
-              <h3>
-                {t(
-                  'Готовы прокачать вашу воронку продаж?',
-                  'Ready to level up your funnel?'
-                )}
-              </h3>
-              <p>
-                {t(
-                  'Свяжитесь с нами любым удобным способом. Мы ответим в течение часа!',
-                  'Reach out in any way you like. We will reply within an hour!'
-                )}
-              </p>
-
-              <div className="contact-methods">
-                <div className="contact-method">
-                  <div className="contact-icon">📞</div>
-                  <div className="contact-details">
-                    <strong>{t('Телефон', 'Phone')}</strong>
-                    <a href="tel:+79770890309">+7(977)-089-03-09</a>
-                  </div>
-                </div>
-
-                <div className="contact-method">
-                  <div className="contact-icon">✉️</div>
-                  <div className="contact-details">
-                    <strong>Email</strong>
-                    <a href="mailto:anix.ai@yandex.ru">anix.ai@yandex.ru</a>
-                  </div>
-                </div>
-
-                <div className="contact-method">
-                  <div className="contact-icon">✈️</div>
-                  <div className="contact-details">
-                    <strong>Telegram</strong>
-                    <a
-                      href="https://t.me/anix_helper"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      @anix_helper
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="contact-visual">
-              <div className="contact-animation">
-                <div className="floating-elements">
-                  <div className="element element-1">🎬</div>
-                  <div className="element element-2">🤖</div>
-                  <div className="element element-3">⚡</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Blog Section */}
-      <Section id="blog" bg="#1a1a1a" className="blog-section">
-        <div className="container">
-          <h2 className="section-title">
-            {t('Последние Новости', 'Latest news')}
-          </h2>
-          <div className="blog-grid">
-            <Suspense fallback={null}>
-              <BlogCard
-                url="https://vc.ru/ai/2028376-startap-anix-iz-mfti-2d-animatsiya"
-                category={t('Новости', 'News')}
-                headline={t(
-                  'Стартап Anix из МФТИ автоматизирует 2D‑анимацию',
-                  'Anix startup from MIPT automates 2D animation'
-                )}
-                description={t(
-                  'VC.ru рассказывает об образовательных корнях проекта и его ИИ‑технологиях.',
-                  'VC.ru covers the project’s educational roots and its AI technology.'
-                )}
-                date="2025-05-01"
-                image="%PUBLIC_URL%/3.png"
-              />
-            </Suspense>
-
-            <a
-              href="https://vc.ru/marketing/1934034-kontent-marketing-s-animatsiey"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="blog-card"
-            >
-              <div className="blog-category">
-                <span className="category-tag">
-                  {t('#Маркетинг', '#Marketing')}
-                </span>
-              </div>
-              <h3>
-                {t(
-                  'Контент‑маркетинг с анимацией: практические советы',
-                  'Content marketing with animation: practical tips'
-                )}
-              </h3>
-              <p>
-                {t(
-                  'Материал о том, как использовать ролики для усиления воронки продаж.',
-                  'Article on using videos to strengthen your sales funnel.'
-                )}
-              </p>
-              <div className="blog-meta">
-                <span>{t('4 мин чтения', '4 min read')}</span>
-                <span>{t('Апр 2025', 'Apr 2025')}</span>
-              </div>
-            </a>
-
-            <a
-              href="https://me-forum.ru/media/events/mef-2025-sessiya-5-molodye-predprinimateli-v-mosko/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="blog-card"
-            >
-              <div className="blog-category">
-                <span className="category-tag">#MEF2025</span>
-              </div>
-              <h3>
-                {t(
-                  'Anix выступил на сессии молодых предпринимателей MEF',
-                  'Anix spoke at the MEF young entrepreneurs session'
-                )}
-              </h3>
-              <p>
-                {t(
-                  'На Московском экономическом форуме команда поделилась опытом нейроанимации.',
-                  'At the Moscow Economic Forum the team shared its neuro-animation expertise.'
-                )}
-              </p>
-              <div className="blog-meta">
-                <span>{t('2 мин чтения', '2 min read')}</span>
-                <span>{t('Мар 2025', 'Mar 2025')}</span>
-              </div>
-            </a>
-
-            <a
-              href="https://vc.ru/life/1916917-kak-b2b-kompaniyam-sozdat-uspeshnyy-animatsionnyy-rolik"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="blog-card"
-            >
-              <div className="blog-category">
-                <span className="category-tag">
-                  {t('#B2BВидео', '#B2BVideo')}
-                </span>
-              </div>
-              <h3>
-                {t(
-                  'Как B2B‑компаниям создать успешный анимационный ролик',
-                  'How B2B companies can create a winning animated video'
-                )}
-              </h3>
-              <p>
-                {t(
-                  'Подробный гид по выбору формата и ключевым этапам производства.',
-                  'A detailed guide to choosing the format and key production stages.'
-                )}
-              </p>
-              <div className="blog-meta">
-                <span>{t('6 мин чтения', '6 min read')}</span>
-                <span>{t('Фев 2025', 'Feb 2025')}</span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </Section>
-
-      {/* NDA Cases Section (moved below news) */}
-      <Section id="nda" bg="#0f0f0f" className="nda-cases-section">
-        <div className="container">
-          <h2 className="section-title">{copy.ndaTitle}</h2>
-          <div className="nda-grid">
-            {ndaCases.map((item, index) => (
-              <div key={index} className="nda-card">
-                <div className="nda-card-header">
-                  <p className="nda-area">{item.area}</p>
-                  <span className="nda-pill">
-                    {t('Было → Стало', 'Before → After')}
-                  </span>
-                </div>
-                <div className="nda-card-body">
-                  <div className="nda-stat">
-                    <p className="nda-label">{t('До', 'Before')}</p>
-                    <p className="nda-value">{item.before}</p>
-                  </div>
-                  <div className="nda-divider" aria-hidden="true"></div>
-                  <div className="nda-stat">
-                    <p className="nda-label nda-label-strong">
-                      {t('После', 'After')}
-                    </p>
-                    <p className="nda-value nda-value-strong">{item.after}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* Telegram Subscribe Section (moved below news) */}
-      <Section id="subscribe" bg="#2c2c59" stickyTransition>
-        <div className="telegram-subscribe py-20 bg-gradient-to-r from-[#5f35ff] to-[#4ac9ff] text-white text-center">
-          <div className="container max-w-3xl mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-4">{copy.subscribeTitle}</h2>
-            <p className="text-lg text-[#e0e0e0] mb-6">
-              {copy.subscribeSubtitle}
+      <section className="sr-band sr-closing" id="contact">
+        <div className="sr-container sr-closing-inner">
+          <div>
+            <p className="sr-eyebrow">Следующий шаг</p>
+            <h2>Покажите нам сложный продукт, правило или событие</h2>
+            <p>
+              Мы вернемся с форматом: один ролик, серия, sales kit, HSE-пилот,
+              pharma-визуал, маскот, конференционный ролик или режиссерская
+              концепция мероприятия.
             </p>
-
+          </div>
+          <div className="sr-contact-actions">
             <a
-              href="https://t.me/anixpro"
+              className="sr-button sr-button-primary"
+              href={telegramUrl}
               target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-white text-[#5f35ff] px-6 py-3 rounded-full font-semibold shadow-md hover:scale-105 transition-transform"
+              rel="noreferrer"
             >
-              {copy.subscribeCTA}
+              <MessageCircle aria-hidden="true" />
+              Написать в Telegram
             </a>
-            <p className="text-sm text-[#B0B0B0] mt-1">{copy.subscribeNote}</p>
+            <a className="sr-button sr-button-secondary" href="mailto:anix.ai@yandex.ru">
+              <Mail aria-hidden="true" />
+              anix.ai@yandex.ru
+            </a>
+          </div>
+          <div className="sr-trust-list" aria-label="Признание ANIX">
+            <span>
+              <BadgeCheck aria-hidden="true" />
+              Sber500
+            </span>
+            <span>
+              <BadgeCheck aria-hidden="true" />
+              RB Young Awards
+            </span>
+            <span>
+              <BadgeCheck aria-hidden="true" />
+              Новаторы Москвы
+            </span>
+            <span>
+              <BadgeCheck aria-hidden="true" />
+              выпускники МФТИ и бизнес-школы Сбера
+            </span>
           </div>
         </div>
-      </Section>
+      </section>
 
       <Suspense fallback={null}>
         <CookieBanner />
       </Suspense>
-
-      {/* Floating Telegram Button */}
-      <div
-        className="floating-telegram"
-        onMouseEnter={() => setShowQRCode(true)}
-        onMouseLeave={() => setShowQRCode(false)}
-        onClick={redirectToTelegram}
-      >
-        <div className="telegram-icon">✈</div>
-        <span>
-          {t(
-            '🔮 Получить расчёт под мой проект',
-            '🔮 Get a quote for my project'
-          )}
-        </span>
-        <div className="telegram-glow"></div>
-
-        {showQRCode && (
-          <div className="qr-modal">
-            <img
-              src={generateQRCode()}
-              srcSet={`${generateQRCode()} 1x, ${generateQRCode()} 2x`}
-              sizes={responsiveSizes}
-              alt={t(
-                'анимационный ролик объясняющий B2B продукт',
-                'animated video explaining a B2B product'
-              )}
-              width="180"
-              height="180"
-              loading="lazy"
-              decoding="async"
-            />
-            <p>Сканируйте для связи</p>
-          </div>
-        )}
-      </div>
-
-      {/* Video Modal */}
-      {showVideoModal && (
-        <div
-          className="video-modal-overlay"
-          onClick={() => setShowVideoModal(false)}
-        >
-          <div className="video-modal" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="modal-close"
-              onClick={() => setShowVideoModal(false)}
-            >
-              ×
-            </button>
-            {selectedVideo && (
-              <div className="modal-content">
-                <iframe
-                  src={selectedVideo.videoUrl}
-                  width="100%"
-                  height="400"
-                  frameBorder="0"
-                  allow="autoplay; fullscreen; picture-in-picture"
-                  allowFullScreen
-                  title={t(
-                    `Видео от ${selectedVideo.name}`,
-                    `Video from ${selectedVideo.name}`
-                  )}
-                  loading="lazy"
-                ></iframe>
-                <div className="progress-bar-container">
-                  <div className="progress-label">
-                    {t('Повышение охвата', 'Reach increase')}
-                  </div>
-                  <div className="progress-bar">
-                    <div
-                      className="progress-fill"
-                      style={{ width: '100%' }}
-                    ></div>
-                  </div>
-                  <div className="progress-percentage">
-                    X{selectedVideo.reach}
-                  </div>
-                </div>
-                <div className="progress-bar-container">
-                  <div className="progress-label">
-                    {t('Повышение конверсии', 'Conversion increase')}
-                  </div>
-                  <div className="progress-bar">
-                    <div
-                      className="progress-fill"
-                      style={{ width: '100%' }}
-                    ></div>
-                  </div>
-                  <div className="progress-percentage">
-                    +{selectedVideo.conversion}%
-                  </div>
-                </div>
-                <div className="modal-info">
-                  <h3>{selectedVideo.name}</h3>
-                  <p>
-                    {isEnglish && selectedVideo.companyEn
-                      ? selectedVideo.companyEn
-                      : selectedVideo.company}
-                  </p>
-                  <p>
-                    &quot;
-                    {isEnglish && selectedVideo.textEn
-                      ? selectedVideo.textEn
-                      : selectedVideo.text}
-                    &quot;
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
+    </main>
   );
-};
+}
 
-export default AnixAILanding;
+export default App;
