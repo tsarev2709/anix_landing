@@ -2,6 +2,7 @@ const ATTEMPTS_KEY = 'anix_hse_mvp_attempts';
 const COURSE_PROGRESS_KEY = 'anix_hse_mvp_course_progress';
 const COURSE_REQUESTS_KEY = 'anix_hse_mvp_course_requests';
 const EVENTS_KEY = 'anix_hse_mvp_events';
+const MODULE_STATE_KEY = 'anix_hse_mvp_module_state';
 
 const canUseStorage = () =>
   typeof window !== 'undefined' && Boolean(window.localStorage);
@@ -69,6 +70,24 @@ export const saveCourseProgress = (moduleId: string, progress: any) => {
   });
 };
 
+export const getModuleLearningState = (moduleId: string) => {
+  const state = readJson(MODULE_STATE_KEY, {});
+  return state[moduleId] || { currentBlockIndex: 0, answers: {} };
+};
+
+export const saveModuleLearningState = (moduleId: string, patch: any) => {
+  const state = readJson(MODULE_STATE_KEY, {});
+  const nextModuleState = {
+    ...(state[moduleId] || { currentBlockIndex: 0, answers: {} }),
+    ...patch,
+    updatedAt: new Date().toISOString(),
+  };
+  writeJson(MODULE_STATE_KEY, {
+    ...state,
+    [moduleId]: nextModuleState,
+  });
+  return nextModuleState;
+};
 export const getCourseRequests = () => readJson(COURSE_REQUESTS_KEY, []);
 
 export const saveCourseRequest = (request: any) => {

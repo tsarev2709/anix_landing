@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import {
   Activity,
@@ -44,7 +44,10 @@ import {
   getCourseProgress,
   getLatestAttempt,
   getAttemptsByModule,
+  getModuleLearningState,
   saveAttempt,
+  saveCourseProgress,
+  saveModuleLearningState,
 } from './lib/storage';
 import { downloadCsv, downloadXlsxFallback } from './lib/export';
 import { getRuleBasedRecommendations } from './lib/recommendations';
@@ -57,6 +60,48 @@ const rootPath = '/hse/mvp';
 const passScore = 95;
 const maxAttempts = 3;
 
+const getModuleBlocksCount = (module) =>
+  module.blocks?.length || module.cards?.length || 0;
+
+const getModuleQuestions = (module) =>
+  module.finalTest || module.questions || [];
+
+const getModulePassScore = (module) => module.passScore || passScore;
+
+const getOptionId = (index) => String.fromCharCode(97 + index);
+
+const normalizeQuestion = (question) => {
+  const options = (question.options || []).map((option, index) => {
+    if (typeof option === 'string') {
+      return {
+        id: getOptionId(index),
+        text: option,
+        correct: option === question.correctAnswer,
+      };
+    }
+    return option;
+  });
+  return {
+    ...question,
+    text: question.text || question.question,
+    type: question.type || 'single',
+    options,
+    riskTag:
+      question.riskTag || question.competency || 'практическое поведение',
+    relatedRuleCode:
+      question.relatedRuleCode || question.competency || 'итоговый тест',
+    recommendationRule: question.recommendationRule || question.explanation,
+  };
+};
+
+const getQuestionCorrectIds = (question) =>
+  normalizeQuestion(question)
+    .options.filter((option) => option.correct)
+    .map((option) => option.id);
+
+const getSourceTitle = (module, sourceId) =>
+  module.sourceRefs?.find((source) => source.id === sourceId)?.title ||
+  sourceId;
 const href = (path) => `${base}${path}`;
 
 const navItems = [
@@ -207,14 +252,16 @@ function KpiCard({ icon: Icon, label, value, hint }) {
 
 const getModuleProgress = (moduleId) => {
   const saved = getCourseProgress()[moduleId] || {};
+  const learningState = getModuleLearningState(moduleId);
   return {
-    status: saved.status || 'Не начат',
-    progress: saved.progress || 0,
+    status:
+      saved.status ||
+      (learningState.currentBlockIndex > 0 ? 'В процессе' : 'Не начат'),
+    progress: saved.progress || learningState.progress || 0,
     score: saved.score,
     attemptId: saved.attemptId,
   };
 };
-
 const scenarioCards = [
   {
     title: 'Пройти обучение как сотрудник',
@@ -356,12 +403,12 @@ function EmployeePage() {
                   <dd>{module.estimatedMinutes} мин</dd>
                 </div>
                 <div>
-                  <dt>Карточки</dt>
-                  <dd>{module.cards.length}</dd>
+                  <dt>{module.blocks?.length ? 'Блоки' : 'Карточки'}</dt>
+                  <dd>{getModuleBlocksCount(module)}</dd>
                 </div>
                 <div>
                   <dt>Вопросы</dt>
-                  <dd>{module.questions.length}</dd>
+                  <dd>{getModuleQuestions(module).length}</dd>
                 </div>
                 <div>
                   <dt>Статус курса</dt>
@@ -376,7 +423,10 @@ function EmployeePage() {
                 className="hse-mvp-button hse-mvp-button-primary"
                 href={href(`${rootPath}/course/${module.id}`)}
               >
-                Открыть модуль <ArrowRight aria-hidden="true" size={18} />
+                {progress.progress > 0 && progress.progress < 100
+                  ? 'Продолжить'
+                  : 'Начать'}
+                <ArrowRight aria-hidden="true" size={18} />
               </a>
             </article>
           );
@@ -385,8 +435,229 @@ function EmployeePage() {
     </>
   );
 }
-function CoursePage({ courseId }) {
-  const module = getModuleById(courseId) || demoModules[0];
+function LearningModulePage({ module }) {
+  const initialState = getModuleLearningState(module.id);
+  const [blockIndex, setBlockIndex] = useState(
+    Math.min(initialState.currentBlockIndex || 0, module.blocks.length - 1)
+  );
+  const [answers, setAnswers] = useState(initialState.answers || {});
+  const block = module.blocks[blockIndex];
+  const selectedAnswer = answers[block.id];
+  const isAnswered = Boolean(selectedAnswer);
+  const requiresAnswer =
+    block.type === 'video_card' || block.type === 'interactive_question';
+  const isCorrect = selectedAnswer === block.correctAnswer;
+  const percent = Math.round(((blockIndex + 1) / module.blocks.length) * 100);
+
+  useEffect(() => {
+    saveModuleLearningState(module.id, {
+      currentBlockIndex: blockIndex,
+      answers,
+      progress: percent,
+    });
+    saveCourseProgress(module.id, {
+      status: percent >= 100 ? 'В процессе' : 'В процессе',
+      progress: Math.min(99, percent),
+    });
+  }, [answers, blockIndex, module.id, percent]);
+
+  const chooseAnswer = (answer) => {
+    setAnswers((current) => ({ ...current, [block.id]: answer }));
+  };
+
+  const goToBlock = (index) => {
+    setBlockIndex(Math.max(0, Math.min(index, module.blocks.length - 1)));
+  };
+
+  const sourceRefs = block.sourceRefIds || [];
+
+  return (
+    <>
+      <section className="hse-mvp-page-head hse-mvp-course-head">
+        <div>
+          <Badge tone="info">{module.title}</Badge>
+          <h1>{block.title}</h1>
+          <p>
+            {module.companyContext}. Короткий LMS-блок для прохождения на
+            рабочем месте.
+          </p>
+        </div>
+        <Progress value={percent} label="Прогресс прохождения модуля" />
+      </section>
+
+      <section className="hse-mvp-course-layout hse-mvp-learning-layout">
+        <article
+          className={`hse-mvp-course-card hse-mvp-learning-card hse-mvp-block-${block.type}`}
+        >
+          <div className="hse-mvp-block-kicker">
+            <Badge
+              tone={
+                block.type === 'text_lesson'
+                  ? 'neutral'
+                  : block.type === 'video_card'
+                    ? 'info'
+                    : 'warning'
+              }
+            >
+              {block.type === 'text_lesson'
+                ? 'Микроурок'
+                : block.type === 'video_card'
+                  ? 'Видеокарточка'
+                  : 'Интерактивный вопрос'}
+            </Badge>
+            <span>
+              Блок {blockIndex + 1} из {module.blocks.length}
+            </span>
+          </div>
+
+          {block.type === 'video_card' ? (
+            <>
+              <div
+                className="hse-mvp-scene-placeholder"
+                role="img"
+                aria-label={block.visualDescription}
+              >
+                <Eye aria-hidden="true" size={34} />
+                <strong>{block.screenText}</strong>
+                <span>{block.visualDescription}</span>
+              </div>
+              <p className="hse-mvp-scene-text">{block.scene}</p>
+              <QuestionOptions
+                block={block}
+                selectedAnswer={selectedAnswer}
+                onChoose={chooseAnswer}
+              />
+            </>
+          ) : null}
+
+          {block.type === 'text_lesson' ? (
+            <div className="hse-mvp-text-lesson">
+              <p>{block.body}</p>
+              <dl>
+                <div>
+                  <dt>Главное правило</dt>
+                  <dd>{block.mainRule}</dd>
+                </div>
+                <div>
+                  <dt>Действие сотрудника</dt>
+                  <dd>{block.employeeAction}</dd>
+                </div>
+                <div>
+                  <dt>Запрет</dt>
+                  <dd>{block.prohibition}</dd>
+                </div>
+              </dl>
+            </div>
+          ) : null}
+
+          {block.type === 'interactive_question' ? (
+            <>
+              <p className="hse-mvp-scene-text">{block.question}</p>
+              <QuestionOptions
+                block={block}
+                selectedAnswer={selectedAnswer}
+                onChoose={chooseAnswer}
+              />
+            </>
+          ) : null}
+
+          {requiresAnswer && isAnswered ? (
+            <div
+              className={`hse-mvp-answer-feedback ${isCorrect ? 'success' : 'warning'}`}
+            >
+              <strong>{isCorrect ? 'Верно' : 'Нужно повторить'}</strong>
+              <p>{block.explanation}</p>
+              {!isCorrect ? (
+                <p>Правильный ответ: {block.correctAnswer}</p>
+              ) : null}
+            </div>
+          ) : null}
+
+          {sourceRefs.length ? (
+            <div
+              className="hse-mvp-source-list"
+              aria-label="Методические источники"
+            >
+              {sourceRefs.map((sourceId) => (
+                <span key={sourceId}>{getSourceTitle(module, sourceId)}</span>
+              ))}
+            </div>
+          ) : null}
+        </article>
+
+        <aside className="hse-mvp-course-aside">
+          <h2>Навигация по модулю</h2>
+          <div className="hse-mvp-card-list" aria-label="Список блоков модуля">
+            {module.blocks.map((item, index) => (
+              <button
+                className={index === blockIndex ? 'active' : ''}
+                key={item.id}
+                type="button"
+                onClick={() => goToBlock(index)}
+              >
+                <span>{index + 1}</span>
+                {item.title}
+              </button>
+            ))}
+          </div>
+        </aside>
+      </section>
+
+      <div className="hse-mvp-actions hse-mvp-course-actions">
+        <button
+          className="hse-mvp-button"
+          type="button"
+          onClick={() => goToBlock(blockIndex - 1)}
+          disabled={blockIndex === 0}
+        >
+          <ArrowLeft aria-hidden="true" size={18} /> Назад
+        </button>
+        {blockIndex < module.blocks.length - 1 ? (
+          <button
+            className="hse-mvp-button hse-mvp-button-primary"
+            type="button"
+            onClick={() => goToBlock(blockIndex + 1)}
+            disabled={requiresAnswer && !isAnswered}
+          >
+            Далее <ArrowRight aria-hidden="true" size={18} />
+          </button>
+        ) : (
+          <a
+            className="hse-mvp-button hse-mvp-button-primary"
+            href={href(`${rootPath}/course/${module.id}/test`)}
+          >
+            Перейти к итоговому тесту{' '}
+            <ArrowRight aria-hidden="true" size={18} />
+          </a>
+        )}
+      </div>
+    </>
+  );
+}
+
+function QuestionOptions({ block, selectedAnswer, onChoose }) {
+  return (
+    <div className="hse-mvp-options hse-mvp-learning-options">
+      {block.options.map((option) => {
+        const answered = Boolean(selectedAnswer);
+        const isSelected = selectedAnswer === option;
+        const isCorrectOption = block.correctAnswer === option;
+        return (
+          <button
+            className={`${isSelected ? 'selected' : ''} ${answered && isCorrectOption ? 'correct' : ''} ${answered && isSelected && !isCorrectOption ? 'wrong' : ''}`}
+            key={option}
+            type="button"
+            onClick={() => onChoose(option)}
+          >
+            {option}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function LegacyCardCoursePage({ module }) {
   const [cardIndex, setCardIndex] = useState(0);
   const [repeatKey, setRepeatKey] = useState(0);
   const card = module.cards[cardIndex];
@@ -482,7 +753,11 @@ function CoursePage({ courseId }) {
     </>
   );
 }
-
+function CoursePage({ courseId }) {
+  const module = getModuleById(courseId) || demoModules[0];
+  if (module.blocks?.length) return <LearningModulePage module={module} />;
+  return <LegacyCardCoursePage module={module} />;
+}
 function sameAnswers(selected, correct) {
   if (selected.length !== correct.length) return false;
   return selected.every((id) => correct.includes(id));
@@ -490,6 +765,8 @@ function sameAnswers(selected, correct) {
 
 function TestPage({ courseId }) {
   const module = getModuleById(courseId) || demoModules[0];
+  const questions = getModuleQuestions(module).map(normalizeQuestion);
+  const requiredScore = getModulePassScore(module);
   const [answers, setAnswers] = useState({});
   const [showMissing, setShowMissing] = useState(false);
   const attemptsCount = getAttemptsByModule(module.id).length;
@@ -511,7 +788,7 @@ function TestPage({ courseId }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const isComplete = module.questions.every(
+    const isComplete = questions.every(
       (question) => (answers[question.id] || []).length > 0
     );
     if (!isComplete) {
@@ -519,23 +796,27 @@ function TestPage({ courseId }) {
       return;
     }
 
-    const results = module.questions.map((question) => {
+    const results = questions.map((question) => {
       const selected = answers[question.id] || [];
-      const correct = question.options
-        .filter((option) => option.correct)
-        .map((option) => option.id);
+      const correct = getQuestionCorrectIds(question);
       return {
         questionId: question.id,
         questionText: question.text,
         selectedOptionIds: selected,
+        selectedAnswers: question.options
+          .filter((option) => selected.includes(option.id))
+          .map((option) => option.text),
         isCorrect: sameAnswers(selected, correct),
         riskTag: question.riskTag,
         relatedRuleCode: question.relatedRuleCode,
         recommendationRule: question.recommendationRule,
+        competency: question.competency,
+        explanation: question.explanation,
       };
     });
     const correctCount = results.filter((result) => result.isCorrect).length;
-    const score = Math.round((correctCount / module.questions.length) * 100);
+    const score = Math.round((correctCount / questions.length) * 100);
+    const passed = score >= requiredScore;
     const storedAttempt = saveAttempt({
       employeeId: demoEmployee.id,
       employeeName: demoEmployee.fullName,
@@ -545,13 +826,22 @@ function TestPage({ courseId }) {
       moduleTitle: module.title,
       version: module.version,
       score,
-      passed: score >= passScore,
-      status: score >= passScore ? 'модуль пройден' : 'рекомендуется повторить',
+      passScore: requiredScore,
+      passed,
+      status: passed ? 'модуль пройден' : 'рекомендуется повторить',
       durationSeconds: module.estimatedMinutes * 60,
       maxAttempts,
       answers: results,
       mistakes: results.filter((result) => !result.isCorrect),
+      completionStatement: module.completionStatement,
       completedAt: new Date().toISOString(),
+    });
+
+    saveModuleLearningState(module.id, {
+      currentBlockIndex: module.blocks?.length ? module.blocks.length - 1 : 0,
+      testScore: score,
+      testPassed: passed,
+      progress: 100,
     });
 
     window.location.assign(href(`${rootPath}/result/${storedAttempt.id}`));
@@ -560,14 +850,16 @@ function TestPage({ courseId }) {
   return (
     <>
       <section className="hse-mvp-page-head">
-        <Badge tone="info">Проверка понимания модуля</Badge>
+        <Badge tone="info">Итоговый тест</Badge>
         <h1>Тест: {module.title}</h1>
         <p>
-          Это не экзамен и не юридический допуск к работам. Тест помогает
-          понять, какие правила стоит повторить.
+          Это проверка понимания обучающего модуля, а не официальный экзамен и
+          не юридический допуск к работам. Для завершения модуля нужно набрать
+          не менее {requiredScore}%.
         </p>
         <div className="hse-mvp-test-limits">
-          <Badge tone="neutral">Проходной балл {passScore}%</Badge>
+          <Badge tone="neutral">Проходной балл {requiredScore}%</Badge>
+          <Badge tone="neutral">{questions.length} вопросов</Badge>
           <Badge tone="neutral">
             Попытка {Math.min(attemptsCount + 1, maxAttempts)} из {maxAttempts}
           </Badge>
@@ -575,7 +867,7 @@ function TestPage({ courseId }) {
       </section>
 
       <form className="hse-mvp-test" onSubmit={handleSubmit}>
-        {module.questions.map((question, index) => (
+        {questions.map((question, index) => (
           <fieldset className="hse-mvp-question" key={question.id}>
             <legend>
               {index + 1}. {question.text}
@@ -584,7 +876,7 @@ function TestPage({ courseId }) {
               {question.type === 'multi'
                 ? 'Выберите несколько вариантов'
                 : 'Выберите один вариант'}{' '}
-              · правило {question.relatedRuleCode}
+              · {question.competency || question.relatedRuleCode}
             </p>
             <div className="hse-mvp-options">
               {question.options.map((option) => {
@@ -604,6 +896,13 @@ function TestPage({ courseId }) {
                 );
               })}
             </div>
+            {question.sourceRefIds?.length ? (
+              <div className="hse-mvp-source-list">
+                {question.sourceRefIds.map((sourceId) => (
+                  <span key={sourceId}>{getSourceTitle(module, sourceId)}</span>
+                ))}
+              </div>
+            ) : null}
           </fieldset>
         ))}
         {showMissing ? (
@@ -616,20 +915,19 @@ function TestPage({ courseId }) {
             className="hse-mvp-button"
             href={href(`${rootPath}/course/${module.id}`)}
           >
-            <ArrowLeft aria-hidden="true" size={18} /> Назад к карточкам
+            <ArrowLeft aria-hidden="true" size={18} /> Назад к модулю
           </a>
           <button
             className="hse-mvp-button hse-mvp-button-primary"
             type="submit"
           >
-            Завершить проверку
+            Завершить модуль
           </button>
         </div>
       </form>
     </>
   );
 }
-
 function ResultPage({ attemptId }) {
   const attempt = getLatestAttempt(attemptId);
   const module = attempt ? getModuleById(attempt.moduleId) : demoModules[0];
@@ -662,6 +960,18 @@ function ResultPage({ attemptId }) {
         </button>
       </section>
 
+      {attempt?.completionStatement || module.completionStatement ? (
+        <section className="hse-mvp-panel hse-mvp-completion-statement">
+          <div className="hse-mvp-section-head">
+            <p>Подтверждение прохождения</p>
+            <h2>{module.title}</h2>
+          </div>
+          <p>{attempt?.completionStatement || module.completionStatement}</p>
+          <a className="hse-mvp-button" href={href(`${rootPath}/employee`)}>
+            Вернуться к модулям
+          </a>
+        </section>
+      ) : null}
       <section className="hse-mvp-grid hse-mvp-result-grid">
         <KpiCard
           icon={BookOpen}

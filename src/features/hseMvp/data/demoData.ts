@@ -1,3 +1,5 @@
+import { foodProductionTrainingModules } from './foodProductionTrainingModules';
+
 const publicAsset = (path: string) => `${process.env.PUBLIC_URL || ''}${path}`;
 const lsrAsset = (file: string, ext: 'mp4' | 'webp') =>
   publicAsset(`/hse/life-saving-rules/${file}.${ext}`);
@@ -138,7 +140,7 @@ const electricalCards = [
   },
 ];
 
-export const demoModules = [
+const legacyDemoModules = [
   {
     id: 'life-saving-rules',
     title: 'Life-saving rules',
@@ -364,6 +366,11 @@ export const demoModules = [
       },
     ],
   },
+];
+
+export const demoModules = [
+  legacyDemoModules[0],
+  ...foodProductionTrainingModules,
 ];
 
 export const demoEmployeeRows = [
