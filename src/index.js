@@ -10,6 +10,7 @@ import AppLayout from './AppLayout';
 import WhyItWorksPage from './components/WhyItWorksPage';
 import MedicinePage from './components/MedicinePage';
 import HsePage from './components/HsePage';
+import HseMvpPage from './features/hseMvp/HseMvpPage';
 import Design1TestPage from './components/Design1TestPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -32,26 +33,29 @@ const renderInLayout = (component) => {
   root.render(<AppLayout>{component}</AppLayout>);
 };
 
-switch (normalizedPath) {
-  case '/':
-    renderInLayout(<App />);
-    break;
-  case '/why_it_works':
-    renderInLayout(<WhyItWorksPage />);
-    break;
-  case '/medicine':
-    renderInLayout(<MedicinePage />);
-    break;
-  case '/hse':
-    renderInLayout(<HsePage />);
-    break;
-  case '/design1test':
-    renderInLayout(<Design1TestPage />);
-    break;
-  default:
-    root.render(<NotFound />);
+if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
+  renderInLayout(<HseMvpPage path={normalizedPath} />);
+} else {
+  switch (normalizedPath) {
+    case '/':
+      renderInLayout(<App />);
+      break;
+    case '/why_it_works':
+      renderInLayout(<WhyItWorksPage />);
+      break;
+    case '/medicine':
+      renderInLayout(<MedicinePage />);
+      break;
+    case '/hse':
+      renderInLayout(<HsePage />);
+      break;
+    case '/design1test':
+      renderInLayout(<Design1TestPage />);
+      break;
+    default:
+      root.render(<NotFound />);
+  }
 }
-
 if ('requestIdleCallback' in window) {
   requestIdleCallback(() => import('./styles/sections.css'));
 } else {

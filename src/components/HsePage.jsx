@@ -104,30 +104,6 @@ const cases = [
   },
 ];
 
-const lifeSavingRuleCards = [
-  {
-    code: 'LSR',
-    title: 'Общая карточка Life Saving Rules',
-    file: 'lsr-overview',
-  },
-  { code: 'A-01', title: 'Сценарий A-01', file: 'lsr-a-01' },
-  { code: 'A-02', title: 'Сценарий A-02', file: 'lsr-a-02' },
-  { code: 'A-03', title: 'Сценарий A-03', file: 'lsr-a-03' },
-  { code: 'A-04', title: 'Сценарий A-04', file: 'lsr-a-04' },
-  { code: 'LSR-05', title: 'Карточка LSR 05', file: 'lsr-05' },
-  { code: 'LSR-06', title: 'Карточка LSR 06', file: 'lsr-06' },
-  { code: 'LSR-07', title: 'Карточка LSR 07', file: 'lsr-07' },
-  { code: 'LSR-08', title: 'Карточка LSR 08', file: 'lsr-08' },
-  { code: 'LSR-09', title: 'Карточка LSR 09', file: 'lsr-09' },
-  { code: 'LSR-10', title: 'Карточка LSR 10', file: 'lsr-10' },
-  { code: 'LSR-11', title: 'Карточка LSR 11', file: 'lsr-11' },
-  { code: 'LSR-12', title: 'Карточка LSR 12', file: 'lsr-12' },
-  { code: 'LSR-13', title: 'Карточка LSR 13', file: 'lsr-13' },
-  { code: 'LSR-14', title: 'Карточка LSR 14', file: 'lsr-14' },
-];
-
-const lifeSavingRuleAsset = (fileName, extension) =>
-  `${process.env.PUBLIC_URL || ''}/hse/life-saving-rules/${fileName}.${extension}`;
 export default function HsePage() {
   return (
     <main className="hse-page">
@@ -293,40 +269,24 @@ export default function HsePage() {
         </div>
       </section>
 
-      <section className="hse-band hse-lsr-module" id="life-saving-rules">
-        <div className="hse-section-head hse-lsr-head">
-          <p className="hse-eyebrow">Life Saving Rules</p>
-          <h2>Реальные карточки LSR уже подключены к веб-модулю</h2>
-          <p>
-            Короткие анимационные карточки сжаты под веб, лежат в
-            public/hse/life-saving-rules и загружаются лениво через постеры.
-            Пользователь видит весь набор правил, а само видео стартует только
-            по запросу.
-          </p>
-        </div>
-        <div className="hse-lsr-grid" aria-label="Карточки Life Saving Rules">
-          {lifeSavingRuleCards.map((card, index) => (
-            <article
-              className={`hse-lsr-card ${index === 0 ? 'hse-lsr-card-featured' : ''}`}
-              key={card.file}
-            >
-              <div className="hse-lsr-media">
-                <video
-                  src={lifeSavingRuleAsset(card.file, 'mp4')}
-                  poster={lifeSavingRuleAsset(card.file, 'webp')}
-                  controls
-                  muted
-                  playsInline
-                  preload="none"
-                  aria-label={`${card.title}: ${card.code}`}
-                />
-              </div>
-              <div className="hse-lsr-card-copy">
-                <span>{card.code}</span>
-                <h3>{card.title}</h3>
-              </div>
-            </article>
-          ))}
+      <section
+        className="hse-band hse-mvp-cta-section"
+        aria-labelledby="hse-mvp-cta-title"
+      >
+        <div className="hse-mvp-cta">
+          <div>
+            <p className="hse-eyebrow">Конкурсный MVP</p>
+            <h2 id="hse-mvp-cta-title">Демополигон цифрового решения</h2>
+            <p>Единая визуальная система обучения по охране труда</p>
+          </div>
+          <a
+            className="hse-button hse-button-primary"
+            href={`${process.env.PUBLIC_URL || ''}/hse/mvp`}
+          >
+            <ShieldCheck aria-hidden="true" size={20} />
+            Открыть демополигон
+            <ArrowRight aria-hidden="true" size={18} />
+          </a>
         </div>
       </section>
       <section className="hse-band" id="formats">
