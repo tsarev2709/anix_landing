@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.1d1270fd.css",
-    "main.js": "/static/js/main.37341226.js",
+    "main.css": "/static/css/main.47f2e445.css",
+    "main.js": "/static/js/main.4a0c0520.js",
     "static/css/663.acb38cc5.chunk.css": "/static/css/663.acb38cc5.chunk.css",
-    "static/js/663.7ce519c1.chunk.js": "/static/js/663.7ce519c1.chunk.js",
-    "static/js/204.2d650761.chunk.js": "/static/js/204.2d650761.chunk.js",
+    "static/js/663.8a172c8b.chunk.js": "/static/js/663.8a172c8b.chunk.js",
+    "static/js/204.9d33de18.chunk.js": "/static/js/204.9d33de18.chunk.js",
     "static/media/3.png": "/static/media/3.95d850bfd9557355a532.png",
     "static/media/1.png": "/static/media/1.4a3c1caf2965ec660799.png",
     "static/media/hse-hero.jpg": "/static/media/hse-hero.98902ec35d115bd2829e.jpg",
@@ -21,7 +21,7 @@
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.1d1270fd.css",
-    "static/js/main.37341226.js"
+    "static/css/main.47f2e445.css",
+    "static/js/main.4a0c0520.js"
   ]
 }
