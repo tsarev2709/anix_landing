@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.0100067a.css",
-    "main.js": "/static/js/main.c130a215.js",
+    "main.css": "/static/css/main.c81ae5d1.css",
+    "main.js": "/static/js/main.ee53e6fb.js",
     "static/css/663.acb38cc5.chunk.css": "/static/css/663.acb38cc5.chunk.css",
     "static/js/663.7ce519c1.chunk.js": "/static/js/663.7ce519c1.chunk.js",
     "static/js/204.2d650761.chunk.js": "/static/js/204.2d650761.chunk.js",
@@ -12,16 +12,28 @@
     "static/media/hse-rule-lab.jpg": "/static/media/hse-rule-lab.5dc8529e78fe92967742.jpg",
     "static/media/hse-ventilation.jpg": "/static/media/hse-ventilation.a81d00c00a11208a1893.jpg",
     "static/media/kolbox.png": "/static/media/kolbox.dd70a6a8ce28a39724f4.png",
-    "static/media/clappy.png": "/static/media/clappy.fdc6e8060c9eff547982.png",
     "static/media/TPES.png": "/static/media/TPES.7505ba4a6840fb8fbd72.png",
     "static/media/hse-onboarding.jpg": "/static/media/hse-onboarding.c0cdd65961e777929f07.jpg",
     "static/media/hse-rule-tara.jpg": "/static/media/hse-rule-tara.9952ba783b5ff9a589b4.jpg",
-    "static/media/fiztech.png": "/static/media/fiztech.b9763fe7bb748d9d819c.png",
+    "static/media/agrotech.webp": "/static/media/agrotech.d8306801ca1e9debfbc4.webp",
+    "static/media/hemotech-ai.webp": "/static/media/hemotech-ai.4404c91ef90659118f75.webp",
+    "static/media/borodino.webp": "/static/media/borodino.4f8a004a31f7f809eb2c.webp",
     "static/media/logoanix.png": "/static/media/logoanix.69424aa82539287cd2d0.png",
+    "static/media/yurrobot.webp": "/static/media/yurrobot.6cc5282b6b161d3c7be0.webp",
+    "static/media/kolobox.webp": "/static/media/kolobox.53d50c80f980c6e9cc9a.webp",
+    "static/media/multon-partners.webp": "/static/media/multon-partners.70f8912431d7cf314395.webp",
+    "static/media/factory-director.webp": "/static/media/factory-director.9e6d7d3c2a98f9c7cab9.webp",
+    "static/media/tpes.webp": "/static/media/tpes.dae92c5342773ff40404.webp",
+    "static/media/clappy.webp": "/static/media/clappy.b1ec29feb709285b6750.webp",
+    "static/media/mosfarma.webp": "/static/media/mosfarma.e7ce796a30bd2fd444fa.webp",
+    "static/media/startech.webp": "/static/media/startech.0d7eac7aa813c56d2857.webp",
+    "static/media/mfti-endowment.webp": "/static/media/mfti-endowment.d96e5a56cd493f6006de.webp",
+    "static/media/bondarchuk.webp": "/static/media/bondarchuk.2f89bc787951be733929.webp",
+    "static/media/little-prince.webp": "/static/media/little-prince.89dcb347c89f4309e300.webp",
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.0100067a.css",
-    "static/js/main.c130a215.js"
+    "static/css/main.c81ae5d1.css",
+    "static/js/main.ee53e6fb.js"
   ]
 }
