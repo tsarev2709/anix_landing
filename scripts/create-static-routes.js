@@ -3,7 +3,7 @@ const path = require('path');
 
 const buildDir = path.resolve(__dirname, '..', 'build');
 const indexFile = path.join(buildDir, 'index.html');
-const routes = ['medicine', 'why_it_works', 'hse'];
+const routes = ['medicine', 'why_it_works', 'hse', 'design1test'];
 
 if (!fs.existsSync(indexFile)) {
   console.warn('[routes] build/index.html not found, skipping static route copies');

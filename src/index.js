@@ -10,6 +10,7 @@ import AppLayout from './AppLayout';
 import WhyItWorksPage from './components/WhyItWorksPage';
 import MedicinePage from './components/MedicinePage';
 import HsePage from './components/HsePage';
+import Design1TestPage from './components/Design1TestPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const base = process.env.PUBLIC_URL || '';
@@ -43,6 +44,9 @@ switch (normalizedPath) {
     break;
   case '/hse':
     renderInLayout(<HsePage />);
+    break;
+  case '/design1test':
+    renderInLayout(<Design1TestPage />);
     break;
   default:
     root.render(<NotFound />);
