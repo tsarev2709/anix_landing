@@ -1,1 +1,0 @@
-"use strict";(globalThis.webpackChunkanix_landing=globalThis.webpackChunkanix_landing||[]).push([[663],{663(a,n,i){i.r(n);i.d(n,["default",0,{}])}}]);
