@@ -17,11 +17,20 @@ import {
   Workflow,
 } from 'lucide-react';
 import logo from '../images/logoanix.png';
-import clappyImage from '../images/clappy.png';
-import hemoImage from '../images/hemoai.png';
-import tpesImage from '../images/TPES.png';
-import fiztechImage from '../images/fiztech.png';
-import hseHeroImage from '../images/hse/hse-hero.jpg';
+import agrotechCaseImage from '../images/cases/agrotech.webp';
+import bondarchukCaseImage from '../images/cases/bondarchuk.webp';
+import borodinoCaseImage from '../images/cases/borodino.webp';
+import clappyCaseImage from '../images/cases/clappy.webp';
+import factoryDirectorCaseImage from '../images/cases/factory-director.webp';
+import hemoCaseImage from '../images/cases/hemotech-ai.webp';
+import koloboxCaseImage from '../images/cases/kolobox.webp';
+import littlePrinceCaseImage from '../images/cases/little-prince.webp';
+import mftiCaseImage from '../images/cases/mfti-endowment.webp';
+import mosfarmaCaseImage from '../images/cases/mosfarma.webp';
+import multonCaseImage from '../images/cases/multon-partners.webp';
+import startechCaseImage from '../images/cases/startech.webp';
+import tpesCaseImage from '../images/cases/tpes.webp';
+import yurrobotCaseImage from '../images/cases/yurrobot.webp';
 import visualThree from '../images/3.png';
 import '../Design1TestPage.css';
 
@@ -91,7 +100,7 @@ const mainCases = [
     result: 'Отклик вырос в несколько десятков раз',
     text: 'До ролика продукт приходилось долго объяснять. Мы собрали короткую историю, где человек быстрее понимает, что происходит, зачем это нужно и почему этим вообще стоит пользоваться.',
     tags: 'explainer / продукт / первые пилоты',
-    image: clappyImage,
+    image: clappyCaseImage,
     href: 'https://drive.google.com/file/d/1EYWBYlhSgIK4Wd4F0nTKR1kQxYhXGc5j/view',
   },
   {
@@ -100,7 +109,7 @@ const mainCases = [
     result: 'Ролик стал частью бренда',
     text: 'Задача была тонкая: показать инновационный медицинский продукт спокойно, без фейерверков и тревожного AI-пафоса. Чтобы врачи, клиники и партнеры не напрягались, а понимали.',
     tags: 'medtech / врачи / доверие',
-    image: hemoImage,
+    image: hemoCaseImage,
     href: 'https://drive.google.com/file/d/1Q6RQlNbAKBGugpo-MH1-_6omwwnmPQ8E/view',
   },
   {
@@ -109,7 +118,7 @@ const mainCases = [
     result: '+30% к отклику',
     text: 'Вместо 50-страничной презентации сделали ролик, который быстрее показывает проблему реактивных потерь, решение и миссию энергоэффективности. Иногда рынок надо не убеждать дольше, а объяснять яснее.',
     tags: 'промышленность / продажи / конференция',
-    image: tpesImage,
+    image: tpesCaseImage,
     href: 'https://drive.google.com/file/d/1BgJs_mKyvEVtDlWeaXGY9rmFjPKrTes5/view',
   },
   {
@@ -118,7 +127,7 @@ const mainCases = [
     result: 'Telegram x2, сайт x3, ERV x10',
     text: 'Мы взяли реальные фотографии МФТИ и перевели их в теплую анимационную систему. Получился не просто ролик, а инфоповод, который люди захотели пересылать.',
     tags: 'PR / анимационная система / охваты',
-    image: fiztechImage,
+    image: mftiCaseImage,
     href: '#cases',
   },
   {
@@ -127,7 +136,7 @@ const mainCases = [
     result: 'Ролик прошел требования Первого канала',
     text: 'Сохранили бренд-персонажей, но сделали их живее и теплее. В фарме доверие часто начинается с маленькой штуки: персонаж не должен выглядеть как пластиковый заложник брендбука.',
     tags: 'фарма / персонажи / ТВ',
-    image: visualThree,
+    image: mosfarmaCaseImage,
     href: 'https://drive.google.com/file/d/1Uw9e-ZFzg9AVK8NnoN_EHwfR0ZPvD_M0/view',
   },
   {
@@ -136,7 +145,7 @@ const mainCases = [
     result: 'Маскот и карточки стали системой',
     text: 'С нуля разработали персонажа кампании и визуальный формат для правил охраны труда. Чтобы безопасность не выглядела как скучный PDF, который все открыли, закрыли и забыли.',
     tags: 'HSE / маскот / карточки',
-    image: hseHeroImage,
+    image: multonCaseImage,
     href: '/hse/',
   },
 ];
@@ -145,41 +154,49 @@ const compactCases = [
   {
     name: 'Kolobox',
     text: 'Переупаковали спорное восприятие доставки излишков еды в дружелюбный, яркий образ.',
+    image: koloboxCaseImage,
     href: 'https://drive.google.com/file/d/1eI5mODOu-mJ54QLPM_q0YuUP9bWjLN5k/view',
   },
   {
     name: 'ЮРРОБОТ',
     text: '15 секунд для узких Telegram-чатов юристов: боль, польза и переход к заявке без лишней лекции.',
+    image: yurrobotCaseImage,
     href: 'https://drive.google.com/file/d/1bwItNtWXY-IfIrG910jVYGbsOH9BJukR/view',
   },
   {
     name: 'Little Prince',
     text: 'Имиджевый ролик-фантазия за один день, который попал в эмоцию профессионального сообщества.',
+    image: littlePrinceCaseImage,
     href: 'https://drive.google.com/file/d/1xIOgHxhhloGtBRtrnwp3xpV9AkShUNqT/view',
   },
   {
     name: 'АгроТех',
     text: 'История с героиней, где агротех выглядит как сфера будущего, а не сухая отрасль из отчета.',
+    image: agrotechCaseImage,
     href: '#cases',
   },
   {
     name: 'Стартех',
     text: 'Переупаковка продукта под региональные B2B-компании и ролик, который говорит с рынком проще.',
+    image: startechCaseImage,
     href: '#cases',
   },
   {
     name: 'Бондарчук',
     text: 'За 4 часа собрали кинематографичный прототип сцены с актерскими лицами и нужной атмосферой.',
+    image: bondarchukCaseImage,
     href: 'https://drive.google.com/file/d/1wnRsoYIgio_MilkNFRlEBuTfgJfzx25d/view',
   },
   {
     name: 'Бородино',
     text: 'Исторически подготовленный ролик с вниманием к форме, оружию, среде, звуку и масштабу битвы.',
+    image: borodinoCaseImage,
     href: 'https://drive.google.com/file/d/1d2iXB33lqPgG3Y0M4e216nzw2QYGmssP/view',
   },
   {
     name: 'Factory Director',
     text: 'Конференционный ролик на базе маскота, который стал рабочей визитной карточкой бренда.',
+    image: factoryDirectorCaseImage,
     href: '#cases',
   },
 ];
@@ -349,7 +366,10 @@ function CompactCaseCard({ item }) {
       href={item.href}
       ariaLabel={`Смотреть видео ${item.name}`}
     >
-      <span>{item.name}</span>
+      <div className="d1-compact-media">
+        <img src={item.image} alt={`Кейс ANIX: ${item.name}`} loading="lazy" />
+      </div>
+      <span className="d1-compact-title">{item.name}</span>
       <p>{item.text}</p>
       <ArrowRight aria-hidden="true" />
     </SmartLink>

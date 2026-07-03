@@ -24,12 +24,20 @@ import {
 import './App.css';
 import './StudioLanding.css';
 import logo from './images/logoanix.png';
-import clappyImage from './images/clappy.png';
-import hemoImage from './images/hemoai.png';
-import tpesImage from './images/TPES.png';
-import fiztechImage from './images/fiztech.png';
-import hseHeroImage from './images/hse/hse-hero.jpg';
-import visualThree from './images/3.png';
+import agrotechCaseImage from './images/cases/agrotech.webp';
+import bondarchukCaseImage from './images/cases/bondarchuk.webp';
+import borodinoCaseImage from './images/cases/borodino.webp';
+import clappyCaseImage from './images/cases/clappy.webp';
+import factoryDirectorCaseImage from './images/cases/factory-director.webp';
+import hemoCaseImage from './images/cases/hemotech-ai.webp';
+import koloboxCaseImage from './images/cases/kolobox.webp';
+import littlePrinceCaseImage from './images/cases/little-prince.webp';
+import mftiCaseImage from './images/cases/mfti-endowment.webp';
+import mosfarmaCaseImage from './images/cases/mosfarma.webp';
+import multonCaseImage from './images/cases/multon-partners.webp';
+import startechCaseImage from './images/cases/startech.webp';
+import tpesCaseImage from './images/cases/tpes.webp';
+import yurrobotCaseImage from './images/cases/yurrobot.webp';
 
 const CookieBanner = React.lazy(() => import('./components/CookieBanner'));
 
@@ -102,7 +110,7 @@ const featuredCases = [
     area: 'B2B2C explainer',
     result: 'отклик вырос в несколько десятков раз',
     text: 'Сложный продукт для пользователей и производств превратили в короткую понятную историю. После запуска появились первые пилоты.',
-    image: clappyImage,
+    image: clappyCaseImage,
     href: 'https://drive.google.com/file/d/1EYWBYlhSgIK4Wd4F0nTKR1kQxYhXGc5j/view',
   },
   {
@@ -110,7 +118,7 @@ const featuredCases = [
     area: 'MedTech / AI-диагностика',
     result: 'ролик стал частью бренда',
     text: 'Снизили недоверие к инновационному продукту через минималистичный ролик-визитку для врачей, клиник и конференций.',
-    image: hemoImage,
+    image: hemoCaseImage,
     href: 'https://drive.google.com/file/d/1Q6RQlNbAKBGugpo-MH1-_6omwwnmPQ8E/view',
   },
   {
@@ -118,7 +126,7 @@ const featuredCases = [
     area: 'Промышленный B2B',
     result: '+30% к отклику',
     text: 'Заменили 50-страничные презентации роликом, который быстро показывает проблему, решение и миссию энергоэффективности.',
-    image: tpesImage,
+    image: tpesCaseImage,
     href: 'https://drive.google.com/file/d/1BgJs_mKyvEVtDlWeaXGY9rmFjPKrTes5/view',
   },
   {
@@ -126,7 +134,7 @@ const featuredCases = [
     area: 'PR и узнаваемость',
     result: 'Telegram x2, сайт x3, ERV x10',
     text: 'Перевели реальные фотографии МФТИ в теплую анимационную систему, которая стала инфоповодом и частью коммуникаций фонда.',
-    image: fiztechImage,
+    image: mftiCaseImage,
     href: '#cases',
   },
   {
@@ -134,7 +142,7 @@ const featuredCases = [
     area: 'Фарма / ТВ-реклама',
     result: 'ролик прошел требования Первого канала',
     text: 'Сохранили бренд-персонажей, но сделали их живее и теплее, чтобы реклама препарата вызывала доверие.',
-    image: visualThree,
+    image: mosfarmaCaseImage,
     href: 'https://drive.google.com/file/d/1Uw9e-ZFzg9AVK8NnoN_EHwfR0ZPvD_M0/view',
   },
   {
@@ -142,7 +150,7 @@ const featuredCases = [
     area: 'HSE / Life Saving Rules',
     result: 'маскот и карточки стали системой',
     text: 'С нуля разработали персонажа кампании и визуальный формат, который делает правила охраны труда заметнее и живее.',
-    image: hseHeroImage,
+    image: multonCaseImage,
     href: '/hse/',
   },
 ];
@@ -151,41 +159,49 @@ const compactCases = [
   {
     name: 'Kolobox',
     text: 'Переупаковали спорное восприятие доставки излишков еды в дружелюбный, яркий образ.',
+    image: koloboxCaseImage,
     href: 'https://drive.google.com/file/d/1eI5mODOu-mJ54QLPM_q0YuUP9bWjLN5k/view',
   },
   {
     name: 'ЮРРОБОТ',
     text: '15-секундный ролик для Telegram-чатов юристов с прогнозом сильной конверсии в заявку.',
+    image: yurrobotCaseImage,
     href: 'https://drive.google.com/file/d/1bwItNtWXY-IfIrG910jVYGbsOH9BJukR/view',
   },
   {
     name: 'Little Prince',
     text: 'Имиджевый ролик-фантазия за один день, который собрал сотни отзывов от индустрии.',
+    image: littlePrinceCaseImage,
     href: 'https://drive.google.com/file/d/1xIOgHxhhloGtBRtrnwp3xpV9AkShUNqT/view',
   },
   {
     name: 'АгроТех',
     text: 'Сюжетный ролик для хакатона, который победил в зрительском голосовании.',
+    image: agrotechCaseImage,
     href: '#cases',
   },
   {
     name: 'Стартех',
     text: 'Переупаковка продукта под региональные B2B-компании и ролик для продаж.',
+    image: startechCaseImage,
     href: '#cases',
   },
   {
     name: 'Бондарчук',
     text: 'За 4 часа собрали кинематографичный прототип сцены с актерскими лицами.',
+    image: bondarchukCaseImage,
     href: 'https://drive.google.com/file/d/1wnRsoYIgio_MilkNFRlEBuTfgJfzx25d/view',
   },
   {
     name: 'Бородино',
     text: 'Исторически подготовленный ультрареалистичный ролик с вниманием к костюмам, быту и атмосфере.',
+    image: borodinoCaseImage,
     href: 'https://drive.google.com/file/d/1d2iXB33lqPgG3Y0M4e216nzw2QYGmssP/view',
   },
   {
     name: 'Factory Director',
     text: 'Конференционный ролик на базе маскота, который стал визитной карточкой бренда.',
+    image: factoryDirectorCaseImage,
     href: '#cases',
   },
 ];
@@ -351,7 +367,10 @@ function App() {
             </div>
             <div className="sr-showreel-caption">
               <span>Showreel</span>
-              <p>Единый срез: AI-видео, анимация, маскоты, фарма, HSE и режиссура событий.</p>
+              <p>
+                Единый срез: AI-видео, анимация, маскоты, фарма, HSE и режиссура
+                событий.
+              </p>
             </div>
           </div>
           <div className="sr-proof-row" aria-label="Ключевые результаты">
@@ -441,7 +460,14 @@ function App() {
           <div className="sr-compact-grid">
             {compactCases.map((item) => (
               <a className="sr-compact-case" href={item.href} key={item.name}>
-                <span>{item.name}</span>
+                <span className="sr-compact-media">
+                  <img
+                    src={item.image}
+                    alt={`Кейс ANIX: ${item.name}`}
+                    loading="lazy"
+                  />
+                </span>
+                <span className="sr-compact-title">{item.name}</span>
                 <p>{item.text}</p>
               </a>
             ))}
@@ -519,7 +545,9 @@ function App() {
         <div className="sr-container sr-two-col">
           <div>
             <p className="sr-eyebrow">Процесс</p>
-            <h2>Ограничиваем scope заранее, чтобы быстро доводить до результата</h2>
+            <h2>
+              Ограничиваем scope заранее, чтобы быстро доводить до результата
+            </h2>
             <p className="sr-muted">
               Это особенно важно в фарме, HSE и корпоративных проектах: есть
               согласующие, эксперты, правила, каналы и риск бесконечных правок.
@@ -557,7 +585,10 @@ function App() {
               <MessageCircle aria-hidden="true" />
               Написать в Telegram
             </a>
-            <a className="sr-button sr-button-secondary" href="mailto:anix.ai@yandex.ru">
+            <a
+              className="sr-button sr-button-secondary"
+              href="mailto:anix.ai@yandex.ru"
+            >
               <Mail aria-hidden="true" />
               anix.ai@yandex.ru
             </a>
