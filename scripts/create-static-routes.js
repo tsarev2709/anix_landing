@@ -16,6 +16,7 @@ for (const route of routes) {
   const routeDir = path.join(buildDir, route);
   fs.mkdirSync(routeDir, { recursive: true });
   fs.copyFileSync(indexFile, path.join(routeDir, 'index.html'));
+  fs.copyFileSync(indexFile, path.join(buildDir, `${route}.html`));
 }
 
 fs.copyFileSync(indexFile, path.join(buildDir, '404.html'));
