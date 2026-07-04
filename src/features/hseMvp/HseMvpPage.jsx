@@ -28,6 +28,7 @@ import {
   Wrench,
 } from 'lucide-react';
 import './HseMvpPage.css';
+import SiteFooter from '../../components/SiteFooter';
 import {
   HSE_MVP_DISCLAIMER,
   HSE_MVP_PRODUCT_DESCRIPTION,
@@ -234,6 +235,7 @@ function Shell({ path, title, children, breadcrumbs = [] }) {
           </div>
         </header>
         {children}
+        <SiteFooter />
       </section>
     </main>
   );

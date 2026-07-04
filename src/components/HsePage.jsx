@@ -18,6 +18,7 @@ import {
   Users,
 } from 'lucide-react';
 import './HsePage.css';
+import SiteFooter from './SiteFooter';
 import logo from '../images/logoanix.png';
 import multonImage from '../images/cases/multon-partners.webp';
 import heroImage from '../images/hse/hse-hero.jpg';
@@ -34,6 +35,7 @@ const navLinks = [
   { label: 'Главная', href: '/' },
   { label: 'Форматы', href: '#formats' },
   { label: 'Эксперт', href: '#expert' },
+  { label: 'Демо', href: '/hse/mvp' },
   { label: 'Medicine', href: '/medicine/' },
 ];
 
@@ -510,20 +512,7 @@ export default function HsePage() {
         </div>
       </section>
 
-      <footer className="hse-footer">
-        <div className="hse-container hse-footer-inner">
-          <a href="/" className="hse-footer-brand">
-            <img src={logo} alt="ANIX" />
-          </a>
-          <span>ANIX HSE</span>
-          <span>
-            <ShieldCheck aria-hidden="true" /> visual safety learning
-          </span>
-          <a href="/medicine/">
-            ANIX Medicine <ArrowRight aria-hidden="true" />
-          </a>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

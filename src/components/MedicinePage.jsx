@@ -1,7 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import {
-  ArrowRight,
   BadgeCheck,
   BookOpen,
   Brain,
@@ -19,6 +18,7 @@ import {
   Stethoscope,
 } from 'lucide-react';
 import './MedicinePage.css';
+import SiteFooter from './SiteFooter';
 import logo from '../images/logoanix.png';
 import hemotechImage from '../images/cases/hemotech-ai.webp';
 import mosfarmaImage from '../images/cases/mosfarma.webp';
@@ -33,6 +33,7 @@ const navLinks = [
   { label: 'Форматы', href: '#formats' },
   { label: 'Научный директор', href: '#expert' },
   { label: 'HSE', href: '/hse/' },
+  { label: 'HSE-демо', href: '/hse/mvp' },
 ];
 
 const heroStats = [
@@ -543,21 +544,7 @@ export default function MedicinePage() {
         </div>
       </section>
 
-      <footer className="medicine-footer">
-        <div className="medicine-container medicine-footer-inner">
-          <a href="/" className="medicine-footer-brand">
-            <img src={logo} alt="ANIX" />
-          </a>
-          <span>ANIX Medicine</span>
-          <span>
-            <BadgeCheck aria-hidden="true" /> scientific storytelling for
-            complex products
-          </span>
-          <a href="/hse/">
-            ANIX HSE <ArrowRight aria-hidden="true" />
-          </a>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

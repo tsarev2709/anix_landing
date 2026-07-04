@@ -16,6 +16,7 @@ import {
   Video,
   Workflow,
 } from 'lucide-react';
+import SiteFooter from './SiteFooter';
 import logo from '../images/logoanix.png';
 import agrotechCaseImage from '../images/cases/agrotech.webp';
 import bondarchukCaseImage from '../images/cases/bondarchuk.webp';
@@ -285,6 +286,8 @@ const trustChips = [
 const navigationLinks = [
   { label: 'Кейсы', href: '#cases' },
   { label: 'Что делаем', href: '#services' },
+  { label: 'Medicine', href: '/medicine/' },
+  { label: 'HSE', href: '/hse/' },
   { label: 'Процесс', href: '#process' },
   { label: 'Видео', href: '#video' },
   { label: 'Контакты', href: '#contact' },
@@ -765,44 +768,7 @@ function Design1TestPage() {
         </div>
       </section>
 
-      <footer className="d1-footer">
-        <div className="d1-container d1-footer-grid">
-          <div className="d1-footer-brand">
-            <img src={logo} alt="ANIX" />
-            <p>
-              AI-видео, анимация и визуальные истории для сложных продуктов.
-            </p>
-          </div>
-          <div>
-            <h3>Разделы</h3>
-            {navigationLinks.map((item) => (
-              <a href={item.href} key={item.href}>
-                {item.label}
-              </a>
-            ))}
-          </div>
-          <div>
-            <h3>Направления</h3>
-            <a href="/medicine/">Medicine</a>
-            <a href="/hse/">HSE</a>
-            <a href="#cases">B2B</a>
-            <a href="#contact">Events</a>
-          </div>
-          <div>
-            <h3>Контакты</h3>
-            <a href={heroLinks.telegram} target="_blank" rel="noreferrer">
-              Telegram
-            </a>
-            <a href={heroLinks.email}>Email</a>
-            <a href={heroLinks.videoFolder} target="_blank" rel="noreferrer">
-              Видео-папка
-            </a>
-          </div>
-        </div>
-        <div className="d1-container d1-footer-bottom">
-          ANIX Studio. Сложные штуки можно объяснять нормально.
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

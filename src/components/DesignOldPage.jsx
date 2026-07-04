@@ -23,6 +23,7 @@ import {
 } from 'lucide-react';
 import '../App.css';
 import '../DesignOldPage.css';
+import SiteFooter from './SiteFooter';
 import logo from '../images/logoanix.png';
 import agrotechCaseImage from '../images/cases/agrotech.webp';
 import bondarchukCaseImage from '../images/cases/bondarchuk.webp';
@@ -674,6 +675,8 @@ function DesignOldPage() {
           </div>
         </div>
       </section>
+
+      <SiteFooter />
 
       <Suspense fallback={null}>
         <CookieBanner />

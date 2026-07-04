@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import SiteFooter from './SiteFooter';
 
 const WhyItWorksPage = () => {
   const proofPoints = [
@@ -203,6 +204,7 @@ const WhyItWorksPage = () => {
           </div>
         </section>
       </div>
+      <SiteFooter />
     </main>
   );
 };
