@@ -227,10 +227,7 @@ export default function HsePage() {
               <MessageCircle aria-hidden="true" />
               Обсудить HSE-пилот
             </a>
-            <a
-              className="hse-button hse-button-secondary"
-              href={`${process.env.PUBLIC_URL || ''}/hse/mvp`}
-            >
+            <a className="hse-button hse-button-secondary" href="/hse/mvp">
               <ShieldCheck aria-hidden="true" />
               Открыть демополигон
             </a>

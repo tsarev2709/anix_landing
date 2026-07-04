@@ -56,7 +56,7 @@ import { generateAiRecommendation } from './lib/aiRecommendations';
 import { submitCourseRequest, getCrmMode } from './lib/crm';
 import { openCompletionPrint } from './lib/pdf';
 
-const base = process.env.PUBLIC_URL || '';
+const base = '';
 const rootPath = '/hse/mvp';
 const passScore = 95;
 const maxAttempts = 3;

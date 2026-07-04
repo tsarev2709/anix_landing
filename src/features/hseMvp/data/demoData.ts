@@ -1,6 +1,6 @@
 import { foodProductionTrainingModules } from './foodProductionTrainingModules';
 
-const publicAsset = (path: string) => `${process.env.PUBLIC_URL || ''}${path}`;
+const publicAsset = (path: string) => path;
 const lsrAsset = (file: string, ext: 'mp4' | 'webp') =>
   publicAsset(`/hse/life-saving-rules/${file}.${ext}`);
 

@@ -15,7 +15,7 @@ import Design1TestPage from './components/Design1TestPage';
 import DesignOldPage from './components/DesignOldPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const base = process.env.PUBLIC_URL || '';
+const base = '';
 const relativePath = window.location.pathname.replace(base, '') || '/';
 const normalizedPath = (() => {
   const withoutIndex = relativePath.replace(/index\.html$/, '');
