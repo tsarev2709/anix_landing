@@ -3,399 +3,527 @@ import { Helmet } from 'react-helmet';
 import {
   Activity,
   ArrowRight,
-  Brain,
+  BadgeCheck,
   CheckCircle2,
   ClipboardList,
-  LineChart,
+  ExternalLink,
+  Gamepad2,
+  HardHat,
+  Mail,
   MessageCircle,
   PlayCircle,
   Presentation,
   ShieldCheck,
+  Sparkles,
+  Users,
 } from 'lucide-react';
 import './HsePage.css';
 import logo from '../images/logoanix.png';
+import multonImage from '../images/cases/multon-partners.webp';
 import heroImage from '../images/hse/hse-hero.jpg';
 import onboardingImage from '../images/hse/hse-onboarding.jpg';
 import ruleTaraImage from '../images/hse/hse-rule-tara.jpg';
 import ruleLabImage from '../images/hse/hse-rule-lab.jpg';
 import ventilationImage from '../images/hse/hse-ventilation.jpg';
+import alexeyPhoto from '../images/experts/alexey-lychko-hse.webp';
 
 const telegramUrl = 'https://t.me/anix_helper';
+const emailUrl = 'mailto:anix.ai@yandex.ru';
+
+const navLinks = [
+  { label: 'Главная', href: '/' },
+  { label: 'Форматы', href: '#formats' },
+  { label: 'Эксперт', href: '#expert' },
+  { label: 'Medicine', href: '/medicine/' },
+];
+
+const heroStats = [
+  ['5-7', 'микро-роликов для первого пилота'],
+  ['QR', 'доступ к материалам прямо на объекте'],
+  ['LSR', 'карточки, тесты, напоминания, сценарии'],
+];
 
 const painPoints = [
   {
-    title: 'Инструкции не пробивают внимание',
-    text: 'Текстовые регламенты, плакаты и комиксы быстро превращаются в фон, особенно на площадках с высокой операционной нагрузкой.',
-    icon: Activity,
-  },
-  {
-    title: 'Правила объясняют заново',
-    text: 'HSE-команда тратит часы на повторяющиеся объяснения для новичков, подрядчиков, сервисных бригад и временного персонала.',
+    title: 'Инструктаж быстро превращается в фон',
+    text: 'Люди кивают, расписываются, уходят на смену. А потом в реальной ситуации вспоминают не пункт регламента, а то, что успели увидеть и прожить.',
     icon: ClipboardList,
   },
   {
-    title: 'Нет повторных касаний',
-    text: 'Один инструктаж редко переводит знание в поведение: правила нужно возвращать в поле внимания короткими понятными сценами.',
-    icon: Brain,
+    title: 'Правила приходится объяснять заново',
+    text: 'Новички, подрядчики, временные команды, сезонные риски. У HSE-службы снова и снова уходит время на один и тот же разговор.',
+    icon: Users,
   },
   {
-    title: 'Сложно видеть вовлеченность',
-    text: 'Без QR, тестов и простой аналитики не ясно, кто дошёл до материала, что посмотрел и какие темы требуют усиления.',
-    icon: LineChart,
+    title: 'Красивый плакат не меняет поведение',
+    text: 'Если нет ситуации, ошибки, последствий и правильного действия, материал остается картинкой на стене. Иногда хорошей. Но все равно фоном.',
+    icon: Activity,
+  },
+  {
+    title: 'Сложно увидеть, кто дошел до смысла',
+    text: 'QR-страница, короткий тест и простая аналитика дают хотя бы базовую картину: кто посмотрел, что понял, какие темы надо повторить.',
+    icon: ShieldCheck,
   },
 ];
 
 const formats = [
   {
     title: 'Преддопусковой onboarding',
-    text: '5-7 микро-роликов, тест, QR-доступ и подтверждение прохождения для одной категории людей на одном объекте.',
-    icon: ShieldCheck,
+    text: 'Короткие сцены для конкретной группы людей: подрядчики, новые сотрудники, сервисные бригады, лаборатория, склад, горячие работы.',
+    icon: HardHat,
   },
   {
     title: 'Life Saving Rules',
-    text: 'Карточки, короткие анимации и истории по LSR, которые можно раскладывать по зонам риска и внутренним каналам.',
+    text: 'Карточки, ролики и тесты по критическим правилам. Не лекция на полчаса, а повторяемые касания, которые можно вернуть в поле внимания.',
     icon: CheckCircle2,
   },
   {
-    title: 'Пожарная безопасность',
-    text: 'Сценарии про эвакуацию, огнетушители, вентиляцию, горячие работы и поведение в нештатной ситуации.',
-    icon: Activity,
+    title: 'Маскот кампании',
+    text: 'Персонаж помогает говорить о безопасности без холодного тона приказа. Особенно когда нужно годами возвращать людей к одним и тем же правилам.',
+    icon: Sparkles,
   },
   {
-    title: 'Годовые HSE-кампании',
-    text: 'Единая система тем, визуальный стандарт, календарь касаний, обновления под сезонные риски и реальные происшествия.',
-    icon: Presentation,
+    title: 'Игровые механики',
+    text: 'Соревнование, выбор, последствия, командные сценарии. То, что легче обсуждать после обучения, чем просто перечень запретов.',
+    icon: Gamepad2,
   },
   {
-    title: 'Сопроводительные материалы',
-    text: 'Памятки, тексты для рассылок, страницы под QR, мини-тесты и короткие сообщения для экранов на объекте.',
-    icon: ClipboardList,
-  },
-  {
-    title: 'Драматургичная инфографика',
-    text: 'Не таблицы ради отчёта, а сцены: ситуация, ошибка, последствие, правильное действие и причина, почему это важно.',
+    title: 'QR-страницы и тесты',
+    text: 'Материал можно открыть у стенда, на объекте, в рассылке или после инструктажа. Сразу пройти мини-проверку и оставить след в отчете.',
     icon: PlayCircle,
   },
-];
-
-const pilotSteps = [
-  'Выбираем объект, категорию людей и 5-7 критических правил.',
-  'Разбираем инструкции, LSR, действующие регламенты и реальные ситуации.',
-  'Пишем короткие сценарии в логике: ситуация, ошибка, как правильно.',
-  'Производим ролики, карточки, QR-страницу, тест и материалы для запуска.',
-  'Передаём пакет, помогаем с размещением и собираем первые метрики.',
+  {
+    title: 'Годовая HSE-кампания',
+    text: 'Система тем, визуальный язык, календарь касаний и обновления под сезонные риски, происшествия и внутренние приоритеты компании.',
+    icon: Presentation,
+  },
 ];
 
 const cases = [
   {
-    name: 'Мултон Партнерс',
-    label: 'система HSE-коммуникации',
-    text: 'Разработали визуальную систему для правил охраны труда: персонаж коммуникации, карточки, короткие анимации и сценарии касаний.',
+    title: 'Мултон Партнерс',
+    label: 'маскот + LSR-карточки',
+    image: multonImage,
+    text: 'Нужно было привлечь внимание сотрудников к правилам безопасности. Мы с нуля разработали маскота кампании и формат карточек. Получился не разовый материал, а визуальный инструмент для внутренней коммуникации.',
   },
   {
-    name: 'Юнипро',
-    label: 'QR + мини-ролики по правилам',
-    text: 'Собрали предложение по системе напоминаний: ролики, QR-коды, превью в зонах, повторные контакты и аналитика просмотров.',
+    title: 'Демополигон HSE',
+    label: 'цифровой MVP',
+    image: onboardingImage,
+    text: 'Собрали демонстрационную среду: обучение, сценарии, тесты, роли сотрудника и специалиста. Это можно открыть и потрогать, а не только представить в КП.',
+    href: '/hse/mvp',
   },
   {
-    name: 'ANIX Studio',
-    label: 'сложные B2B-коммуникации',
-    text: 'Команда выпускников МФТИ и бизнес-школы Сбера, участники Sber500, RB Young Awards, конкурса "Новаторы Москвы" и ТОП-100 перспективных стартапов.',
+    title: 'Сцены риска',
+    label: 'визуальные правила',
+    image: ruleLabImage,
+    text: 'Показываем не пункт инструкции, а момент, где человек может ошибиться: тара, лаборатория, вентиляция, пожарная безопасность, подготовка места работ.',
   },
 ];
+
+const expertFacts = [
+  'более 20 лет в охране труда и промышленной безопасности',
+  'генеральный директор ООО Безопасные Условия Труда',
+  'основатель/сооснователь проекта B в Кубе',
+  'автор игровых форматов по охране труда, пожарной и электробезопасности',
+];
+
+const expertSources = [
+  { title: 'Профиль Pressfeed', href: 'https://pressfeed.ru/people/116563' },
+  { title: 'B в Кубе', href: 'https://b-cubed.ru/about-us/' },
+  {
+    title: 'Интервью в Строительной газете',
+    href: 'https://stroygaz.ru/publication/biznes/ozorstvo-okhrannoy-gramoty-igra-pomozhet-bezopasnosti-i-uluchshit-kulturu-proizvodstva/',
+  },
+];
+
+const process = [
+  'Выбираем один объект, одну группу людей и 5-7 правил. Чем меньше расплывчатости, тем быстрее появляется рабочий пилот.',
+  'Разбираем регламенты, LSR, реальные ситуации и типовые ошибки вместе с вашей HSE-командой и профильным экспертом.',
+  'Пишем короткие сцены: человек собирается сделать действие, появляется риск, видно последствие, понятно правильное поведение.',
+  'Производим ролики, карточки, QR-страницу, тесты и материалы для запуска во внутренних каналах.',
+  'Смотрим первые метрики и решаем, что масштабировать: темы, площадки, форматы, маскота, годовую кампанию.',
+];
+
+function IconCard({ item }) {
+  const Icon = item.icon;
+
+  return (
+    <article className="hse-card">
+      <Icon aria-hidden="true" />
+      <h3>{item.title}</h3>
+      <p>{item.text}</p>
+    </article>
+  );
+}
 
 export default function HsePage() {
   return (
     <main className="hse-page">
       <Helmet>
-        <title>ANIX HSE - видео и кампании по охране труда</title>
+        <title>
+          ANIX HSE - видео, onboarding и игровые материалы по охране труда
+        </title>
         <meta
           name="description"
-          content="ANIX создает преддопусковой видео-onboarding, серии креативов, карточки Life Saving Rules, QR-материалы и годовые кампании по охране труда для производственных компаний."
+          content="ANIX HSE делает видео-onboarding, Life Saving Rules, QR-страницы, тесты, маскотов и игровые обучающие материалы по охране труда, промышленной, пожарной и электробезопасности."
         />
-        <link rel="canonical" href="https://studio.anix-ai.pro/hse" />
-        <meta
-          property="og:title"
-          content="ANIX HSE - видео и кампании по охране труда"
-        />
+        <link rel="canonical" href="https://studio.anix-ai.pro/hse/" />
+        <meta property="og:title" content="ANIX HSE" />
         <meta
           property="og:description"
-          content="Переводим правила безопасности в понятные визуальные истории, микро-ролики, карточки, QR-страницы, тесты и кампании для HSE-команд."
+          content="Визуальные и игровые обучающие материалы по охране труда: onboarding, LSR, QR, тесты, маскоты и HSE-кампании."
         />
-        <meta property="og:url" content="https://studio.anix-ai.pro/hse" />
+        <meta property="og:url" content="https://studio.anix-ai.pro/hse/" />
         <meta property="og:type" content="website" />
       </Helmet>
 
-      <section
-        className="hse-hero"
-        style={{
-          backgroundImage: `linear-gradient(90deg, rgba(8, 13, 12, 0.96) 0%, rgba(8, 13, 12, 0.9) 38%, rgba(8, 13, 12, 0.34) 68%, rgba(8, 13, 12, 0.72) 100%), url(${heroImage})`,
-        }}
-      >
-        <nav className="hse-nav" aria-label="ANIX HSE">
+      <header className="hse-header">
+        <nav className="hse-header-inner" aria-label="ANIX HSE">
           <a className="hse-logo" href="/" aria-label="ANIX Studio">
             <img src={logo} alt="ANIX" />
           </a>
-          <a className="hse-nav-link" href="#contact">
-            Обсудить HSE-пилот
-            <ArrowRight aria-hidden="true" size={18} />
+          <div className="hse-nav-links">
+            {navLinks.map((item) => (
+              <a href={item.href} key={item.href}>
+                {item.label}
+              </a>
+            ))}
+          </div>
+          <a
+            className="hse-header-cta"
+            href={telegramUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Написать
           </a>
         </nav>
+      </header>
 
-        <div className="hse-hero-content">
+      <section className="hse-hero" id="top">
+        <div className="hse-hero-copy">
           <p className="hse-eyebrow">
-            Охрана труда / HSE / Промышленная безопасность
+            ANIX HSE / охрана труда и культура безопасности
           </p>
           <h1>
-            Видео-onboarding и креативные кампании, которые переводят правила
-            безопасности в поведение
+            Правила безопасности легче запомнить, когда они выглядят как рабочая
+            ситуация
           </h1>
           <p className="hse-lead">
-            ANIX собирает серии материалов для отделов охраны труда:
-            микро-ролики, карточки Life Saving Rules, QR-страницы, тесты,
-            инфографику, тексты для внутренних каналов и годовые кампании под
-            реальные риски объекта.
+            Мы делаем видео-onboarding, LSR-карточки, QR-страницы, тесты,
+            маскотов и игровые обучающие форматы для компаний, где безопасность
+            не должна оставаться подписью в журнале.
           </p>
-          <div className="hse-hero-actions">
+          <div className="hse-actions">
             <a
               className="hse-button hse-button-primary"
               href={telegramUrl}
               target="_blank"
               rel="noreferrer"
             >
-              <MessageCircle aria-hidden="true" size={20} />
-              Разобрать пилот
+              <MessageCircle aria-hidden="true" />
+              Обсудить HSE-пилот
             </a>
-            <a className="hse-button hse-button-secondary" href="#formats">
-              <PlayCircle aria-hidden="true" size={20} />
-              Что можно собрать
+            <a
+              className="hse-button hse-button-secondary"
+              href={`${process.env.PUBLIC_URL || ''}/hse/mvp`}
+            >
+              <ShieldCheck aria-hidden="true" />
+              Открыть демополигон
             </a>
           </div>
         </div>
+        <aside className="hse-hero-media" aria-label="Визуальный пример HSE">
+          <img
+            src={heroImage}
+            alt="HSE onboarding и визуальные материалы ANIX"
+          />
+          <div className="hse-hero-stats">
+            {heroStats.map(([value, label]) => (
+              <div key={value}>
+                <strong>{value}</strong>
+                <span>{label}</span>
+              </div>
+            ))}
+          </div>
+        </aside>
       </section>
 
-      <section className="hse-signal-strip" aria-label="Формат пилота">
-        <div>
-          <span>01</span>
-          <strong>Один объект</strong>
-          <p>
-            Фокусируемся на конкретной площадке, группе и ближайшем выходе
-            людей.
-          </p>
-        </div>
-        <div>
-          <span>02</span>
-          <strong>5-7 микро-роликов</strong>
-          <p>Короткие сцены по критическим правилам вместо длинной лекции.</p>
-        </div>
-        <div>
-          <span>03</span>
-          <strong>QR + тест + отчёт</strong>
-          <p>
-            Простой доступ, проверка усвоения и базовая аналитика прохождения.
-          </p>
-        </div>
-      </section>
-
-      <section className="hse-band hse-band-muted">
-        <div className="hse-section-head">
-          <p className="hse-eyebrow">Почему это нужно HSE-команде</p>
-          <h2>
-            Правила безопасности проигрывают не потому, что они неважные. Их
-            просто плохо видят, плохо помнят и редко проживают как ситуацию.
-          </h2>
-        </div>
-        <div className="hse-grid hse-pain-grid">
-          {painPoints.map(({ title, text, icon: Icon }) => (
-            <article className="hse-card" key={title}>
-              <Icon aria-hidden="true" />
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="hse-showcase">
-        <div className="hse-showcase-copy">
-          <p className="hse-eyebrow">От инструкции к сцене</p>
-          <h2>
-            Мы показываем не пункт регламента, а момент, где человек может
-            ошибиться.
-          </h2>
-          <p>
-            Сотрудник видит конкретную ситуацию: что он собирается сделать, где
-            появляется риск, чем это заканчивается и какое действие нужно
-            выбрать. Так техника безопасности становится не абстрактной нормой,
-            а узнаваемым рабочим эпизодом.
-          </p>
-          <ul className="hse-check-list">
-            <li>
-              <CheckCircle2 aria-hidden="true" /> сценарии под производство,
-              склад, лабораторию, ремонт, подрядчиков
-            </li>
-            <li>
-              <CheckCircle2 aria-hidden="true" /> визуальные акценты на
-              опасность, запрет и правильное действие
-            </li>
-            <li>
-              <CheckCircle2 aria-hidden="true" /> версии под телефон, экраны,
-              презентации, LMS и внутренние каналы
-            </li>
-          </ul>
-        </div>
-        <div className="hse-image-grid" aria-label="Примеры HSE-визуалов ANIX">
-          <img
-            className="hse-image-large"
-            src={onboardingImage}
-            alt="Видео-onboarding по безопасности на планшете"
-            loading="lazy"
-          />
-          <img
-            src={ruleTaraImage}
-            alt="Анимационная сцена с правилом безопасной работы"
-            loading="lazy"
-          />
-          <img
-            src={ruleLabImage}
-            alt="Анимационная сцена проверки состава на производстве"
-            loading="lazy"
-          />
-          <img
-            src={ventilationImage}
-            alt="Анимационная сцена по вентиляции и пожарной безопасности"
-            loading="lazy"
-          />
-        </div>
-      </section>
-
-      <section
-        className="hse-band hse-mvp-cta-section"
-        aria-labelledby="hse-mvp-cta-title"
-      >
-        <div className="hse-mvp-cta">
+      <section className="hse-section hse-intro">
+        <div className="hse-container hse-two-col">
           <div>
-            <p className="hse-eyebrow">Конкурсный MVP</p>
-            <h2 id="hse-mvp-cta-title">Демополигон цифрового решения</h2>
-            <p>Единая визуальная система обучения по охране труда</p>
+            <p className="hse-eyebrow">Проблема</p>
+            <h2>
+              Охрана труда проигрывает не потому, что правила слабые. Их плохо
+              проживают.
+            </h2>
           </div>
-          <a
-            className="hse-button hse-button-primary"
-            href={`${process.env.PUBLIC_URL || ''}/hse/mvp`}
-          >
-            <ShieldCheck aria-hidden="true" size={20} />
-            Открыть демополигон
-            <ArrowRight aria-hidden="true" size={18} />
-          </a>
-        </div>
-      </section>
-      <section className="hse-band" id="formats">
-        <div className="hse-section-head">
-          <p className="hse-eyebrow">Что можем собрать</p>
-          <h2>От преддопускового модуля до годовой кампании по охране труда</h2>
-        </div>
-        <div className="hse-grid hse-format-grid">
-          {formats.map(({ title, text, icon: Icon }) => (
-            <article className="hse-card hse-format-card" key={title}>
-              <Icon aria-hidden="true" />
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </article>
-          ))}
+          <div className="hse-rich-text">
+            <p>
+              В реальности сотрудник вспоминает не номер пункта. Он вспоминает
+              сцену: как выглядит опасная ситуация, что он делает руками, где
+              запрет, где нормальное действие, чем кончится ошибка.
+            </p>
+            <p>
+              Поэтому мы переводим требования в короткие визуальные эпизоды. Без
+              попытки заменить службу ОТ. С ней вместе.
+            </p>
+          </div>
         </div>
       </section>
 
-      <section className="hse-band hse-pilot">
-        <div className="hse-pilot-copy">
-          <p className="hse-eyebrow">Первый продукт</p>
-          <h2>
-            Пилот без тяжёлой интеграции: быстро проверить пользу на одном
-            объекте
-          </h2>
-          <p>
-            Стартуем с ограниченного модуля, который можно купить и запустить
-            без перестройки всей системы обучения. Обязательные процедуры,
-            нормативная ответственность и утверждение содержания остаются в
-            контуре клиента; ANIX отвечает за драматургию, визуальный язык,
-            производство и упаковку материалов.
-          </p>
-        </div>
-        <ol className="hse-process-list">
-          {pilotSteps.map((step, index) => (
-            <li key={step}>
-              <span>{String(index + 1).padStart(2, '0')}</span>
-              <p>{step}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="hse-band hse-proof">
-        <div className="hse-section-head">
-          <p className="hse-eyebrow">Опыт и доверие</p>
-          <h2>Мы уже продавали HSE-коммуникации и сложные B2B-визуалы</h2>
-        </div>
-        <div className="hse-grid hse-case-grid">
-          {cases.map((item) => (
-            <article className="hse-case" key={item.name}>
-              <span>{item.label}</span>
-              <h3>{item.name}</h3>
-              <p>{item.text}</p>
-            </article>
-          ))}
-        </div>
-        <div className="hse-recognition" aria-label="Признание ANIX">
-          <span>Sber500</span>
-          <span>RB Young Awards</span>
-          <span>Новаторы Москвы</span>
-          <span>ТОП-100 перспективных стартапов</span>
-          <span>МФТИ</span>
+      <section className="hse-section">
+        <div className="hse-container">
+          <div className="hse-section-head">
+            <p className="hse-eyebrow">
+              Почему обычные материалы слабо держатся
+            </p>
+            <h2>
+              Сотрудник должен узнать себя в ситуации, иначе материал быстро
+              становится фоном
+            </h2>
+          </div>
+          <div className="hse-card-grid hse-pain-grid">
+            {painPoints.map((item) => (
+              <IconCard item={item} key={item.title} />
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="hse-expert-band">
-        <div>
-          <ShieldCheck aria-hidden="true" />
-          <h2>Экспертность по охране труда встроена в процесс</h2>
-          <p>
-            Мы работаем вместе с HSE-службой клиента и профильными экспертами:
-            проверяем смысл, не берём на себя нормативную ответственность за
-            допуск, фиксируем правила правок и не превращаем пилот в бесконечное
-            согласование.
-          </p>
+      <section className="hse-section hse-showcase">
+        <div className="hse-container hse-showcase-layout">
+          <div>
+            <p className="hse-eyebrow">От инструкции к сцене</p>
+            <h2>Показываем момент, где человек может ошибиться</h2>
+            <p>
+              Тара, лаборатория, вентиляция, пожарная безопасность, вход на
+              объект. Чем конкретнее ситуация, тем проще сотруднику потом
+              заметить её в жизни.
+            </p>
+            <ul className="hse-check-list">
+              <li>
+                <CheckCircle2 aria-hidden="true" /> сценарии под производство,
+                склад, лабораторию, подрядчиков и сервисные бригады
+              </li>
+              <li>
+                <CheckCircle2 aria-hidden="true" /> версии под телефон, экран,
+                LMS, презентацию и внутренние каналы
+              </li>
+              <li>
+                <CheckCircle2 aria-hidden="true" /> карточки и тесты вокруг
+                роликов, чтобы правило вернулось несколько раз
+              </li>
+            </ul>
+          </div>
+          <div className="hse-image-grid" aria-label="Примеры HSE-визуалов">
+            <img
+              className="hse-image-large"
+              src={onboardingImage}
+              alt="Видео-onboarding по безопасности"
+              loading="lazy"
+            />
+            <img
+              src={ruleTaraImage}
+              alt="Правило безопасной работы с тарой"
+              loading="lazy"
+            />
+            <img
+              src={ruleLabImage}
+              alt="HSE-сцена для лаборатории"
+              loading="lazy"
+            />
+            <img
+              src={ventilationImage}
+              alt="Сцена по вентиляции и пожарной безопасности"
+              loading="lazy"
+            />
+          </div>
         </div>
-        <ul>
-          <li>содержание предоставляет и утверждает служба клиента</li>
-          <li>внешний эксперт может рецензировать сценарии и формулировки</li>
-          <li>правки, форматы и объём работ ограничены заранее</li>
-          <li>масштабирование идёт после измеримого пилота</li>
-        </ul>
+      </section>
+
+      <section className="hse-section" id="formats">
+        <div className="hse-container">
+          <div className="hse-section-head">
+            <p className="hse-eyebrow">Форматы</p>
+            <h2>Можно начать с маленького пилота, а потом вырастить систему</h2>
+          </div>
+          <div className="hse-card-grid hse-format-grid">
+            {formats.map((item) => (
+              <IconCard item={item} key={item.title} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="hse-section hse-cases">
+        <div className="hse-container">
+          <div className="hse-section-head hse-section-head-row">
+            <div>
+              <p className="hse-eyebrow">Кейсы и демо</p>
+              <h2>
+                Не только обещание. Уже есть визуальные материалы и демополигон
+              </h2>
+            </div>
+            <p>
+              В HSE важно быстро увидеть, как это будет работать: карточка,
+              ролик, QR, тест, путь сотрудника.
+            </p>
+          </div>
+          <div className="hse-case-grid">
+            {cases.map((item) => {
+              const Wrapper = item.href ? 'a' : 'article';
+              const props = item.href ? { href: item.href } : {};
+              return (
+                <Wrapper className="hse-case" key={item.title} {...props}>
+                  <img
+                    src={item.image}
+                    alt={`Кейс ANIX HSE: ${item.title}`}
+                    loading="lazy"
+                  />
+                  <div>
+                    <span>{item.label}</span>
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                    {item.href ? <ArrowRight aria-hidden="true" /> : null}
+                  </div>
+                </Wrapper>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="hse-section hse-expert" id="expert">
+        <div className="hse-container hse-expert-layout">
+          <div className="hse-expert-photo">
+            <img
+              src={alexeyPhoto}
+              alt="Алексей Лычко, эксперт ANIX по охране труда"
+              loading="lazy"
+            />
+          </div>
+          <div className="hse-expert-copy">
+            <p className="hse-eyebrow">Эксперт по охране труда</p>
+            <h2>
+              Алексей Лычко помогает ANIX не путать красивый HSE-ролик с
+              полезным обучением
+            </h2>
+            <p>
+              Алексей работает на стыке охраны труда, промышленной безопасности,
+              пожарной и электробезопасности, культуры безопасности и игрового
+              обучения. Его роль в проектах ANIX простая и очень важная:
+              проверить, что сценарий связан с реальным риском, говорит на языке
+              ОТ и не превращает безопасность в декоративную анимацию.
+            </p>
+            <div className="hse-fact-grid">
+              {expertFacts.map((fact) => (
+                <span key={fact}>
+                  <BadgeCheck aria-hidden="true" />
+                  {fact}
+                </span>
+              ))}
+            </div>
+            <div className="hse-source-row">
+              {expertSources.map((item) => (
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  key={item.href}
+                >
+                  {item.title}
+                  <ExternalLink aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="hse-section hse-bcube">
+        <div className="hse-container hse-bcube-inner">
+          <Gamepad2 aria-hidden="true" />
+          <div>
+            <p className="hse-eyebrow">Почему игровой подход здесь уместен</p>
+            <h2>
+              B в Кубе показывает ту же мысль: безопасность лучше запоминается
+              через действие
+            </h2>
+            <p>
+              У проекта B в Кубе заявлены 16 000+ обученных участников и 110+
+              турниров. Это не метрики ANIX, но хороший сигнал подхода Алексея:
+              обучение можно делать не как зубрежку, а как ситуацию, где есть
+              выбор, риск, последствия и командное обсуждение.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="hse-section hse-process">
+        <div className="hse-container hse-process-layout">
+          <div>
+            <p className="hse-eyebrow">Процесс</p>
+            <h2>Пилот должен быть маленьким, понятным и проверяемым</h2>
+            <p>
+              Если начать сразу с большой платформы, проект может утонуть в
+              согласованиях. Мы предлагаем сначала собрать один работающий
+              контур.
+            </p>
+          </div>
+          <ol className="hse-process-list">
+            {process.map((item, index) => (
+              <li key={item}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <p>{item}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
       </section>
 
       <section className="hse-final" id="contact">
-        <div className="hse-final-inner">
-          <p className="hse-eyebrow">Следующий шаг</p>
-          <h2>
-            Выберите одну группу людей и один риск. Мы покажем, как из этого
-            собрать HSE-пилот.
-          </h2>
-          <p>
-            Напишите, что сейчас сильнее всего нагружает вашу HSE-команду:
-            подрядчики, новые сотрудники, пожарная безопасность, LSR, повторные
-            нарушения, склад, лаборатория или сезонная кампания. Мы предложим
-            формат, состав материалов и первый сценарий.
-          </p>
-          <a
-            className="hse-button hse-button-primary"
-            href={telegramUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <MessageCircle aria-hidden="true" size={20} />
-            Написать в Telegram
-          </a>
+        <div className="hse-container hse-final-inner">
+          <div>
+            <p className="hse-eyebrow">Следующий шаг</p>
+            <h2>
+              Выберите одну группу людей и один риск. Мы покажем, как из этого
+              собрать HSE-пилот.
+            </h2>
+          </div>
+          <div className="hse-final-actions">
+            <a
+              className="hse-button hse-button-light"
+              href={telegramUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <MessageCircle aria-hidden="true" />
+              Telegram
+            </a>
+            <a className="hse-button hse-button-outline-dark" href={emailUrl}>
+              <Mail aria-hidden="true" />
+              Email
+            </a>
+          </div>
         </div>
       </section>
+
+      <footer className="hse-footer">
+        <div className="hse-container hse-footer-inner">
+          <a href="/" className="hse-footer-brand">
+            <img src={logo} alt="ANIX" />
+          </a>
+          <span>ANIX HSE</span>
+          <span>
+            <ShieldCheck aria-hidden="true" /> visual safety learning
+          </span>
+          <a href="/medicine/">
+            ANIX Medicine <ArrowRight aria-hidden="true" />
+          </a>
+        </div>
+      </footer>
     </main>
   );
 }

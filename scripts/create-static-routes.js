@@ -21,6 +21,7 @@ const routes = [
   'hse/mvp/integrations',
   'hse/mvp/support',
   'design1test',
+  'design_old',
 ];
 
 if (!fs.existsSync(indexFile)) {

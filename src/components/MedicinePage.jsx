@@ -1,1 +1,563 @@
-import React from 'react';import { Helmet } from 'react-helmet';import { Activity, ArrowRight, Brain, CheckCircle2, ClipboardList, HeartPulse, LineChart, MessageCircle, Microscope, Network, Pill, PlayCircle, Presentation, ShieldCheck, Stethoscope } from 'lucide-react';import './MedicinePage.css';import logo from '../images/logoanix.png';import hemoai from '../images/hemoai.png';import kolbox from '../images/kolbox.png';import tpes from '../images/TPES.png';import visualOne from '../images/1.png';import visualThree from '../images/3.png';const telegramUrl='https://t.me/m/i23MvBuLOGJi';const audiences=[{title:'Врачи и HCP',text:'Показываем механизм действия, клинический сценарий и пользу без перегруза слайдами.',icon:Stethoscope},{title:'Пациенты',text:'Переводим сложную терапию на человеческий язык: страхи, путь, ожидания, доверие.',icon:HeartPulse},{title:'Медпредставители',text:'Собираем материалы, которые помогают быстро объяснять препарат и оставлять понятный follow-up.',icon:ClipboardList},{title:'Medtech и biotech sales',text:'Упаковываем один workflow так, чтобы клиника поняла применение решения на демо и пилоте.',icon:Network}];const formats=[{title:'Серии креативов',text:'Портфельные кампании для нескольких препаратов, каналов и аудиторий с общей производственной рамкой.',icon:Pill},{title:'Молекулярные взаимодействия',text:'Визуализируем механизм действия, рецепторы, клеточные процессы и причинно-следственные связи.',icon:Microscope},{title:'Dramatic infographics',text:'Инфографика не как таблица, а как сцена: конфликт, доказательство, развязка, следующий шаг.',icon:Activity},{title:'Visual sales kit',text:'Один сценарий применения продукта для конференции, демо, релиза, встречи и follow-up.',icon:Presentation},{title:'Обучающие материалы',text:'Короткие объясняющие модули для врачей, представителей, отделов продаж и внутренних команд.',icon:Brain},{title:'Запуск и аналитика',text:'Помогаем встроить ролики в воронку, проверять реакцию аудитории и усиливать работающие связки.',icon:LineChart}];const process=['Находим один сценарий, где визуальное непонимание тормозит продажу или доверие.','Собираем смысловую карту: аудитории, claims, возражения, согласующие, каналы применения.','Пишем драматургию и визуальный язык: что зритель должен понять, почувствовать и сделать.','Производим master-материал и адаптации под врачей, пациентов, медпредов или конференцию.','Проходим medical/product validation с экспертом на стороне клиента и фиксируем правила правок.','Передаём пакет для демо, лендинга, рассылок, соцсетей, стенда и follow-up после встречи.'];const proof=[{name:'ХимРар',label:'фарма и пациентское объяснение',text:'Пакет роликов для врача и пациента: сложный препарат превращается в понятную систему касаний.'},{name:'Hemotech AI',label:'medtech / AI-диагностика',text:'Визуальный материал для конференции и лендинга, чтобы показывать продукт врачам и клиникам.'},{name:'Dentomo и Dental PRO',label:'медицинские продажи',text:'КП и ролики как sales enablement: объяснить сложный продукт до звонка и снизить нагрузку на команду.'}];const gates=['medical validator со стороны клиента','ограниченный scope и понятные правки','корректные claims без самовольных медицинских обещаний','версии под врачей, пациентов и коммерческие касания'];const card=(items,extra='')=>items.map(({title,text,icon:Icon})=><article className={extra?'medicine-card '+extra:'medicine-card'} key={title}><Icon aria-hidden='true'/><h3>{title}</h3><p>{text}</p></article>);export default function MedicinePage(){return <main className='medicine-page'><Helmet><title>ANIX Medicine — визуальные кампании для фармы, medtech и биотеха</title><meta name='description' content='ANIX создает серии креативов, explainer-ролики, visual sales kits и драматургичную инфографику для фармы, medtech, biotech, врачей, пациентов и медпредставителей.'/><link rel='canonical' href='https://studio.anix-ai.pro/medicine'/><meta property='og:title' content='ANIX Medicine — визуальные кампании для медицины'/><meta property='og:description' content='Объясняем сложную медицину, фарму, medtech и biotech через ролики, серии креативов, молекулярные сцены и инфографику.'/><meta property='og:url' content='https://studio.anix-ai.pro/medicine'/><meta property='og:type' content='website'/></Helmet><section className='medicine-hero'><nav className='medicine-nav' aria-label='ANIX Medicine'><a className='medicine-logo' href='/' aria-label='ANIX Studio'><img src={logo} alt='ANIX'/></a><a className='medicine-nav-link' href='#contact'>Обсудить проект<ArrowRight aria-hidden='true' size={18}/></a></nav><div className='medicine-hero-grid'><div className='medicine-hero-copy'><p className='medicine-eyebrow'>Фарма / MedTech / Biotech</p><h1>Визуальные кампании, которые помогают врачам, пациентам и клиникам понять сложную медицину</h1><p className='medicine-lead'>ANIX собирает целые серии креативов: от механизма действия препарата и molecular storytelling до материалов для медпредставителей, конференций, демо и follow-up после встречи.</p><div className='medicine-hero-actions'><a className='medicine-button medicine-button-primary' href={telegramUrl} target='_blank' rel='noreferrer'><MessageCircle aria-hidden='true' size={20}/>Разобрать медицинский продукт</a><a className='medicine-button medicine-button-secondary' href='#formats'><PlayCircle aria-hidden='true' size={20}/>Посмотреть форматы</a></div><div className='medicine-hero-proof' aria-label='Опыт ANIX'><span>ХимРар</span><span>Hemotech AI</span><span>Dentomo</span><span>Dental PRO</span></div></div><div className='medicine-visual-stage' aria-label='Примеры визуальных медицинских материалов'><div className='medicine-stage-main'><img src={visualThree} alt='Визуальный стиль ANIX для сложных продуктов'/><div className='medicine-stage-overlay'><span>MOA</span><strong>молекула → клетка → клинический смысл</strong></div></div><div className='medicine-stage-strip'><img src={hemoai} alt='Medtech визуальный кейс ANIX'/><img src={kolbox} alt='B2B explainer кейс ANIX'/><img src={tpes} alt='Инфографика и визуальный кейс ANIX'/></div></div></div></section><section className='medicine-band medicine-band-muted' id='audiences'><div className='medicine-section-head'><p className='medicine-eyebrow'>Не один ролик, а система касаний</p><h2>Разные аудитории должны понять разный смысл</h2></div><div className='medicine-audience-grid'>{card(audiences)}</div></section><section className='medicine-band medicine-funnel'><div className='medicine-funnel-copy'><p className='medicine-eyebrow'>Что меняется в воронке</p><h2>КП, сайт и демо перестают быть первым объяснением</h2><p>Сначала человек видит понятную визуальную историю, примеряет проблему на себя, разбирается в механике продукта и приходит к разговору уже с вопросами. Так материал работает и до встречи, и на ней, и после неё.</p></div><div className='medicine-funnel-steps' aria-label='Путь материала в воронке'>{['Первое касание','Демо / конференция','Medical validation','Follow-up'].map((step,index)=><div className='medicine-funnel-step' key={step}><span>{String(index+1).padStart(2,'0')}</span><strong>{step}</strong></div>)}</div></section><section className='medicine-band' id='formats'><div className='medicine-section-head'><p className='medicine-eyebrow'>Что можем собрать</p><h2>От молекулярной сцены до серии материалов под портфель</h2></div><div className='medicine-format-grid'>{card(formats,'medicine-format-card')}</div></section><section className='medicine-showcase'><div className='medicine-showcase-copy'><p className='medicine-eyebrow'>Визуальная драматургия</p><h2>Мы объясняем не “что нарисовано”, а почему это важно</h2><p>В медицинских темах зрителю мало увидеть красивую картинку. Ему нужно понять причинность: что происходит в организме, почему решение меняет сценарий лечения или диагностики, где место врача, пациента, клиники и продукта.</p><ul className='medicine-check-list'><li><CheckCircle2 aria-hidden='true'/> сценарии для врачей и пациентов</li><li><CheckCircle2 aria-hidden='true'/> визуальные метафоры для сложной науки</li><li><CheckCircle2 aria-hidden='true'/> адаптации под лендинг, стенд, рассылку, соцсети</li></ul></div><div className='medicine-mechanism' aria-label='Схема объяснения молекулярного взаимодействия'><img src={visualOne} alt='Сценарный визуал ANIX'/><div className='medicine-mechanism-layer medicine-layer-a'>рецептор</div><div className='medicine-mechanism-layer medicine-layer-b'>сигнальный путь</div><div className='medicine-mechanism-layer medicine-layer-c'>клинический эффект</div></div></section><section className='medicine-band medicine-proof'><div className='medicine-section-head'><p className='medicine-eyebrow'>Опыт и доверие</p><h2>У ANIX уже покупали медицинские и сложные B2B-визуалы</h2></div><div className='medicine-proof-grid'>{proof.map(item=><article className='medicine-proof-item' key={item.name}><span>{item.label}</span><h3>{item.name}</h3><p>{item.text}</p></article>)}</div><div className='medicine-recognition'><span>Sber500</span><span>RB Young Awards</span><span>Новаторы Москвы</span><span>ТОП-100 перспективных стартапов</span><span>МФТИ</span></div></section><section className='medicine-band medicine-process'><div className='medicine-section-head'><p className='medicine-eyebrow'>Как работаем</p><h2>Ограниченный управляемый процесс вместо бесконечного продакшена</h2></div><ol className='medicine-process-list'>{process.map((item,index)=><li key={item}><span>{index+1}</span><p>{item}</p></li>)}</ol></section><section className='medicine-compliance'><div><ShieldCheck aria-hidden='true'/><h2>Медицинская корректность встроена в процесс</h2><p>Мы не заменяем medical, legal и regulatory экспертику клиента. Наша зона ответственности — ясная драматургия, визуальный язык, производство и адаптации. Научные утверждения проходят через валидатора и согласующих.</p></div><ul>{gates.map(gate=><li key={gate}>{gate}</li>)}</ul></section><section className='medicine-final' id='contact'><div className='medicine-final-inner'><p className='medicine-eyebrow'>Следующий шаг</p><h2>Разберём один медицинский продукт и найдём, где визуал усилит продажи или доверие</h2><p>Напишите, что продвигаете: препарат, платформу, диагностику, оборудование, biotech-разработку или образовательный материал. Мы вернёмся с форматом, аудиторией, scope и первым сценарием применения.</p><a className='medicine-button medicine-button-primary' href={telegramUrl} target='_blank' rel='noreferrer'><MessageCircle aria-hidden='true' size={20}/>Написать в Telegram</a></div></section></main>;}
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import {
+  ArrowRight,
+  BadgeCheck,
+  BookOpen,
+  Brain,
+  CheckCircle2,
+  ExternalLink,
+  GraduationCap,
+  Mail,
+  MessageCircle,
+  Microscope,
+  Pill,
+  PlayCircle,
+  Presentation,
+  ShieldCheck,
+  Sparkles,
+  Stethoscope,
+} from 'lucide-react';
+import './MedicinePage.css';
+import logo from '../images/logoanix.png';
+import hemotechImage from '../images/cases/hemotech-ai.webp';
+import mosfarmaImage from '../images/cases/mosfarma.webp';
+import clappyImage from '../images/cases/clappy.webp';
+import andreyPhoto from '../images/experts/andrey-tsarev-scientist.webp';
+
+const telegramUrl = 'https://t.me/anix_helper';
+const emailUrl = 'mailto:anix.ai@yandex.ru';
+
+const navLinks = [
+  { label: 'Главная', href: '/' },
+  { label: 'Форматы', href: '#formats' },
+  { label: 'Научный директор', href: '#expert' },
+  { label: 'HSE', href: '/hse/' },
+];
+
+const heroStats = [
+  ['MOA', 'механизм действия без слайда на 14 стрелок'],
+  ['HCP', 'ролики и визуалы для врачей, клиник, конференций'],
+  ['PDB', 'структурный бэкграунд внутри команды'],
+];
+
+const formats = [
+  {
+    title: 'Механизм действия препарата',
+    text: 'Берем молекулу, рецептор, клеточный процесс или каскад и собираем сцену, где зритель понимает причинность. Что связывается, что меняется, почему это важно врачу.',
+    icon: Microscope,
+  },
+  {
+    title: 'Ролик для конференции',
+    text: 'Короткий материал для стенда, выступления или встречи с врачами. Без тяжелого рекламного пафоса. Смысл, ритм, визуальная память.',
+    icon: Presentation,
+  },
+  {
+    title: 'Visual sales kit',
+    text: 'Один главный ролик, версии для письма, демо, Telegram, лендинга, презентации и follow-up. Чтобы команда не объясняла с нуля каждый раз.',
+    icon: PlayCircle,
+  },
+  {
+    title: 'Маскот препарата',
+    text: 'Когда бренду нужна мягкость и узнаваемость: персонаж, который помогает говорить с врачами или пациентами без холодного корпоративного лица.',
+    icon: Sparkles,
+  },
+  {
+    title: 'Материалы для медпредов',
+    text: 'Сценарии первого касания, короткие видео, карточки и визуальные объяснения, которые проще отправить после встречи, чем пересказывать голосом.',
+    icon: Stethoscope,
+  },
+  {
+    title: 'Серия под портфель',
+    text: 'Если препаратов несколько, собираем общую визуальную систему. Не набор разрозненных файлов, а нормальный язык коммуникации.',
+    icon: Pill,
+  },
+];
+
+const cases = [
+  {
+    title: 'Hemotech AI',
+    label: 'medtech / AI-диагностика',
+    image: hemotechImage,
+    text: 'Нужно было быстро снизить недоверие к инновационному продукту. Мы сделали спокойный минималистичный ролик-визитку. Его стиль потом ушел в презентации и стал частью бренда.',
+    result:
+      'отклик и охваты выросли в несколько десятков раз по оценке фаундера',
+  },
+  {
+    title: 'Мосфарма',
+    label: 'фарма / ТВ-реклама',
+    image: mosfarmaImage,
+    text: 'У бренда уже были персонажи, но они выглядели холодно. Мы сохранили узнаваемость и сделали героев живее, теплее, ближе к классическому рекламному ролику.',
+    result: 'ролик прошел требования Первого канала',
+  },
+  {
+    title: 'Clappy',
+    label: 'сложный B2B2C-продукт',
+    image: clappyImage,
+    text: 'Это не фарма, но задача очень похожая: продукт непонятен сразу двум аудиториям. Ролик собрал одну ясную историю и помог довести компанию до первых пилотов.',
+    result: 'отклик на письма вырос в несколько десятков раз',
+  },
+];
+
+const scienceTags = [
+  'структурная биология',
+  'молекулярная биофизика',
+  'ЯМР-структуры',
+  'антимикробные пептиды',
+  'Ly6/uPAR-белки',
+  'PDB-структуры',
+];
+
+const education = [
+  {
+    title: 'ФБМФ МФТИ',
+    text: 'бакалавриат 2017, магистратура 2019, аспирантура 2023',
+    href: 'https://mipt.ru/',
+  },
+  {
+    title: 'Бизнес-школа МФТИ',
+    text: '2023',
+    href: 'https://business.mipt.ru/',
+  },
+];
+
+const publications = [
+  {
+    title:
+      'Novel Antimicrobial Peptides from the Arctic Polychaeta Nicomache minor',
+    venue: 'Marine Drugs, 2018',
+    href: 'https://doi.org/10.3390/md16110401',
+  },
+  {
+    title:
+      'Recombinant Production and Structural Studies of Human Lypd6 and Lypd6b',
+    venue: 'Russian Journal of Bioorganic Chemistry, 2017',
+    href: 'https://doi.org/10.1134/S1068162017060127',
+  },
+  {
+    title: 'Structural Diversity and Dynamics of Human Three-Finger Proteins',
+    venue: 'International Journal of Molecular Sciences, 2020',
+    href: 'https://doi.org/10.3390/ijms21197280',
+  },
+  {
+    title: 'Structure Elucidation and Functional Studies of Capitellacin',
+    venue: 'Marine Drugs, 2020',
+    href: 'https://doi.org/10.3390/md18120620',
+  },
+  {
+    title: 'Specific Binding of Lichenicidin to Lipid II',
+    venue: 'International Journal of Molecular Sciences, 2023',
+    href: 'https://doi.org/10.3390/ijms24021332',
+  },
+];
+
+const structures = [
+  {
+    code: '6HN9',
+    title: 'Nicomicin-1',
+    href: 'https://www.rcsb.org/structure/6HN9',
+  },
+  {
+    code: '7ALD',
+    title: 'Capitellacin',
+    href: 'https://www.rcsb.org/structure/7ALD',
+  },
+  {
+    code: '6IB6',
+    title: 'Human Lypd6',
+    href: 'https://www.rcsb.org/structure/6IB6',
+  },
+  {
+    code: '6ZSO',
+    title: 'Human Lypd6b',
+    href: 'https://www.rcsb.org/structure/6ZSO',
+  },
+];
+
+const process = [
+  'Сначала разбираем, где ломается понимание: механизм, доверие, claims, конференционный сценарий или первый контакт с врачом.',
+  'Собираем научную карту. Что можно показывать, что нельзя обещать, где нужна валидация medical или regulatory команды клиента.',
+  'Пишем сцену. Не дикторский текст поверх картинок, а маршрут: молекула, ткань, пациентский или клинический смысл.',
+  'Делаем master-ролик и адаптации. Горизонталь, вертикаль, слайды, стенд, рассылка, карточки, обложки, короткие фрагменты.',
+  'Передаем материалы так, чтобы ими реально пользовались: на встрече, после встречи, на сайте, конференции и внутри команды.',
+];
+
+function IconCard({ item }) {
+  const Icon = item.icon;
+
+  return (
+    <article className="medicine-card">
+      <Icon aria-hidden="true" />
+      <h3>{item.title}</h3>
+      <p>{item.text}</p>
+    </article>
+  );
+}
+
+function ExternalRow({ title, meta, href }) {
+  return (
+    <a
+      className="medicine-link-row"
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <span>
+        <strong>{title}</strong>
+        <small>{meta}</small>
+      </span>
+      <ExternalLink aria-hidden="true" />
+    </a>
+  );
+}
+
+export default function MedicinePage() {
+  return (
+    <main className="medicine-page">
+      <Helmet>
+        <title>
+          ANIX Medicine - визуальная коммуникация для фармы и MedTech
+        </title>
+        <meta
+          name="description"
+          content="ANIX Medicine делает ролики, visual sales kits, маскотов и визуальные системы для фармы, MedTech и biotech. Механизмы действия, конференции, врачи, медпреды и научная валидация."
+        />
+        <link rel="canonical" href="https://studio.anix-ai.pro/medicine/" />
+        <meta property="og:title" content="ANIX Medicine" />
+        <meta
+          property="og:description"
+          content="Визуальная коммуникация для фармы, MedTech и biotech: механизмы действия, конференционные ролики, маскоты и visual sales kits."
+        />
+        <meta
+          property="og:url"
+          content="https://studio.anix-ai.pro/medicine/"
+        />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
+      <header className="medicine-header">
+        <nav className="medicine-header-inner" aria-label="ANIX Medicine">
+          <a className="medicine-logo" href="/" aria-label="ANIX Studio">
+            <img src={logo} alt="ANIX" />
+          </a>
+          <div className="medicine-nav-links">
+            {navLinks.map((item) => (
+              <a href={item.href} key={item.href}>
+                {item.label}
+              </a>
+            ))}
+          </div>
+          <a
+            className="medicine-header-cta"
+            href={telegramUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Написать
+          </a>
+        </nav>
+      </header>
+
+      <section className="medicine-hero" id="top">
+        <div className="medicine-hero-copy">
+          <p className="medicine-eyebrow">
+            ANIX Medicine / фарма, MedTech, biotech
+          </p>
+          <h1>
+            Показываем механизм препарата так, чтобы его не приходилось
+            досказывать десятью слайдами
+          </h1>
+          <p className="medicine-lead">
+            Врач не обязан угадывать, что бренд имел в виду. Медпред не должен
+            каждый раз спасать смысл голосом. Мы собираем ролики, маскотов и
+            visual sales kits для продуктов, где важно не просто красиво, а
+            точно.
+          </p>
+          <div className="medicine-actions">
+            <a
+              className="medicine-button medicine-button-primary"
+              href={telegramUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <MessageCircle aria-hidden="true" />
+              Разобрать продукт
+            </a>
+            <a
+              className="medicine-button medicine-button-secondary"
+              href="#expert"
+            >
+              <Microscope aria-hidden="true" />
+              Научный бэкграунд
+            </a>
+          </div>
+        </div>
+        <aside className="medicine-hero-panel" aria-label="Фокус ANIX Medicine">
+          {heroStats.map(([value, label]) => (
+            <div key={value}>
+              <strong>{value}</strong>
+              <span>{label}</span>
+            </div>
+          ))}
+        </aside>
+      </section>
+
+      <section className="medicine-section medicine-intro">
+        <div className="medicine-container medicine-two-col">
+          <div>
+            <p className="medicine-eyebrow">Где обычно больно</p>
+            <h2>
+              Препарат вроде понятен внутри команды. Снаружи все уже не так
+              гладко.
+            </h2>
+          </div>
+          <div className="medicine-rich-text">
+            <p>
+              На конференции мало времени. В письме мало внимания. У врача уже
+              есть контекст, усталость и скепсис. Поэтому медицинский визуал
+              должен быстро собрать сцену: что происходит в организме, где точка
+              приложения, почему этот продукт вообще заслуживает разговора.
+            </p>
+            <p>
+              Мы не заменяем medical-команду клиента. Мы помогаем сделать так,
+              чтобы утвержденная научная логика не умерла в тяжёлой презентации.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="medicine-section" id="formats">
+        <div className="medicine-container">
+          <div className="medicine-section-head">
+            <p className="medicine-eyebrow">Форматы</p>
+            <h2>
+              Из одного сложного объяснения можно собрать целую систему касаний
+            </h2>
+          </div>
+          <div className="medicine-card-grid">
+            {formats.map((item) => (
+              <IconCard item={item} key={item.title} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="medicine-section medicine-cases">
+        <div className="medicine-container">
+          <div className="medicine-section-head medicine-section-head-row">
+            <div>
+              <p className="medicine-eyebrow">Опыт</p>
+              <h2>Фарма, MedTech и похожие по сложности продукты</h2>
+            </div>
+            <p>
+              В этих проектах важен не только визуальный стиль. Важна точка, где
+              человек перестает сопротивляться и начинает понимать.
+            </p>
+          </div>
+          <div className="medicine-case-grid">
+            {cases.map((item) => (
+              <article className="medicine-case" key={item.title}>
+                <img
+                  src={item.image}
+                  alt={`Кейс ANIX: ${item.title}`}
+                  loading="lazy"
+                />
+                <div>
+                  <span>{item.label}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                  <strong>{item.result}</strong>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="medicine-section medicine-expert" id="expert">
+        <div className="medicine-container medicine-expert-layout">
+          <div className="medicine-expert-photo">
+            <img
+              src={andreyPhoto}
+              alt="Андрей Царёв, научно-креативный директор ANIX"
+              loading="lazy"
+            />
+          </div>
+          <div className="medicine-expert-copy">
+            <p className="medicine-eyebrow">Научно-креативный директор</p>
+            <h2>
+              Андрей Царёв помогает превращать молекулярную сложность в
+              нормальную визуальную коммуникацию
+            </h2>
+            <p>
+              У Андрея есть реальный structural biology track record: ФБМФ МФТИ,
+              лаборатория структурной биологии ионных каналов ИБХ РАН,
+              публикации по молекулярной биофизике, ЯМР-структурам,
+              антимикробным пептидам и Ly6/uPAR-белкам. Поэтому в фарма-проектах
+              мы не рисуем научную фантазию поверх бренда. Сначала разбираемся,
+              что происходит на уровне молекулы и где это можно показать честно.
+            </p>
+            <div className="medicine-tag-row">
+              {scienceTags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </div>
+            <div className="medicine-education-grid">
+              {education.map((item) => (
+                <a
+                  className="medicine-education-card"
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  key={item.title}
+                >
+                  <GraduationCap aria-hidden="true" />
+                  <span>{item.title}</span>
+                  <small>{item.text}</small>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="medicine-section medicine-science-links">
+        <div className="medicine-container medicine-link-layout">
+          <div>
+            <p className="medicine-eyebrow">Публикации</p>
+            <h2>Кликабельные научные статьи</h2>
+            <div className="medicine-link-list">
+              {publications.map((item) => (
+                <ExternalRow
+                  title={item.title}
+                  meta={item.venue}
+                  href={item.href}
+                  key={item.href}
+                />
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="medicine-eyebrow">PDB</p>
+            <h2>Опубликованные структуры</h2>
+            <div className="medicine-structure-grid">
+              {structures.map((item) => (
+                <a
+                  className="medicine-structure-card"
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  key={item.code}
+                >
+                  <strong>{item.code}</strong>
+                  <span>{item.title}</span>
+                  <ExternalLink aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="medicine-section medicine-process">
+        <div className="medicine-container medicine-process-layout">
+          <div>
+            <p className="medicine-eyebrow">Процесс</p>
+            <h2>Меньше тумана в начале, меньше бесконечных правок в конце</h2>
+            <p>
+              Особенно в фарме. Здесь нельзя просто придумать красиво и
+              надеяться, что потом кто-нибудь поправит. Сначала фиксируем смысл,
+              ограничения и проверку.
+            </p>
+          </div>
+          <ol className="medicine-process-list">
+            {process.map((item, index) => (
+              <li key={item}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <p>{item}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="medicine-section medicine-compliance">
+        <div className="medicine-container medicine-compliance-inner">
+          <ShieldCheck aria-hidden="true" />
+          <div>
+            <h2>
+              Medical, legal и regulatory остаются на стороне клиента. Мы держим
+              визуальную точность.
+            </h2>
+            <p>
+              Claims, показания, ограничения и финальные формулировки проходят
+              через вашу команду. Наша работа - сделать так, чтобы утвержденная
+              логика стала понятной сценой, а не распалась на набор красивых, но
+              спорных кадров.
+            </p>
+          </div>
+          <ul>
+            <li>
+              <CheckCircle2 aria-hidden="true" /> заранее фиксируем источники и
+              ограничения
+            </li>
+            <li>
+              <CheckCircle2 aria-hidden="true" /> показываем научную
+              причинность, а не декоративные молекулы
+            </li>
+            <li>
+              <CheckCircle2 aria-hidden="true" /> готовим версии под разные
+              аудитории
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section className="medicine-final" id="contact">
+        <div className="medicine-container medicine-final-inner">
+          <div>
+            <p className="medicine-eyebrow">Следующий шаг</p>
+            <h2>
+              Покажите препарат, платформу или технологию. Мы найдем, где ей
+              нужен визуальный перевод.
+            </h2>
+          </div>
+          <div className="medicine-final-actions">
+            <a
+              className="medicine-button medicine-button-light"
+              href={telegramUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <MessageCircle aria-hidden="true" />
+              Telegram
+            </a>
+            <a
+              className="medicine-button medicine-button-outline-dark"
+              href={emailUrl}
+            >
+              <Mail aria-hidden="true" />
+              Email
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer className="medicine-footer">
+        <div className="medicine-container medicine-footer-inner">
+          <a href="/" className="medicine-footer-brand">
+            <img src={logo} alt="ANIX" />
+          </a>
+          <span>ANIX Medicine</span>
+          <span>
+            <BadgeCheck aria-hidden="true" /> scientific storytelling for
+            complex products
+          </span>
+          <a href="/hse/">
+            ANIX HSE <ArrowRight aria-hidden="true" />
+          </a>
+        </div>
+      </footer>
+    </main>
+  );
+}

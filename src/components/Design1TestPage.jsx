@@ -454,13 +454,15 @@ function Design1TestPage() {
   return (
     <main className="design1-test">
       <Helmet>
-        <title>ANIX Studio — дизайн-тест лендинга</title>
+        <title>
+          ANIX Studio - ролики, маскоты и визуальные системы для сложных
+          продуктов
+        </title>
         <meta
           name="description"
-          content="Тестовая версия лендинга ANIX Studio: AI-видео, анимация, фарма, HSE, сложные B2B-продукты, кейсы и showreel."
+          content="ANIX Studio делает AI-видео, анимацию, маскотов, visual sales kits и обучающие материалы для B2B, фармы, MedTech, HSE и событий."
         />
-        <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href="https://studio.anix-ai.pro/design1test/" />
+        <link rel="canonical" href="https://studio.anix-ai.pro/" />
         <meta
           property="og:title"
           content="ANIX Studio — дизайн-тест лендинга"
@@ -469,10 +471,7 @@ function Design1TestPage() {
           property="og:description"
           content="Кейсы, showreel, метрики и направления ANIX в новой редакторской структуре."
         />
-        <meta
-          property="og:url"
-          content="https://studio.anix-ai.pro/design1test/"
-        />
+        <meta property="og:url" content="https://studio.anix-ai.pro/" />
         <meta property="og:type" content="website" />
       </Helmet>
 
