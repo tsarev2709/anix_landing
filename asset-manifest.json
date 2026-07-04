@@ -1,21 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.c81ae5d1.css",
-    "main.js": "/static/js/main.ee53e6fb.js",
+    "main.css": "/static/css/main.a9c21bf6.css",
+    "main.js": "/static/js/main.e2d37926.js",
     "static/css/663.acb38cc5.chunk.css": "/static/css/663.acb38cc5.chunk.css",
     "static/js/663.7ce519c1.chunk.js": "/static/js/663.7ce519c1.chunk.js",
-    "static/js/204.2d650761.chunk.js": "/static/js/204.2d650761.chunk.js",
+    "static/js/204.95e88743.chunk.js": "/static/js/204.95e88743.chunk.js",
     "static/media/3.png": "/static/media/3.95d850bfd9557355a532.png",
-    "static/media/1.png": "/static/media/1.4a3c1caf2965ec660799.png",
     "static/media/hse-hero.jpg": "/static/media/hse-hero.98902ec35d115bd2829e.jpg",
-    "static/media/hemoai.png": "/static/media/hemoai.ef667ac8009226c70baa.png",
     "static/media/hse-rule-lab.jpg": "/static/media/hse-rule-lab.5dc8529e78fe92967742.jpg",
     "static/media/hse-ventilation.jpg": "/static/media/hse-ventilation.a81d00c00a11208a1893.jpg",
-    "static/media/kolbox.png": "/static/media/kolbox.dd70a6a8ce28a39724f4.png",
-    "static/media/TPES.png": "/static/media/TPES.7505ba4a6840fb8fbd72.png",
+    "static/media/andrey-tsarev-scientist.webp": "/static/media/andrey-tsarev-scientist.fb1c32d63e5da8193242.webp",
     "static/media/hse-onboarding.jpg": "/static/media/hse-onboarding.c0cdd65961e777929f07.jpg",
     "static/media/hse-rule-tara.jpg": "/static/media/hse-rule-tara.9952ba783b5ff9a589b4.jpg",
     "static/media/agrotech.webp": "/static/media/agrotech.d8306801ca1e9debfbc4.webp",
+    "static/media/alexey-lychko-hse.webp": "/static/media/alexey-lychko-hse.8e7df99aff5e376762c9.webp",
     "static/media/hemotech-ai.webp": "/static/media/hemotech-ai.4404c91ef90659118f75.webp",
     "static/media/borodino.webp": "/static/media/borodino.4f8a004a31f7f809eb2c.webp",
     "static/media/logoanix.png": "/static/media/logoanix.69424aa82539287cd2d0.png",
@@ -33,7 +31,7 @@
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.c81ae5d1.css",
-    "static/js/main.ee53e6fb.js"
+    "static/css/main.a9c21bf6.css",
+    "static/js/main.e2d37926.js"
   ]
 }
