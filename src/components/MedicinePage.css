@@ -927,3 +927,22 @@
     padding: 24px 0;
   }
 }
+
+/* Contrast isolation: keep button labels readable even after legacy global styles. */
+.medicine-page .medicine-header-cta,
+.medicine-page .medicine-header-cta *,
+.medicine-page .medicine-button-primary,
+.medicine-page .medicine-button-primary *,
+.medicine-page .medicine-button-outline-dark,
+.medicine-page .medicine-button-outline-dark * {
+  color: var(--medicine-white) !important;
+  -webkit-text-fill-color: var(--medicine-white);
+}
+
+.medicine-page .medicine-button-secondary,
+.medicine-page .medicine-button-secondary *,
+.medicine-page .medicine-button-light,
+.medicine-page .medicine-button-light * {
+  color: var(--medicine-black) !important;
+  -webkit-text-fill-color: var(--medicine-black);
+}

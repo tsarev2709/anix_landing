@@ -22,6 +22,7 @@ const pageLinks = [
   { label: 'Кейсы', href: '/#cases' },
   { label: 'Medicine', href: '/medicine/' },
   { label: 'HSE', href: '/hse/' },
+  { label: 'CEO', href: '/ceo/' },
   { label: 'HSE-демо', href: '/hse/mvp' },
   { label: 'Почему работает', href: '/why_it_works/' },
   { label: 'Тестовый дизайн', href: '/design1test/' },
@@ -38,6 +39,11 @@ const directionLinks = [
     label: 'Охрана труда и HSE',
     href: '/hse/',
     icon: HardHat,
+  },
+  {
+    label: 'CEO ANIX',
+    href: '/ceo/',
+    icon: Sparkles,
   },
   {
     label: 'Все видео-кейсы',
@@ -120,6 +126,9 @@ export default function SiteFooter() {
         </a>
         <a href="/hse/">
           HSE <ArrowRight aria-hidden="true" />
+        </a>
+        <a href="/ceo/">
+          CEO <ArrowRight aria-hidden="true" />
         </a>
       </div>
     </footer>

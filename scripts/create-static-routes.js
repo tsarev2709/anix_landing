@@ -59,6 +59,7 @@ const lessonRoutes = [
 const routes = [
   'medicine',
   'why_it_works',
+  'ceo',
   'hse',
   'hse/mvp',
   'hse/mvp/showcase',

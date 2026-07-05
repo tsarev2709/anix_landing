@@ -13,6 +13,7 @@ import HsePage from './components/HsePage';
 import HseMvpPage from './features/hseMvp/HseMvpPage';
 import Design1TestPage from './components/Design1TestPage';
 import DesignOldPage from './components/DesignOldPage';
+import CeoPage from './components/CeoPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const base = '';
@@ -55,6 +56,9 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       break;
     case '/design_old':
       renderInLayout(<DesignOldPage />);
+      break;
+    case '/ceo':
+      renderInLayout(<CeoPage />);
       break;
     default:
       root.render(<NotFound />);

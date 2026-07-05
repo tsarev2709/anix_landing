@@ -37,6 +37,7 @@ const navLinks = [
   { label: 'Эксперт', href: '#expert' },
   { label: 'Демо', href: '/hse/mvp' },
   { label: 'Medicine', href: '/medicine/' },
+  { label: 'CEO', href: '/ceo/' },
 ];
 
 const heroStats = [

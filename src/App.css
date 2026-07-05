@@ -3970,3 +3970,30 @@ a:focus {
     display: none;
   }
 }
+
+/* Legacy landing button contrast guard. */
+.cta-button.primary,
+.cta-button.primary *,
+.package-cta,
+.package-cta *,
+.subscribe-btn,
+.subscribe-btn * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+}
+
+.details-button,
+.details-button * {
+  color: #d9ccff !important;
+  -webkit-text-fill-color: #d9ccff;
+}
+
+.cta-btn,
+.cta-btn * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+}
+
+.cta-sticky span {
+  color: #ffffff;
+}

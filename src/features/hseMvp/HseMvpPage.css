@@ -1253,3 +1253,24 @@
   flex-wrap: wrap;
   min-width: 0;
 }
+
+/* Contrast isolation for CTA controls across the HSE MVP demo. */
+.hse-mvp .hse-mvp-button,
+.hse-mvp .hse-mvp-button * {
+  color: var(--mvp-blue) !important;
+  -webkit-text-fill-color: var(--mvp-blue);
+}
+
+.hse-mvp .hse-mvp-button-primary,
+.hse-mvp .hse-mvp-button-primary * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+}
+
+.hse-mvp .hse-mvp-learning-options button,
+.hse-mvp .hse-mvp-learning-options button *,
+.hse-mvp .hse-mvp-card-list button,
+.hse-mvp .hse-mvp-card-list button * {
+  color: var(--mvp-ink) !important;
+  -webkit-text-fill-color: var(--mvp-ink);
+}

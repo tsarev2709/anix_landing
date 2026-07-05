@@ -1,27 +1,42 @@
-self.addEventListener('install', event => {
+﻿self.addEventListener('install', event => {
   self.skipWaiting();
 });
 
+const cacheName = 'anix-cache-v2';
+const cacheableContent = /javascript|css|image/;
+
 self.addEventListener('activate', event => {
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    caches
+      .keys()
+      .then(keys => Promise.all(keys.filter(key => key !== cacheName).map(key => caches.delete(key))))
+      .then(() => self.clients.claim())
+  );
 });
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   event.respondWith(
-    caches.open('anix-cache').then(cache =>
-      cache.match(event.request).then(response => {
-        const fetchPromise = fetch(event.request).then(networkResponse => {
-          if (networkResponse && networkResponse.status === 200) {
-            const contentType = networkResponse.headers.get('content-type') || '';
-            if (/javascript|css|image/.test(contentType)) {
-              cache.put(event.request, networkResponse.clone());
-            }
+    fetch(event.request)
+      .then(networkResponse => {
+        if (networkResponse && networkResponse.status === 200) {
+          const contentType = networkResponse.headers.get('content-type') || '';
+          if (cacheableContent.test(contentType)) {
+            const responseToCache = networkResponse.clone();
+            caches.open(cacheName).then(cache => {
+              cache.put(event.request, responseToCache);
+            });
           }
-          return networkResponse;
-        });
-        return response || fetchPromise;
+        }
+        return networkResponse;
       })
-    )
+      .catch(() =>
+        caches.open(cacheName).then(cache =>
+          cache.match(event.request).then(response => {
+            if (response) return response;
+            return Response.error();
+          })
+        )
+      )
   );
 });

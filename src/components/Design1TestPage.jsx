@@ -13,6 +13,7 @@ import {
   PlayCircle,
   ShieldCheck,
   Stethoscope,
+  UserRound,
   Video,
   Workflow,
 } from 'lucide-react';
@@ -267,6 +268,12 @@ const directions = [
     icon: ShieldCheck,
   },
   {
+    title: 'Команда и CEO',
+    text: 'Кто собирает режиссуру, физтеховскую точность и бизнес-процесс внутри ANIX.',
+    href: '/ceo/',
+    icon: UserRound,
+  },
+  {
     title: 'События',
     text: 'Экранный контент, съемка, звук, монтаж, AI-визуалы и режиссура события как единой истории.',
     href: '#contact',
@@ -288,6 +295,7 @@ const navigationLinks = [
   { label: 'Что делаем', href: '#services' },
   { label: 'Medicine', href: '/medicine/' },
   { label: 'HSE', href: '/hse/' },
+  { label: 'CEO', href: '/ceo/' },
   { label: 'Процесс', href: '#process' },
   { label: 'Видео', href: '#video' },
   { label: 'Контакты', href: '#contact' },

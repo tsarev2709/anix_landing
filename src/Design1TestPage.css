@@ -1617,3 +1617,30 @@
     width: calc(100% - 32px) !important;
   }
 }
+
+/* Contrast isolation: global legacy button rules should not wash these labels out. */
+.design1-test .d1-button-primary,
+.design1-test .d1-button-primary *,
+.design1-test .d1-button-dark,
+.design1-test .d1-button-dark *,
+.design1-test .d1-button-outline-dark,
+.design1-test .d1-button-outline-dark *,
+.design1-test .d1-button-dark-outline,
+.design1-test .d1-button-dark-outline * {
+  color: var(--d1-white) !important;
+  -webkit-text-fill-color: var(--d1-white);
+}
+
+.design1-test .d1-button-secondary,
+.design1-test .d1-button-secondary *,
+.design1-test .d1-button-light,
+.design1-test .d1-button-light * {
+  color: var(--d1-ink) !important;
+  -webkit-text-fill-color: var(--d1-ink);
+}
+
+.design1-test .d1-showreel-poster,
+.design1-test .d1-showreel-poster * {
+  color: var(--d1-white) !important;
+  -webkit-text-fill-color: currentColor;
+}

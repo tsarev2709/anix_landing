@@ -175,3 +175,17 @@
     flex-direction: column;
   }
 }
+
+/* Keep footer pill buttons readable on the dark footer. */
+.anix-site-footer__nav a,
+.anix-site-footer__nav a *,
+.anix-site-footer__button,
+.anix-site-footer__button * {
+  color: rgba(255, 255, 255, 0.86) !important;
+  -webkit-text-fill-color: currentColor;
+}
+
+.anix-site-footer__nav a:hover,
+.anix-site-footer__button:hover {
+  color: #ffffff !important;
+}

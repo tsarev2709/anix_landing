@@ -897,3 +897,22 @@
     padding: 24px 0;
   }
 }
+
+/* Contrast isolation: keep button labels readable even after legacy global styles. */
+.hse-page .hse-header-cta,
+.hse-page .hse-header-cta *,
+.hse-page .hse-button-primary,
+.hse-page .hse-button-primary *,
+.hse-page .hse-button-outline-dark,
+.hse-page .hse-button-outline-dark * {
+  color: var(--hse-white) !important;
+  -webkit-text-fill-color: var(--hse-white);
+}
+
+.hse-page .hse-button-secondary,
+.hse-page .hse-button-secondary *,
+.hse-page .hse-button-light,
+.hse-page .hse-button-light * {
+  color: var(--hse-black) !important;
+  -webkit-text-fill-color: var(--hse-black);
+}

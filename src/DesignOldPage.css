@@ -929,3 +929,18 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Contrast isolation for the archived design page. */
+.studio-refresh .sr-button-primary,
+.studio-refresh .sr-button-primary *,
+.studio-refresh .sr-button-ghost,
+.studio-refresh .sr-button-ghost * {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+}
+
+.studio-refresh .sr-closing .sr-button-secondary,
+.studio-refresh .sr-closing .sr-button-secondary * {
+  color: #101217 !important;
+  -webkit-text-fill-color: #101217;
+}
