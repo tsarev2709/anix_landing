@@ -46,7 +46,8 @@
     "lint:fix": "eslint src --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,css}\"",
     "lint:css": "stylelint \"src/**/*.{css,scss}\"",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "hse:create-admin": "node scripts/create-hse-admin.mjs"
   },
   "browserslist": {
     "production": [

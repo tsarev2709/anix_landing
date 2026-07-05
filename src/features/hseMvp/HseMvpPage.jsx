@@ -42,6 +42,13 @@ import {
   getModuleById,
 } from './data/demoData';
 import {
+  getDepartmentById,
+  hseDepartments,
+  hseModeCards,
+  showcaseJurySteps,
+  testModeEnvKeys,
+} from './data/modeData';
+import {
   getCourseProgress,
   getLatestAttempt,
   getAttemptsByModule,
@@ -55,9 +62,16 @@ import { getRuleBasedRecommendations } from './lib/recommendations';
 import { generateAiRecommendation } from './lib/aiRecommendations';
 import { submitCourseRequest, getCrmMode } from './lib/crm';
 import { openCompletionPrint } from './lib/pdf';
+import {
+  getHseSupabaseClient,
+  getHseSupabaseConfig,
+  isAllowedWorkEmail,
+} from './lib/hseSupabase';
 
 const base = '';
 const rootPath = '/hse/mvp';
+const showcasePath = `${rootPath}/showcase`;
+const testPath = `${rootPath}/test`;
 const passScore = 95;
 const maxAttempts = 3;
 
@@ -69,6 +83,26 @@ const getModuleQuestions = (module) =>
 
 const getModulePassScore = (module) => module.passScore || passScore;
 
+const getModuleLessonItems = (module) => {
+  if (module.blocks?.length) {
+    return module.blocks.map((block, index) => ({
+      id: block.id,
+      title: block.title,
+      type: block.type,
+      summary: block.body || block.scene || block.question || block.shortText,
+      sourceRefIds: block.sourceRefIds || [],
+      index,
+    }));
+  }
+  return (module.cards || []).map((card, index) => ({
+    id: card.id,
+    title: card.title,
+    type: 'video_card',
+    summary: card.shortText,
+    sourceRefIds: [],
+    index,
+  }));
+};
 const getOptionId = (index) => String.fromCharCode(97 + index);
 
 const normalizeQuestion = (question) => {
@@ -106,14 +140,30 @@ const getSourceTitle = (module, sourceId) =>
 const href = (path) => `${base}${path}`;
 
 const navItems = [
-  { label: 'Сценарии', path: rootPath, icon: Gauge },
-  { label: 'Сотрудник', path: `${rootPath}/employee`, icon: Users },
-  { label: 'Специалист ОТ', path: `${rootPath}/specialist`, icon: BarChart3 },
-  { label: 'Администратор', path: `${rootPath}/admin`, icon: Settings },
-  { label: 'Заказ курса', path: `${rootPath}/request-course`, icon: Plus },
-  { label: 'Интеграции', path: `${rootPath}/integrations`, icon: LinkIcon },
-  { label: 'Поддержка', path: `${rootPath}/support`, icon: LifeBuoy },
+  { label: 'Главная MVP', path: rootPath, icon: Gauge },
+  { label: 'Витринный контур', path: showcasePath, icon: BookOpen },
+  { label: 'Тестировочный контур', path: testPath, icon: Database },
+  { label: 'Организация', path: `${showcasePath}/organization`, icon: Users },
+  {
+    label: 'Специалист ОТ',
+    path: `${showcasePath}/specialist`,
+    icon: BarChart3,
+  },
+  { label: 'Администратор', path: `${showcasePath}/admin`, icon: Settings },
+  { label: 'Интеграции', path: `${showcasePath}/integrations`, icon: LinkIcon },
+  { label: 'Поддержка', path: `${showcasePath}/support`, icon: LifeBuoy },
 ];
+
+const getModeBadge = (path) => {
+  if (path === testPath || path.startsWith(`${testPath}/`)) {
+    const config = getHseSupabaseConfig();
+    return config.isConfigured
+      ? 'Тестировочный режим · Supabase'
+      : 'Тестировочный режим · Supabase не настроен';
+  }
+  if (path === rootPath) return 'Выбор контура';
+  return 'Витринный режим · демоданные';
+};
 
 const statusClass = (status = '') => {
   if (status.includes('Пройден')) return 'success';
@@ -214,7 +264,10 @@ function Shell({ path, title, children, breadcrumbs = [] }) {
       </aside>
       <section className="hse-mvp-workspace">
         <header className="hse-mvp-topbar">
-          <Breadcrumbs items={breadcrumbs} />
+          <div className="hse-mvp-topbar-left">
+            <Breadcrumbs items={breadcrumbs} />
+            <Badge tone="info">{getModeBadge(path)}</Badge>
+          </div>
           <div className="hse-mvp-access" aria-label="Настройки доступности">
             <label>
               <input
@@ -268,30 +321,101 @@ const scenarioCards = [
   {
     title: 'Пройти обучение как сотрудник',
     text: 'Мобильный сценарий по QR-коду: карточки, прогресс, тест и подтверждение прохождения.',
-    path: `${rootPath}/employee`,
+    path: `${showcasePath}/organization`,
     icon: BookOpen,
   },
   {
     title: 'Кабинет специалиста по охране труда',
     text: 'Аналитика, ошибки по темам, таблица сотрудников, экспорт и рекомендации.',
-    path: `${rootPath}/specialist`,
+    path: `${showcasePath}/specialist`,
     icon: BarChart3,
   },
   {
     title: 'Кабинет администратора',
     text: 'Курсы, версии, модули, технологический контур и сведения для конкурса.',
-    path: `${rootPath}/admin`,
+    path: `${showcasePath}/admin`,
     icon: Settings,
   },
   {
     title: 'Заказать новый курс',
     text: 'Форма заявки с файлами, CRM webhook-ready архитектурой и demo fallback.',
-    path: `${rootPath}/request-course`,
+    path: `${showcasePath}/request-course`,
     icon: ClipboardList,
   },
 ];
 
 function HomePage() {
+  return (
+    <>
+      <section className="hse-mvp-hero">
+        <div>
+          <Badge tone="info">Демополигон цифрового решения</Badge>
+          <h1>ANIX. Единая визуальная система обучения по охране труда</h1>
+          <p>{HSE_MVP_PRODUCT_DESCRIPTION}</p>
+          <div className="hse-mvp-disclaimer">
+            <ShieldCheck aria-hidden="true" />
+            {HSE_MVP_DISCLAIMER}
+          </div>
+        </div>
+        <div className="hse-mvp-hero-panel" aria-label="Контуры демополигона">
+          <KpiCard
+            icon={BookOpen}
+            label="Витринный контур"
+            value="demo"
+            hint="Готовые данные и localStorage"
+          />
+          <KpiCard
+            icon={Database}
+            label="Тестовый контур"
+            value="Supabase"
+            hint="Auth, роли, база, RLS-ready"
+          />
+          <KpiCard
+            icon={ShieldCheck}
+            label="Безопасность"
+            value="0 секретов"
+            hint="Service role ключи не попадают во frontend"
+          />
+        </div>
+      </section>
+
+      <section
+        className="hse-mvp-grid hse-mvp-mode-grid"
+        aria-label="Выбор контура MVP"
+      >
+        {hseModeCards.map((mode) => (
+          <a
+            className="hse-mvp-card hse-mvp-mode-card"
+            href={href(mode.path)}
+            key={mode.id}
+          >
+            <Badge tone={mode.id === 'test' ? 'warning' : 'info'}>
+              {mode.badge}
+            </Badge>
+            <h2>{mode.title}</h2>
+            <p>{mode.description}</p>
+            <span>
+              {mode.button} <ArrowRight aria-hidden="true" size={18} />
+            </span>
+          </a>
+        ))}
+      </section>
+
+      <section className="hse-mvp-panel">
+        <div className="hse-mvp-section-head">
+          <p>Сценарий для жюри</p>
+          <h2>Покажите оба контура за 3-5 минут</h2>
+        </div>
+        <ol className="hse-mvp-steps">
+          {showcaseJurySteps.map((step) => (
+            <li key={step}>{step}</li>
+          ))}
+        </ol>
+      </section>
+    </>
+  );
+}
+function ShowcaseHomePage() {
   const jurySteps = [
     'Откройте сценарий сотрудника.',
     'Пройдите один модуль.',
@@ -370,6 +494,318 @@ function HomePage() {
   );
 }
 
+function ShowcaseOrganizationPage() {
+  const totalHeadcount = hseDepartments.reduce(
+    (sum, department) => sum + department.headcount,
+    0
+  );
+  const averageProgress = Math.round(
+    hseDepartments.reduce((sum, department) => sum + department.progress, 0) /
+      hseDepartments.length
+  );
+
+  return (
+    <>
+      <section className="hse-mvp-page-head">
+        <Badge tone="info">Витринный режим · демоданные</Badge>
+        <h1>{demoCompany.name}</h1>
+        <p>
+          Организация показывает структуру LMS: отделы, обязательные модули,
+          прогресс, riskTags и нормативную базу. Данные заранее подготовлены для
+          демонстрации и сохраняются в браузере.
+        </p>
+      </section>
+      <section className="hse-mvp-grid hse-mvp-kpi-grid">
+        <KpiCard
+          icon={Users}
+          label="Сотрудники"
+          value={totalHeadcount}
+          hint="в демоструктуре"
+        />
+        <KpiCard
+          icon={BookOpen}
+          label="Модули"
+          value={demoModules.length}
+          hint="LSR, падения, электробезопасность"
+        />
+        <KpiCard
+          icon={Activity}
+          label="Средний прогресс"
+          value={`${averageProgress}%`}
+          hint="по отделам"
+        />
+        <KpiCard
+          icon={FileText}
+          label="Источники"
+          value="ГОСТ/приказы"
+          hint="хранятся в методических полях"
+        />
+      </section>
+      <section className="hse-mvp-grid hse-mvp-department-grid">
+        {hseDepartments.map((department) => (
+          <article
+            className="hse-mvp-card hse-mvp-department-card"
+            key={department.id}
+          >
+            <div className="hse-mvp-card-top">
+              <Badge tone="neutral">{department.headcount} чел.</Badge>
+              <span>{department.requiredModuleIds.length} мод.</span>
+            </div>
+            <h2>{department.title}</h2>
+            <p>{department.description}</p>
+            <Progress
+              value={department.progress}
+              label={`Прогресс отдела ${department.title}`}
+            />
+            <div className="hse-mvp-source-list">
+              {department.riskTags.map((riskTag) => (
+                <span key={riskTag}>{riskTag}</span>
+              ))}
+            </div>
+            <a
+              className="hse-mvp-button hse-mvp-button-primary"
+              href={href(`${showcasePath}/departments/${department.id}`)}
+            >
+              Открыть отдел <ArrowRight aria-hidden="true" size={18} />
+            </a>
+          </article>
+        ))}
+      </section>
+    </>
+  );
+}
+
+function ShowcaseDepartmentPage({ departmentId }) {
+  const department = getDepartmentById(departmentId);
+  const modules = department.requiredModuleIds.map((moduleId) =>
+    getModuleById(moduleId)
+  );
+
+  return (
+    <>
+      <section className="hse-mvp-page-head">
+        <Badge tone="info">Отдел</Badge>
+        <h1>{department.title}</h1>
+        <p>{department.description}</p>
+      </section>
+      <section className="hse-mvp-grid hse-mvp-module-grid">
+        {modules.map((module) => {
+          const lessons = getModuleLessonItems(module);
+          return (
+            <article
+              className="hse-mvp-card hse-mvp-module-card"
+              key={module.id}
+            >
+              <div className="hse-mvp-card-top">
+                <Badge tone="neutral">версия {module.version}</Badge>
+                <span>{lessons.length} уроков</span>
+              </div>
+              <h2>{module.title}</h2>
+              <p>{module.description}</p>
+              <Progress
+                value={getModuleProgress(module.id).progress}
+                label={`Прогресс ${module.title}`}
+              />
+              <dl className="hse-mvp-meta">
+                <div>
+                  <dt>Время</dt>
+                  <dd>{module.estimatedMinutes} мин</dd>
+                </div>
+                <div>
+                  <dt>Тест</dt>
+                  <dd>{getModuleQuestions(module).length} вопросов</dd>
+                </div>
+                <div>
+                  <dt>Порог</dt>
+                  <dd>{getModulePassScore(module)}%</dd>
+                </div>
+                <div>
+                  <dt>Risk tags</dt>
+                  <dd>{department.riskTags.slice(0, 2).join(', ')}</dd>
+                </div>
+              </dl>
+              <a
+                className="hse-mvp-button hse-mvp-button-primary"
+                href={href(`${showcasePath}/modules/${module.id}`)}
+              >
+                Открыть модуль <ArrowRight aria-hidden="true" size={18} />
+              </a>
+            </article>
+          );
+        })}
+      </section>
+    </>
+  );
+}
+
+function ShowcaseModulePage({ moduleId }) {
+  const module = getModuleById(moduleId);
+  const lessons = getModuleLessonItems(module);
+
+  return (
+    <>
+      <section className="hse-mvp-page-head">
+        <Badge tone="info">Модуль</Badge>
+        <h1>{module.title}</h1>
+        <p>{module.description}</p>
+      </section>
+      <section className="hse-mvp-grid hse-mvp-kpi-grid">
+        <KpiCard
+          icon={BookOpen}
+          label="Уроки"
+          value={lessons.length}
+          hint="обязательные блоки"
+        />
+        <KpiCard
+          icon={ClipboardList}
+          label="Тест"
+          value={getModuleQuestions(module).length}
+          hint="вопросов"
+        />
+        <KpiCard
+          icon={ShieldCheck}
+          label="Порог"
+          value={`${getModulePassScore(module)}%`}
+          hint="для прохождения"
+        />
+        <KpiCard
+          icon={FileText}
+          label="Версия"
+          value={module.version}
+          hint="каталог курса"
+        />
+      </section>
+      <section className="hse-mvp-panel">
+        <div className="hse-mvp-section-head">
+          <p>Обязательные уроки</p>
+          <h2>Единый каталог используется в витринном и тестовом контуре</h2>
+        </div>
+        <div className="hse-mvp-lesson-list">
+          {lessons.map((lesson) => (
+            <a
+              className="hse-mvp-lesson-row"
+              href={href(
+                `${showcasePath}/modules/${module.id}/lessons/${lesson.id}`
+              )}
+              key={lesson.id}
+            >
+              <span>{lesson.index + 1}</span>
+              <div>
+                <strong>{lesson.title}</strong>
+                <p>{lesson.summary}</p>
+              </div>
+              <ArrowRight aria-hidden="true" size={18} />
+            </a>
+          ))}
+        </div>
+      </section>
+      <div className="hse-mvp-actions">
+        <a
+          className="hse-mvp-button"
+          href={href(`${rootPath}/course/${module.id}`)}
+        >
+          Открыть прохождение модуля
+        </a>
+        <a
+          className="hse-mvp-button hse-mvp-button-primary"
+          href={href(`${showcasePath}/modules/${module.id}/test`)}
+        >
+          Перейти к тесту <ArrowRight aria-hidden="true" size={18} />
+        </a>
+      </div>
+    </>
+  );
+}
+
+function ShowcaseLessonPage({ moduleId, lessonId }) {
+  const module = getModuleById(moduleId);
+  const lessons = getModuleLessonItems(module);
+  const lesson = lessons.find((item) => item.id === lessonId) || lessons[0];
+  const sourceRefs = lesson.sourceRefIds || [];
+
+  return (
+    <>
+      <section className="hse-mvp-page-head">
+        <Badge tone="info">Урок {lesson.index + 1}</Badge>
+        <h1>{lesson.title}</h1>
+        <p>{lesson.summary}</p>
+      </section>
+      <section className="hse-mvp-course-layout hse-mvp-learning-layout">
+        <article className="hse-mvp-course-card hse-mvp-learning-card">
+          <div
+            className="hse-mvp-scene-placeholder"
+            role="img"
+            aria-label={lesson.title}
+          >
+            <Eye aria-hidden="true" size={34} />
+            <strong>{lesson.title}</strong>
+            <span>Визуальная карточка / урок из единого каталога модуля.</span>
+          </div>
+          <div className="hse-mvp-text-lesson">
+            <p>{lesson.summary}</p>
+            <dl>
+              <div>
+                <dt>На чем основан урок</dt>
+                <dd>
+                  {sourceRefs.length
+                    ? sourceRefs
+                        .map((sourceId) => getSourceTitle(module, sourceId))
+                        .join(', ')
+                    : 'Методические данные курса и внутренние правила площадки'}
+                </dd>
+              </div>
+              <div>
+                <dt>Практическое действие</dt>
+                <dd>
+                  Определить риск, остановиться, обозначить опасность и сообщить
+                  ответственному лицу.
+                </dd>
+              </div>
+              <div>
+                <dt>Запрет</dt>
+                <dd>
+                  Не игнорировать опасность и не продолжать работу, если
+                  ситуация небезопасна.
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </article>
+        <aside className="hse-mvp-course-aside">
+          <h2>Уроки модуля</h2>
+          <div className="hse-mvp-card-list">
+            {lessons.map((item) => (
+              <a
+                className={item.id === lesson.id ? 'active' : ''}
+                href={href(
+                  `${showcasePath}/modules/${module.id}/lessons/${item.id}`
+                )}
+                key={item.id}
+              >
+                <span>{item.index + 1}</span>
+                {item.title}
+              </a>
+            ))}
+          </div>
+        </aside>
+      </section>
+      <div className="hse-mvp-actions hse-mvp-course-actions">
+        <a
+          className="hse-mvp-button"
+          href={href(`${showcasePath}/modules/${module.id}`)}
+        >
+          <ArrowLeft aria-hidden="true" size={18} /> К модулю
+        </a>
+        <a
+          className="hse-mvp-button hse-mvp-button-primary"
+          href={href(`${rootPath}/course/${module.id}`)}
+        >
+          Пройти интерактивно <ArrowRight aria-hidden="true" size={18} />
+        </a>
+      </div>
+    </>
+  );
+}
 function EmployeePage() {
   return (
     <>
@@ -1757,6 +2193,285 @@ function SupportPage() {
   );
 }
 
+function SupabaseSetupPanel() {
+  return (
+    <section className="hse-mvp-panel hse-mvp-setup-panel">
+      <div className="hse-mvp-section-head">
+        <p>Supabase не настроен</p>
+        <h2>Тестировочный контур не подключен</h2>
+      </div>
+      <p>
+        Для включения авторизации и базы данных укажите публичные
+        env-переменные. Без них витринный контур продолжает работать на demoData
+        и localStorage.
+      </p>
+      <div className="hse-mvp-env-list">
+        {testModeEnvKeys.map((key) => (
+          <code key={key}>{key}</code>
+        ))}
+      </div>
+      <pre className="hse-mvp-code-block">{`VITE_SUPABASE_URL=https://project.supabase.co
+VITE_SUPABASE_ANON_KEY=public-anon-key
+VITE_ALLOWED_EMAIL_DOMAINS=company.ru,multon.ru,anix-ai.pro
+VITE_TEST_ADMIN_EMAIL=admin@anix-ai.pro`}</pre>
+      <div className="hse-mvp-actions">
+        <a
+          className="hse-mvp-button hse-mvp-button-primary"
+          href={href(showcasePath)}
+        >
+          Открыть витринный контур
+        </a>
+        <a className="hse-mvp-button" href={href('/docs/hse-mvp-supabase.md')}>
+          Инструкция настройки
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function TestModePage() {
+  const config = getHseSupabaseConfig();
+  const client = getHseSupabaseClient();
+
+  return (
+    <>
+      <section className="hse-mvp-page-head">
+        <Badge tone={config.isConfigured ? 'success' : 'warning'}>
+          {config.isConfigured ? 'Supabase подключен' : 'Supabase не настроен'}
+        </Badge>
+        <h1>Тестировочный контур</h1>
+        <p>
+          Рабочий контур для регистрации сотрудников, входа по ролям и
+          сохранения прохождений в Supabase. Service role ключи используются
+          только локально в админском script и не попадают во frontend.
+        </p>
+      </section>
+      <section className="hse-mvp-grid hse-mvp-scenarios">
+        <a
+          className="hse-mvp-card hse-mvp-scenario"
+          href={href(`${testPath}/login`)}
+        >
+          <Users aria-hidden="true" />
+          <h2>Войти</h2>
+          <p>
+            Email/password через Supabase Auth. После входа пользователь
+            попадает в свой ролевой кабинет.
+          </p>
+          <span>
+            Открыть вход <ArrowRight aria-hidden="true" size={18} />
+          </span>
+        </a>
+        <a
+          className="hse-mvp-card hse-mvp-scenario"
+          href={href(`${testPath}/register`)}
+        >
+          <Plus aria-hidden="true" />
+          <h2>Зарегистрироваться по рабочей почте</h2>
+          <p>
+            Фронтенд проверяет домен для UX, настоящая защита описана через
+            Supabase Auth Hook.
+          </p>
+          <span>
+            Открыть регистрацию <ArrowRight aria-hidden="true" size={18} />
+          </span>
+        </a>
+        <a
+          className="hse-mvp-card hse-mvp-scenario"
+          href={href(`${testPath}/admin-login`)}
+        >
+          <Settings aria-hidden="true" />
+          <h2>Админский вход</h2>
+          <p>
+            Администратор создается seed/script. Пароль не хранится во frontend
+            env.
+          </p>
+          <span>
+            Открыть админ-вход <ArrowRight aria-hidden="true" size={18} />
+          </span>
+        </a>
+        <article className="hse-mvp-card hse-mvp-scenario">
+          <Database aria-hidden="true" />
+          <h2>Статус клиента</h2>
+          <p>
+            {client
+              ? 'Supabase client инициализирован из env.'
+              : 'Клиент не создан: env отсутствуют.'}
+          </p>
+          <span>
+            {config.allowedDomains.length
+              ? `Домены: ${config.allowedDomains.join(', ')}`
+              : 'Домены задаются через env'}
+          </span>
+        </article>
+      </section>
+      {!config.isConfigured ? <SupabaseSetupPanel /> : null}
+    </>
+  );
+}
+
+function TestAuthPage({ kind }) {
+  const config = getHseSupabaseConfig();
+  const [email, setEmail] = useState(kind === 'admin' ? config.adminEmail : '');
+  const [message, setMessage] = useState('');
+  const domainOk = isAllowedWorkEmail(email);
+  const title =
+    kind === 'register'
+      ? 'Регистрация сотрудника'
+      : kind === 'admin'
+        ? 'Админский вход'
+        : 'Вход пользователя';
+
+  const submitLabel =
+    kind === 'register'
+      ? 'Создать профиль'
+      : kind === 'admin'
+        ? 'Войти как администратор'
+        : 'Войти';
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!config.isConfigured) {
+      setMessage(
+        'Supabase не настроен: форма показана как безопасная демонстрация UX.'
+      );
+      return;
+    }
+    if (kind === 'register' && !domainOk) {
+      setMessage('Домен почты не входит в список разрешенных для регистрации.');
+      return;
+    }
+    setMessage(
+      'Форма готова к отправке в Supabase Auth через защищенный публичный anon key.'
+    );
+  };
+
+  return (
+    <>
+      <section className="hse-mvp-page-head">
+        <Badge tone={config.isConfigured ? 'success' : 'warning'}>
+          {config.isConfigured ? 'Supabase Auth' : 'Supabase не настроен'}
+        </Badge>
+        <h1>{title}</h1>
+        <p>
+          В промышленном режиме вход и регистрация выполняются через Supabase
+          Auth, профиль и роль читаются из hse_profiles.
+        </p>
+      </section>
+      <form className="hse-mvp-panel hse-mvp-auth-form" onSubmit={handleSubmit}>
+        {kind === 'register' ? (
+          <label>
+            ФИО
+            <input required placeholder="Иванов Иван Иванович" />
+          </label>
+        ) : null}
+        <label>
+          Рабочая почта
+          <input
+            required
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="name@company.ru"
+          />
+        </label>
+        <label>
+          Пароль
+          <input
+            required
+            type="password"
+            placeholder="Пароль хранится только в Supabase Auth"
+          />
+        </label>
+        {kind === 'register' ? (
+          <>
+            <label>
+              Отдел
+              <select defaultValue="production-lines">
+                {hseDepartments.map((department) => (
+                  <option key={department.id} value={department.id}>
+                    {department.title}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              Должность / роль на площадке
+              <input placeholder="Оператор линии" />
+            </label>
+          </>
+        ) : null}
+        {kind === 'register' && email ? (
+          <p className={domainOk ? 'hse-mvp-success' : 'hse-mvp-form-error'}>
+            {domainOk
+              ? 'Домен почты проходит frontend-проверку.'
+              : 'Для регистрации нужен домен из VITE_ALLOWED_EMAIL_DOMAINS.'}
+          </p>
+        ) : null}
+        <div className="hse-mvp-actions">
+          <button
+            className="hse-mvp-button hse-mvp-button-primary"
+            type="submit"
+          >
+            {submitLabel}
+          </button>
+          <a className="hse-mvp-button" href={href(testPath)}>
+            Назад к тестовому контуру
+          </a>
+        </div>
+        {message ? <p className="hse-mvp-success">{message}</p> : null}
+      </form>
+      {!config.isConfigured ? <SupabaseSetupPanel /> : null}
+    </>
+  );
+}
+
+function TestMePage() {
+  const config = getHseSupabaseConfig();
+  if (!config.isConfigured) return <SupabaseSetupPanel />;
+  return (
+    <section className="hse-mvp-panel">
+      <Badge tone="info">employee</Badge>
+      <h1>Мой кабинет</h1>
+      <p>
+        Пользователь видит только свои назначенные модули, попытки, прогресс и
+        подтверждения прохождения.
+      </p>
+      <EmployeePage />
+    </section>
+  );
+}
+
+function TestAdminPage() {
+  const config = getHseSupabaseConfig();
+  if (!config.isConfigured) return <SupabaseSetupPanel />;
+  return (
+    <section className="hse-mvp-panel">
+      <Badge tone="info">admin</Badge>
+      <h1>Админка тестового контура</h1>
+      <p>
+        В промышленном режиме этот экран читает организации, отделы, модули,
+        уроки, пользователей, события и заявки из Supabase.
+      </p>
+      <AdminPage />
+    </section>
+  );
+}
+
+function TestSpecialistPage() {
+  const config = getHseSupabaseConfig();
+  if (!config.isConfigured) return <SupabaseSetupPanel />;
+  return (
+    <section className="hse-mvp-panel">
+      <Badge tone="info">specialist</Badge>
+      <h1>Кабинет специалиста тестового контура</h1>
+      <p>
+        Специалист видит прохождения по своей организации/отделам, фильтры,
+        ошибки, рекомендации и CSV-экспорт.
+      </p>
+      <SpecialistPage />
+    </section>
+  );
+}
 function NotFoundMvp() {
   return (
     <section className="hse-mvp-result-hero">
@@ -1790,6 +2505,185 @@ export default function HseMvpPage({ path }) {
 
   if (cleanPath === rootPath) {
     page = <HomePage />;
+  } else if (cleanPath === showcasePath) {
+    title = 'Витринный контур';
+    activePath = showcasePath;
+    breadcrumbs = [{ label: 'Витринный контур' }];
+    page = <ShowcaseHomePage />;
+  } else if (cleanPath === `${showcasePath}/organization`) {
+    title = demoCompany.name;
+    activePath = `${showcasePath}/organization`;
+    breadcrumbs = [
+      { label: 'Витринный контур', path: showcasePath },
+      { label: 'Организация' },
+    ];
+    page = <ShowcaseOrganizationPage />;
+  } else if (
+    parts[0] === 'showcase' &&
+    parts[1] === 'departments' &&
+    parts[2]
+  ) {
+    const department = getDepartmentById(parts[2]);
+    title = department.title;
+    activePath = `${showcasePath}/organization`;
+    breadcrumbs = [
+      { label: 'Витринный контур', path: showcasePath },
+      { label: 'Организация', path: `${showcasePath}/organization` },
+      { label: department.title },
+    ];
+    page = <ShowcaseDepartmentPage departmentId={parts[2]} />;
+  } else if (
+    parts[0] === 'showcase' &&
+    parts[1] === 'modules' &&
+    parts[2] &&
+    parts[3] === 'lessons'
+  ) {
+    const module = getModuleById(parts[2]);
+    title = `Урок: ${module.title}`;
+    activePath = showcasePath;
+    breadcrumbs = [
+      { label: 'Витринный контур', path: showcasePath },
+      { label: module.title, path: `${showcasePath}/modules/${module.id}` },
+      { label: 'Урок' },
+    ];
+    page = <ShowcaseLessonPage moduleId={parts[2]} lessonId={parts[4]} />;
+  } else if (
+    parts[0] === 'showcase' &&
+    parts[1] === 'modules' &&
+    parts[2] &&
+    parts[3] === 'test'
+  ) {
+    const module = getModuleById(parts[2]);
+    title = `Тест: ${module.title}`;
+    activePath = showcasePath;
+    breadcrumbs = [
+      { label: 'Витринный контур', path: showcasePath },
+      { label: module.title, path: `${showcasePath}/modules/${module.id}` },
+      { label: 'Тест' },
+    ];
+    page = <TestPage courseId={parts[2]} />;
+  } else if (parts[0] === 'showcase' && parts[1] === 'modules' && parts[2]) {
+    const module = getModuleById(parts[2]);
+    title = module.title;
+    activePath = showcasePath;
+    breadcrumbs = [
+      { label: 'Витринный контур', path: showcasePath },
+      { label: module.title },
+    ];
+    page = <ShowcaseModulePage moduleId={parts[2]} />;
+  } else if (parts[0] === 'showcase' && parts[1] === 'result') {
+    title = 'Итог прохождения';
+    activePath = showcasePath;
+    breadcrumbs = [
+      { label: 'Витринный контур', path: showcasePath },
+      { label: 'Итог' },
+    ];
+    page = <ResultPage attemptId={parts[2]} />;
+  } else if (cleanPath === `${showcasePath}/specialist`) {
+    title = 'Кабинет специалиста по ОТ';
+    activePath = `${showcasePath}/specialist`;
+    breadcrumbs = [
+      { label: 'Витринный контур', path: showcasePath },
+      { label: 'Специалист ОТ' },
+    ];
+    page = <SpecialistPage />;
+  } else if (cleanPath === `${showcasePath}/admin`) {
+    title = 'Кабинет администратора';
+    activePath = `${showcasePath}/admin`;
+    breadcrumbs = [
+      { label: 'Витринный контур', path: showcasePath },
+      { label: 'Администратор' },
+    ];
+    page = <AdminPage />;
+  } else if (cleanPath === `${showcasePath}/request-course`) {
+    title = 'Заказать новый курс';
+    activePath = showcasePath;
+    breadcrumbs = [
+      { label: 'Витринный контур', path: showcasePath },
+      { label: 'Заказ курса' },
+    ];
+    page = <RequestCoursePage />;
+  } else if (cleanPath === `${showcasePath}/integrations`) {
+    title = 'Интеграции';
+    activePath = `${showcasePath}/integrations`;
+    breadcrumbs = [
+      { label: 'Витринный контур', path: showcasePath },
+      { label: 'Интеграции' },
+    ];
+    page = <IntegrationsPage />;
+  } else if (cleanPath === `${showcasePath}/support`) {
+    title = 'Поддержка';
+    activePath = `${showcasePath}/support`;
+    breadcrumbs = [
+      { label: 'Витринный контур', path: showcasePath },
+      { label: 'Поддержка' },
+    ];
+    page = <SupportPage />;
+  } else if (cleanPath === testPath) {
+    title = 'Тестировочный контур';
+    activePath = testPath;
+    breadcrumbs = [{ label: 'Тестировочный контур' }];
+    page = <TestModePage />;
+  } else if (cleanPath === `${testPath}/login`) {
+    title = 'Вход пользователя';
+    activePath = testPath;
+    breadcrumbs = [
+      { label: 'Тестировочный контур', path: testPath },
+      { label: 'Вход' },
+    ];
+    page = <TestAuthPage kind="login" />;
+  } else if (cleanPath === `${testPath}/register`) {
+    title = 'Регистрация сотрудника';
+    activePath = testPath;
+    breadcrumbs = [
+      { label: 'Тестировочный контур', path: testPath },
+      { label: 'Регистрация' },
+    ];
+    page = <TestAuthPage kind="register" />;
+  } else if (cleanPath === `${testPath}/admin-login`) {
+    title = 'Админский вход';
+    activePath = testPath;
+    breadcrumbs = [
+      { label: 'Тестировочный контур', path: testPath },
+      { label: 'Админский вход' },
+    ];
+    page = <TestAuthPage kind="admin" />;
+  } else if (cleanPath === `${testPath}/me`) {
+    title = 'Мой кабинет';
+    activePath = testPath;
+    breadcrumbs = [
+      { label: 'Тестировочный контур', path: testPath },
+      { label: 'Мой кабинет' },
+    ];
+    page = <TestMePage />;
+  } else if (cleanPath === `${testPath}/admin`) {
+    title = 'Админка тестового контура';
+    activePath = testPath;
+    breadcrumbs = [
+      { label: 'Тестировочный контур', path: testPath },
+      { label: 'Админ' },
+    ];
+    page = <TestAdminPage />;
+  } else if (cleanPath === `${testPath}/specialist`) {
+    title = 'Специалист тестового контура';
+    activePath = testPath;
+    breadcrumbs = [
+      { label: 'Тестировочный контур', path: testPath },
+      { label: 'Специалист' },
+    ];
+    page = <TestSpecialistPage />;
+  } else if (cleanPath === `${testPath}/organization`) {
+    title = 'Организация тестового контура';
+    activePath = testPath;
+    breadcrumbs = [
+      { label: 'Тестировочный контур', path: testPath },
+      { label: 'Организация' },
+    ];
+    page = getHseSupabaseConfig().isConfigured ? (
+      <ShowcaseOrganizationPage />
+    ) : (
+      <SupabaseSetupPanel />
+    );
   } else if (cleanPath === `${rootPath}/employee`) {
     title = 'Сценарий сотрудника';
     breadcrumbs = [{ label: 'Сотрудник' }];
@@ -1799,7 +2693,7 @@ export default function HseMvpPage({ path }) {
     title = `Тест: ${module.title}`;
     activePath = `${rootPath}/employee`;
     breadcrumbs = [
-      { label: 'Сотрудник', path: `${rootPath}/employee` },
+      { label: 'Сотрудник', path: `${showcasePath}/organization` },
       { label: module.title, path: `${rootPath}/course/${module.id}` },
       { label: 'Тест' },
     ];
@@ -1809,7 +2703,7 @@ export default function HseMvpPage({ path }) {
     title = module.title;
     activePath = `${rootPath}/employee`;
     breadcrumbs = [
-      { label: 'Сотрудник', path: `${rootPath}/employee` },
+      { label: 'Сотрудник', path: `${showcasePath}/organization` },
       { label: module.title },
     ];
     page = <CoursePage courseId={parts[1]} />;
@@ -1817,7 +2711,7 @@ export default function HseMvpPage({ path }) {
     title = 'Итог прохождения';
     activePath = `${rootPath}/employee`;
     breadcrumbs = [
-      { label: 'Сотрудник', path: `${rootPath}/employee` },
+      { label: 'Сотрудник', path: `${showcasePath}/organization` },
       { label: 'Итог' },
     ];
     page = <ResultPage attemptId={parts[1]} />;
