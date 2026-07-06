@@ -25,6 +25,8 @@ const pageLinks = [
   { label: 'CEO', href: '/ceo/' },
   { label: 'HSE-демо', href: '/hse/mvp' },
   { label: 'Почему работает', href: '/why_it_works/' },
+  { label: 'Политика обработки персональных данных', href: '/personal-data/' },
+  { label: 'Политика конфиденциальности', href: '/privacy/' },
   { label: 'Тестовый дизайн', href: '/design1test/' },
   { label: 'Старый дизайн', href: '/design_old/' },
 ];
@@ -130,6 +132,8 @@ export default function SiteFooter() {
         <a href="/ceo/">
           CEO <ArrowRight aria-hidden="true" />
         </a>
+        <a href="/personal-data/">Политика обработки персональных данных</a>
+        <a href="/privacy/">Политика конфиденциальности</a>
       </div>
     </footer>
   );

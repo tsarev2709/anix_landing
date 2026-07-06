@@ -93,6 +93,8 @@ const routes = [
   'hse/mvp/request-course',
   'hse/mvp/integrations',
   'hse/mvp/support',
+  'personal-data',
+  'privacy',
   'design1test',
   'design_old',
 ];

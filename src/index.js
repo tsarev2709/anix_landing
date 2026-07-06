@@ -14,6 +14,7 @@ import HseMvpPage from './features/hseMvp/HseMvpPage';
 import Design1TestPage from './components/Design1TestPage';
 import DesignOldPage from './components/DesignOldPage';
 import CeoPage from './components/CeoPage';
+import LegalPage from './components/LegalPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const base = '';
@@ -59,6 +60,12 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       break;
     case '/ceo':
       renderInLayout(<CeoPage />);
+      break;
+    case '/personal-data':
+      renderInLayout(<LegalPage type="personal-data" />);
+      break;
+    case '/privacy':
+      renderInLayout(<LegalPage type="privacy" />);
       break;
     default:
       root.render(<NotFound />);
