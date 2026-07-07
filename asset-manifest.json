@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.50baee01.css",
-    "main.js": "/static/js/main.1f29cab8.js",
+    "main.css": "/static/css/main.d2190304.css",
+    "main.js": "/static/js/main.c7a23f91.js",
     "static/css/663.acb38cc5.chunk.css": "/static/css/663.acb38cc5.chunk.css",
-    "static/js/663.844ba145.chunk.js": "/static/js/663.844ba145.chunk.js",
-    "static/js/204.77aa8264.chunk.js": "/static/js/204.77aa8264.chunk.js",
+    "static/js/663.7ce519c1.chunk.js": "/static/js/663.7ce519c1.chunk.js",
+    "static/js/204.95e88743.chunk.js": "/static/js/204.95e88743.chunk.js",
     "static/media/3.png": "/static/media/3.95d850bfd9557355a532.png",
     "static/media/hse-hero.jpg": "/static/media/hse-hero.98902ec35d115bd2829e.jpg",
     "static/media/alexandra-andrey-anix.webp": "/static/media/alexandra-andrey-anix.3aa3b1342754067831aa.webp",
@@ -35,7 +35,7 @@
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.50baee01.css",
-    "static/js/main.1f29cab8.js"
+    "static/css/main.d2190304.css",
+    "static/js/main.c7a23f91.js"
   ]
 }
