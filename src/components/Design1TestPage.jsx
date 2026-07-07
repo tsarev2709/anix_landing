@@ -508,7 +508,12 @@ function Design1TestPage({ wandTest = false }) {
           className="d1-header-inner"
           aria-label="Навигация тестовой страницы ANIX"
         >
-          <a className="d1-logo" href="#top" aria-label="ANIX Studio">
+          <a
+            className="d1-logo"
+            href="#top"
+            aria-label="ANIX Studio"
+            {...wandTarget(wandTest ? 'logo-origin' : undefined)}
+          >
             <img src={logo} alt="ANIX" />
           </a>
           <div className="d1-nav-links">
@@ -659,9 +664,7 @@ function Design1TestPage({ wandTest = false }) {
               <CaseCard
                 item={item}
                 key={item.title}
-                wandTargetName={
-                  wandTest && index === 1 ? 'case-card-main-right' : undefined
-                }
+                wandTargetName={wandTest ? `case-card-${index + 1}` : undefined}
               />
             ))}
           </div>

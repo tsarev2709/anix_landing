@@ -1679,3 +1679,16 @@
   font-size: 15px;
   line-height: 1.35;
 }
+.design1-wand-test .d1-header {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  z-index: 100;
+  margin-top: 0;
+  transform: translateX(-50%);
+}
+
+.design1-wand-test .d1-hero {
+  padding-top: 148px;
+}
+

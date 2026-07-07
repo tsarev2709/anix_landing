@@ -28,21 +28,21 @@
 
 .wand-asset {
   box-sizing: border-box;
-  width: clamp(70px, 6vw, 102px);
-  height: clamp(70px, 6vw, 102px);
+  width: clamp(78px, 6.8vw, 116px);
+  height: clamp(78px, 6.8vw, 116px);
   padding: 8px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.62), rgba(79, 250, 238, 0.17) 42%, rgba(246, 144, 255, 0.1) 58%, transparent 74%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.72), rgba(79, 250, 238, 0.24) 40%, rgba(246, 144, 255, 0.16) 60%, transparent 76%);
   filter:
     drop-shadow(0 0 8px rgba(255, 255, 255, 0.74))
-    drop-shadow(0 0 18px rgba(79, 250, 238, 0.44))
-    drop-shadow(0 0 30px rgba(246, 144, 255, 0.28));
+    drop-shadow(0 0 22px rgba(79, 250, 238, 0.56))
+    drop-shadow(0 0 40px rgba(246, 144, 255, 0.34));
   transform-origin: 50% 50%;
 }
 
 .wand-trail {
-  width: 118px;
-  height: 18px;
+  width: 172px;
+  height: 22px;
   border-radius: 999px;
   background: linear-gradient(
     90deg,
@@ -51,13 +51,13 @@
     rgba(246, 144, 255, 0.1),
     rgba(255, 255, 255, 0)
   );
-  filter: blur(6px);
+  filter: blur(7px);
   transform-origin: 100% 50%;
 }
 
 .wand-beam {
-  width: 320px;
-  height: 24px;
+  width: 380px;
+  height: 28px;
   border-radius: 999px;
   background: linear-gradient(
     90deg,
@@ -73,8 +73,8 @@
 }
 
 .wand-spark-pillar {
-  width: 150px;
-  height: 190px;
+  width: 190px;
+  height: 230px;
   border-radius: 999px;
   background:
     radial-gradient(circle at 50% 72%, rgba(255, 255, 255, 0.5), transparent 22%),
@@ -187,6 +187,7 @@
 .design1-wand-test .d1-reason-card.wand-target-active,
 .design1-wand-test .d1-process-list.wand-target-active,
 .design1-wand-test .d1-route-marker.wand-target-active,
+.design1-wand-test .d1-direction-card.wand-target-active,
 .design1-wand-test .d1-final-cta.wand-target-active {
   border-color: rgba(79, 250, 238, 0.44);
   box-shadow:
@@ -199,7 +200,8 @@
 .design1-wand-test .d1-reason-card.wand-target-active,
 .design1-wand-test .d1-route-marker.wand-target-active,
 .design1-wand-test .d1-process-step.wand-target-active,
-.design1-wand-test .d1-compact-case.wand-target-active {
+.design1-wand-test .d1-compact-case.wand-target-active,
+.design1-wand-test .d1-direction-card.wand-target-active {
   transform: translateY(-3px) scale(1.01);
 }
 
@@ -216,8 +218,41 @@
   filter: drop-shadow(0 16px 30px rgba(79, 250, 238, 0.12));
 }
 
+.design1-wand-test .d1-showreel-frame.wand-target-active {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.34),
+    0 0 38px rgba(79, 250, 238, 0.34),
+    0 0 88px rgba(246, 144, 255, 0.22),
+    0 34px 78px rgba(17, 17, 17, 0.2);
+}
+
+.design1-wand-test .d1-showreel-frame.wand-target-active::before {
+  position: absolute;
+  inset: -2px;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  content: '';
+  background:
+    radial-gradient(circle at 58% 44%, rgba(255, 255, 255, 0.32), transparent 18%),
+    linear-gradient(120deg, rgba(79, 250, 238, 0.24), transparent 42%, rgba(246, 144, 255, 0.18));
+  mix-blend-mode: screen;
+  animation: wandVideoGlow 1.6s ease-in-out infinite;
+}
+
 .design1-wand-test .d1-wand-footer-target.wand-target-active .anix-site-footer {
   box-shadow: inset 0 -48px 90px rgba(79, 250, 238, 0.12);
+}
+
+@keyframes wandVideoGlow {
+  0%,
+  100% {
+    opacity: 0.34;
+  }
+
+  50% {
+    opacity: 0.74;
+  }
 }
 
 @media (max-width: 1023px), (prefers-reduced-motion: reduce) {
