@@ -69,9 +69,13 @@ import {
 } from './lib/hseSupabase';
 import {
   SELF_REGISTER_ROLES,
+  fetchDepartmentSlug,
   fetchOwnProfile,
   getCurrentSession,
+  listAllAttempts,
   listAllProfiles,
+  listMyAttempts,
+  listModulesByKey,
   listRecentEvents,
   signInWithPassword,
   signOutCurrentUser,
@@ -2591,26 +2595,55 @@ const roleLabels = {
 
 function RealEmployeeDashboard({ profile }) {
   const [events, setEvents] = useState([]);
+  const [requiredModules, setRequiredModules] = useState([]);
+  const [attemptsByModuleKey, setAttemptsByModuleKey] = useState({});
   const [error, setError] = useState('');
 
   useEffect(() => {
     let active = true;
     (async () => {
       try {
-        const allEvents = await listRecentEvents(20);
-        if (active)
-          setEvents(
-            allEvents.filter((event) => event.user_id === profile.user_id)
-          );
+        const [allEvents, departmentSlug, modules, myAttempts] =
+          await Promise.all([
+            listRecentEvents(20),
+            fetchDepartmentSlug(profile.department_id),
+            listModulesByKey(),
+            listMyAttempts(),
+          ]);
+        if (!active) return;
+        setEvents(
+          allEvents.filter((event) => event.user_id === profile.user_id)
+        );
+
+        const department = getDepartmentById(departmentSlug || 'all-employees');
+        setRequiredModules(
+          department.requiredModuleIds
+            .map((moduleId) => getModuleById(moduleId))
+            .filter(Boolean)
+        );
+
+        const idToKey = {};
+        modules.forEach((module) => {
+          idToKey[module.id] = module.module_key;
+        });
+        const byKey = {};
+        myAttempts.forEach((attempt) => {
+          const key = idToKey[attempt.module_id];
+          if (!key) return;
+          if (!byKey[key] || attempt.completed_at > byKey[key].completed_at) {
+            byKey[key] = attempt;
+          }
+        });
+        setAttemptsByModuleKey(byKey);
       } catch (loadError) {
         if (active)
-          setError(loadError.message || 'Не удалось загрузить события.');
+          setError(loadError.message || 'Не удалось загрузить данные.');
       }
     })();
     return () => {
       active = false;
     };
-  }, [profile.user_id]);
+  }, [profile.user_id, profile.department_id]);
 
   return (
     <div className="hse-mvp-grid">
@@ -2629,8 +2662,48 @@ function RealEmployeeDashboard({ profile }) {
         <TestSignOutButton />
       </article>
       <article className="hse-mvp-card">
-        <h2>Моя активность</h2>
+        <h2>Мои курсы</h2>
         {error ? <p className="hse-mvp-form-error">{error}</p> : null}
+        {requiredModules.length ? (
+          <ul className="hse-mvp-card-list">
+            {requiredModules.map((module) => {
+              const attempt = attemptsByModuleKey[module.id];
+              return (
+                <li key={module.id}>
+                  <div>
+                    <strong>{module.title}</strong>
+                    <p>{module.description}</p>
+                    {attempt ? (
+                      <Badge
+                        tone={
+                          attempt.status?.includes('пройден')
+                            ? 'success'
+                            : 'warning'
+                        }
+                      >
+                        {attempt.status} · {attempt.score}%
+                      </Badge>
+                    ) : (
+                      <Badge tone="neutral">Не начат</Badge>
+                    )}
+                  </div>
+                  <a
+                    className="hse-mvp-button hse-mvp-button-primary"
+                    href={href(`${rootPath}/course/${module.id}`)}
+                  >
+                    {attempt ? 'Пройти ещё раз' : 'Начать'}{' '}
+                    <ArrowRight aria-hidden="true" size={18} />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p>Для вашего отдела пока нет назначенных курсов.</p>
+        )}
+      </article>
+      <article className="hse-mvp-card">
+        <h2>Моя активность</h2>
         {events.length ? (
           <ul>
             {events.map((event) => (
@@ -2650,21 +2723,37 @@ function RealEmployeeDashboard({ profile }) {
 
 function RealSpecialistDashboard({ profile }) {
   const [profiles, setProfiles] = useState([]);
+  const [progressByUser, setProgressByUser] = useState({});
   const [error, setError] = useState('');
 
   useEffect(() => {
     let active = true;
     (async () => {
       try {
-        const all = await listAllProfiles();
-        if (active)
-          setProfiles(
-            all.filter(
-              (item) =>
-                !profile.organization_id ||
-                item.organization_id === profile.organization_id
-            )
-          );
+        const [all, attempts, modules] = await Promise.all([
+          listAllProfiles(),
+          listAllAttempts(),
+          listModulesByKey(),
+        ]);
+        if (!active) return;
+        const orgProfiles = all.filter(
+          (item) =>
+            !profile.organization_id ||
+            item.organization_id === profile.organization_id
+        );
+        setProfiles(orgProfiles);
+
+        const idToKey = {};
+        modules.forEach((module) => {
+          idToKey[module.id] = module.module_key;
+        });
+        const progress = {};
+        attempts.forEach((attempt) => {
+          const list = progress[attempt.user_id] || [];
+          list.push({ ...attempt, moduleKey: idToKey[attempt.module_id] });
+          progress[attempt.user_id] = list;
+        });
+        setProgressByUser(progress);
       } catch (loadError) {
         if (active)
           setError(loadError.message || 'Не удалось загрузить пользователей.');
@@ -2689,18 +2778,35 @@ function RealSpecialistDashboard({ profile }) {
               <th>ФИО</th>
               <th>Почта</th>
               <th>Роль</th>
-              <th>Регистрация</th>
+              <th>Пройдено курсов</th>
+              <th>Последний результат</th>
             </tr>
           </thead>
           <tbody>
-            {profiles.map((item) => (
-              <tr key={item.user_id}>
-                <td>{item.full_name || '—'}</td>
-                <td>{item.email}</td>
-                <td>{roleLabels[item.role] || item.role}</td>
-                <td>{new Date(item.created_at).toLocaleString('ru-RU')}</td>
-              </tr>
-            ))}
+            {profiles.map((item) => {
+              const attempts = progressByUser[item.user_id] || [];
+              const passed = attempts.filter((attempt) =>
+                attempt.status?.includes('пройден')
+              );
+              const latest = attempts[0];
+              return (
+                <tr key={item.user_id}>
+                  <td>{item.full_name || '—'}</td>
+                  <td>{item.email}</td>
+                  <td>{roleLabels[item.role] || item.role}</td>
+                  <td>
+                    {item.role === 'employee'
+                      ? `${passed.length} из ${attempts.length || 0}`
+                      : '—'}
+                  </td>
+                  <td>
+                    {latest
+                      ? `${latest.moduleKey || '—'}: ${latest.score}% (${new Date(latest.completed_at).toLocaleDateString('ru-RU')})`
+                      : '—'}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

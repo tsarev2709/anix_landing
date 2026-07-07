@@ -145,3 +145,102 @@ export const updateProfileRole = async (userId: string, role: HseRole) => {
     .eq('user_id', userId);
   if (error) throw error;
 };
+
+export const fetchDepartmentSlug = async (departmentId: string | null) => {
+  if (!departmentId) return null;
+  const client = getHseSupabaseClient();
+  if (!client) return null;
+  const { data } = await table(client, 'hse_departments')
+    .select('slug')
+    .eq('id', departmentId)
+    .maybeSingle();
+  return data?.slug || null;
+};
+
+// Course/lesson content (demoData.ts, foodProductionTrainingModules.ts) is
+// static in the app bundle, keyed by the same string ids as
+// hse_modules.module_key ('life-saving-rules', 'slips-and-falls',
+// 'electrical-safety'). Only progress/attempts live in Supabase — there is
+// no admin-editable course content model yet.
+export const listModulesByKey = async () => {
+  const client = getHseSupabaseClient();
+  if (!client) return [];
+  const { data, error } = await table(client, 'hse_modules').select(
+    'id, module_key, title'
+  );
+  if (error) throw error;
+  return (data || []) as { id: string; module_key: string; title: string }[];
+};
+
+const resolveModuleIdByKey = async (moduleKey: string) => {
+  const client = getHseSupabaseClient();
+  if (!client) return null;
+  const { data } = await table(client, 'hse_modules')
+    .select('id')
+    .eq('module_key', moduleKey)
+    .maybeSingle();
+  return data?.id || null;
+};
+
+// Called from lib/storage.ts's saveAttempt so the localStorage-based demo
+// flow transparently also persists to Supabase for a real, logged-in user —
+// no-op in showcase mode where there is no session.
+export const recordRealAttempt = async (attempt: {
+  moduleId: string;
+  moduleTitle?: string;
+  version?: string;
+  score: number;
+  passed: boolean;
+  status: string;
+  attemptNumber?: number;
+  durationSeconds?: number;
+  completedAt?: string;
+}) => {
+  const client = getHseSupabaseClient();
+  if (!client) return;
+  const { data: userData } = await client.auth.getUser();
+  const userId = userData?.user?.id;
+  if (!userId) return;
+
+  const moduleId = await resolveModuleIdByKey(attempt.moduleId);
+  await table(client, 'hse_attempts').insert({
+    user_id: userId,
+    module_id: moduleId,
+    course_version: attempt.version || 'n/a',
+    attempt_number: attempt.attemptNumber || 1,
+    status: attempt.status,
+    score: attempt.score,
+    completed_at: attempt.completedAt || new Date().toISOString(),
+    duration_seconds: attempt.durationSeconds || 0,
+  });
+
+  await logHseEvent('attempt_completed', {
+    moduleKey: attempt.moduleId,
+    moduleTitle: attempt.moduleTitle,
+    score: attempt.score,
+    passed: attempt.passed,
+  });
+};
+
+export const listMyAttempts = async () => {
+  const client = getHseSupabaseClient();
+  if (!client) return [];
+  const { data: userData } = await client.auth.getUser();
+  const userId = userData?.user?.id;
+  if (!userId) return [];
+  const { data, error } = await table(client, 'hse_attempts')
+    .select('id, module_id, status, score, completed_at')
+    .eq('user_id', userId)
+    .order('completed_at', { ascending: false });
+  if (error) throw error;
+  return data || [];
+};
+
+export const listAllAttempts = async () => {
+  const client = requireClient();
+  const { data, error } = await table(client, 'hse_attempts')
+    .select('id, user_id, module_id, status, score, completed_at')
+    .order('completed_at', { ascending: false });
+  if (error) throw error;
+  return data || [];
+};
