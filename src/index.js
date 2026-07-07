@@ -17,7 +17,7 @@ import CeoPage from './components/CeoPage';
 import LegalPage from './components/LegalPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-const base = '';
+const base = process.env.PUBLIC_URL || '';
 const relativePath = window.location.pathname.replace(base, '') || '/';
 const normalizedPath = (() => {
   const withoutIndex = relativePath.replace(/index\.html$/, '');

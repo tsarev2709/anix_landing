@@ -79,7 +79,7 @@ import {
   updateProfileRole,
 } from './lib/auth';
 
-const base = '';
+const base = process.env.PUBLIC_URL || '';
 const rootPath = '/hse/mvp';
 const showcasePath = `${rootPath}/showcase`;
 const testPath = `${rootPath}/test`;
