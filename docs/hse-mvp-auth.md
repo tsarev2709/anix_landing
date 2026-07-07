@@ -10,9 +10,13 @@ The test contour is designed around three roles:
 
 ## Registration
 
-Employee self-registration should use Supabase Auth with allowed corporate email domains from `VITE_ALLOWED_EMAIL_DOMAINS` or `REACT_APP_ALLOWED_EMAIL_DOMAINS`.
+Self-registration (`/hse/mvp/test/register`) uses Supabase Auth with allowed corporate email domains from `VITE_ALLOWED_EMAIL_DOMAINS` or `REACT_APP_ALLOWED_EMAIL_DOMAINS`.
 
-The frontend may validate email domains for UX, but backend/Supabase policies remain the enforcement layer.
+The registrant picks their own role, but the choice is limited to `employee` and `specialist` — `admin` is never offered on the self-registration form. This is a deliberate security boundary: anyone who can reach the form must not be able to grant themselves administrator access. `admin` accounts are created only via `scripts/create-hse-admin.mjs` or promoted from the admin dashboard by an existing admin.
+
+The frontend may validate email domains for UX, but backend/Supabase policies (RLS) remain the enforcement layer.
+
+Email confirmation is disabled for this contour (`Authentication` → `Email` → "Confirm email" off in the Supabase dashboard), so `supabase.auth.signUp` returns an active session immediately and the user lands in their role's dashboard without checking their inbox.
 
 ## Admin creation
 
