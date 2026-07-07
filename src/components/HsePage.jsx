@@ -164,9 +164,7 @@ export default function HsePage() {
   return (
     <main className="hse-page">
       <Helmet>
-        <title>
-          ANIX - правила безопасности, которые запоминают
-        </title>
+        <title>ANIX - правила безопасности, которые запоминают</title>
         <meta
           name="description"
           content="ANIX делает ролики, карточки, инфографику, тесты и годовые кампании по охране труда, чтобы правила безопасности запоминали и применяли."
@@ -194,6 +192,12 @@ export default function HsePage() {
             ))}
           </div>
           <a
+            className="hse-header-cta hse-header-cta-secondary"
+            href="/hse/mvp/test/login"
+          >
+            Войти
+          </a>
+          <a
             className="hse-header-cta"
             href={telegramUrl}
             target="_blank"
@@ -210,7 +214,7 @@ export default function HsePage() {
             Охрана труда / промышленная безопасность
           </p>
           <h1>Делаем правила безопасности запоминаемыми</h1>
-                    <p className="hse-lead">
+          <p className="hse-lead">
             ANIX собирает серии материалов для отделов охраны труда: ролики,
             карточки, страницы по QR-коду, тесты, инфографику, тексты для
             внутренних каналов и годовые кампании там, где инструкции должны
@@ -254,7 +258,7 @@ export default function HsePage() {
             <p className="hse-eyebrow">Проблема</p>
             <h2>Правила не запоминают</h2>
           </div>
-                    <div className="hse-rich-text">
+          <div className="hse-rich-text">
             <p>
               Сотрудник вспоминает не номер пункта, а сцену: где риск, чем
               закончится ошибка и какое действие выбрать.
@@ -288,7 +292,7 @@ export default function HsePage() {
           <div>
             <p className="hse-eyebrow">От инструкции к сцене</p>
             <h2>Наглядно показываем риск</h2>
-                        <p>
+            <p>
               Сотрудник видит конкретную ситуацию: что может пойти не так, чем
               это закончится и какое действие нужно выбрать.
             </p>
@@ -352,10 +356,7 @@ export default function HsePage() {
           <div className="hse-section-head hse-section-head-row">
             <div>
               <p className="hse-eyebrow">Кейсы и демо</p>
-              <h2>
-                Уже есть кейсы и результаты
-
-              </h2>
+              <h2>Уже есть кейсы и результаты</h2>
             </div>
             <p>
               В HSE важно быстро увидеть, как это будет работать: карточка,

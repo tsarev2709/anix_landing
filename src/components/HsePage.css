@@ -134,6 +134,17 @@
   background: var(--hse-green-dark);
 }
 
+.hse-header-cta-secondary {
+  background: transparent;
+  color: var(--hse-black);
+  border-color: currentColor;
+}
+
+.hse-header-cta-secondary:hover {
+  background: var(--hse-black);
+  color: var(--hse-white);
+}
+
 .hse-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.03fr) minmax(520px, 0.97fr);

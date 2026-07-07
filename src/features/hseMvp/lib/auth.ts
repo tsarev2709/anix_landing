@@ -19,21 +19,6 @@ const requireClient = () => {
 const table = (client: ReturnType<typeof requireClient>, name: string): any =>
   (client as any).from(name);
 
-export const resolveDepartmentBySlug = async (slug: string) => {
-  const client = requireClient();
-  const { data, error } = await table(client, 'hse_departments')
-    .select('id, organization_id, slug, title')
-    .eq('slug', slug)
-    .maybeSingle();
-  if (error) throw error;
-  return data as {
-    id: string;
-    organization_id: string;
-    slug: string;
-    title: string;
-  } | null;
-};
-
 export const logHseEvent = async (eventType: string, payload: unknown = {}) => {
   const client = getHseSupabaseClient();
   if (!client) return;
@@ -45,6 +30,14 @@ export const logHseEvent = async (eventType: string, payload: unknown = {}) => {
   });
 };
 
+// The hse_profiles row is created server-side by the
+// on_auth_user_created_hse_profile trigger (see
+// supabase/migrations/003_hse_mvp_signup_trigger.sql), not from here.
+// Right after signUp() there is no session yet when email confirmation is
+// required, so the client has no auth.uid() and RLS would reject a direct
+// insert. Metadata passed via `options.data` is what the trigger reads —
+// note it is attacker-controlled input, so the trigger whitelists the role
+// server-side rather than trusting it outright.
 export const signUpWithProfile = async ({
   email,
   password,
@@ -59,33 +52,22 @@ export const signUpWithProfile = async ({
   departmentSlug: string;
 }) => {
   const client = requireClient();
-  const { data, error } = await client.auth.signUp({ email, password });
+  const { data, error } = await client.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullName,
+        role,
+        department_slug: departmentSlug,
+      },
+    },
+  });
   if (error) throw error;
 
-  const userId = data.user?.id;
-  if (!userId) {
-    throw new Error(
-      'Аккаунт создан, но требуется подтверждение почты на стороне Supabase Auth. Отключите email confirmations в Authentication settings, чтобы вход был мгновенным.'
-    );
+  if (data.session) {
+    await logHseEvent('user_registered', { role, departmentSlug });
   }
-
-  const department = await resolveDepartmentBySlug(departmentSlug);
-
-  const { error: profileError } = await table(client, 'hse_profiles').upsert(
-    {
-      user_id: userId,
-      organization_id: department?.organization_id || null,
-      department_id: department?.id || null,
-      email,
-      full_name: fullName,
-      role,
-      updated_at: new Date().toISOString(),
-    },
-    { onConflict: 'user_id' }
-  );
-  if (profileError) throw profileError;
-
-  await logHseEvent('user_registered', { role, departmentSlug });
   return data;
 };
 

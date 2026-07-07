@@ -2371,14 +2371,20 @@ function TestAuthPage({ kind }) {
     setBusy(true);
     try {
       if (kind === 'register') {
-        await signUpWithProfile({
+        const result = await signUpWithProfile({
           email,
           password,
           fullName,
           role,
           departmentSlug,
         });
-        window.location.href = href(roleToPath(role));
+        if (result.session) {
+          window.location.href = href(roleToPath(role));
+          return;
+        }
+        setMessage(
+          'Аккаунт создан. Проверьте почту и перейдите по ссылке подтверждения, затем войдите через "Вход".'
+        );
         return;
       }
       await signInWithPassword({ email, password });
