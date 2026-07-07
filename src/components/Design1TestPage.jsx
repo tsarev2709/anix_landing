@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import {
   ArrowRight,
@@ -18,6 +18,7 @@ import {
   Workflow,
 } from 'lucide-react';
 import SiteFooter from './SiteFooter';
+import WandOverlay from './WandOverlay';
 import logo from '../images/logoanix.png';
 import agrotechCaseImage from '../images/cases/agrotech.webp';
 import bondarchukCaseImage from '../images/cases/bondarchuk.webp';
@@ -302,6 +303,7 @@ const navigationLinks = [
 ];
 
 const isExternalHref = (href) => /^https?:\/\//.test(href);
+const wandTarget = (name) => (name ? { 'data-wand-target': name } : {});
 
 function SmartLink({ href, className, children, ariaLabel }) {
   const isExternal = isExternalHref(href);
@@ -319,9 +321,9 @@ function SmartLink({ href, className, children, ariaLabel }) {
   );
 }
 
-function MetricCard({ item }) {
+function MetricCard({ item, wandTargetName }) {
   return (
-    <article className="d1-metric-card">
+    <article className="d1-metric-card" {...wandTarget(wandTargetName)}>
       <strong>{item.value}</strong>
       <h3>{item.label}</h3>
       <p>{item.note}</p>
@@ -343,9 +345,9 @@ function ServiceCard({ item }) {
   );
 }
 
-function CaseCard({ item }) {
+function CaseCard({ item, wandTargetName }) {
   return (
-    <article className="d1-case-card">
+    <article className="d1-case-card" {...wandTarget(wandTargetName)}>
       <SmartLink
         className="d1-case-image"
         href={item.href}
@@ -387,9 +389,9 @@ function CompactCaseCard({ item }) {
   );
 }
 
-function ReasonCard({ item }) {
+function ReasonCard({ item, wandTargetName }) {
   return (
-    <article className="d1-reason-card">
+    <article className="d1-reason-card" {...wandTarget(wandTargetName)}>
       <span>{item.number}</span>
       <h3>{item.title}</h3>
       <p>{item.text}</p>
@@ -424,12 +426,12 @@ function DirectionCard({ item }) {
   );
 }
 
-function VideoShowreel({ variant = 'hero' }) {
+function VideoShowreel({ variant = 'hero', wandTargetName }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className={`d1-showreel d1-showreel-${variant}`}>
-      <div className="d1-showreel-frame">
+      <div className="d1-showreel-frame" {...wandTarget(wandTargetName)}>
         {isOpen ? (
           <iframe
             src={showreelUrl}
@@ -461,19 +463,27 @@ function VideoShowreel({ variant = 'hero' }) {
   );
 }
 
-function Design1TestPage() {
+function Design1TestPage({ wandTest = false }) {
   return (
-    <main className="design1-test">
+    <main className={`design1-test${wandTest ? ' design1-wand-test' : ''}`}>
       <Helmet>
         <title>
-          ANIX Studio - ролики, маскоты и визуальные системы для сложных
-          продуктов
+          {wandTest
+            ? 'ANIX Studio - hero animation test'
+            : 'ANIX Studio - ролики, маскоты и визуальные системы для сложных продуктов'}
         </title>
         <meta
           name="description"
           content="ANIX Studio делает AI-видео, анимацию, маскотов, visual sales kits и обучающие материалы для B2B, фармы, MedTech, HSE и событий."
         />
-        <link rel="canonical" href="https://studio.anix-ai.pro/" />
+        <link
+          rel="canonical"
+          href={
+            wandTest
+              ? 'https://studio.anix-ai.pro/hero_animation_test'
+              : 'https://studio.anix-ai.pro/'
+          }
+        />
         <meta
           property="og:title"
           content="ANIX Studio — дизайн-тест лендинга"
@@ -482,7 +492,14 @@ function Design1TestPage() {
           property="og:description"
           content="Кейсы, showreel, метрики и направления ANIX в новой редакторской структуре."
         />
-        <meta property="og:url" content="https://studio.anix-ai.pro/" />
+        <meta
+          property="og:url"
+          content={
+            wandTest
+              ? 'https://studio.anix-ai.pro/hero_animation_test'
+              : 'https://studio.anix-ai.pro/'
+          }
+        />
         <meta property="og:type" content="website" />
       </Helmet>
 
@@ -547,7 +564,7 @@ function Design1TestPage() {
         </div>
 
         <aside className="d1-hero-visual" aria-label="Showreel ANIX">
-          <VideoShowreel />
+          <VideoShowreel wandTargetName={wandTest ? 'hero-video' : undefined} />
           <div className="d1-hero-note">
             <MonitorPlay aria-hidden="true" />
             <span>
@@ -563,7 +580,21 @@ function Design1TestPage() {
           <div className="d1-proof-layout">
             <div>
               <p className="d1-eyebrow">Showreel + цифры</p>
-              <h2>Сначала человек должен понять, потом уже восхищаться</h2>
+              <h2>
+                Сначала человек должен{' '}
+                <span
+                  className={wandTest ? 'd1-wand-word' : undefined}
+                  {...wandTarget(wandTest ? 'understand-word' : undefined)}
+                >
+                  понять
+                </span>{', потом уже '}
+                <span
+                  className={wandTest ? 'd1-wand-word' : undefined}
+                  {...wandTarget(wandTest ? 'admire-word' : undefined)}
+                >
+                  восхищаться
+                </span>
+              </h2>
             </div>
             <p className="d1-section-lead">
               Хороший ролик не просит у зрителя лишнюю минуту на расшифровку. Он
@@ -572,8 +603,14 @@ function Design1TestPage() {
             </p>
           </div>
           <div className="d1-metrics-grid">
-            {metrics.map((item) => (
-              <MetricCard item={item} key={item.value} />
+            {metrics.map((item, index) => (
+              <MetricCard
+                item={item}
+                key={item.value}
+                wandTargetName={
+                  wandTest && index < 3 ? `metric-${index + 1}` : undefined
+                }
+              />
             ))}
           </div>
         </div>
@@ -614,9 +651,18 @@ function Design1TestPage() {
               задача, а не просто желание сделать вау.
             </p>
           </div>
-          <div className="d1-case-grid">
-            {mainCases.map((item) => (
-              <CaseCard item={item} key={item.title} />
+          <div
+            className="d1-case-grid"
+            {...wandTarget(wandTest ? 'case-card-grid' : undefined)}
+          >
+            {mainCases.map((item, index) => (
+              <CaseCard
+                item={item}
+                key={item.title}
+                wandTargetName={
+                  wandTest && index === 1 ? 'case-card-main-right' : undefined
+                }
+              />
             ))}
           </div>
         </div>
@@ -627,7 +673,7 @@ function Design1TestPage() {
           <div className="d1-section-head d1-section-head-row">
             <div>
               <p className="d1-eyebrow">Еще видео</p>
-              <h2>
+              <h2 {...wandTarget(wandTest ? 'small-cases-title' : undefined)}>
                 Не все надо превращать в огромный кейс. Иногда достаточно быстро
                 показать, что мы умеем
               </h2>
@@ -665,8 +711,12 @@ function Design1TestPage() {
             </p>
           </div>
           <div className="d1-reason-grid">
-            {reasons.map((item) => (
-              <ReasonCard item={item} key={item.number} />
+            {reasons.map((item, index) => (
+              <ReasonCard
+                item={item}
+                key={item.number}
+                wandTargetName={wandTest ? `why-card-${index + 1}` : undefined}
+              />
             ))}
           </div>
         </div>
@@ -682,8 +732,22 @@ function Design1TestPage() {
               согласующих, правил, экспертов и внезапных правок. Поэтому процесс
               должен быть виден, а не жить в голове у подрядчика.
             </p>
+            {wandTest ? (
+              <div
+                className="d1-route-marker"
+                {...wandTarget('route-title-space')}
+                aria-hidden="true"
+              >
+                <span>route</span>
+                <strong>6 шагов</strong>
+                <small>зафиксировали маршрут проекта</small>
+              </div>
+            ) : null}
           </div>
-          <ol className="d1-process-list">
+          <ol
+            className="d1-process-list"
+            {...wandTarget(wandTest ? 'roadmap' : undefined)}
+          >
             {processSteps.map((item, index) => (
               <ProcessStep item={item} index={index} key={item.title} />
             ))}
@@ -729,7 +793,11 @@ function Design1TestPage() {
         </div>
       </section>
 
-      <section className="d1-section d1-final-cta" id="contact">
+      <section
+        className="d1-section d1-final-cta"
+        id="contact"
+        {...wandTarget(wandTest ? 'contacts' : undefined)}
+      >
         <div className="d1-container d1-final-inner">
           <div>
             <p className="d1-eyebrow">Контакты</p>
@@ -773,9 +841,16 @@ function Design1TestPage() {
         </div>
       </section>
 
-      <SiteFooter />
+      <div
+        className="d1-wand-footer-target"
+        {...wandTarget(wandTest ? 'footer' : undefined)}
+      >
+        <SiteFooter />
+      </div>
+      {wandTest ? <WandOverlay /> : null}
     </main>
   );
 }
 
 export default Design1TestPage;
+

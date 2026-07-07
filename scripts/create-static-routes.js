@@ -96,6 +96,7 @@ const routes = [
   'personal-data',
   'privacy',
   'design1test',
+  'hero_animation_test',
   'design_old',
 ];
 

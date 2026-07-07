@@ -1644,3 +1644,38 @@
   color: var(--d1-white) !important;
   -webkit-text-fill-color: currentColor;
 }
+
+.design1-wand-test .d1-route-marker {
+  display: grid;
+  gap: 8px;
+  width: min(360px, 100%);
+  margin-top: 34px;
+  padding: 22px;
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(79, 250, 238, 0.16), transparent 34%),
+    radial-gradient(circle at 18% 76%, rgba(246, 144, 255, 0.14), transparent 42%),
+    #fffaf2;
+  color: var(--d1-ink);
+  transform-origin: 50% 65%;
+}
+
+.design1-wand-test .d1-route-marker span {
+  color: var(--d1-accent-dark);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.design1-wand-test .d1-route-marker strong {
+  font-size: clamp(34px, 3vw, 52px);
+  line-height: 0.95;
+}
+
+.design1-wand-test .d1-route-marker small {
+  color: var(--d1-muted);
+  font-size: 15px;
+  line-height: 1.35;
+}

@@ -1,0 +1,228 @@
+﻿.wand-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  overflow: hidden;
+  contain: layout paint style;
+}
+
+.wand-dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 9, 13, 0.82);
+  opacity: 0;
+}
+
+.wand-asset,
+.wand-beam,
+.wand-spark-pillar,
+.wand-footer-burst,
+.wand-trail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+.wand-asset {
+  box-sizing: border-box;
+  width: clamp(70px, 6vw, 102px);
+  height: clamp(70px, 6vw, 102px);
+  padding: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.62), rgba(79, 250, 238, 0.17) 42%, rgba(246, 144, 255, 0.1) 58%, transparent 74%);
+  filter:
+    drop-shadow(0 0 8px rgba(255, 255, 255, 0.74))
+    drop-shadow(0 0 18px rgba(79, 250, 238, 0.44))
+    drop-shadow(0 0 30px rgba(246, 144, 255, 0.28));
+  transform-origin: 50% 50%;
+}
+
+.wand-trail {
+  width: 118px;
+  height: 18px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(79, 250, 238, 0),
+    rgba(79, 250, 238, 0.32),
+    rgba(246, 144, 255, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+  filter: blur(6px);
+  transform-origin: 100% 50%;
+}
+
+.wand-beam {
+  width: 320px;
+  height: 24px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(79, 250, 238, 0),
+    rgba(79, 250, 238, 0.34),
+    rgba(246, 144, 255, 0.28),
+    rgba(255, 244, 178, 0.22),
+    rgba(255, 255, 255, 0)
+  );
+  filter: blur(5px);
+  transform-origin: 0 50%;
+  mix-blend-mode: screen;
+}
+
+.wand-spark-pillar {
+  width: 150px;
+  height: 190px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 72%, rgba(255, 255, 255, 0.5), transparent 22%),
+    linear-gradient(
+      0deg,
+      rgba(79, 250, 238, 0),
+      rgba(79, 250, 238, 0.22),
+      rgba(246, 144, 255, 0.18),
+      rgba(255, 244, 178, 0)
+    );
+  filter: blur(0.2px);
+  mix-blend-mode: screen;
+}
+
+.wand-spark-pillar::before,
+.wand-spark-pillar::after {
+  position: absolute;
+  inset: 20px 48px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.42);
+  filter: blur(14px);
+  content: '';
+}
+
+.wand-spark-pillar::after {
+  inset: 42px 62px;
+  background: rgba(79, 250, 238, 0.46);
+}
+
+.wand-spark-pillar span,
+.wand-footer-burst span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 0.9),
+    0 0 20px rgba(79, 250, 238, 0.58);
+  transform: translate(var(--spark-x), var(--spark-y));
+  animation: wandSpark 1.25s ease-in-out infinite;
+  animation-delay: var(--spark-delay);
+}
+
+.wand-spark-pillar span:nth-child(3n),
+.wand-footer-burst span:nth-child(3n) {
+  background: #4ffaee;
+}
+
+.wand-spark-pillar span:nth-child(3n + 1),
+.wand-footer-burst span:nth-child(3n + 1) {
+  background: #f690ff;
+}
+
+.wand-spark-pillar span:nth-child(5n),
+.wand-footer-burst span:nth-child(5n) {
+  background: #fff4b2;
+}
+
+.wand-footer-burst {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.46), transparent 11%),
+    radial-gradient(circle, rgba(79, 250, 238, 0.24), transparent 42%),
+    radial-gradient(circle, rgba(246, 144, 255, 0.2), transparent 62%);
+  filter: blur(0.2px);
+  mix-blend-mode: screen;
+}
+
+.wand-footer-burst span {
+  width: 7px;
+  height: 7px;
+  transform: translate(calc(var(--spark-x) * 1.9), calc(var(--spark-y) * 1.9));
+}
+
+@keyframes wandSpark {
+  0%,
+  100% {
+    opacity: 0.16;
+    scale: 0.72;
+  }
+
+  45% {
+    opacity: 1;
+    scale: 1.28;
+  }
+}
+
+.design1-wand-test [data-wand-target] {
+  position: relative;
+}
+
+.design1-wand-test .wand-target-active {
+  transition:
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    filter 180ms ease,
+    text-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.design1-wand-test .d1-showreel-frame.wand-target-active,
+.design1-wand-test .d1-metric-card.wand-target-active,
+.design1-wand-test .d1-case-card.wand-target-active,
+.design1-wand-test .d1-case-grid.wand-target-active,
+.design1-wand-test .d1-reason-card.wand-target-active,
+.design1-wand-test .d1-process-list.wand-target-active,
+.design1-wand-test .d1-route-marker.wand-target-active,
+.design1-wand-test .d1-final-cta.wand-target-active {
+  border-color: rgba(79, 250, 238, 0.44);
+  box-shadow:
+    0 0 0 1px rgba(246, 144, 255, 0.14),
+    0 0 34px rgba(79, 250, 238, 0.16),
+    0 18px 54px rgba(102, 51, 204, 0.12);
+}
+
+.design1-wand-test .d1-metric-card.wand-target-active,
+.design1-wand-test .d1-reason-card.wand-target-active,
+.design1-wand-test .d1-route-marker.wand-target-active,
+.design1-wand-test .d1-process-step.wand-target-active,
+.design1-wand-test .d1-compact-case.wand-target-active {
+  transform: translateY(-3px) scale(1.01);
+}
+
+.design1-wand-test .d1-wand-word.wand-target-active,
+.design1-wand-test [data-wand-target='small-cases-title'].wand-target-active {
+  color: #0b7f70;
+  text-shadow:
+    0 0 18px rgba(79, 250, 238, 0.38),
+    0 0 28px rgba(246, 144, 255, 0.2);
+}
+
+.design1-wand-test .d1-process-step.wand-target-active {
+  border-color: rgba(79, 250, 238, 0.42);
+  filter: drop-shadow(0 16px 30px rgba(79, 250, 238, 0.12));
+}
+
+.design1-wand-test .d1-wand-footer-target.wand-target-active .anix-site-footer {
+  box-shadow: inset 0 -48px 90px rgba(79, 250, 238, 0.12);
+}
+
+@media (max-width: 1023px), (prefers-reduced-motion: reduce) {
+  .wand-overlay {
+    display: none;
+  }
+}
+

@@ -12,6 +12,7 @@ import MedicinePage from './components/MedicinePage';
 import HsePage from './components/HsePage';
 import HseMvpPage from './features/hseMvp/HseMvpPage';
 import Design1TestPage from './components/Design1TestPage';
+import HeroAnimationTest from './components/HeroAnimationTest';
 import DesignOldPage from './components/DesignOldPage';
 import CeoPage from './components/CeoPage';
 import LegalPage from './components/LegalPage';
@@ -54,6 +55,9 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       break;
     case '/design1test':
       renderInLayout(<Design1TestPage />);
+      break;
+    case '/hero_animation_test':
+      renderInLayout(<HeroAnimationTest />);
       break;
     case '/design_old':
       renderInLayout(<DesignOldPage />);
