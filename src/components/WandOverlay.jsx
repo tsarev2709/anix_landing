@@ -97,6 +97,8 @@ function WandOverlay() {
     let compactCards = [];
     let processSteps = [];
     let directionCards = [];
+    let trustChipTargets = [];
+    let ctaTargets = [];
     const triggers = [];
 
     const readTargets = () => {
@@ -113,6 +115,12 @@ function WandOverlay() {
       directionCards = Array.from(
         document.querySelectorAll('.design1-wand-test .d1-direction-card')
       ).map((element) => ({ element }));
+      trustChipTargets = Array.from(
+        document.querySelectorAll('.design1-wand-test .d1-trust-chip')
+      ).map((element) => ({ element }));
+      ctaTargets = ['cta-telegram', 'cta-videos', 'cta-email']
+        .map((name) => targets[name])
+        .filter(Boolean);
     };
 
     const focusBand = (spec = {}) => {
@@ -353,11 +361,13 @@ function WandOverlay() {
     const hero = document.querySelector('.design1-wand-test .d1-hero');
     const proof = document.querySelector('.design1-wand-test .d1-proof');
     const metricsGrid = document.querySelector('.design1-wand-test .d1-metrics-grid');
+    const servicesSection = document.querySelector('.design1-wand-test #services');
     const cases = document.querySelector('.design1-wand-test .d1-cases');
     const smallCases = document.querySelector('.design1-wand-test .d1-video-shelf');
     const reasons = document.querySelector('.design1-wand-test .d1-reasons');
     const process = document.querySelector('.design1-wand-test .d1-process');
     const directions = document.querySelector('.design1-wand-test .d1-directions');
+    const trust = document.querySelector('.design1-wand-test .d1-trust');
     const contacts = targets.contacts?.element;
     const footer = targets.footer?.element;
 
@@ -416,8 +426,8 @@ function WandOverlay() {
             opacity: appear,
             trailScale: 1.25 + settle * 0.5,
           });
-          showPillar(videoPoint, appear * (0.2 + bell(segment(progress, 0.28, 0.92)) * 0.96), 0.92 + settle * 0.58);
-          showBeam(videoPoint, appear * bell(segment(progress, 0.26, 0.82)) * 0.58, -66 + settle * 24, 1.05 + settle * 0.28);
+          showPillar(point, appear * (0.2 + bell(segment(progress, 0.28, 0.92)) * 0.96), 0.92 + settle * 0.58);
+          showBeam(point, appear * bell(segment(progress, 0.26, 0.82)) * 0.58, -66 + settle * 24, 1.05 + settle * 0.28);
           showDim(0);
           showFooterBurst(videoPoint, 0);
           setActive(progress > 0.24 ? ['hero-video'] : []);
@@ -436,7 +446,7 @@ function WandOverlay() {
         onUpdate: ({ progress }) => {
           const point = pathThrough(
             [
-              { vx: 0.68, vy: 0.42, band: 'middle' },
+              { vx: 0.75, vy: 0.66, band: 'middle' },
               { target: 'understand-word', ax: 0.46, ay: 0.5, dx: -24, dy: -46, band: 'middle' },
               { target: 'admire-word', ax: 0.52, ay: 0.5, dx: 26, dy: -46, band: 'middle' },
             ],
@@ -444,7 +454,6 @@ function WandOverlay() {
             { arcX: [52, -44], arcY: [44, -36], band: 'middle' }
           );
           const active = progress < 0.54 ? 'understand-word' : 'admire-word';
-          const targetPoint = pointFor({ target: active, ax: 0.5, ay: 0.54, band: 'middle' });
           placeWand({
             point,
             rotation: lerp(82, -34, smooth(progress)),
@@ -452,9 +461,9 @@ function WandOverlay() {
             opacity: 0.98,
             trailScale: 1.2,
           });
-          showBeam(targetPoint, 0.22 + bell(progress) * 0.2, progress < 0.54 ? 8 : -12, 0.72);
-          showPillar(targetPoint, bell(progress) * 0.5, 0.78);
-          showFooterBurst(targetPoint, 0);
+          showBeam(point, 0.22 + bell(progress) * 0.2, progress < 0.54 ? 8 : -12, 0.72);
+          showPillar(point, bell(progress) * 0.5, 0.78);
+          showFooterBurst(point, 0);
           showDim(0);
           setActive([active]);
           gsap.set(overlay, { autoAlpha: 1 });
@@ -465,14 +474,15 @@ function WandOverlay() {
     if (metricsGrid) {
       const metricSpecs = [
         { target: 'metric-1', ax: 0.34, ay: 0.64, dx: -18, dy: 18, rotation: -26, band: 'middle' },
-        { target: 'metric-2', ax: 0.52, ay: 0.35, dx: 4, dy: -28, rotation: 28, band: 'middle' },
-        { target: 'metric-3', ax: 0.7, ay: 0.62, dx: 22, dy: 18, rotation: -82, band: 'middle' },
+        { target: 'metric-2', ax: 0.52, ay: 0.35, dx: 4, dy: -28, rotation: 24, band: 'middle' },
+        { target: 'metric-3', ax: 0.68, ay: 0.62, dx: 18, dy: 18, rotation: -44, band: 'middle' },
+        { target: 'metric-4', ax: 0.76, ay: 0.44, dx: 22, dy: -12, rotation: 30, band: 'middle' },
       ];
 
       createTrigger({
         trigger: metricsGrid,
         start: 'top 94%',
-        end: 'center 54%',
+        end: 'bottom 42%',
         scrub: true,
         invalidateOnRefresh: true,
         onUpdate: ({ progress }) => {
@@ -482,23 +492,59 @@ function WandOverlay() {
               ...metricSpecs,
             ],
             progress,
-            { arcX: [54, -36, 52], arcY: [-36, 34, -30], band: 'middle' }
+            { arcX: [50, -38, 44, -32], arcY: [-30, 32, -26, 24], band: 'middle' }
           );
-          const index = steppedIndex(progress, metricSpecs.length);
-          const local = (progress * metricSpecs.length) % 1;
+          const metricProgress = segment(progress, 0.02, 0.82);
+          const index = steppedIndex(metricProgress, metricSpecs.length);
+          const local = (metricProgress * metricSpecs.length) % 1;
           const activeName = 'metric-' + (index + 1);
-          const activePoint = pointFor({ target: activeName, ax: 0.5, ay: 0.58, band: 'middle' });
+          const fromRotation = metricSpecs[Math.max(0, index - 1)]?.rotation ?? -18;
           placeWand({
             point,
-            rotation: lerp(metricSpecs[Math.max(0, index - 1)]?.rotation ?? 16, metricSpecs[index].rotation, smooth(local)),
-            scale: 0.78 + bell(local) * 0.24,
-            opacity: 0.92 + bell(local) * 0.08,
-            trailScale: 1.08,
+            rotation: lerp(fromRotation, metricSpecs[index].rotation, smooth(local)),
+            scale: 0.8 + bell(local) * 0.26,
+            opacity: 0.9 + bell(local) * 0.1,
+            trailScale: 1.1,
           });
-          showPillar(activePoint, 0.22 + bell(local) * 0.58, 0.72 + bell(local) * 0.18);
-          showBeam(activePoint, bell(local) * 0.36, metricSpecs[index].rotation / 2, 0.76);
+          showPillar(point, 0.2 + bell(local) * 0.54, 0.7 + bell(local) * 0.18);
+          showBeam(point, bell(local) * 0.3, metricSpecs[index].rotation / 2, 0.74);
+          showFooterBurst(point, 0);
           showDim(0);
-          setActive([activeName]);
+          setActive(progress < 0.14 ? ['admire-word'] : [activeName]);
+        },
+      });
+    }
+
+    if (servicesSection) {
+      createTrigger({
+        trigger: servicesSection,
+        start: 'top 92%',
+        end: 'bottom 38%',
+        scrub: true,
+        invalidateOnRefresh: true,
+        onUpdate: ({ progress }) => {
+          const point = pathThrough(
+            [
+              { target: 'metric-4', ax: 0.72, ay: 0.52, band: 'middle' },
+              { vx: 0.62, vy: 0.48, dx: -18, dy: -18, band: 'middle' },
+              { vx: 0.42, vy: 0.62, dx: 24, dy: 18, band: 'middle' },
+              { target: 'case-card-1', ax: 0.34, ay: 0.42, dx: -16, dy: -18, band: 'middle' },
+            ],
+            progress,
+            { arcX: [-56, 68, -46], arcY: [42, -52, 34], band: 'middle' }
+          );
+          placeWand({
+            point,
+            rotation: lerp(28, -38, smooth(progress)) + Math.sin(progress * Math.PI * 2) * 10,
+            scale: 0.92 + bell(progress) * 0.42,
+            opacity: 0.82 + bell(progress) * 0.12,
+            trailScale: 1.34,
+          });
+          showPillar(point, 0.14 + bell(progress) * 0.3, 0.58 + bell(progress) * 0.18);
+          showBeam(point, 0.1 + bell(progress) * 0.1, -24, 0.72);
+          showFooterBurst(point, 0);
+          showDim(0);
+          setActive(progress < 0.24 ? ['metric-4'] : []);
         },
       });
     }
@@ -506,46 +552,40 @@ function WandOverlay() {
     if (cases) {
       const caseSpecs = Array.from({ length: 6 }, (_, index) => ({
         target: 'case-card-' + (index + 1),
-        ax: index % 2 === 0 ? 0.32 : 0.7,
+        ax: index % 2 === 0 ? 0.34 : 0.68,
         ay: index < 2 ? 0.42 : 0.5,
         dx: index % 2 === 0 ? -12 : 12,
-        dy: index % 3 === 1 ? -26 : 22,
+        dy: index % 3 === 1 ? -18 : 18,
         band: 'middle',
       }));
 
       createTrigger({
         trigger: cases,
         start: 'top 88%',
-        end: 'bottom 22%',
+        end: 'bottom 18%',
         scrub: true,
         invalidateOnRefresh: true,
         onUpdate: ({ progress }) => {
-          const point = pathThrough(
-            [
-              { target: 'metric-3', ax: 0.72, ay: 0.62, band: 'middle' },
-              ...caseSpecs,
-            ],
-            progress,
-            {
-              arcX: [92, -110, 126, -92, 106, -76],
-              arcY: [-48, 58, -62, 44, -52, 38],
-              band: 'middle',
-            }
-          );
-          const index = steppedIndex(progress, caseSpecs.length);
-          const local = (progress * caseSpecs.length) % 1;
+          const point = pathThrough(caseSpecs, progress, {
+            arcX: [62, -58, 64, -52, 44],
+            arcY: [-34, 36, -32, 30, -24],
+            band: 'middle',
+          });
+          const caseProgress = segment(progress, 0.02, 0.9);
+          const index = steppedIndex(caseProgress, caseSpecs.length);
+          const local = (caseProgress * caseSpecs.length) % 1;
           const activeName = 'case-card-' + (index + 1);
-          const pulsePoint = pointFor({ target: activeName, ax: 0.5, ay: 0.48, band: 'middle' });
           placeWand({
             point,
-            rotation: lerp(76, 318, smooth(progress)) + Math.sin(progress * Math.PI * 8) * 22,
+            rotation: lerp(64, 292, smooth(progress)) + Math.sin(progress * Math.PI * 6) * 14,
             scale: 0.72 + bell(local) * 0.18,
-            opacity: 0.68 + bell(local) * 0.24,
-            trailScale: 1.32,
+            opacity: 0.72 + bell(local) * 0.22,
+            trailScale: 1.22,
           });
-          showPillar(pulsePoint, 0.16 + bell(local) * 0.3, 0.54 + bell(local) * 0.12);
-          showBeam(pulsePoint, 0.12 + bell(local) * 0.16, progress * 120 - 36, 0.62);
-          showDim(0.04 + bell(progress) * 0.04);
+          showPillar(point, 0.14 + bell(local) * 0.3, 0.52 + bell(local) * 0.12);
+          showBeam(point, 0.1 + bell(local) * 0.14, progress * 90 - 32, 0.58);
+          showFooterBurst(point, 0);
+          showDim(0.03 + bell(progress) * 0.03);
           setActive([activeName]);
         },
       });
@@ -555,38 +595,44 @@ function WandOverlay() {
       createTrigger({
         trigger: smallCases,
         start: 'top 88%',
-        end: 'bottom 28%',
+        end: 'bottom 12%',
         scrub: true,
         invalidateOnRefresh: true,
         onUpdate: ({ progress }) => {
-          const cardIndex = steppedIndex(progress, Math.max(1, compactCards.length));
+          const compactSpecs = compactCards.map((card, index) => ({
+            target: 'compact-case-' + (index + 1),
+            element: card.element,
+            ax: index % 2 === 0 ? 0.3 : 0.7,
+            ay: 0.42,
+            dy: index % 2 === 0 ? -16 : 18,
+            band: 'middle',
+          }));
           const point = pathThrough(
             [
-              { target: 'case-card-6', ax: 0.62, ay: 0.52, band: 'middle' },
-              { target: 'small-cases-title', ax: 0.5, ay: 0.52, dx: 18, dy: -30, band: 'middle' },
-              ...compactCards.map((card, index) => ({
-                element: card.element,
-                ax: index % 2 === 0 ? 0.28 : 0.72,
-                ay: 0.42,
-                dy: index % 2 === 0 ? -18 : 22,
-                band: 'middle',
-              })),
+              { target: 'case-card-6', ax: 0.6, ay: 0.5, band: 'middle' },
+              { target: 'small-cases-title', ax: 0.54, ay: 0.52, dx: 16, dy: -28, band: 'middle' },
+              ...compactSpecs,
             ],
             progress,
-            { arcX: [70, -66, 58, -74], arcY: [34, -44, 38, -36], band: 'middle' }
+            { arcX: [62, -58, 54, -64, 48], arcY: [30, -38, 32, -34, 28], band: 'middle' }
           );
-          const local = (progress * Math.max(1, compactCards.length)) % 1;
+          const compactProgress = segment(progress, 0.12, 0.84);
+          const length = Math.max(1, compactSpecs.length);
+          const cardIndex = steppedIndex(compactProgress, length);
+          const local = (compactProgress * length) % 1;
+          const activeName = compactSpecs[cardIndex]?.target;
           placeWand({
             point,
-            rotation: progress * 620 - 94,
-            scale: 0.56 + bell(local) * 0.14,
-            opacity: 0.64 + bell(local) * 0.18,
-            trailScale: 1.12,
+            rotation: lerp(248, -72, smooth(progress)) + Math.sin(progress * Math.PI * 5) * 12,
+            scale: 0.58 + bell(local) * 0.16,
+            opacity: 0.66 + bell(local) * 0.2,
+            trailScale: 1.08,
           });
-          showPillar(point, bell(local) * 0.32, 0.48);
-          showBeam(point, 0.12 + bell(local) * 0.08, progress * 140, 0.54);
-          showDim(0.03 + bell(progress) * 0.03);
-          setActive(['small-cases-title', compactCards[cardIndex]?.element]);
+          showPillar(point, 0.08 + bell(local) * 0.3, 0.46 + bell(local) * 0.1);
+          showBeam(point, 0.1 + bell(local) * 0.08, progress * 120 - 28, 0.5);
+          showFooterBurst(point, 0);
+          showDim(0.02 + bell(progress) * 0.03);
+          setActive(progress < 0.12 || !activeName ? ['case-card-6', 'small-cases-title'] : ['small-cases-title', activeName]);
         },
       });
     }
@@ -600,23 +646,24 @@ function WandOverlay() {
 
       createTrigger({
         trigger: reasons,
-        start: 'top 82%',
-        end: 'bottom 24%',
+        start: 'top 84%',
+        end: 'bottom 22%',
         scrub: true,
         invalidateOnRefresh: true,
         onUpdate: ({ progress }) => {
+          const lastCompactTarget = 'compact-case-' + Math.max(1, compactCards.length);
           const point = pathThrough(
             [
-              { target: 'small-cases-title', ax: 0.62, ay: 0.58, band: 'middle' },
+              { target: lastCompactTarget, ax: 0.62, ay: 0.5, band: 'middle' },
               ...reasonSpecs,
             ],
             progress,
-            { arcX: [76, -58, 64], arcY: [-42, 36, -38], band: 'middle' }
+            { arcX: [66, -54, 58], arcY: [-36, 34, -34], band: 'middle' }
           );
-          const index = steppedIndex(progress, reasonSpecs.length);
-          const local = (progress * reasonSpecs.length) % 1;
+          const reasonProgress = segment(progress, 0.1, 0.82);
+          const index = steppedIndex(reasonProgress, reasonSpecs.length);
+          const local = (reasonProgress * reasonSpecs.length) % 1;
           const activeName = 'why-card-' + (index + 1);
-          const activePoint = pointFor({ target: activeName, ax: 0.5, ay: 0.55, band: 'middle' });
           placeWand({
             point,
             rotation: lerp(reasonSpecs[Math.max(0, index - 1)]?.rotation ?? -12, reasonSpecs[index].rotation, smooth(local)),
@@ -624,10 +671,11 @@ function WandOverlay() {
             opacity: 0.84 + bell(local) * 0.12,
             trailScale: 1.08,
           });
-          showPillar(activePoint, bell(local) * 0.56, 0.68);
-          showBeam(activePoint, bell(local) * 0.26, reasonSpecs[index].rotation, 0.62);
+          showPillar(point, 0.12 + bell(local) * 0.46, 0.6 + bell(local) * 0.14);
+          showBeam(point, 0.08 + bell(local) * 0.18, reasonSpecs[index].rotation, 0.58);
+          showFooterBurst(point, 0);
           showDim(0);
-          setActive([activeName]);
+          setActive(progress < 0.12 ? [lastCompactTarget] : [activeName]);
         },
       });
     }
@@ -636,39 +684,44 @@ function WandOverlay() {
       createTrigger({
         trigger: process,
         start: 'top 82%',
-        end: 'bottom 20%',
+        end: 'bottom 18%',
         scrub: true,
         invalidateOnRefresh: true,
         onUpdate: ({ progress }) => {
-          const stepIndex = steppedIndex(progress, Math.max(1, processSteps.length));
+          const stepSpecs = processSteps.map((step, index) => ({
+            target: 'process-step-' + (index + 1),
+            element: step.element,
+            ax: index % 2 === 0 ? 0.34 : 0.72,
+            ay: 0.5,
+            dx: index % 2 === 0 ? -18 : 18,
+            band: 'middle',
+          }));
           const point = pathThrough(
             [
               { target: 'why-card-3', ax: 0.66, ay: 0.6, band: 'middle' },
               { target: 'route-title-space', ax: 0.55, ay: 0.55, band: 'middle' },
-              { target: 'roadmap', ax: 0.44, ay: 0.44, band: 'middle' },
-              ...processSteps.map((step, index) => ({
-                element: step.element,
-                ax: index % 2 === 0 ? 0.34 : 0.72,
-                ay: 0.5,
-                dx: index % 2 === 0 ? -20 : 20,
-                band: 'middle',
-              })),
+              ...stepSpecs,
             ],
             progress,
-            { arcX: [84, -72, 64, -54, 60], arcY: [36, -48, 34, -36, 28], band: 'middle' }
+            { arcX: [72, -60, 56, -50, 54], arcY: [32, -40, 30, -32, 26], band: 'middle' }
           );
-          const local = (progress * Math.max(1, processSteps.length)) % 1;
+          const stepProgress = segment(progress, 0.14, 0.82);
+          const length = Math.max(1, stepSpecs.length);
+          const stepIndex = steppedIndex(stepProgress, length);
+          const local = (stepProgress * length) % 1;
+          const activeName = stepSpecs[stepIndex]?.target;
           placeWand({
             point,
-            rotation: lerp(20, 330, smooth(progress)) + Math.sin(progress * Math.PI * 5) * 14,
+            rotation: lerp(18, 292, smooth(progress)) + Math.sin(progress * Math.PI * 4) * 10,
             scale: 0.62 + bell(local) * 0.16,
-            opacity: 0.72 + bell(local) * 0.12,
-            trailScale: 1.08,
+            opacity: 0.72 + bell(local) * 0.14,
+            trailScale: 1.06,
           });
-          showPillar(point, bell(local) * 0.26, 0.46);
-          showBeam(point, 0.1 + bell(local) * 0.08, -24, 0.56);
+          showPillar(point, 0.08 + bell(local) * 0.24, 0.42 + bell(local) * 0.1);
+          showBeam(point, 0.08 + bell(local) * 0.08, -24, 0.52);
+          showFooterBurst(point, 0);
           showDim(0);
-          setActive(['roadmap', 'route-title-space', processSteps[stepIndex]?.element]);
+          setActive(progress < 0.14 || !activeName ? ['why-card-3', 'route-title-space'] : [activeName]);
         },
       });
     }
@@ -677,37 +730,84 @@ function WandOverlay() {
       createTrigger({
         trigger: directions,
         start: 'top 88%',
-        end: 'bottom 26%',
+        end: 'bottom 24%',
         scrub: true,
         invalidateOnRefresh: true,
         onUpdate: ({ progress }) => {
           const cardIndex = steppedIndex(progress, Math.max(1, directionCards.length));
           const point = pathThrough(
             [
-              { target: 'roadmap', ax: 0.54, ay: 0.68, band: 'middle' },
+              { target: 'process-step-' + Math.max(1, processSteps.length), ax: 0.58, ay: 0.58, band: 'middle' },
               ...directionCards.map((card, index) => ({
                 element: card.element,
                 ax: index % 2 === 0 ? 0.32 : 0.68,
                 ay: 0.44,
                 band: 'middle',
               })),
-              { target: 'contacts', ax: 0.74, ay: 0.22, dx: -22, dy: -24, band: 'middle' },
+              { target: 'trust-panel', ax: 0.34, ay: 0.42, dx: -18, dy: -18, band: 'middle' },
             ],
             progress,
-            { arcX: [74, -84, 62, -58, 68], arcY: [-36, 44, -34, 36, -28], band: 'middle' }
+            { arcX: [62, -70, 54, -52, 58], arcY: [-30, 38, -28, 32, -24], band: 'middle' }
           );
           const local = (progress * Math.max(1, directionCards.length)) % 1;
           placeWand({
             point,
-            rotation: lerp(300, 152, smooth(progress)) + Math.sin(progress * Math.PI * 4) * 12,
-            scale: 0.54 + bell(local) * 0.12,
-            opacity: 0.56 + bell(local) * 0.14,
+            rotation: lerp(282, 148, smooth(progress)) + Math.sin(progress * Math.PI * 4) * 10,
+            scale: 0.56 + bell(local) * 0.12,
+            opacity: 0.58 + bell(local) * 0.14,
             trailScale: 1,
           });
-          showPillar(point, bell(local) * 0.18, 0.38);
-          showBeam(point, 0.08 + bell(local) * 0.06, -12, 0.46);
+          showPillar(point, 0.06 + bell(local) * 0.16, 0.36 + bell(local) * 0.08);
+          showBeam(point, 0.06 + bell(local) * 0.06, -12, 0.44);
+          showFooterBurst(point, 0);
           showDim(0);
-          setActive([directionCards[cardIndex]?.element]);
+          setActive(progress < 0.14 ? ['process-step-' + Math.max(1, processSteps.length)] : progress > 0.88 ? ['trust-panel'] : [directionCards[cardIndex]?.element]);
+        },
+      });
+    }
+
+    if (trust) {
+      createTrigger({
+        trigger: trust,
+        start: 'top 86%',
+        end: 'bottom 28%',
+        scrub: true,
+        invalidateOnRefresh: true,
+        onUpdate: ({ progress }) => {
+          const trustSpecs = trustChipTargets.map((chip, index) => ({
+            target: 'trust-chip-' + (index + 1),
+            element: chip.element,
+            ax: index % 2 === 0 ? 0.34 : 0.68,
+            ay: 0.5,
+            dx: index % 2 === 0 ? -10 : 10,
+            band: 'middle',
+          }));
+          const point = pathThrough(
+            [
+              { target: 'trust-panel', ax: 0.34, ay: 0.42, dx: -12, dy: -16, band: 'middle' },
+              ...trustSpecs,
+              { target: 'contacts', ax: 0.48, ay: 0.34, dx: -10, dy: -20, band: 'middle' },
+            ],
+            progress,
+            { arcX: [54, -48, 46, -42, 40], arcY: [-24, 30, -26, 28, -22], band: 'middle' }
+          );
+          const chipProgress = segment(progress, 0.08, 0.78);
+          const length = Math.max(1, trustSpecs.length);
+          const index = steppedIndex(chipProgress, length);
+          const local = (chipProgress * length) % 1;
+          const activeName = trustSpecs[index]?.target;
+          placeWand({
+            point,
+            rotation: lerp(212, -28, smooth(progress)) + Math.sin(progress * Math.PI * 4) * 8,
+            scale: 0.74 + bell(progress) * 0.36,
+            opacity: 0.8 + bell(progress) * 0.16,
+            trailScale: 1.28,
+          });
+          showPillar(point, 0.16 + bell(local) * 0.36, 0.58 + bell(local) * 0.16);
+          showBeam(point, 0.08 + bell(local) * 0.12, -22, 0.64);
+          showFooterBurst(point, 0);
+          showDim(0);
+          setActive(progress < 0.08 || !activeName ? ['trust-panel'] : ['trust-panel', activeName]);
         },
       });
     }
@@ -716,31 +816,42 @@ function WandOverlay() {
       createTrigger({
         trigger: contacts,
         start: 'top 82%',
-        end: 'bottom 24%',
+        end: 'bottom 20%',
         scrub: true,
         invalidateOnRefresh: true,
         onUpdate: ({ progress }) => {
+          const ctaSpecs = [
+            { target: 'cta-telegram', ax: 0.84, ay: 0.5, dx: 26, rotation: -22, band: 'middle' },
+            { target: 'cta-videos', ax: 0.84, ay: 0.5, dx: 26, rotation: -12, band: 'middle' },
+            { target: 'cta-email', ax: 0.84, ay: 0.5, dx: 26, rotation: 4, band: 'middle' },
+          ].filter((spec) => ctaTargets.some((target) => target.element === targets[spec.target]?.element));
           const point = pathThrough(
             [
-              { target: 'contacts', ax: 0.78, ay: 0.22, dx: -26, dy: -16, band: 'middle' },
-              { target: 'contacts', ax: 0.44, ay: 0.52, dx: 12, dy: -8, band: 'middle' },
-              { target: 'footer', ax: 0.64, ay: 0.3, dx: 20, dy: -22, band: 'middle' },
+              { target: 'trust-chip-' + Math.max(1, trustChipTargets.length), ax: 0.64, ay: 0.5, band: 'middle' },
+              { target: 'contacts', ax: 0.44, ay: 0.46, dx: 8, dy: -8, band: 'middle' },
+              ...ctaSpecs,
+              { target: 'footer', ax: 0.26, ay: 0.36, dx: -12, dy: -18, band: 'middle' },
             ],
             progress,
-            { arcX: [-72, 66], arcY: [34, -42], band: 'middle' }
+            { arcX: [-56, 62, -42, 38], arcY: [30, -36, 22, -24], band: 'middle' }
           );
+          const ctaProgress = segment(progress, 0.22, 0.88);
+          const length = Math.max(1, ctaSpecs.length);
+          const index = steppedIndex(ctaProgress, length);
+          const local = (ctaProgress * length) % 1;
+          const activeName = ctaSpecs[index]?.target;
           placeWand({
             point,
-            rotation: lerp(156, 500, smooth(progress)),
-            scale: lerp(0.7, 0.9, bell(progress)),
-            opacity: 0.88,
-            trailScale: 1.14,
+            rotation: lerp(138, -26, smooth(progress)),
+            scale: 0.74 + bell(local) * 0.24,
+            opacity: 0.9,
+            trailScale: 1.2,
           });
-          showPillar(point, bell(progress) * 0.46, 0.7);
-          showBeam(point, bell(progress) * 0.2, -42, 0.58);
-          showDim(0);
+          showPillar(point, 0.14 + bell(local) * 0.44, 0.62 + bell(local) * 0.18);
+          showBeam(point, 0.1 + bell(local) * 0.18, -34, 0.68);
           showFooterBurst(point, 0);
-          setActive(['contacts']);
+          showDim(0);
+          setActive(progress < 0.18 || !activeName ? ['contacts', 'trust-chip-' + Math.max(1, trustChipTargets.length - 1), 'trust-chip-' + Math.max(1, trustChipTargets.length)] : ['contacts', activeName]);
         },
       });
     }
@@ -748,28 +859,31 @@ function WandOverlay() {
     if (footer) {
       createTrigger({
         trigger: footer,
-        start: 'top 84%',
+        start: 'top 86%',
         end: 'bottom bottom',
         scrub: true,
         invalidateOnRefresh: true,
         onUpdate: ({ progress }) => {
-          const point = pointFor({ target: 'footer', ax: 0.58, ay: 0.58, dx: 18, dy: -22, band: 'middle' });
-          point.x += Math.sin(progress * Math.PI * 6) * (30 - progress * 16);
-          point.y += Math.cos(progress * Math.PI * 4) * 16;
-          const fade = 1 - segment(progress, 0.72, 1);
+          const p = smooth(progress);
+          const swing = Math.sin(p * Math.PI);
+          const point = {
+            x: lerp(window.innerWidth * 0.08, window.innerWidth * 0.92, p) + swing * window.innerWidth * 0.04,
+            y: lerp(window.innerHeight * 0.9, window.innerHeight * 0.16, p) - swing * window.innerHeight * 0.08,
+          };
+          const opacity = 0.38 + segment(progress, 0.02, 0.34) * 0.58;
           placeWand({
             point,
-            rotation: 500 + progress * 840,
-            scale: lerp(0.86, 0.44, segment(progress, 0.62, 1)),
-            opacity: fade,
-            trailScale: 1 - progress * 0.34,
+            rotation: lerp(42, -38, p),
+            scale: lerp(1.16, 4.35, segment(progress, 0.04, 0.92)),
+            opacity,
+            trailScale: 1.8 + progress * 1.5,
           });
-          showPillar(point, (0.24 + bell(progress) * 0.56) * fade, 0.9 + progress * 0.48);
-          showBeam(point, bell(progress) * 0.28 * fade, progress * 180, 0.72);
-          showFooterBurst(point, segment(progress, 0.32, 0.94) * (1 - segment(progress, 0.94, 1)), 0.82 + progress * 0.88);
+          showPillar(point, (0.24 + bell(progress) * 0.58) * opacity, 0.95 + progress * 1.25);
+          showBeam(point, (0.14 + bell(progress) * 0.22) * opacity, -38, 1.1 + progress * 1.55);
+          showFooterBurst(point, segment(progress, 0.18, 0.96) * 0.92, 1 + progress * 1.4);
           showDim(0);
-          setActive(['footer']);
-          gsap.set(overlay, { autoAlpha: fade <= 0.03 ? 0 : 1 });
+          setActive(['footer', 'cta-telegram', 'cta-videos', 'cta-email']);
+          gsap.set(overlay, { autoAlpha: 1 });
         },
       });
     }

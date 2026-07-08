@@ -305,7 +305,7 @@ const navigationLinks = [
 const isExternalHref = (href) => /^https?:\/\//.test(href);
 const wandTarget = (name) => (name ? { 'data-wand-target': name } : {});
 
-function SmartLink({ href, className, children, ariaLabel }) {
+function SmartLink({ href, className, children, ariaLabel, ...linkProps }) {
   const isExternal = isExternalHref(href);
 
   return (
@@ -315,6 +315,7 @@ function SmartLink({ href, className, children, ariaLabel }) {
       aria-label={ariaLabel}
       target={isExternal ? '_blank' : undefined}
       rel={isExternal ? 'noreferrer' : undefined}
+      {...linkProps}
     >
       {children}
     </a>
@@ -372,12 +373,13 @@ function CaseCard({ item, wandTargetName }) {
   );
 }
 
-function CompactCaseCard({ item }) {
+function CompactCaseCard({ item, wandTargetName }) {
   return (
     <SmartLink
       className="d1-compact-case"
       href={item.href}
       ariaLabel={`Смотреть видео ${item.name}`}
+      {...wandTarget(wandTargetName)}
     >
       <div className="d1-compact-media">
         <img src={item.image} alt={`Кейс ANIX: ${item.name}`} loading="lazy" />
@@ -399,9 +401,9 @@ function ReasonCard({ item, wandTargetName }) {
   );
 }
 
-function ProcessStep({ item, index }) {
+function ProcessStep({ item, index, wandTargetName }) {
   return (
-    <li className="d1-process-step">
+    <li className="d1-process-step" {...wandTarget(wandTargetName)}>
       <span>{String(index + 1).padStart(2, '0')}</span>
       <div>
         <h3>{item.title}</h3>
@@ -613,7 +615,7 @@ function Design1TestPage({ wandTest = false }) {
                 item={item}
                 key={item.value}
                 wandTargetName={
-                  wandTest && index < 3 ? `metric-${index + 1}` : undefined
+                  wandTest ? `metric-${index + 1}` : undefined
                 }
               />
             ))}
@@ -692,8 +694,12 @@ function Design1TestPage({ wandTest = false }) {
             </a>
           </div>
           <div className="d1-compact-grid">
-            {compactCases.map((item) => (
-              <CompactCaseCard item={item} key={item.name} />
+            {compactCases.map((item, index) => (
+              <CompactCaseCard
+                item={item}
+                key={item.name}
+                wandTargetName={wandTest ? `compact-case-${index + 1}` : undefined}
+              />
             ))}
           </div>
         </div>
@@ -747,12 +753,14 @@ function Design1TestPage({ wandTest = false }) {
               </div>
             ) : null}
           </div>
-          <ol
-            className="d1-process-list"
-            {...wandTarget(wandTest ? 'roadmap' : undefined)}
-          >
+          <ol className="d1-process-list">
             {processSteps.map((item, index) => (
-              <ProcessStep item={item} index={index} key={item.title} />
+              <ProcessStep
+                item={item}
+                index={index}
+                key={item.title}
+                wandTargetName={wandTest ? `process-step-${index + 1}` : undefined}
+              />
             ))}
           </ol>
         </div>
@@ -773,15 +781,22 @@ function Design1TestPage({ wandTest = false }) {
       </section>
 
       <section className="d1-section d1-trust">
-        <div className="d1-container d1-trust-layout">
+        <div
+          className="d1-container d1-trust-layout"
+          {...wandTarget(wandTest ? 'trust-panel' : undefined)}
+        >
           <div>
             <p className="d1-eyebrow">Признание</p>
             <h2>Нас уже замечали не только клиенты</h2>
           </div>
           <div>
             <div className="d1-trust-chips" aria-label="Признание ANIX">
-              {trustChips.map((item) => (
-                <span key={item}>
+              {trustChips.map((item, index) => (
+                <span
+                  className={wandTest ? 'd1-trust-chip' : undefined}
+                  key={item}
+                  {...wandTarget(wandTest ? `trust-chip-${index + 1}` : undefined)}
+                >
                   <BadgeCheck aria-hidden="true" />
                   {item}
                 </span>
@@ -820,6 +835,7 @@ function Design1TestPage({ wandTest = false }) {
               href={heroLinks.telegram}
               target="_blank"
               rel="noreferrer"
+              {...wandTarget(wandTest ? 'cta-telegram' : undefined)}
             >
               <MessageCircle aria-hidden="true" />
               Написать в Telegram
@@ -829,6 +845,7 @@ function Design1TestPage({ wandTest = false }) {
               href={heroLinks.videoFolder}
               target="_blank"
               rel="noreferrer"
+              {...wandTarget(wandTest ? 'cta-videos' : undefined)}
             >
               <PlayCircle aria-hidden="true" />
               Смотреть все видео
@@ -836,6 +853,7 @@ function Design1TestPage({ wandTest = false }) {
             <a
               className="d1-button d1-button-dark-outline"
               href={heroLinks.email}
+              {...wandTarget(wandTest ? 'cta-email' : undefined)}
             >
               <Mail aria-hidden="true" />
               anix.ai@yandex.ru
