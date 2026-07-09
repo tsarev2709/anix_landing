@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom/client';
 import './App.css';
 import App from './App';
 import NotFound from './components/NotFound';
+import ErrorBoundary from './components/ErrorBoundary';
 import AppLayout from './AppLayout';
 import WhyItWorksPage from './components/WhyItWorksPage';
 import MedicinePage from './components/MedicinePage';
@@ -33,7 +34,11 @@ const normalizedPath = (() => {
 })();
 
 const renderInLayout = (component) => {
-  root.render(<AppLayout>{component}</AppLayout>);
+  root.render(
+    <ErrorBoundary>
+      <AppLayout>{component}</AppLayout>
+    </ErrorBoundary>
+  );
 };
 
 if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
@@ -68,7 +73,11 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       renderInLayout(<LegalPage type="privacy" />);
       break;
     default:
-      root.render(<NotFound />);
+      root.render(
+        <ErrorBoundary>
+          <NotFound />
+        </ErrorBoundary>
+      );
   }
 }
 if ('requestIdleCallback' in window) {
