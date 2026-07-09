@@ -5,20 +5,15 @@ import {
   demoEmployee,
 } from '../data/demoData';
 
+// A real file download via Blob + a temporary <a download> link works
+// without any popup permissions and isn't subject to popup-blocker
+// quirks — window.open()-based approaches (print dialog, blank tab)
+// were unreliable on mobile Chrome (blocked outright, or opened blank).
 export const openCompletionPrint = (attempt: any) => {
-  // `noopener` makes window.open() return null in most browsers (it
-  // deliberately severs the reference), which silently broke this: the
-  // popup opened blank and nothing was ever written into it.
-  const printWindow = window.open(
-    '',
-    '_blank',
-    'noreferrer,width=900,height=720'
-  );
-  if (!printWindow) return;
   const date = attempt?.completedAt
     ? new Date(attempt.completedAt).toLocaleDateString('ru-RU')
     : new Date().toLocaleDateString('ru-RU');
-  printWindow.document.write(`
+  const html = `
     <!doctype html>
     <html lang="ru">
       <head>
@@ -50,9 +45,16 @@ export const openCompletionPrint = (attempt: any) => {
           <div class="disc">Документ не является удостоверением, протоколом проверки знаний или допуском к работам. Используется как демонстрационное подтверждение прохождения цифрового обучающего модуля. ${HSE_MVP_DISCLAIMER}</div>
         </div>
         <p><button onclick="window.print()">Сохранить как PDF / печать</button></p>
-        <script>setTimeout(function(){ window.print(); }, 300);</script>
       </body>
     </html>
-  `);
-  printWindow.document.close();
+  `;
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `podtverzhdenie-${attempt?.moduleId || 'module'}.html`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
 };
