@@ -154,6 +154,21 @@ const getSourceTitle = (module, sourceId) =>
   sourceId;
 const href = (path) => `${base}${path}`;
 
+const HSE_MVP_NAVIGATE_EVENT = 'hse-mvp-navigate';
+
+// Full-page navigations (window.location.assign) to a path with no matching
+// static file rely on the host's 404 fallback to boot the SPA again — that
+// mechanism is host-specific and has proven unreliable for the dynamic
+// /result/:attemptId route (generated at runtime, so it can never be
+// pre-built as a static file). This does the transition purely client-side
+// instead, so no navigation request is ever made for it.
+const navigateWithinApp = (path) => {
+  window.history.pushState(null, '', href(path));
+  window.dispatchEvent(
+    new CustomEvent(HSE_MVP_NAVIGATE_EVENT, { detail: path })
+  );
+};
+
 const navItems = [
   { label: 'Главная MVP', path: rootPath, icon: Gauge },
   { label: 'Витринный контур', path: showcasePath, icon: BookOpen },
@@ -1297,7 +1312,7 @@ function TestPage({ courseId }) {
       progress: 100,
     });
 
-    window.location.assign(href(`${rootPath}/result/${storedAttempt.id}`));
+    navigateWithinApp(`${rootPath}/result/${storedAttempt.id}`);
   };
 
   return (
@@ -3015,8 +3030,22 @@ function NotFoundMvp() {
 }
 
 export default function HseMvpPage({ path }) {
+  const [internalPath, setInternalPath] = useState(path);
+
+  useEffect(() => {
+    const handleNavigate = (event) => setInternalPath(event.detail);
+    const handlePopState = () =>
+      setInternalPath(window.location.pathname.replace(base, ''));
+    window.addEventListener(HSE_MVP_NAVIGATE_EVENT, handleNavigate);
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener(HSE_MVP_NAVIGATE_EVENT, handleNavigate);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
   const rawPath =
-    path || window.location.pathname.replace(base, '') || rootPath;
+    internalPath || window.location.pathname.replace(base, '') || rootPath;
   const cleanPath =
     rawPath.endsWith('/') && rawPath.length > 1
       ? rawPath.slice(0, -1)
