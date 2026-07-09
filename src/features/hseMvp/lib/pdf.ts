@@ -6,10 +6,13 @@ import {
 } from '../data/demoData';
 
 export const openCompletionPrint = (attempt: any) => {
+  // `noopener` makes window.open() return null in most browsers (it
+  // deliberately severs the reference), which silently broke this: the
+  // popup opened blank and nothing was ever written into it.
   const printWindow = window.open(
     '',
     '_blank',
-    'noopener,noreferrer,width=900,height=720'
+    'noreferrer,width=900,height=720'
   );
   if (!printWindow) return;
   const date = attempt?.completedAt
