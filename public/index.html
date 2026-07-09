@@ -104,11 +104,49 @@
       }
     </script>
     <script>
+      // The custom service worker caused repeated stale-asset bugs after
+      // rebuilds (old JS/CSS served instead of the current deploy). Actively
+      // unregister it and clear its caches for anyone who already has it
+      // installed, instead of registering it for new visitors.
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('%PUBLIC_URL%/service-worker.js');
+        navigator.serviceWorker.getRegistrations().then((registrations) => {
+          registrations.forEach((registration) => registration.unregister());
         });
       }
+      if ('caches' in window) {
+        caches.keys().then((keys) => keys.forEach((key) => caches.delete(key)));
+      }
+    </script>
+    <script>
+      // Belt-and-suspenders visible error reporting: works even if the app
+      // bundle itself fails to load (a plain React error boundary can't
+      // catch that), so a broken deploy shows a message instead of a blank
+      // page with the real cause only in devtools.
+      window.__hseMvpErrorShown = false;
+      window.__hseMvpRenderError = function (error) {
+        if (window.__hseMvpErrorShown) return;
+        window.__hseMvpErrorShown = true;
+        var message =
+          error && error.stack ? error.stack : String(error && error.message ? error.message : error);
+        var container = document.createElement('div');
+        container.style.cssText =
+          'position:fixed;inset:0;background:#fff;color:#111;padding:24px;overflow:auto;z-index:999999;font-family:sans-serif;';
+        var title = document.createElement('h1');
+        title.style.cssText = 'font-size:18px;margin:0 0 12px;';
+        title.textContent = 'Ошибка загрузки страницы';
+        var pre = document.createElement('pre');
+        pre.style.cssText = 'white-space:pre-wrap;font-size:13px;';
+        pre.textContent = message;
+        container.appendChild(title);
+        container.appendChild(pre);
+        document.body.appendChild(container);
+      };
+      window.addEventListener('error', function (event) {
+        window.__hseMvpRenderError(event.error || event.message);
+      });
+      window.addEventListener('unhandledrejection', function (event) {
+        window.__hseMvpRenderError(event.reason);
+      });
     </script>
   </body>
 </html>

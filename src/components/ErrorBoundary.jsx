@@ -12,6 +12,9 @@ export default class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, info) {
     console.error('[ErrorBoundary]', error, info?.componentStack);
+    if (typeof window !== 'undefined' && window.__hseMvpRenderError) {
+      window.__hseMvpRenderError(error);
+    }
   }
 
   render() {
