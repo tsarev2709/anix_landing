@@ -61,6 +61,7 @@ const routes = [
   'why_it_works',
   'ceo',
   'hse',
+  'rybki',
   'hse/mvp',
   'hse/mvp/showcase',
   'hse/mvp/showcase/organization',
