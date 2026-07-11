@@ -62,6 +62,7 @@ const routes = [
   'ceo',
   'hse',
   'rybki',
+  'rybki_page',
   'hse/mvp',
   'hse/mvp/showcase',
   'hse/mvp/showcase/organization',
