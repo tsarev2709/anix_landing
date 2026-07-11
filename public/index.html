@@ -23,15 +23,30 @@
 
     <link rel="icon" href="%PUBLIC_URL%/anix_wand.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link
-      rel="preload"
-      as="image"
-      type="image/webp"
-      href="%PUBLIC_URL%/optimized/showreel-640.webp"
-      imagesrcset="%PUBLIC_URL%/optimized/showreel-640.webp 640w, %PUBLIC_URL%/optimized/showreel-960.webp 960w, %PUBLIC_URL%/optimized/showreel-1344.webp 1344w"
-      imagesizes="(max-width: 760px) 90vw, 48vw"
-      fetchpriority="high"
-    />
+    <script>
+      (function preloadRouteLcp() {
+        var path = window.location.pathname.replace(/\/+$/, '') || '/';
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.type = 'image/webp';
+        link.fetchPriority = 'high';
+
+        if (path === '/rybki') {
+          link.href = '%PUBLIC_URL%/optimized/rybki-01-cover-640.webp';
+          link.imageSrcset = '%PUBLIC_URL%/optimized/rybki-01-cover-640.webp 640w, %PUBLIC_URL%/optimized/rybki-01-cover-1280.webp 1280w, %PUBLIC_URL%/optimized/rybki-01-cover-1920.webp 1920w';
+          link.imageSizes = '(max-width: 800px) 94vw, calc(96vw - 174px)';
+        } else if (path === '/') {
+          link.href = '%PUBLIC_URL%/optimized/showreel-640.webp';
+          link.imageSrcset = '%PUBLIC_URL%/optimized/showreel-640.webp 640w, %PUBLIC_URL%/optimized/showreel-960.webp 960w, %PUBLIC_URL%/optimized/showreel-1344.webp 1344w';
+          link.imageSizes = '(max-width: 760px) 90vw, 48vw';
+        } else {
+          return;
+        }
+
+        document.head.appendChild(link);
+      })();
+    </script>
     <style>
       body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#f7f4ef;color:#111;line-height:1.6;overflow-x:hidden}
     </style>
