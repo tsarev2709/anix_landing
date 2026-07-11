@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import './App.css';
 import App from './App';
 import AppLayout from './AppLayout';
+import RouteBreadcrumbsPortal from './seo/RouteBreadcrumbsPortal';
 import SeoHead from './seo/SeoHead';
 
 console.info('[CFG] SUBMIT:', CONFIG.SUBMIT_LEAD_URL);
@@ -41,6 +42,7 @@ const renderInLayout = (component) => {
     <AppLayout>
       <SeoHead path={normalizedPath} />
       <Suspense fallback={null}>{component}</Suspense>
+      <RouteBreadcrumbsPortal path={normalizedPath} />
     </AppLayout>
   );
 };
