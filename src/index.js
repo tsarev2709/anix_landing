@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { CONFIG } from '@/config';
-console.info('[CFG] SUBMIT:', CONFIG.SUBMIT_LEAD_URL);
-console.info('[CFG] TRACK :', CONFIG.TRACK_EVENT_URL);
 import ReactDOM from 'react-dom/client';
 import './App.css';
 import App from './App';
-import NotFound from './components/NotFound';
 import AppLayout from './AppLayout';
-import WhyItWorksPage from './components/WhyItWorksPage';
-import MedicinePage from './components/MedicinePage';
-import HsePage from './components/HsePage';
-import HseMvpPage from './features/hseMvp/HseMvpPage';
-import Design1TestPage from './components/Design1TestPage';
-import DesignOldPage from './components/DesignOldPage';
-import CeoPage from './components/CeoPage';
-import LegalPage from './components/LegalPage';
-import RybkiPage from './components/RybkiPage';
+
+console.info('[CFG] SUBMIT:', CONFIG.SUBMIT_LEAD_URL);
+console.info('[CFG] TRACK :', CONFIG.TRACK_EVENT_URL);
+
+const NotFound = lazy(() => import('./components/NotFound'));
+const WhyItWorksPage = lazy(() => import('./components/WhyItWorksPage'));
+const MedicinePage = lazy(() => import('./components/MedicinePage'));
+const HsePage = lazy(() => import('./components/HsePage'));
+const HseMvpPage = lazy(() => import('./features/hseMvp/HseMvpPage'));
+const Design1TestPage = lazy(() => import('./components/Design1TestPage'));
+const DesignOldPage = lazy(() => import('./components/DesignOldPage'));
+const CeoPage = lazy(() => import('./components/CeoPage'));
+const LegalPage = lazy(() => import('./components/LegalPage'));
+const RybkiPage = lazy(() => import('./components/RybkiPage'));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const base = '';
@@ -30,7 +32,11 @@ const normalizedPath = (() => {
 })();
 
 const renderInLayout = (component) => {
-  root.render(<AppLayout>{component}</AppLayout>);
+  root.render(
+    <AppLayout>
+      <Suspense fallback={null}>{component}</Suspense>
+    </AppLayout>
+  );
 };
 
 if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
@@ -68,9 +74,14 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       renderInLayout(<LegalPage type="privacy" />);
       break;
     default:
-      root.render(<NotFound />);
+      root.render(
+        <Suspense fallback={null}>
+          <NotFound />
+        </Suspense>
+      );
   }
 }
+
 if ('requestIdleCallback' in window) {
   requestIdleCallback(() => import('./styles/sections.css'));
 } else {
