@@ -1,0 +1,12 @@
+const rybkiDeckData = [
+  { slug: '01-cover', label: 'Обложка', heading: 'РЫБКИ', fallback: ['Антиутопия о памяти, свободе и праве человека остаться собой', 'Полнометражный фильм'], text: [], fontFamilies: [] },
+  { slug: '02-logline', label: 'Логлайн', heading: 'Логлайн', fallback: ['Полнометражный научно-фантастический триллер о памяти, идентичности и свободе.'], text: [], fontFamilies: [] },
+  { slug: '03-why-it-hooks', label: 'Почему это цепляет', heading: 'Почему это цепляет', fallback: ['История соединяет личную драму героя и большую антиутопическую систему.'], text: [], fontFamilies: [] },
+  { slug: '04-synopsis', label: 'Синопсис', heading: 'Синопсис', fallback: ['История раскрывается через столкновение героя с системой и собственной памятью.'], text: [], fontFamilies: [] },
+  { slug: '05-main-character', label: 'Главный герой', heading: 'Главный герой', fallback: ['И-1 — человек внутри системы, которая знает о нём больше, чем он сам.'], text: [], fontFamilies: [] },
+  { slug: '06-world', label: 'Мир', heading: 'Мир', fallback: ['Корпоративное будущее, где память становится инфраструктурой власти.'], text: [], fontFamilies: [] },
+  { slug: '08-audience', label: 'Для кого', heading: 'Для кого', fallback: ['Интеллектуальный sci-fi, психологический триллер и сильная авторская идея.'], text: [], fontFamilies: [] },
+  { slug: '09-potential', label: 'Потенциал', heading: 'Потенциал', fallback: ['Полнометражный фильм и самостоятельная визуальная вселенная.'], text: [], fontFamilies: [] },
+];
+
+export default rybkiDeckData;

@@ -18,6 +18,7 @@ const DesignOldPage = lazy(() => import('./components/DesignOldPage'));
 const CeoPage = lazy(() => import('./components/CeoPage'));
 const LegalPage = lazy(() => import('./components/LegalPage'));
 const RybkiPage = lazy(() => import('./components/RybkiPage'));
+const RybkiLayeredPage = lazy(() => import('./components/RybkiLayeredPage'));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const base = '';
@@ -57,6 +58,9 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       break;
     case '/rybki':
       renderInLayout(<RybkiPage />);
+      break;
+    case '/rybki_page':
+      renderInLayout(<RybkiLayeredPage />);
       break;
     case '/design1test':
       renderInLayout(<Design1TestPage />);
