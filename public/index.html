@@ -10,14 +10,12 @@
     <link rel="canonical" href="https://studio.anix-ai.pro/" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <!-- Open Graph -->
     <meta property="og:title" content="ANIX Studio - визуальные истории для сложных продуктов" />
     <meta property="og:description" content="Ролики, маскоты, visual sales kits и обучающие материалы для B2B, фармы, MedTech, HSE и событий." />
     <meta property="og:image" content="%PUBLIC_URL%/3.png" />
     <meta property="og:url" content="https://studio.anix-ai.pro/" />
     <meta property="og:type" content="website" />
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ANIX Studio - AI-видео, фарма, HSE и сложные продукты" />
     <meta name="twitter:description" content="Делаем сложные продукты понятными через видео, анимацию, маскотов и визуальные системы." />
@@ -25,7 +23,15 @@
 
     <link rel="icon" href="%PUBLIC_URL%/anix_wand.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!-- preconnects removed to avoid third-party requests before first paint -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href="%PUBLIC_URL%/optimized/showreel-640.webp"
+      imagesrcset="%PUBLIC_URL%/optimized/showreel-640.webp 640w, %PUBLIC_URL%/optimized/showreel-960.webp 960w, %PUBLIC_URL%/optimized/showreel-1344.webp 1344w"
+      imagesizes="(max-width: 760px) 90vw, 48vw"
+      fetchpriority="high"
+    />
     <style>
       body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#f7f4ef;color:#111;line-height:1.6;overflow-x:hidden}
     </style>
@@ -47,7 +53,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- Yandex.Metrika counter with Content Analytics enabled -->
     <script>
       function loadAnalytics() {
         (function (m, e, t, r, i, k, a) {
@@ -56,15 +61,13 @@
           };
           m[i].l = 1 * new Date();
           for (var j = 0; j < document.scripts.length; j++) {
-            if (document.scripts[j].src === r) {
-              return;
-            }
+            if (document.scripts[j].src === r) return;
           }
-          k = e.createElement(t),
-            a = e.getElementsByTagName(t)[0],
-            k.async = 1,
-            k.src = r,
-            a.parentNode.insertBefore(k, a);
+          k = e.createElement(t);
+          a = e.getElementsByTagName(t)[0];
+          k.async = 1;
+          k.src = r;
+          a.parentNode.insertBefore(k, a);
         })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
         ym(103290769, "init", {
@@ -82,27 +85,9 @@
     </script>
     <noscript>
       <div>
-        <img
-          src="https://mc.yandex.ru/watch/103290769"
-          style="position:absolute; left:-9999px;"
-          alt=""
-        />
+        <img src="https://mc.yandex.ru/watch/103290769" style="position:absolute; left:-9999px;" alt="" />
       </div>
     </noscript>
-    <!-- /Yandex.Metrika counter -->
-    <script>
-      function loadFonts() {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap';
-        document.head.appendChild(link);
-      }
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(loadFonts);
-      } else {
-        window.addEventListener('load', () => setTimeout(loadFonts, 0));
-      }
-    </script>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
