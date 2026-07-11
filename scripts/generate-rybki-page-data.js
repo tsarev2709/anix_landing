@@ -18,6 +18,9 @@ const slides = [
   { slug: '09-potential', label: 'Потенциал', heading: 'Потенциал', fallback: ['Полнометражный фильм и самостоятельная визуальная вселенная.'] },
 ];
 
+const embeddedPngPattern = /(?:xlink:href|href)=["']data:image\/png;base64,([^"']+)["']/i;
+const embeddedPngGroupPattern = /<g\b[^>]*>[\s\S]*?<image\b[^>]*(?:xlink:href|href)=["']data:image\/png;base64,[^"']+["'][^>]*\/?>(?:[\s\S]*?)<\/g>/i;
+
 function decodeEntities(value) {
   return value
     .replace(/&amp;/g, '&')
@@ -59,14 +62,14 @@ function extractFontFamilies(xml) {
 }
 
 function extractBasePng(xml, slug) {
-  const groupMatch = xml.match(/<g\s+id=["'][^"']*base_render[^"']*["'][^>]*>[\s\S]*?<image\b[\s\S]*?(?:xlink:href|href)=["']data:image\/png;base64,([^"']+)["'][\s\S]*?<\/g>/i);
-  if (!groupMatch) throw new Error(`Base render PNG not found in ${slug}`);
-  return Buffer.from(groupMatch[1].replace(/\s+/g, ''), 'base64');
+  const imageMatch = xml.match(embeddedPngPattern);
+  if (!imageMatch) throw new Error(`Embedded PNG not found in ${slug}`);
+  return Buffer.from(imageMatch[1].replace(/\s+/g, ''), 'base64');
 }
 
 function createOverlaySvg(xml) {
   return xml
-    .replace(/<g\s+id=["'][^"']*base_render[^"']*["'][^>]*>[\s\S]*?<\/g>/i, '')
+    .replace(embeddedPngGroupPattern, '')
     .replace(/<text\b[^>]*>[\s\S]*?<\/text>/gi, '')
     .replace(/<title>[\s\S]*?<\/title>/i, '')
     .replace(/<desc>[\s\S]*?<\/desc>/i, '');
