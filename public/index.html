@@ -3,44 +3,45 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ANIX Studio - ролики, маскоты и визуальные системы для сложных продуктов</title>
-    <meta name="description" content="ANIX Studio делает AI-видео, анимацию, маскотов, visual sales kits и обучающие материалы для B2B, фармы, MedTech, HSE и событий." />
+    <title>ANIX Studio</title>
+    <meta name="description" content="ANIX Studio" />
     <meta name="robots" content="index, follow" />
-    <meta name="keywords" content="AI-видео, анимационные ролики, visual sales kit, фарма, MedTech, HSE, охрана труда, маскоты, explainer video, B2B-видео, ANIX Studio" />
-    <link rel="canonical" href="https://studio.anix-ai.pro/" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <meta property="og:title" content="ANIX Studio - визуальные истории для сложных продуктов" />
-    <meta property="og:description" content="Ролики, маскоты, visual sales kits и обучающие материалы для B2B, фармы, MedTech, HSE и событий." />
-    <meta property="og:image" content="%PUBLIC_URL%/3.png" />
-    <meta property="og:url" content="https://studio.anix-ai.pro/" />
-    <meta property="og:type" content="website" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ANIX Studio - AI-видео, фарма, HSE и сложные продукты" />
-    <meta name="twitter:description" content="Делаем сложные продукты понятными через видео, анимацию, маскотов и визуальные системы." />
-    <meta name="twitter:image" content="%PUBLIC_URL%/3.png" />
 
     <link rel="icon" href="%PUBLIC_URL%/anix_wand.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <script>
+      (function normalizeCleanUrl() {
+        var path = window.location.pathname;
+        if (path.length > 1 && /\/$/.test(path)) {
+          window.location.replace(path.replace(/\/+$/, '') + window.location.search + window.location.hash);
+        }
+      })();
+    </script>
     <script>
       (function preloadRouteLcp() {
         var path = window.location.pathname.replace(/\/+$/, '') || '/';
         var link = document.createElement('link');
         link.rel = 'preload';
         link.as = 'image';
-        link.type = 'image/webp';
         link.fetchPriority = 'high';
 
         if (path === '/rybki') {
+          link.type = 'image/webp';
           link.href = '%PUBLIC_URL%/optimized/rybki-01-cover-640.webp';
           link.imageSrcset = '%PUBLIC_URL%/optimized/rybki-01-cover-640.webp 640w, %PUBLIC_URL%/optimized/rybki-01-cover-1280.webp 1280w, %PUBLIC_URL%/optimized/rybki-01-cover-1920.webp 1920w';
           link.imageSizes = '(max-width: 800px) 94vw, calc(96vw - 174px)';
         } else if (path === '/rybki_page') {
+          link.type = 'image/webp';
           link.href = '%PUBLIC_URL%/rybki-page-assets/01-cover-base-720.webp';
           link.imageSrcset = '%PUBLIC_URL%/rybki-page-assets/01-cover-base-720.webp 720w, %PUBLIC_URL%/rybki-page-assets/01-cover-base-1280.webp 1280w, %PUBLIC_URL%/rybki-page-assets/01-cover-base-1800.webp 1800w';
           link.imageSizes = '(max-width: 860px) 92vw, 56vw';
+        } else if (path.indexOf('/cases/') === 0) {
+          link.type = 'image/webp';
+          link.href = '%PUBLIC_URL%/seo-media/cases/' + path.split('/').pop() + '.webp';
+          link.imageSizes = '(max-width: 860px) 90vw, 52vw';
         } else if (path === '/') {
+          link.type = 'image/webp';
           link.href = '%PUBLIC_URL%/optimized/showreel-640.webp';
           link.imageSrcset = '%PUBLIC_URL%/optimized/showreel-640.webp 640w, %PUBLIC_URL%/optimized/showreel-960.webp 960w, %PUBLIC_URL%/optimized/showreel-1344.webp 1344w';
           link.imageSizes = '(max-width: 760px) 90vw, 48vw';
@@ -54,21 +55,6 @@
     <style>
       body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#f7f4ef;color:#111;line-height:1.6;overflow-x:hidden}
     </style>
-
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "ANIX Studio",
-        "url": "https://studio.anix-ai.pro/",
-        "logo": "https://studio.anix-ai.pro/3.png",
-        "description": "ANIX Studio делает AI-видео, анимацию, маскотов, visual sales kits и обучающие материалы для B2B, фармы, MedTech, HSE и событий.",
-        "sameAs": [
-          "https://t.me/anix_helper",
-          "https://www.linkedin.com/company/anixvideo/"
-        ]
-      }
-    </script>
   </head>
   <body>
     <div id="root"></div>
