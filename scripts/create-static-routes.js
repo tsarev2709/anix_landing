@@ -61,6 +61,7 @@ const routes = [
   'why_it_works',
   'ceo',
   'hse',
+  'rybki',
   'hse/mvp',
   'hse/mvp/showcase',
   'hse/mvp/showcase/organization',
@@ -100,9 +101,7 @@ const routes = [
 ];
 
 if (!fs.existsSync(indexFile)) {
-  console.warn(
-    '[routes] build/index.html not found, skipping static route copies'
-  );
+  console.warn('[routes] build/index.html not found, skipping static route copies');
   process.exit(0);
 }
 
