@@ -43,7 +43,7 @@ jobs:
         if: steps.npm-install.outcome == 'failure'
         run: echo "npm install failed"
 
-      - name: Build
+      - name: Build and verify static SEO
         if: steps.npm-install.outcome == 'success'
         env:
           REACT_APP_SUBMIT_LEAD_URL: ${{ secrets.REACT_APP_SUBMIT_LEAD_URL }}
@@ -52,10 +52,6 @@ jobs:
           REACT_APP_SUPABASE_ANON_KEY: ${{ secrets.REACT_APP_SUPABASE_ANON_KEY }}
           CI: false
         run: npm run build
-
-      - name: Prepare 404 page
-        if: steps.npm-install.outcome == 'success'
-        run: cp build/index.html build/404.html
 
       - name: Deploy to gh-pages
         if: steps.npm-install.outcome == 'success'
