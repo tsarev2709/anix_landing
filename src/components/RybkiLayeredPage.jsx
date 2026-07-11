@@ -3,10 +3,21 @@ import { Helmet } from 'react-helmet';
 import { ArrowDown, ArrowLeft, MessageCircle } from 'lucide-react';
 import rybkiDeckData from '../generated/rybkiDeckData';
 import './RybkiLayeredPage.css';
+import './RybkiLayeredTypography.css';
 
 const telegramUrl = 'https://t.me/anix_helper';
 
 function cleanCopy(section) {
+  if (section.slug === '02-logline' && section.text?.length) {
+    const story = section.text
+      .slice(1, 8)
+      .join(' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    return [story, 'SCI-FI / ТРИЛЛЕР / САТИРА · РОССИЯ БУДУЩЕГО'];
+  }
+
   const ignored = new Set([
     section.heading.toLowerCase(),
     section.label.toLowerCase(),
