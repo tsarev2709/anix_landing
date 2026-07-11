@@ -1,0 +1,33 @@
+.rybki-layered-page {
+  font-family: 'Jura', 'Exo 2', 'Raleway', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 300;
+}
+
+.rybki-layered-hero h1,
+.rybki-layered-copy h2,
+.rybki-layered-final h2,
+.rybki-layered-text p:first-child {
+  font-family: 'Jura', 'Exo 2', 'Raleway', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 200;
+  letter-spacing: 0.035em;
+}
+
+.rybki-layered-hero h1,
+.rybki-layered-copy h2,
+.rybki-layered-final h2 {
+  text-transform: uppercase;
+}
+
+.rybki-layered-text p {
+  font-weight: 300;
+  letter-spacing: 0.035em;
+}
+
+.rybki-layered-meta,
+.rybki-layered-title,
+.rybki-layered-back,
+.rybki-layered-contact,
+.rybki-layered-scroll,
+.rybki-layered-final-button {
+  letter-spacing: 0.18em;
+}
