@@ -15,18 +15,15 @@ import Design1TestPage from './components/Design1TestPage';
 import DesignOldPage from './components/DesignOldPage';
 import CeoPage from './components/CeoPage';
 import LegalPage from './components/LegalPage';
+import RybkiPage from './components/RybkiPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const base = '';
 const relativePath = window.location.pathname.replace(base, '') || '/';
 const normalizedPath = (() => {
   const withoutIndex = relativePath.replace(/index\.html$/, '');
-  if (!withoutIndex) {
-    return '/';
-  }
-  if (withoutIndex === '/') {
-    return '/';
-  }
+  if (!withoutIndex) return '/';
+  if (withoutIndex === '/') return '/';
   return withoutIndex.endsWith('/')
     ? withoutIndex.slice(0, Math.max(1, withoutIndex.length - 1))
     : withoutIndex;
@@ -51,6 +48,9 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       break;
     case '/hse':
       renderInLayout(<HsePage />);
+      break;
+    case '/rybki':
+      renderInLayout(<RybkiPage />);
       break;
     case '/design1test':
       renderInLayout(<Design1TestPage />);
