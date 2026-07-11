@@ -29,6 +29,7 @@ function replaceText(source, from, to) {
 }
 
 runNodeScript('scripts/optimize-assets.js');
+runNodeScript('scripts/check-image-budget.js');
 
 patchFile('src/components/Design1TestPage.jsx', (input) => {
   let source = input;
