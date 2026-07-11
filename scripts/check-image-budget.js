@@ -6,6 +6,9 @@ const limits = [
   { file: 'public/optimized/showreel-640.webp', maxKiB: 220 },
   { file: 'public/optimized/showreel-960.webp', maxKiB: 360 },
   { file: 'public/optimized/showreel-1344.webp', maxKiB: 560 },
+  { file: 'public/optimized/rybki-01-cover-640.webp', maxKiB: 320 },
+  { file: 'public/optimized/rybki-01-cover-1280.webp', maxKiB: 700 },
+  { file: 'public/optimized/rybki-01-cover-1920.webp', maxKiB: 1200 },
 ];
 
 let failed = false;
