@@ -15,6 +15,7 @@ import Design1TestPage from './components/Design1TestPage';
 import DesignOldPage from './components/DesignOldPage';
 import CeoPage from './components/CeoPage';
 import LegalPage from './components/LegalPage';
+import RybkiPage from './components/RybkiPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const base = '';
@@ -51,6 +52,9 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       break;
     case '/hse':
       renderInLayout(<HsePage />);
+      break;
+    case '/rybki':
+      renderInLayout(<RybkiPage />);
       break;
     case '/design1test':
       renderInLayout(<Design1TestPage />);
