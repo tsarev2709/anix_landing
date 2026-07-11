@@ -6,18 +6,20 @@ import './RybkiPage.css';
 const telegramUrl = 'https://t.me/anix_helper';
 
 const slides = [
-  { src: '/rybki-assets/01-cover.svg', alt: 'Рыбки — антиутопия о памяти. Обложка проекта.', label: 'Обложка' },
-  { src: '/rybki-assets/02-logline.svg', alt: 'Логлайн полнометражного фильма «Рыбки».', label: 'Логлайн' },
-  { src: '/rybki-assets/03-why-it-hooks.svg', alt: 'Почему история «Рыбки» цепляет зрителя.', label: 'Почему это цепляет' },
-  { src: '/rybki-assets/04-synopsis.svg', alt: 'Синопсис полнометражного фильма «Рыбки».', label: 'Синопсис' },
-  { src: '/rybki-assets/05-main-character.svg', alt: 'Главный герой И-1.', label: 'Главный герой' },
-  { src: '/rybki-assets/06-world.svg', alt: 'Мир и контекст истории «Рыбки».', label: 'Мир' },
-  { src: '/rybki-assets/08-audience.svg', alt: 'Целевая аудитория фильма «Рыбки».', label: 'Для кого' },
-  { src: '/rybki-assets/09-potential.svg', alt: 'Потенциал проекта «Рыбки».', label: 'Потенциал' },
+  { slug: '01-cover', alt: 'Рыбки — антиутопия о памяти. Обложка проекта.', label: 'Обложка' },
+  { slug: '02-logline', alt: 'Логлайн полнометражного фильма «Рыбки».', label: 'Логлайн' },
+  { slug: '03-why-it-hooks', alt: 'Почему история «Рыбки» цепляет зрителя.', label: 'Почему это цепляет' },
+  { slug: '04-synopsis', alt: 'Синопсис полнометражного фильма «Рыбки».', label: 'Синопсис' },
+  { slug: '05-main-character', alt: 'Главный герой И-1.', label: 'Главный герой' },
+  { slug: '06-world', alt: 'Мир и контекст истории «Рыбки».', label: 'Мир' },
+  { slug: '08-audience', alt: 'Целевая аудитория фильма «Рыбки».', label: 'Для кого' },
+  { slug: '09-potential', alt: 'Потенциал проекта «Рыбки».', label: 'Потенциал' },
 ];
 
 function Slide({ slide, index }) {
   const [failed, setFailed] = useState(false);
+  const optimizedBase = `/optimized/rybki-${slide.slug}`;
+  const fallbackSvg = `/rybki-assets/${slide.slug}.svg`;
 
   return (
     <section className="rybki-slide" id={`slide-${index + 1}`}>
@@ -29,16 +31,26 @@ function Slide({ slide, index }) {
         {failed ? (
           <div className="rybki-asset-missing">
             <strong>{slide.label}</strong>
-            <span>SVG-файл не удалось загрузить.</span>
+            <span>Изображение не удалось загрузить.</span>
           </div>
         ) : (
-          <img
-            src={slide.src}
-            alt={slide.alt}
-            loading={index === 0 ? 'eager' : 'lazy'}
-            fetchPriority={index === 0 ? 'high' : 'auto'}
-            onError={() => setFailed(true)}
-          />
+          <picture>
+            <source
+              type="image/webp"
+              srcSet={`${optimizedBase}-640.webp 640w, ${optimizedBase}-1280.webp 1280w, ${optimizedBase}-1920.webp 1920w`}
+              sizes="(max-width: 800px) 94vw, calc(96vw - 174px)"
+            />
+            <img
+              src={fallbackSvg}
+              alt={slide.alt}
+              width="1920"
+              height="1080"
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchPriority={index === 0 ? 'high' : 'auto'}
+              decoding={index === 0 ? 'sync' : 'async'}
+              onError={() => setFailed(true)}
+            />
+          </picture>
         )}
       </div>
     </section>
@@ -82,7 +94,7 @@ export default function RybkiPage() {
 
       <div className="rybki-slides">
         {slides.map((slide, index) => (
-          <Slide slide={slide} index={index} key={slide.src} />
+          <Slide slide={slide} index={index} key={slide.slug} />
         ))}
       </div>
 
