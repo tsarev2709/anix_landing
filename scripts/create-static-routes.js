@@ -63,6 +63,12 @@ const routes = [
   'hse',
   'rybki',
   'rybki_page',
+  'cases/clappy',
+  'cases/hemotech-ai',
+  'cases/tpes',
+  'cases/mfti-endowment',
+  'cases/mosfarma',
+  'cases/multon-partners',
   'hse/mvp',
   'hse/mvp/showcase',
   'hse/mvp/showcase/organization',
@@ -110,8 +116,6 @@ for (const route of routes) {
   const routeDir = path.join(buildDir, route);
   fs.mkdirSync(routeDir, { recursive: true });
   fs.copyFileSync(indexFile, path.join(routeDir, 'index.html'));
-  fs.copyFileSync(indexFile, path.join(buildDir, `${route}.html`));
 }
 
-fs.copyFileSync(indexFile, path.join(buildDir, '404.html'));
-console.log(`[routes] created static entries for: ${routes.join(', ')}`);
+console.log(`[routes] created clean static entries for: ${routes.join(', ')}`);
