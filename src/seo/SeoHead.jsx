@@ -33,14 +33,35 @@ export const resolveSeoRoute = (path) => {
   };
 };
 
-const absoluteUrl = (value) => {
+const absoluteAssetUrl = (value) => {
   if (/^https?:\/\//.test(value)) return value;
   if (value === '/') return `${seoConfig.baseUrl}/`;
   return `${seoConfig.baseUrl}${value.startsWith('/') ? value : `/${value}`}`;
 };
 
+export const toPublicHref = (value = '/') => {
+  if (!value.startsWith('/') || value.startsWith('//')) return value;
+  const [pathname, suffix = ''] = value.split(/(?=[?#])/u, 2);
+  const normalized = normalizePath(pathname);
+  const isKnownPage = Boolean(seoConfig.routes[normalized]) || normalized.startsWith('/hse/mvp');
+
+  if (!isKnownPage || normalized === '/') return value;
+  return `${normalized}/${suffix}`;
+};
+
+const absolutePageUrl = (path) => {
+  const href = toPublicHref(path);
+  return absoluteAssetUrl(href);
+};
+
+const ogTypeForRoute = (route) => {
+  if (route.kind === 'profile') return 'profile';
+  if (route.kind === 'case' || route.kind === 'creativeWork') return 'article';
+  return 'website';
+};
+
 export const buildStructuredData = (route) => {
-  const url = absoluteUrl(route.path);
+  const url = absolutePageUrl(route.path);
   const organization = {
     '@type': 'Organization',
     name: seoConfig.organization.name,
@@ -79,7 +100,7 @@ export const buildStructuredData = (route) => {
       headline: route.h1,
       description: route.description,
       url,
-      image: absoluteUrl(route.ogImage),
+      image: absoluteAssetUrl(route.ogImage),
       inLanguage: 'ru-RU',
       publisher: organization,
     });
@@ -118,7 +139,7 @@ export const buildStructuredData = (route) => {
         '@type': 'ListItem',
         position: index + 1,
         name: item.label,
-        item: absoluteUrl(item.href),
+        item: absolutePageUrl(item.href),
       })),
     });
   }
@@ -128,8 +149,8 @@ export const buildStructuredData = (route) => {
 
 export default function SeoHead({ path = window.location.pathname }) {
   const route = resolveSeoRoute(path);
-  const canonical = absoluteUrl(route.path);
-  const ogImage = absoluteUrl(route.ogImage);
+  const canonical = absolutePageUrl(route.path);
+  const ogImage = absoluteAssetUrl(route.ogImage);
   const robots = route.indexable ? 'index, follow' : 'noindex, follow';
   const schemas = buildStructuredData(route);
 
@@ -139,12 +160,12 @@ export default function SeoHead({ path = window.location.pathname }) {
       <title>{route.title}</title>
       <meta name="description" content={route.description} />
       <meta name="robots" content={robots} />
-      <link rel="canonical" href={canonical} />
+      {route.kind === 'notFound' ? null : <link rel="canonical" href={canonical} />}
       <meta property="og:title" content={route.ogTitle || route.title} />
       <meta property="og:description" content={route.ogDescription || route.description} />
       <meta property="og:url" content={canonical} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content={ogTypeForRoute(route)} />
       <meta property="og:site_name" content={seoConfig.siteName} />
       <meta property="og:locale" content="ru_RU" />
       <meta name="twitter:card" content="summary_large_image" />
