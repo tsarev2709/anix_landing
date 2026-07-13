@@ -57,7 +57,7 @@ import {
   saveCourseProgress,
   saveModuleLearningState,
 } from './lib/storage';
-import { downloadCsv, downloadXlsxFallback } from './lib/export';
+import { downloadCsv, downloadXlsx, downloadXlsxFallback } from './lib/export';
 import { getRuleBasedRecommendations } from './lib/recommendations';
 import { generateAiRecommendation } from './lib/aiRecommendations';
 import { submitCourseRequest, getCrmMode } from './lib/crm';
@@ -2779,9 +2779,41 @@ function RealSpecialistDashboard({ profile }) {
     };
   }, [profile.organization_id]);
 
+  const handleExportXlsx = () => {
+    const rows = profiles.map((item) => {
+      const attempts = progressByUser[item.user_id] || [];
+      const passed = attempts.filter((attempt) =>
+        attempt.status?.includes('пройден')
+      );
+      const latest = attempts[0];
+      return {
+        ФИО: item.full_name || '—',
+        Почта: item.email,
+        Роль: roleLabels[item.role] || item.role,
+        'Пройдено курсов':
+          item.role === 'employee'
+            ? `${passed.length} из ${attempts.length || 0}`
+            : '—',
+        'Последний модуль': latest?.moduleKey || '—',
+        'Последний результат, %': latest?.score ?? '—',
+        'Дата последнего прохождения': latest
+          ? new Date(latest.completed_at).toLocaleDateString('ru-RU')
+          : '—',
+      };
+    });
+    downloadXlsx(rows, 'hse-progress-report.xlsx', 'Прогресс сотрудников');
+  };
+
   return (
     <div className="hse-mvp-panel">
       <div className="hse-mvp-actions">
+        <button
+          className="hse-mvp-button hse-mvp-button-primary"
+          type="button"
+          onClick={handleExportXlsx}
+        >
+          <Download aria-hidden="true" size={18} /> Экспорт в Excel
+        </button>
         <TestSignOutButton />
       </div>
       <h2>Сотрудники организации</h2>

@@ -1,3 +1,5 @@
+import * as XLSX from 'xlsx';
+
 const escapeCsv = (value: unknown) => {
   const normalized = value === null || value === undefined ? '' : String(value);
   return `"${normalized.replace(/"/g, '""')}"`;
@@ -32,6 +34,18 @@ export const downloadCsv = (
 ) => {
   const csv = `\uFEFF${rowsToCsv(rows)}`;
   downloadBlob(csv, fileName, 'text/csv;charset=utf-8');
+};
+
+export const downloadXlsx = (
+  rows: Record<string, unknown>[],
+  fileName = 'hse-results.xlsx',
+  sheetName = 'Отчёт'
+) => {
+  if (!rows.length) return;
+  const worksheet = XLSX.utils.json_to_sheet(rows);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
+  XLSX.writeFile(workbook, fileName);
 };
 
 export const downloadXlsxFallback = (

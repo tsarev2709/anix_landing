@@ -1,3 +1,5 @@
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import {
   HSE_MVP_DISCLAIMER,
   HSE_MVP_SYSTEM_NAME,
@@ -5,56 +7,54 @@ import {
   demoEmployee,
 } from '../data/demoData';
 
-// A real file download via Blob + a temporary <a download> link works
-// without any popup permissions and isn't subject to popup-blocker
-// quirks — window.open()-based approaches (print dialog, blank tab)
-// were unreliable on mobile Chrome (blocked outright, or opened blank).
-export const openCompletionPrint = (attempt: any) => {
+// jsPDF's built-in fonts only cover Latin/WinAnsi glyphs — Cyrillic text
+// drawn directly with doc.text() renders as garbage or blank without
+// embedding a custom Unicode font. Rendering the certificate as HTML and
+// rasterizing it with html2canvas sidesteps that entirely: the browser's
+// own font rendering handles Cyrillic correctly, and the result is just
+// dropped into the PDF as an image.
+export const openCompletionPrint = async (attempt: any) => {
   const date = attempt?.completedAt
     ? new Date(attempt.completedAt).toLocaleDateString('ru-RU')
     : new Date().toLocaleDateString('ru-RU');
-  const html = `
-    <!doctype html>
-    <html lang="ru">
-      <head>
-        <meta charset="utf-8" />
-        <title>Подтверждение прохождения обучающего модуля</title>
-        <style>
-          body { font-family: Arial, sans-serif; margin: 40px; color: #172033; }
-          .doc { border: 2px solid #1f4f82; padding: 32px; }
-          h1 { margin: 0 0 20px; font-size: 26px; }
-          dl { display: grid; grid-template-columns: 220px 1fr; gap: 10px 18px; }
-          dt { font-weight: 700; color: #44546a; }
-          dd { margin: 0; }
-          .disc { margin-top: 28px; padding: 18px; background: #f3f6fa; border-left: 5px solid #1f4f82; }
-          @media print { button { display: none; } body { margin: 0; } }
-        </style>
-      </head>
-      <body>
-        <div class="doc">
-          <h1>Подтверждение прохождения обучающего модуля</h1>
-          <dl>
-            <dt>Система</dt><dd>${HSE_MVP_SYSTEM_NAME}</dd>
-            <dt>Демо-компания</dt><dd>${demoCompany.name}</dd>
-            <dt>Сотрудник</dt><dd>${demoEmployee.fullName}</dd>
-            <dt>Модуль</dt><dd>${attempt?.moduleTitle || ''}</dd>
-            <dt>Версия курса</dt><dd>${attempt?.version || ''}</dd>
-            <dt>Дата</dt><dd>${date}</dd>
-            <dt>Результат</dt><dd>${attempt?.score || 0}% — ${attempt?.passed ? 'модуль пройден' : 'рекомендуется повторить'}</dd>
-          </dl>
-          <div class="disc">Документ не является удостоверением, протоколом проверки знаний или допуском к работам. Используется как демонстрационное подтверждение прохождения цифрового обучающего модуля. ${HSE_MVP_DISCLAIMER}</div>
-        </div>
-        <p><button onclick="window.print()">Сохранить как PDF / печать</button></p>
-      </body>
-    </html>
+
+  const container = document.createElement('div');
+  container.style.cssText =
+    'position:fixed;left:-9999px;top:0;width:700px;box-sizing:border-box;padding:32px;background:#ffffff;font-family:Arial, sans-serif;color:#172033;border:2px solid #1f4f82;';
+  container.innerHTML = `
+    <h1 style="margin:0 0 20px;font-size:26px;">Подтверждение прохождения обучающего модуля</h1>
+    <dl style="display:grid;grid-template-columns:220px 1fr;gap:10px 18px;margin:0;">
+      <dt style="font-weight:700;color:#44546a;">Система</dt><dd style="margin:0;">${HSE_MVP_SYSTEM_NAME}</dd>
+      <dt style="font-weight:700;color:#44546a;">Демо-компания</dt><dd style="margin:0;">${demoCompany.name}</dd>
+      <dt style="font-weight:700;color:#44546a;">Сотрудник</dt><dd style="margin:0;">${demoEmployee.fullName}</dd>
+      <dt style="font-weight:700;color:#44546a;">Модуль</dt><dd style="margin:0;">${attempt?.moduleTitle || ''}</dd>
+      <dt style="font-weight:700;color:#44546a;">Версия курса</dt><dd style="margin:0;">${attempt?.version || ''}</dd>
+      <dt style="font-weight:700;color:#44546a;">Дата</dt><dd style="margin:0;">${date}</dd>
+      <dt style="font-weight:700;color:#44546a;">Результат</dt><dd style="margin:0;">${attempt?.score || 0}% — ${attempt?.passed ? 'модуль пройден' : 'рекомендуется повторить'}</dd>
+    </dl>
+    <div style="margin-top:28px;padding:18px;background:#f3f6fa;border-left:5px solid #1f4f82;">
+      Документ не является удостоверением, протоколом проверки знаний или допуском к работам. Используется как демонстрационное подтверждение прохождения цифрового обучающего модуля. ${HSE_MVP_DISCLAIMER}
+    </div>
   `;
-  const blob = new Blob([html], { type: 'text/html' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = `podtverzhdenie-${attempt?.moduleId || 'module'}.html`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  setTimeout(() => URL.revokeObjectURL(url), 10000);
+  document.body.appendChild(container);
+
+  try {
+    const canvas = await html2canvas(container, {
+      scale: 2,
+      backgroundColor: '#ffffff',
+    });
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'pt',
+      format: 'a4',
+    });
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const imgWidth = pageWidth - 40;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    pdf.addImage(imgData, 'PNG', 20, 20, imgWidth, imgHeight);
+    pdf.save(`podtverzhdenie-${attempt?.moduleId || 'module'}.pdf`);
+  } finally {
+    document.body.removeChild(container);
+  }
 };
