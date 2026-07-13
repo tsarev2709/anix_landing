@@ -9,6 +9,7 @@ import {
   PlayCircle,
   Sparkles,
 } from 'lucide-react';
+import { toPublicHref } from '../seo/SeoHead';
 import logo from '../images/logoanix.png';
 import './SiteFooter.css';
 
@@ -58,10 +59,11 @@ const directionLinks = [
 
 function FooterLink({ item }) {
   const Icon = item.icon;
+  const href = item.external ? item.href : toPublicHref(item.href);
 
   return (
     <a
-      href={item.href}
+      href={href}
       target={item.external ? '_blank' : undefined}
       rel={item.external ? 'noreferrer' : undefined}
     >
@@ -124,17 +126,17 @@ export default function SiteFooter() {
 
       <div className="anix-site-footer__bottom">
         <span>ANIX Studio</span>
-        <a href="/medicine">
+        <a href={toPublicHref('/medicine')}>
           Medicine <ArrowRight aria-hidden="true" />
         </a>
-        <a href="/hse">
+        <a href={toPublicHref('/hse')}>
           HSE <ArrowRight aria-hidden="true" />
         </a>
-        <a href="/ceo">
+        <a href={toPublicHref('/ceo')}>
           CEO <ArrowRight aria-hidden="true" />
         </a>
-        <a href="/personal-data">Политика обработки персональных данных</a>
-        <a href="/privacy">Политика конфиденциальности</a>
+        <a href={toPublicHref('/personal-data')}>Политика обработки персональных данных</a>
+        <a href={toPublicHref('/privacy')}>Политика конфиденциальности</a>
       </div>
     </footer>
   );
