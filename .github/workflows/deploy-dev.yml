@@ -29,11 +29,8 @@ jobs:
       - name: Install deps
         run: npm install
 
-      - name: Build
+      - name: Build and verify static SEO
         run: npm run build
-
-      - name: Prepare 404 page
-        run: cp build/index.html build/404.html
 
       - name: Deploy to gh-pages dev folder
         uses: peaceiris/actions-gh-pages@v4

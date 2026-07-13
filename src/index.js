@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom/client';
 import './App.css';
 import App from './App';
 import AppLayout from './AppLayout';
+import RouteBreadcrumbsPortal from './seo/RouteBreadcrumbsPortal';
+import RouteRelatedLinksPortal from './seo/RouteRelatedLinksPortal';
+import SeoHead from './seo/SeoHead';
 
 console.info('[CFG] SUBMIT:', CONFIG.SUBMIT_LEAD_URL);
 console.info('[CFG] TRACK :', CONFIG.TRACK_EVENT_URL);
@@ -19,8 +22,11 @@ const CeoPage = lazy(() => import('./components/CeoPage'));
 const LegalPage = lazy(() => import('./components/LegalPage'));
 const RybkiPage = lazy(() => import('./components/RybkiPage'));
 const RybkiLayeredPage = lazy(() => import('./components/RybkiLayeredPage'));
+const CasePage = lazy(() => import('./components/CasePage'));
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const rootElement = document.getElementById('root');
+rootElement.replaceChildren();
+const root = ReactDOM.createRoot(rootElement);
 const base = '';
 const relativePath = window.location.pathname.replace(base, '') || '/';
 const normalizedPath = (() => {
@@ -35,13 +41,18 @@ const normalizedPath = (() => {
 const renderInLayout = (component) => {
   root.render(
     <AppLayout>
+      <SeoHead path={normalizedPath} />
       <Suspense fallback={null}>{component}</Suspense>
+      <RouteBreadcrumbsPortal path={normalizedPath} />
+      <RouteRelatedLinksPortal path={normalizedPath} />
     </AppLayout>
   );
 };
 
 if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
   renderInLayout(<HseMvpPage path={normalizedPath} />);
+} else if (normalizedPath.startsWith('/cases/')) {
+  renderInLayout(<CasePage path={normalizedPath} />);
 } else {
   switch (normalizedPath) {
     case '/':
@@ -79,9 +90,12 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       break;
     default:
       root.render(
-        <Suspense fallback={null}>
-          <NotFound />
-        </Suspense>
+        <>
+          <SeoHead path={normalizedPath} />
+          <Suspense fallback={null}>
+            <NotFound />
+          </Suspense>
+        </>
       );
   }
 }

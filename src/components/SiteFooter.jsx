@@ -9,6 +9,7 @@ import {
   PlayCircle,
   Sparkles,
 } from 'lucide-react';
+import { toPublicHref } from '../seo/SeoHead';
 import logo from '../images/logoanix.png';
 import './SiteFooter.css';
 
@@ -20,31 +21,32 @@ const videoFolderUrl =
 const pageLinks = [
   { label: 'Главная', href: '/' },
   { label: 'Кейсы', href: '/#cases' },
-  { label: 'Medicine', href: '/medicine/' },
-  { label: 'HSE', href: '/hse/' },
-  { label: 'CEO', href: '/ceo/' },
+  { label: 'Medicine', href: '/medicine' },
+  { label: 'HSE', href: '/hse' },
+  { label: 'CEO', href: '/ceo' },
+  { label: 'Почему работает', href: '/why_it_works' },
+  { label: 'Проект «Рыбки»', href: '/rybki' },
+  { label: 'Кейс Hemotech AI', href: '/cases/hemotech-ai' },
+  { label: 'Кейс Мултон Партнерс', href: '/cases/multon-partners' },
   { label: 'HSE-демо', href: '/hse/mvp' },
-  { label: 'Почему работает', href: '/why_it_works/' },
-  { label: 'Политика обработки персональных данных', href: '/personal-data/' },
-  { label: 'Политика конфиденциальности', href: '/privacy/' },
-  { label: 'Тестовый дизайн', href: '/design1test/' },
-  { label: 'Старый дизайн', href: '/design_old/' },
+  { label: 'Политика обработки персональных данных', href: '/personal-data' },
+  { label: 'Политика конфиденциальности', href: '/privacy' },
 ];
 
 const directionLinks = [
   {
     label: 'Фарма и MedTech',
-    href: '/medicine/',
+    href: '/medicine',
     icon: Pill,
   },
   {
     label: 'Охрана труда и HSE',
-    href: '/hse/',
+    href: '/hse',
     icon: HardHat,
   },
   {
     label: 'CEO ANIX',
-    href: '/ceo/',
+    href: '/ceo',
     icon: Sparkles,
   },
   {
@@ -57,10 +59,11 @@ const directionLinks = [
 
 function FooterLink({ item }) {
   const Icon = item.icon;
+  const href = item.external ? item.href : toPublicHref(item.href);
 
   return (
     <a
-      href={item.href}
+      href={href}
       target={item.external ? '_blank' : undefined}
       rel={item.external ? 'noreferrer' : undefined}
     >
@@ -77,7 +80,7 @@ export default function SiteFooter() {
       <div className="anix-site-footer__inner">
         <div className="anix-site-footer__brand">
           <a href="/" aria-label="ANIX Studio">
-            <img src={logo} alt="ANIX" />
+            <img src={logo} alt="ANIX Studio" />
           </a>
           <p>
             AI-видео, анимация, маскоты и визуальные системы для сложных
@@ -123,17 +126,17 @@ export default function SiteFooter() {
 
       <div className="anix-site-footer__bottom">
         <span>ANIX Studio</span>
-        <a href="/medicine/">
+        <a href={toPublicHref('/medicine')}>
           Medicine <ArrowRight aria-hidden="true" />
         </a>
-        <a href="/hse/">
+        <a href={toPublicHref('/hse')}>
           HSE <ArrowRight aria-hidden="true" />
         </a>
-        <a href="/ceo/">
+        <a href={toPublicHref('/ceo')}>
           CEO <ArrowRight aria-hidden="true" />
         </a>
-        <a href="/personal-data/">Политика обработки персональных данных</a>
-        <a href="/privacy/">Политика конфиденциальности</a>
+        <a href={toPublicHref('/personal-data')}>Политика обработки персональных данных</a>
+        <a href={toPublicHref('/privacy')}>Политика конфиденциальности</a>
       </div>
     </footer>
   );

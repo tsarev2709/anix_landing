@@ -37,8 +37,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "node scripts/generate-rybki-page-data.js && node scripts/build.js",
-    "postbuild": "node scripts/create-static-routes.js",
+    "build": "node scripts/generate-rybki-page-data.js && node scripts/optimize-assets.js && node scripts/generate-seo-assets.js && node scripts/prepare-seo-source.js && node scripts/build.js",
+    "postbuild": "node scripts/create-static-routes.js && node scripts/generate-static-seo.js && node scripts/normalize-seo-output.js && node scripts/verify-seo-build.js",
+    "seo:verify": "node scripts/verify-seo-build.js",
     "optimize:assets": "node scripts/optimize-assets.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
