@@ -1,5 +1,5 @@
 import React from 'react';
-import { resolveSeoRoute } from '../seo/SeoHead';
+import { resolveSeoRoute, toPublicHref } from '../seo/SeoHead';
 import './Breadcrumbs.css';
 
 export default function Breadcrumbs({ path = window.location.pathname }) {
@@ -18,7 +18,7 @@ export default function Breadcrumbs({ path = window.location.pathname }) {
               {isCurrent ? (
                 <span aria-current="page">{item.label}</span>
               ) : (
-                <a href={item.href}>{item.label}</a>
+                <a href={toPublicHref(item.href)}>{item.label}</a>
               )}
             </li>
           );
