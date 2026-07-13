@@ -7,9 +7,14 @@ const buildDir = path.join(root, 'build');
 const requiredRoutes = ['/', '/medicine', '/hse', '/rybki', '/privacy', '/personal-data'];
 const failures = [];
 
+function canonicalUrl(routePath) {
+  return routePath === '/' ? `${seoConfig.baseUrl}/` : `${seoConfig.baseUrl}${routePath}/`;
+}
+
 function routeFile(routePath) {
   if (routePath === '/') return path.join(buildDir, 'index.html');
-  return path.join(buildDir, routePath.slice(1), 'index.html');
+  const normalized = routePath.replace(/^\//, '').replace(/\/$/, '');
+  return path.join(buildDir, normalized, 'index.html');
 }
 
 function readRoute(routePath) {
@@ -33,6 +38,12 @@ function assert(condition, message) {
   if (!condition) failures.push(message);
 }
 
+function expectedOgType(route) {
+  if (route.kind === 'profile') return 'profile';
+  if (route.kind === 'case' || route.kind === 'creativeWork') return 'article';
+  return 'website';
+}
+
 function verifyRoute(routePath) {
   const route = seoConfig.routes[routePath];
   const html = readRoute(routePath);
@@ -44,9 +55,10 @@ function verifyRoute(routePath) {
   const canonical = getContent(html, /<link\s+rel="canonical"\s+href="([^"]*)"\s*\/?\s*>/i);
   const ogUrl = getContent(html, /<meta\s+property="og:url"\s+content="([^"]*)"\s*\/?\s*>/i);
   const ogImage = getContent(html, /<meta\s+property="og:image"\s+content="([^"]*)"\s*\/?\s*>/i);
+  const ogType = getContent(html, /<meta\s+property="og:type"\s+content="([^"]*)"\s*\/?\s*>/i);
   const h1Count = countMatches(html, /<h1\b[^>]*>/gi);
   const jsonLdScripts = [...html.matchAll(/<script\s+type="application\/ld\+json">([\s\S]*?)<\/script>/gi)];
-  const expectedCanonical = routePath === '/' ? `${seoConfig.baseUrl}/` : `${seoConfig.baseUrl}${routePath}`;
+  const expectedCanonical = canonicalUrl(routePath);
 
   assert(title === route.title, `${routePath}: title mismatch`);
   assert(description === route.description, `${routePath}: description mismatch`);
@@ -54,8 +66,10 @@ function verifyRoute(routePath) {
   assert(canonical === expectedCanonical, `${routePath}: canonical mismatch (${canonical})`);
   assert(ogUrl === expectedCanonical, `${routePath}: og:url mismatch (${ogUrl})`);
   assert(/^https:\/\//.test(ogImage), `${routePath}: og:image must be absolute`);
+  assert(ogType === expectedOgType(route), `${routePath}: og:type mismatch (${ogType})`);
   assert(h1Count === 1, `${routePath}: expected exactly one H1 in static HTML, got ${h1Count}`);
   assert(html.includes(route.intro), `${routePath}: main static text is missing`);
+  assert(html.includes('data-seo-shell="true"'), `${routePath}: static SEO shell is missing`);
   assert(!/<meta\s+name="keywords"/i.test(html), `${routePath}: legacy meta keywords found`);
   assert(jsonLdScripts.length > 0, `${routePath}: JSON-LD is missing`);
 
@@ -82,7 +96,7 @@ assert(fs.existsSync(sitemapPath), 'sitemap.xml is missing');
 if (fs.existsSync(sitemapPath)) {
   const sitemap = fs.readFileSync(sitemapPath, 'utf8');
   for (const [routePath, route] of Object.entries(seoConfig.routes)) {
-    const absolute = routePath === '/' ? `${seoConfig.baseUrl}/` : `${seoConfig.baseUrl}${routePath}`;
+    const absolute = canonicalUrl(routePath);
     if (route.indexable) {
       assert(sitemap.includes(`<loc>${absolute}</loc>`), `sitemap: missing ${absolute}`);
     } else {
