@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowLeft, ArrowRight, ExternalLink, MessageCircle } from 'lucide-react';
 import seoConfig from '../seo/routes.json';
+import { toPublicHref } from '../seo/SeoHead';
 import Breadcrumbs from './Breadcrumbs';
 import SiteFooter from './SiteFooter';
 import logo from '../images/logoanix.png';
@@ -23,8 +24,8 @@ export default function CasePage({ path }) {
         </a>
         <nav aria-label="Навигация по кейсу">
           <a href="/#cases">Кейсы</a>
-          <a href="/medicine">Medicine</a>
-          <a href="/hse">HSE</a>
+          <a href={toPublicHref('/medicine')}>Medicine</a>
+          <a href={toPublicHref('/hse')}>HSE</a>
         </nav>
         <a className="case-header-cta" href={telegramUrl} target="_blank" rel="noreferrer">
           Обсудить проект
@@ -49,7 +50,7 @@ export default function CasePage({ path }) {
                 <ExternalLink aria-hidden="true" />
               </a>
             ) : null}
-            <a className="case-button case-button-secondary" href={caseData.relatedPath}>
+            <a className="case-button case-button-secondary" href={toPublicHref(caseData.relatedPath)}>
               Связанное направление
               <ArrowRight aria-hidden="true" />
             </a>
