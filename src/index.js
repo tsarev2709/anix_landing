@@ -5,6 +5,7 @@ import './App.css';
 import App from './App';
 import AppLayout from './AppLayout';
 import RouteBreadcrumbsPortal from './seo/RouteBreadcrumbsPortal';
+import RouteRelatedLinksPortal from './seo/RouteRelatedLinksPortal';
 import SeoHead from './seo/SeoHead';
 
 console.info('[CFG] SUBMIT:', CONFIG.SUBMIT_LEAD_URL);
@@ -43,6 +44,7 @@ const renderInLayout = (component) => {
       <SeoHead path={normalizedPath} />
       <Suspense fallback={null}>{component}</Suspense>
       <RouteBreadcrumbsPortal path={normalizedPath} />
+      <RouteRelatedLinksPortal path={normalizedPath} />
     </AppLayout>
   );
 };
