@@ -2,6 +2,7 @@ import React from 'react';
 import {
   ArrowRight,
   ExternalLink,
+  Film,
   HardHat,
   Mail,
   MessageCircle,
@@ -20,6 +21,7 @@ const videoFolderUrl =
 
 const pageLinks = [
   { label: 'Главная', href: '/' },
+  { label: 'Анимационные ролики', href: '/animation' },
   { label: 'Кейсы', href: '/cases' },
   { label: 'Medicine', href: '/medicine' },
   { label: 'HSE', href: '/hse' },
@@ -34,6 +36,11 @@ const pageLinks = [
 ];
 
 const directionLinks = [
+  {
+    label: 'Анимационные ролики',
+    href: '/animation',
+    icon: Film,
+  },
   {
     label: 'Фарма и MedTech',
     href: '/medicine',
@@ -126,6 +133,9 @@ export default function SiteFooter() {
 
       <div className="anix-site-footer__bottom">
         <span>Anix Studio</span>
+        <a href={toPublicHref('/animation')}>
+          Анимационные ролики <ArrowRight aria-hidden="true" />
+        </a>
         <a href={toPublicHref('/medicine')}>
           Medicine <ArrowRight aria-hidden="true" />
         </a>

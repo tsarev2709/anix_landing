@@ -17,6 +17,7 @@ const NotFound = lazy(() => import('./components/NotFound'));
 const WhyItWorksPage = lazy(() => import('./components/WhyItWorksPage'));
 const MedicinePage = lazy(() => import('./components/MedicinePage'));
 const HsePage = lazy(() => import('./components/HsePage'));
+const AnimationPage = lazy(() => import('./components/AnimationPage'));
 const HseMvpPage = lazy(() => import('./features/hseMvp/HseMvpPage'));
 const Design1TestPage = lazy(() => import('./components/Design1TestPage'));
 const DesignOldPage = lazy(() => import('./components/DesignOldPage'));
@@ -76,6 +77,9 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       break;
     case '/hse':
       renderInLayout(<HsePage />);
+      break;
+    case '/animation':
+      renderInLayout(<AnimationPage />);
       break;
     case '/rybki':
     case '/rybki_page':
