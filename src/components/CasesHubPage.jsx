@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Film, HeartPulse, HardHat, Sparkles, Workflow } from 'lucide-react';
+import { ArrowRight, Camera, HardHat, Sparkles, Stethoscope, Workflow } from 'lucide-react';
 import SiteFooter from './SiteFooter';
 import logo from '../images/logoanix.png';
 import agrotechImage from '../images/cases/agrotech.webp';
@@ -43,7 +43,7 @@ const categories = [
     title: 'Pharma, MedTech и медицина',
     description:
       'Работаем там, где одновременно важны точность, доверие и внимание: медицинские продукты, препараты, научная логика, врачи и пациенты.',
-    icon: HeartPulse,
+    icon: Stethoscope,
     cases: [
       { title: 'Hemotech AI', image: hemotechImage, note: 'Спокойная визуальная система для инновационного MedTech-продукта.', href: '/cases/hemotech-ai/' },
       { title: 'Мосфарма', image: mosfarmaImage, note: 'ТВ-ролик с бренд-персонажами и требованиями федерального эфира.', href: '/cases/mosfarma/' },
@@ -56,7 +56,7 @@ const categories = [
     title: 'Cinema & Creative',
     description:
       'Кинематографичные прототипы, исторические миры и авторские эксперименты — там, где важны атмосфера, художественный язык и скорость проверки идеи.',
-    icon: Film,
+    icon: Camera,
     cases: [
       { title: 'Маленький принц', image: littlePrinceImage, note: 'Имиджевый ролик-фантазия, собранный за один день.', href: 'https://drive.google.com/file/d/1xIOgHxhhloGtBRtrnwp3xpV9AkShUNqT/view' },
       { title: 'Фёдор Бондарчук', image: bondarchukImage, note: 'Кинематографичный прототип сцены с нужной атмосферой за несколько часов.', href: 'https://drive.google.com/file/d/1wnRsoYIgio_MilkNFRlEBuTfgJfzx25d/view' },
