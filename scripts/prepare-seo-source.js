@@ -14,6 +14,8 @@ const files = [
   'src/components/RybkiLayeredPage.jsx',
   'src/features/hseMvp/HseMvpPage.jsx',
   'src/components/BlogCard.js',
+  'src/components/SiteFooter.jsx',
+  'src/components/CasePage.jsx',
 ];
 
 const cleanRouteReplacements = [
@@ -41,6 +43,8 @@ const caseLinkReplacements = [
   ["image: multonCaseImage,\n    href: '/hse',", "image: multonCaseImage,\n    href: '/cases/multon-partners',"],
 ];
 
+const approvedBrandLine = 'Anix Studio (Студия Аникс) — анимационная студия для сложных продуктов.';
+
 for (const relativePath of files) {
   const filePath = path.join(root, relativePath);
   if (!fs.existsSync(filePath)) continue;
@@ -48,10 +52,16 @@ for (const relativePath of files) {
   const current = fs.readFileSync(filePath, 'utf8');
   let next = current
     .replace(/^import\s+\{\s*Helmet\s*\}\s+from\s+['"]react-helmet['"];?\s*\r?\n/m, '')
-    .replace(/\s*<Helmet>[\s\S]*?<\/Helmet>\s*/g, '\n');
+    .replace(/\s*<Helmet>[\s\S]*?<\/Helmet>\s*/g, '\n')
+    .replaceAll('anix.ai@yandex.ru', 'studio@anix-ai.pro')
+    .replaceAll('ANIX', 'Anix');
 
   for (const [from, to] of cleanRouteReplacements) next = next.split(from).join(to);
   if (relativePath.endsWith('Design1TestPage.jsx')) {
+    next = next.replace(
+      'Anix / AI-видео, анимация и сложные продукты',
+      approvedBrandLine,
+    );
     for (const [from, to] of caseLinkReplacements) next = next.replace(from, to);
   }
 

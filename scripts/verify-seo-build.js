@@ -7,6 +7,10 @@ const buildDir = path.join(root, 'build');
 const requiredRoutes = ['/', '/medicine', '/hse', '/rybki', '/privacy', '/personal-data'];
 const failures = [];
 
+function normalizeBrandText(value = '') {
+  return String(value).replaceAll('ANIX', 'Anix');
+}
+
 function canonicalUrl(routePath) {
   return routePath === '/' ? `${seoConfig.baseUrl}/` : `${seoConfig.baseUrl}${routePath}/`;
 }
@@ -60,15 +64,15 @@ function verifyRoute(routePath) {
   const jsonLdScripts = [...html.matchAll(/<script\s+type="application\/ld\+json">([\s\S]*?)<\/script>/gi)];
   const expectedCanonical = canonicalUrl(routePath);
 
-  assert(title === route.title, `${routePath}: title mismatch`);
-  assert(description === route.description, `${routePath}: description mismatch`);
+  assert(title === normalizeBrandText(route.title), `${routePath}: title mismatch`);
+  assert(description === normalizeBrandText(route.description), `${routePath}: description mismatch`);
   assert(robots === (route.indexable ? 'index, follow' : 'noindex, follow'), `${routePath}: robots mismatch`);
   assert(canonical === expectedCanonical, `${routePath}: canonical mismatch (${canonical})`);
   assert(ogUrl === expectedCanonical, `${routePath}: og:url mismatch (${ogUrl})`);
   assert(/^https:\/\//.test(ogImage), `${routePath}: og:image must be absolute`);
   assert(ogType === expectedOgType(route), `${routePath}: og:type mismatch (${ogType})`);
   assert(h1Count === 1, `${routePath}: expected exactly one H1 in static HTML, got ${h1Count}`);
-  assert(html.includes(route.intro), `${routePath}: main static text is missing`);
+  assert(html.includes(normalizeBrandText(route.intro)), `${routePath}: main static text is missing`);
   assert(html.includes('data-seo-shell="true"'), `${routePath}: static SEO shell is missing`);
   assert(!/<meta\s+name="keywords"/i.test(html), `${routePath}: legacy meta keywords found`);
   assert(jsonLdScripts.length > 0, `${routePath}: JSON-LD is missing`);
@@ -118,7 +122,7 @@ const notFoundPath = path.join(buildDir, '404.html');
 assert(fs.existsSync(notFoundPath), '404.html is missing');
 if (fs.existsSync(notFoundPath)) {
   const notFound = fs.readFileSync(notFoundPath, 'utf8');
-  assert(notFound.includes('<title>Страница не найдена — ANIX Studio</title>'), '404: unique title is missing');
+  assert(notFound.includes('<title>Страница не найдена — Anix Studio</title>'), '404: unique title is missing');
   assert(notFound.includes('content="noindex, follow"'), '404: noindex is missing');
   assert(!/<link\s+rel="canonical"/i.test(notFound), '404: canonical must not be present');
   assert(countMatches(notFound, /<h1\b[^>]*>/gi) === 1, '404: expected one H1');
