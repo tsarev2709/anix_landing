@@ -25,14 +25,18 @@ async function main() {
     const png = `${tempPrefix}.png`;
     if (!fs.existsSync(pdf)) throw new Error(`Missing Rybki PDF: ${pdf}`);
 
-    const render = spawnSync('pdftoppm', ['-f', '1', '-singlefile', '-png', '-r', '180', pdf, tempPrefix], { stdio: 'inherit' });
+    const render = spawnSync(
+      'pdftoppm',
+      ['-f', '1', '-singlefile', '-png', '-scale-to-x', '1920', '-scale-to-y', '-1', pdf, tempPrefix],
+      { stdio: 'inherit' },
+    );
     if (render.status !== 0 || !fs.existsSync(png)) throw new Error(`Failed to render ${path.basename(pdf)}`);
 
     for (const width of widths) {
       const output = path.join(outputDir, `slide-${index}-${width}.webp`);
       await sharp(png)
         .resize({ width, withoutEnlargement: true })
-        .webp({ quality: width === 1920 ? 84 : 80, effort: 6 })
+        .webp({ quality: width === 1920 ? 84 : 80, effort: 5 })
         .toFile(output);
     }
 
