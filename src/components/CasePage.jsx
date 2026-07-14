@@ -2,9 +2,9 @@ import React from 'react';
 import { ArrowLeft, ArrowRight, ExternalLink, MessageCircle } from 'lucide-react';
 import seoConfig from '../seo/routes.json';
 import { toPublicHref } from '../seo/SeoHead';
+import BrandLogo from './BrandLogo';
 import Breadcrumbs from './Breadcrumbs';
 import SiteFooter from './SiteFooter';
-import logo from '../images/logoanix.png';
 import './CasePage.css';
 
 const telegramUrl = 'https://t.me/anix_helper';
@@ -19,11 +19,11 @@ export default function CasePage({ path }) {
   return (
     <main className="case-page">
       <header className="case-header">
-        <a className="case-logo" href="/" aria-label="ANIX Studio">
-          <img src={logo} alt="ANIX Studio" width="120" height="44" />
+        <a className="case-logo" href="/" aria-label="Anix Studio">
+          <BrandLogo alt="Anix Studio" width={120} height={44} />
         </a>
         <nav aria-label="Навигация по кейсу">
-          <a href="/#cases">Кейсы</a>
+          <a href={toPublicHref('/cases')}>Кейсы</a>
           <a href={toPublicHref('/medicine')}>Medicine</a>
           <a href={toPublicHref('/hse')}>HSE</a>
         </nav>
@@ -36,7 +36,7 @@ export default function CasePage({ path }) {
 
       <section className="case-hero">
         <div className="case-hero-copy">
-          <p className="case-eyebrow">Кейс ANIX / {caseData.category}</p>
+          <p className="case-eyebrow">Кейс Anix / {caseData.category}</p>
           <h1>{route.h1}</h1>
           <p className="case-lead">{route.intro}</p>
           <div className="case-result">
@@ -83,9 +83,9 @@ export default function CasePage({ path }) {
       </section>
 
       <section className="case-related">
-        <a href="/#cases" className="case-back-link">
+        <a href={toPublicHref('/cases')} className="case-back-link">
           <ArrowLeft aria-hidden="true" />
-          Все кейсы ANIX
+          Все кейсы Anix
         </a>
         <div>
           <p>Есть сложный продукт или задача?</p>

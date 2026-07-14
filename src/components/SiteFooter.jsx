@@ -10,17 +10,17 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { toPublicHref } from '../seo/SeoHead';
-import logo from '../images/logoanix.png';
+import BrandLogo from './BrandLogo';
 import './SiteFooter.css';
 
 const telegramUrl = 'https://t.me/anix_helper';
-const emailUrl = 'mailto:anix.ai@yandex.ru';
+const emailUrl = 'mailto:studio@anix-ai.pro';
 const videoFolderUrl =
   'https://drive.google.com/drive/folders/1XzaVX00V5xukMZwEF9Vb_WCbco2M7erA';
 
 const pageLinks = [
   { label: 'Главная', href: '/' },
-  { label: 'Кейсы', href: '/#cases' },
+  { label: 'Кейсы', href: '/cases' },
   { label: 'Medicine', href: '/medicine' },
   { label: 'HSE', href: '/hse' },
   { label: 'CEO', href: '/ceo' },
@@ -45,7 +45,7 @@ const directionLinks = [
     icon: HardHat,
   },
   {
-    label: 'CEO ANIX',
+    label: 'CEO Anix',
     href: '/ceo',
     icon: Sparkles,
   },
@@ -79,8 +79,8 @@ export default function SiteFooter() {
     <footer className="anix-site-footer">
       <div className="anix-site-footer__inner">
         <div className="anix-site-footer__brand">
-          <a href="/" aria-label="ANIX Studio">
-            <img src={logo} alt="ANIX Studio" />
+          <a href="/" aria-label="Anix Studio">
+            <BrandLogo className="anix-site-footer__logo" alt="Anix Studio" width={120} height={44} />
           </a>
           <p>
             AI-видео, анимация, маскоты и визуальные системы для сложных
@@ -88,14 +88,14 @@ export default function SiteFooter() {
           </p>
         </div>
 
-        <nav className="anix-site-footer__nav" aria-label="Страницы ANIX">
+        <nav className="anix-site-footer__nav" aria-label="Страницы Anix">
           <h2>Страницы</h2>
           {pageLinks.map((item) => (
             <FooterLink item={item} key={item.href} />
           ))}
         </nav>
 
-        <nav className="anix-site-footer__nav" aria-label="Направления ANIX">
+        <nav className="anix-site-footer__nav" aria-label="Направления Anix">
           <h2>Направления</h2>
           {directionLinks.map((item) => (
             <FooterLink item={item} key={item.href} />
@@ -125,7 +125,7 @@ export default function SiteFooter() {
       </div>
 
       <div className="anix-site-footer__bottom">
-        <span>ANIX Studio</span>
+        <span>Anix Studio</span>
         <a href={toPublicHref('/medicine')}>
           Medicine <ArrowRight aria-hidden="true" />
         </a>
