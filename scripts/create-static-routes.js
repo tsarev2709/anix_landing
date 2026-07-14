@@ -63,6 +63,7 @@ const routes = [
   'hse',
   'rybki',
   'rybki_page',
+  'cases',
   'cases/clappy',
   'cases/hemotech-ai',
   'cases/tpes',
