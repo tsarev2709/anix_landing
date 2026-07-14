@@ -35,6 +35,9 @@ jobs:
           CI: false
         run: npm run build
 
+      - name: Runtime smoke test
+        run: node scripts/runtime-smoke-test.js
+
       - name: Collect production asset metrics
         run: node scripts/report-build-metrics.js
 
