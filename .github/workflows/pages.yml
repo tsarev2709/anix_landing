@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: 18
 
+      - name: Install PDF renderer
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+
       - name: Cache node modules
         uses: actions/cache@v4
         with:
@@ -42,6 +45,10 @@ jobs:
       - name: Notify if install failed
         if: steps.npm-install.outcome == 'failure'
         run: echo "npm install failed"
+
+      - name: Render Rybki slide previews
+        if: steps.npm-install.outcome == 'success'
+        run: node scripts/render-rybki-pdf-slides.js
 
       - name: Build and verify static SEO
         if: steps.npm-install.outcome == 'success'
