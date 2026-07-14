@@ -100,7 +100,23 @@ async function buildSlide(slide) {
   };
 }
 
+function hasLegacySources() {
+  return slides.every((slide) => fs.existsSync(path.join(sourceDir, `${slide.slug}.svg`)));
+}
+
+function hasGeneratedLayeredDeck() {
+  return fs.existsSync(path.join(publicOutputDir, 'content.json')) && fs.existsSync(path.join(generatedDir, 'rybkiDeckData.js'));
+}
+
 async function main() {
+  if (!hasLegacySources()) {
+    if (hasGeneratedLayeredDeck()) {
+      console.log('[rybki-page] legacy SVG sources removed; keeping existing generated layered deck assets');
+      return;
+    }
+    throw new Error('Legacy Rybki SVG sources are missing and no generated layered deck assets are available');
+  }
+
   fs.mkdirSync(publicOutputDir, { recursive: true });
   fs.mkdirSync(generatedDir, { recursive: true });
 
