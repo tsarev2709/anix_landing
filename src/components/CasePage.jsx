@@ -57,15 +57,21 @@ export default function CasePage({ path }) {
           </div>
         </div>
 
-        <figure className="case-hero-media">
-          <img
-            src={caseData.image}
-            alt={caseData.imageAlt}
-            width="1200"
-            height="675"
-            fetchPriority="high"
-            decoding="async"
-          />
+        <figure className={`case-hero-media${caseData.image ? '' : ' case-hero-media--placeholder'}`}>
+          {caseData.image ? (
+            <img
+              src={caseData.image}
+              alt={caseData.imageAlt}
+              width="1200"
+              height="675"
+              fetchPriority="high"
+              decoding="async"
+            />
+          ) : (
+            <div className="case-hero-placeholder" role="img" aria-label={caseData.imageAlt}>
+              <span>{caseData.placeholder || 'Anix'}</span>
+            </div>
+          )}
           <figcaption>{caseData.tags}</figcaption>
         </figure>
       </section>
