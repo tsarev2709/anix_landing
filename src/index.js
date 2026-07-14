@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import './App.css';
 import App from './App';
 import AppLayout from './AppLayout';
+import HomeAboutStudioPortal from './components/HomeAboutStudioPortal';
 import RouteBreadcrumbsPortal from './seo/RouteBreadcrumbsPortal';
 import RouteRelatedLinksPortal from './seo/RouteRelatedLinksPortal';
 import SeoHead from './seo/SeoHead';
@@ -42,6 +43,7 @@ const renderInLayout = (component) => {
     <AppLayout>
       <SeoHead path={normalizedPath} />
       <Suspense fallback={null}>{component}</Suspense>
+      <HomeAboutStudioPortal path={normalizedPath} />
       <RouteBreadcrumbsPortal path={normalizedPath} />
       <RouteRelatedLinksPortal path={normalizedPath} />
     </AppLayout>,
