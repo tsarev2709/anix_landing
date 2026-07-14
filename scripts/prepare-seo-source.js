@@ -58,6 +58,11 @@ for (const relativePath of files) {
 
   for (const [from, to] of cleanRouteReplacements) next = next.split(from).join(to);
   if (relativePath.endsWith('Design1TestPage.jsx')) {
+    // Keep this technical marker compatible with scripts/build.js. The build script
+    // replaces the original showreel <img> with responsive WebP markup and then
+    // removes the visualThree import. If this marker is normalized to "Anix" first,
+    // the replacement misses and production crashes with visualThree undefined.
+    next = next.replace('Постер showreel Anix', 'Постер showreel ANIX');
     next = next.replace(
       'Anix / AI-видео, анимация и сложные продукты',
       approvedBrandLine,
