@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight, Camera, HardHat, Sparkles, Stethoscope, Workflow } from 'lucide-react';
+import BrandLogo from './BrandLogo';
 import SiteFooter from './SiteFooter';
-import logo from '../images/logoanix.png';
 import agrotechImage from '../images/cases/agrotech.webp';
 import bondarchukImage from '../images/cases/bondarchuk.webp';
 import borodinoImage from '../images/cases/borodino.webp';
@@ -113,7 +113,7 @@ export default function CasesHubPage() {
     <main className="cases-hub-page">
       <header className="cases-hub-header">
         <a href="/" className="cases-hub-logo" aria-label="Anix Studio — на главную">
-          <img src={logo} alt="Anix Studio" />
+          <BrandLogo alt="Anix Studio" width={120} height={44} />
         </a>
         <a className="cases-hub-header__cta" href="https://t.me/anix_helper" target="_blank" rel="noreferrer">
           Обсудить проект
@@ -128,7 +128,7 @@ export default function CasesHubPage() {
         </p>
         <nav className="cases-hub-jump" aria-label="Категории кейсов">
           {categories.map((category) => (
-            <a href={`#${category.id}`} key={category.id}>{category.title}</a>
+            <a href={`/cases/${category.id}/`} key={category.id}>{category.title}</a>
           ))}
           <a href="#events">Events</a>
         </nav>
@@ -144,6 +144,7 @@ export default function CasesHubPage() {
                 <p className="cases-hub-eyebrow">{category.eyebrow}</p>
                 <h2>{category.title}</h2>
                 <p>{category.description}</p>
+                <a href={`/cases/${category.id}/`}>Открыть категорию <ArrowRight aria-hidden="true" /></a>
               </div>
             </div>
             <div className={`cases-hub-grid${category.cases.length === 1 ? ' cases-hub-grid--single' : ''}`}>
