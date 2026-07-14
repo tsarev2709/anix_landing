@@ -6,12 +6,14 @@ import './RybkiPdfSlides.css';
 const telegramUrl = 'https://t.me/anix_helper';
 
 const slides = Array.from({ length: 10 }, (_, index) => ({
+  number: index + 1,
   file: `Слайд ${index + 1}.pdf`,
   label: `Слайд ${index + 1}`,
 }));
 
 function Slide({ slide, index }) {
-  const pdfUrl = `/rybki-assets/${encodeURIComponent(slide.file)}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`;
+  const pdfUrl = `/rybki-assets/${encodeURIComponent(slide.file)}`;
+  const imageBase = `/rybki-rendered/slide-${slide.number}`;
 
   return (
     <section className="rybki-slide" id={`slide-${index + 1}`}>
@@ -20,14 +22,25 @@ function Slide({ slide, index }) {
         <span>{slide.label}</span>
       </div>
       <div className="rybki-slide-frame">
-        <iframe
-          className="rybki-slide-pdf"
-          src={pdfUrl}
-          title={`Рыбки — ${slide.label}`}
-          loading={index === 0 ? 'eager' : 'lazy'}
-        />
+        <picture>
+          <source
+            type="image/webp"
+            srcSet={`${imageBase}-720.webp 720w, ${imageBase}-1280.webp 1280w, ${imageBase}-1920.webp 1920w`}
+            sizes="(max-width: 800px) 94vw, calc(96vw - 174px)"
+          />
+          <img
+            className="rybki-slide-image"
+            src={`${imageBase}-1280.webp`}
+            alt={`Кадр презентации «Рыбки» — ${slide.label}`}
+            width="1920"
+            height="1080"
+            loading={index === 0 ? 'eager' : 'lazy'}
+            fetchPriority={index === 0 ? 'high' : 'auto'}
+            decoding={index === 0 ? 'sync' : 'async'}
+          />
+        </picture>
         <a className="rybki-slide-open" href={pdfUrl} target="_blank" rel="noreferrer">
-          Открыть слайд отдельно
+          Открыть PDF
         </a>
       </div>
     </section>
