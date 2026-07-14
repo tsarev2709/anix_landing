@@ -8,12 +8,9 @@ import HomeAboutStudioPortal from './components/HomeAboutStudioPortal';
 import RouteBreadcrumbsPortal from './seo/RouteBreadcrumbsPortal';
 import RouteRelatedLinksPortal from './seo/RouteRelatedLinksPortal';
 import SeoHead from './seo/SeoHead';
-import { setupSeoTracking } from './lib/seoTracking';
 
 console.info('[CFG] SUBMIT:', CONFIG.SUBMIT_LEAD_URL);
 console.info('[CFG] TRACK :', CONFIG.TRACK_EVENT_URL);
-
-setupSeoTracking();
 
 const NotFound = lazy(() => import('./components/NotFound'));
 const WhyItWorksPage = lazy(() => import('./components/WhyItWorksPage'));
