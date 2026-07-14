@@ -1,0 +1,1 @@
+See `docs/RYBKI_MOBILE_RENDERING.md` for the mobile-safe PDF slide rendering pipeline.
