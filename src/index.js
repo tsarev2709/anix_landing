@@ -7,9 +7,12 @@ import AppLayout from './AppLayout';
 import RouteBreadcrumbsPortal from './seo/RouteBreadcrumbsPortal';
 import RouteRelatedLinksPortal from './seo/RouteRelatedLinksPortal';
 import SeoHead from './seo/SeoHead';
+import { setupSeoTracking } from './lib/seoTracking';
 
 console.info('[CFG] SUBMIT:', CONFIG.SUBMIT_LEAD_URL);
 console.info('[CFG] TRACK :', CONFIG.TRACK_EVENT_URL);
+
+setupSeoTracking();
 
 const NotFound = lazy(() => import('./components/NotFound'));
 const WhyItWorksPage = lazy(() => import('./components/WhyItWorksPage'));
@@ -45,7 +48,7 @@ const renderInLayout = (component) => {
       <Suspense fallback={null}>{component}</Suspense>
       <RouteBreadcrumbsPortal path={normalizedPath} />
       <RouteRelatedLinksPortal path={normalizedPath} />
-    </AppLayout>
+    </AppLayout>,
   );
 };
 
@@ -95,7 +98,7 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
           <Suspense fallback={null}>
             <NotFound />
           </Suspense>
-        </>
+        </>,
       );
   }
 }
