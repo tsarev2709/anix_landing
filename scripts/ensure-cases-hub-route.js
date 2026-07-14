@@ -9,7 +9,7 @@ config.routes['/cases'] = {
   kind: 'webPage',
   title: 'Кейсы Anix Studio — анимация для B2B, фармы, кино и охраны труда',
   description:
-    'Кейсы Anix Studio: технологии и B2B, Pharma и MedTech, Cinema & Creative, охрана труда и специальные проекты.',
+    'Кейсы Anix Studio: технологии и B2B, Pharma и MedTech, Cinema / Creative, охрана труда и специальные проекты.',
   ogTitle: 'Кейсы Anix Studio — сложные продукты в понятных историях',
   ogDescription:
     'Проекты Anix для технологий, B2B, фармы, MedTech, кино и охраны труда.',
