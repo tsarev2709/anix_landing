@@ -5,6 +5,7 @@ import './App.css';
 import App from './App';
 import AppLayout from './AppLayout';
 import AboutStudioPortal from './components/AboutStudioPortal';
+import CasesHubLinkPortal from './components/CasesHubLinkPortal';
 import RouteBreadcrumbsPortal from './seo/RouteBreadcrumbsPortal';
 import RouteRelatedLinksPortal from './seo/RouteRelatedLinksPortal';
 import SeoHead from './seo/SeoHead';
@@ -23,6 +24,7 @@ const CeoPage = lazy(() => import('./components/CeoPage'));
 const LegalPage = lazy(() => import('./components/LegalPage'));
 const RybkiPage = lazy(() => import('./components/RybkiPage'));
 const RybkiLayeredPage = lazy(() => import('./components/RybkiLayeredPage'));
+const CasesHubPage = lazy(() => import('./components/CasesHubPage'));
 const CasePage = lazy(() => import('./components/CasePage'));
 
 const rootElement = document.getElementById('root');
@@ -44,6 +46,7 @@ const renderInLayout = (component) => {
       <SeoHead path={normalizedPath} />
       <Suspense fallback={null}>{component}</Suspense>
       <AboutStudioPortal path={normalizedPath} />
+      <CasesHubLinkPortal path={normalizedPath} />
       <RouteBreadcrumbsPortal path={normalizedPath} />
       <RouteRelatedLinksPortal path={normalizedPath} />
     </AppLayout>,
@@ -52,6 +55,8 @@ const renderInLayout = (component) => {
 
 if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
   renderInLayout(<HseMvpPage path={normalizedPath} />);
+} else if (normalizedPath === '/cases') {
+  renderInLayout(<CasesHubPage />);
 } else if (normalizedPath.startsWith('/cases/')) {
   renderInLayout(<CasePage path={normalizedPath} />);
 } else {
