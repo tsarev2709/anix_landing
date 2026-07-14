@@ -5,6 +5,7 @@ const seoConfig = require('../src/seo/routes.json');
 const root = path.resolve(__dirname, '..');
 const buildDir = path.join(root, 'build');
 const requiredRoutes = ['/', '/medicine', '/hse', '/rybki', '/privacy', '/personal-data'];
+const requiredCommercialRoutes = ['/cases', '/animation', '/ai-video'];
 const failures = [];
 
 function normalizeBrandText(value = '') {
@@ -138,10 +139,36 @@ for (const route of Object.values(seoConfig.routes)) {
   }
 }
 
+const indexableRoutes = Object.entries(seoConfig.routes).filter(([, route]) => route.indexable);
+const titleOwners = new Map();
+for (const [routePath, route] of indexableRoutes) {
+  const normalizedTitle = normalizeBrandText(route.title).trim();
+  assert(normalizedTitle.length > 0, `${routePath}: indexable route title is empty`);
+  if (titleOwners.has(normalizedTitle)) {
+    failures.push(`${routePath}: duplicate indexable title also used by ${titleOwners.get(normalizedTitle)}`);
+  } else {
+    titleOwners.set(normalizedTitle, routePath);
+  }
+}
+
+for (const routePath of requiredCommercialRoutes) {
+  const route = seoConfig.routes[routePath];
+  assert(Boolean(route), `${routePath}: required commercial route is missing from SEO config`);
+  assert(route?.indexable === true, `${routePath}: required commercial route must be indexable`);
+  assert(fs.existsSync(routeFile(routePath)), `${routePath}: required commercial static route is missing`);
+}
+
+const animationLinks = new Set((seoConfig.routes['/animation']?.links || []).map((link) => link.href));
+const aiVideoLinks = new Set((seoConfig.routes['/ai-video']?.links || []).map((link) => link.href));
+assert(animationLinks.has('/ai-video'), '/animation: SEO links must include /ai-video');
+assert(animationLinks.has('/cases'), '/animation: SEO links must include /cases');
+assert(aiVideoLinks.has('/animation'), '/ai-video: SEO links must include /animation');
+assert(aiVideoLinks.has('/cases'), '/ai-video: SEO links must include /cases');
+
 if (failures.length) {
   console.error('\nSEO build verification failed:');
   for (const failure of failures) console.error(` - ${failure}`);
   process.exit(1);
 }
 
-console.log(`[seo-check] verified ${Object.values(seoConfig.routes).filter((route) => route.indexable).length} indexable routes, ${requiredRoutes.length} required routes, sitemap, robots and 404`);
+console.log(`[seo-check] verified ${indexableRoutes.length} indexable routes, ${requiredRoutes.length} required routes, commercial architecture, sitemap, robots and 404`);
