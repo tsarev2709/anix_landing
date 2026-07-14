@@ -89,7 +89,18 @@ function CaseCard({ item }) {
   return (
     <a className="animation-case" href={item.href}>
       <div className={`animation-case__media${item.image ? '' : ' animation-case__media--placeholder'}`}>
-        {item.image ? <img src={item.image} alt={`Кейс Anix: ${item.title}`} loading="lazy" /> : <span>{item.placeholder}</span>}
+        {item.image ? (
+          <img
+            src={item.image}
+            alt={`Кейс Anix: ${item.title}`}
+            width="1200"
+            height="675"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <span>{item.placeholder}</span>
+        )}
       </div>
       <div className="animation-case__body">
         <h3>{item.title}</h3>
@@ -124,6 +135,7 @@ export default function AnimationPage() {
             <MessageCircle aria-hidden="true" /> Обсудить задачу
           </a>
           <a className="animation-button" href="/cases/">Посмотреть кейсы <ArrowRight aria-hidden="true" /></a>
+          <a className="animation-button" href="/ai-video/">Как мы используем AI <ArrowRight aria-hidden="true" /></a>
         </div>
         <div className="animation-hero__statement">
           <WandSparkles aria-hidden="true" />

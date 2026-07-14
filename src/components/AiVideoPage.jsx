@@ -91,7 +91,14 @@ function CaseCard({ item }) {
   return (
     <a className="ai-video-case" href={item.href}>
       <div className="ai-video-case__media">
-        <img src={item.image} alt={`Кейс Anix: ${item.title}`} loading="lazy" />
+        <img
+          src={item.image}
+          alt={`Кейс Anix: ${item.title}`}
+          width="1200"
+          height="675"
+          loading="lazy"
+          decoding="async"
+        />
       </div>
       <div className="ai-video-case__body">
         <h3>{item.title}</h3>

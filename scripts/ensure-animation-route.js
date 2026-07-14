@@ -33,6 +33,7 @@ config.routes['/animation'] = {
     },
   ],
   links: [
+    { label: 'AI-видео и генеративный продакшн', href: '/ai-video' },
     { label: 'Все кейсы Anix Studio', href: '/cases' },
     { label: 'Маленький принц', href: '/cases/little-prince' },
     { label: 'Мосфарма', href: '/cases/mosfarma' },
