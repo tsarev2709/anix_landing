@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: 18
 
+      - name: Install PDF renderer
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+
       - name: Cache node modules
         uses: actions/cache@v4
         with:
