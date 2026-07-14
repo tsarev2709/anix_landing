@@ -25,7 +25,6 @@ const RybkiLayeredPage = lazy(() => import('./components/RybkiLayeredPage'));
 const CasePage = lazy(() => import('./components/CasePage'));
 
 const rootElement = document.getElementById('root');
-rootElement.replaceChildren();
 const root = ReactDOM.createRoot(rootElement);
 const base = '';
 const relativePath = window.location.pathname.replace(base, '') || '/';
