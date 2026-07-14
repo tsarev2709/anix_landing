@@ -23,7 +23,6 @@ const DesignOldPage = lazy(() => import('./components/DesignOldPage'));
 const CeoPage = lazy(() => import('./components/CeoPage'));
 const LegalPage = lazy(() => import('./components/LegalPage'));
 const RybkiPage = lazy(() => import('./components/RybkiPage'));
-const RybkiLayeredPage = lazy(() => import('./components/RybkiLayeredPage'));
 const CasesHubPage = lazy(() => import('./components/CasesHubPage'));
 const CasesCategoryPage = lazy(() => import('./components/CasesCategoryPage'));
 const CasePage = lazy(() => import('./components/CasePage'));
@@ -79,10 +78,8 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       renderInLayout(<HsePage />);
       break;
     case '/rybki':
-      renderInLayout(<RybkiPage />);
-      break;
     case '/rybki_page':
-      renderInLayout(<RybkiLayeredPage />);
+      renderInLayout(<RybkiPage />);
       break;
     case '/design1test':
       renderInLayout(<Design1TestPage />);
