@@ -13,6 +13,7 @@ const routes = [
   { path: '/', marker: 'class="design1-test"', extraMarker: 'd1-showreel-poster' },
   { path: '/medicine/', marker: 'class="medicine-page"' },
   { path: '/hse/', marker: 'class="hse-page"' },
+  { path: '/cases/', marker: 'class="cases-hub-page"', extraMarker: 'cases-hub-category' },
 ];
 
 function findChrome() {
