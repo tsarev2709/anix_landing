@@ -1,6 +1,25 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import seoConfig from './routes.json';
+import verification from './verification.json';
+
+const PUBLIC_EMAIL = 'studio@anix-ai.pro';
+const BRAND_NAME = 'Anix Studio';
+const BRAND_ALTERNATE_NAMES = ['Студия Аникс', 'Аникс Студия', 'Anix'];
+const BRAND_DESCRIPTION =
+  'Anix Studio — анимационная студия для сложных продуктов. Создаёт анимационные и AI-ролики, маскотов и визуальные системы для фармы, MedTech, охраны труда, B2B-продуктов и мероприятий.';
+const BRAND_KNOWS_ABOUT = [
+  'анимационные ролики',
+  'AI-видео',
+  'объясняющие ролики для B2B',
+  'медицинская и фармацевтическая коммуникация',
+  'MedTech',
+  'визуальное обучение по охране труда',
+  'маскоты и визуальные системы',
+  'видеоконтент для мероприятий',
+];
+
+const normalizeBrandText = (value = '') => String(value).replaceAll('ANIX', 'Anix');
 
 const normalizePath = (value = '/') => {
   const withoutQuery = value.split('?')[0].split('#')[0] || '/';
@@ -21,13 +40,13 @@ export const resolveSeoRoute = (path) => {
     path: normalizedPath,
     indexable: false,
     kind: 'notFound',
-    title: 'Страница не найдена — ANIX Studio',
-    description: 'Запрошенная страница ANIX Studio не найдена.',
-    ogTitle: 'Страница не найдена — ANIX Studio',
+    title: 'Страница не найдена — Anix Studio',
+    description: 'Запрошенная страница Anix Studio не найдена.',
+    ogTitle: 'Страница не найдена — Anix Studio',
     ogDescription: 'Запрошенная страница не найдена.',
     ogImage: '/og/home.jpg',
     h1: 'Страница не найдена',
-    intro: 'Проверьте адрес или вернитесь на главную страницу ANIX Studio.',
+    intro: 'Проверьте адрес или вернитесь на главную страницу Anix Studio.',
     sections: [],
     links: [{ label: 'На главную', href: '/' }],
   };
@@ -60,74 +79,92 @@ const ogTypeForRoute = (route) => {
   return 'website';
 };
 
+const organizationSchema = {
+  '@type': 'Organization',
+  name: BRAND_NAME,
+  alternateName: BRAND_ALTERNATE_NAMES,
+  url: `${seoConfig.baseUrl}/`,
+  logo: `${seoConfig.baseUrl}/anix_wand.png`,
+  description: BRAND_DESCRIPTION,
+  email: PUBLIC_EMAIL,
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer support',
+    email: PUBLIC_EMAIL,
+    availableLanguage: ['ru'],
+  },
+  areaServed: {
+    '@type': 'Country',
+    name: 'Россия',
+  },
+  knowsAbout: BRAND_KNOWS_ABOUT,
+  sameAs: seoConfig.organization.sameAs,
+};
+
 export const buildStructuredData = (route) => {
   const url = absolutePageUrl(route.path);
-  const organization = {
-    '@type': 'Organization',
-    name: seoConfig.organization.name,
-    url: seoConfig.organization.url,
-    logo: `${seoConfig.baseUrl}/anix_wand.png`,
-    sameAs: seoConfig.organization.sameAs,
-  };
   const schemas = [];
 
   if (route.kind === 'home') {
-    schemas.push({ '@context': 'https://schema.org', ...organization });
+    schemas.push({ '@context': 'https://schema.org', ...organizationSchema });
     schemas.push({
       '@context': 'https://schema.org',
       '@type': 'WebSite',
-      name: seoConfig.siteName,
+      name: BRAND_NAME,
+      alternateName: BRAND_ALTERNATE_NAMES,
       url: `${seoConfig.baseUrl}/`,
       inLanguage: 'ru-RU',
-      description: route.description,
-      publisher: organization,
+      description: normalizeBrandText(route.description),
+      publisher: organizationSchema,
     });
   } else if (route.kind === 'service') {
     schemas.push({
       '@context': 'https://schema.org',
       '@type': 'Service',
-      name: route.serviceType,
-      description: route.description,
+      name: normalizeBrandText(route.serviceType),
+      description: normalizeBrandText(route.description),
       url,
-      provider: organization,
+      provider: organizationSchema,
+      areaServed: organizationSchema.areaServed,
       inLanguage: 'ru-RU',
     });
   } else if (route.kind === 'creativeWork' || route.kind === 'case') {
     schemas.push({
       '@context': 'https://schema.org',
       '@type': 'CreativeWork',
-      name: route.h1,
-      headline: route.h1,
-      description: route.description,
+      name: normalizeBrandText(route.h1),
+      headline: normalizeBrandText(route.h1),
+      description: normalizeBrandText(route.description),
       url,
       image: absoluteAssetUrl(route.ogImage),
       inLanguage: 'ru-RU',
-      publisher: organization,
+      creator: organizationSchema,
+      publisher: organizationSchema,
     });
   } else if (route.kind === 'profile') {
     schemas.push({
       '@context': 'https://schema.org',
       '@type': 'ProfilePage',
-      name: route.title,
-      description: route.description,
+      name: normalizeBrandText(route.title),
+      description: normalizeBrandText(route.description),
       url,
       inLanguage: 'ru-RU',
       mainEntity: {
         '@type': 'Person',
         name: 'Александра Севостьянова',
-        jobTitle: 'CEO ANIX Studio',
-        worksFor: organization,
+        jobTitle: 'CEO Anix Studio',
+        worksFor: organizationSchema,
       },
     });
   } else if (route.kind === 'webPage' || route.kind === 'legal') {
     schemas.push({
       '@context': 'https://schema.org',
       '@type': 'WebPage',
-      name: route.title,
-      description: route.description,
+      name: normalizeBrandText(route.title),
+      description: normalizeBrandText(route.description),
       url,
       inLanguage: 'ru-RU',
-      publisher: organization,
+      publisher: organizationSchema,
     });
   }
 
@@ -138,7 +175,7 @@ export const buildStructuredData = (route) => {
       itemListElement: route.breadcrumbs.map((item, index) => ({
         '@type': 'ListItem',
         position: index + 1,
-        name: item.label,
+        name: normalizeBrandText(item.label),
         item: absolutePageUrl(item.href),
       })),
     });
@@ -153,24 +190,30 @@ export default function SeoHead({ path = window.location.pathname }) {
   const ogImage = absoluteAssetUrl(route.ogImage);
   const robots = route.indexable ? 'index, follow' : 'noindex, follow';
   const schemas = buildStructuredData(route);
+  const title = normalizeBrandText(route.title);
+  const description = normalizeBrandText(route.description);
+  const ogTitle = normalizeBrandText(route.ogTitle || route.title);
+  const ogDescription = normalizeBrandText(route.ogDescription || route.description);
 
   return (
     <Helmet>
       <html lang="ru" />
-      <title>{route.title}</title>
-      <meta name="description" content={route.description} />
+      <title>{title}</title>
+      <meta name="description" content={description} />
       <meta name="robots" content={robots} />
+      {verification.google ? <meta name="google-site-verification" content={verification.google} /> : null}
+      {verification.yandex ? <meta name="yandex-verification" content={verification.yandex} /> : null}
       {route.kind === 'notFound' ? null : <link rel="canonical" href={canonical} />}
-      <meta property="og:title" content={route.ogTitle || route.title} />
-      <meta property="og:description" content={route.ogDescription || route.description} />
+      <meta property="og:title" content={ogTitle} />
+      <meta property="og:description" content={ogDescription} />
       <meta property="og:url" content={canonical} />
       <meta property="og:image" content={ogImage} />
       <meta property="og:type" content={ogTypeForRoute(route)} />
-      <meta property="og:site_name" content={seoConfig.siteName} />
+      <meta property="og:site_name" content={BRAND_NAME} />
       <meta property="og:locale" content="ru_RU" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={route.ogTitle || route.title} />
-      <meta name="twitter:description" content={route.ogDescription || route.description} />
+      <meta name="twitter:title" content={ogTitle} />
+      <meta name="twitter:description" content={ogDescription} />
       <meta name="twitter:image" content={ogImage} />
       {schemas.map((schema, index) => (
         <script type="application/ld+json" key={`${route.path}-${index}`}>
