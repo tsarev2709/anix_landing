@@ -23,6 +23,8 @@ const caseImages = [
   ['mfti-endowment', 'mfti-endowment.webp'],
   ['mosfarma', 'mosfarma.webp'],
   ['multon-partners', 'multon-partners.webp'],
+  ['little-prince', 'little-prince.webp'],
+  ['borodino', 'borodino.webp'],
 ];
 
 async function writeOg(source, output) {
