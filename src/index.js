@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { CONFIG } from '@/config';
 import ReactDOM from 'react-dom/client';
 import './App.css';
+import './components/SiteFooterLogoFix.css';
 import App from './App';
 import AppLayout from './AppLayout';
 import AboutStudioPortal from './components/AboutStudioPortal';
