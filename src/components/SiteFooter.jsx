@@ -9,6 +9,7 @@ import {
   Pill,
   PlayCircle,
   Sparkles,
+  WandSparkles,
 } from 'lucide-react';
 import { toPublicHref } from '../seo/SeoHead';
 import BrandLogo from './BrandLogo';
@@ -22,6 +23,7 @@ const videoFolderUrl =
 const pageLinks = [
   { label: 'Главная', href: '/' },
   { label: 'Анимационные ролики', href: '/animation' },
+  { label: 'AI-видео', href: '/ai-video' },
   { label: 'Кейсы', href: '/cases' },
   { label: 'Medicine', href: '/medicine' },
   { label: 'HSE', href: '/hse' },
@@ -40,6 +42,11 @@ const directionLinks = [
     label: 'Анимационные ролики',
     href: '/animation',
     icon: Film,
+  },
+  {
+    label: 'AI-видео',
+    href: '/ai-video',
+    icon: WandSparkles,
   },
   {
     label: 'Фарма и MedTech',
@@ -135,6 +142,9 @@ export default function SiteFooter() {
         <span>Anix Studio</span>
         <a href={toPublicHref('/animation')}>
           Анимационные ролики <ArrowRight aria-hidden="true" />
+        </a>
+        <a href={toPublicHref('/ai-video')}>
+          AI-видео <ArrowRight aria-hidden="true" />
         </a>
         <a href={toPublicHref('/medicine')}>
           Medicine <ArrowRight aria-hidden="true" />
