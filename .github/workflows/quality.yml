@@ -33,7 +33,18 @@ jobs:
       - name: Production build and SEO verification
         env:
           CI: false
-        run: npm run build
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee build-output.log
+
+      - name: Upload build diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: build-output.log
+          if-no-files-found: ignore
 
       - name: Runtime smoke test
         run: node scripts/runtime-smoke-test.js
