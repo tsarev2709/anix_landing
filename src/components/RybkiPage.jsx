@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowDown, ArrowLeft, MessageCircle } from 'lucide-react';
 import './RybkiPage.css';
+import './RybkiPdfSlides.css';
 
 const telegramUrl = 'https://t.me/anix_helper';
 
