@@ -18,12 +18,7 @@
         link.as = 'image';
         link.fetchPriority = 'high';
 
-        if (path === '/rybki') {
-          link.type = 'image/webp';
-          link.href = '%PUBLIC_URL%/optimized/rybki-01-cover-640.webp';
-          link.imageSrcset = '%PUBLIC_URL%/optimized/rybki-01-cover-640.webp 640w, %PUBLIC_URL%/optimized/rybki-01-cover-1280.webp 1280w, %PUBLIC_URL%/optimized/rybki-01-cover-1920.webp 1920w';
-          link.imageSizes = '(max-width: 800px) 94vw, calc(96vw - 174px)';
-        } else if (path === '/rybki_page') {
+        if (path === '/rybki_page') {
           link.type = 'image/webp';
           link.href = '%PUBLIC_URL%/rybki-page-assets/01-cover-base-720.webp';
           link.imageSrcset = '%PUBLIC_URL%/rybki-page-assets/01-cover-base-720.webp 720w, %PUBLIC_URL%/rybki-page-assets/01-cover-base-1280.webp 1280w, %PUBLIC_URL%/rybki-page-assets/01-cover-base-1800.webp 1800w';

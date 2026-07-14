@@ -13,7 +13,7 @@ const routeImages = [
   { slug: 'medicine', source: path.join(root, 'src', 'images', 'cases', 'hemotech-ai.webp') },
   { slug: 'hse', source: path.join(root, 'src', 'images', 'hse', 'hse-hero.jpg') },
   { slug: 'ceo', source: path.join(root, 'src', 'images', 'ceo', 'alexandra-portrait.webp') },
-  { slug: 'rybki', source: path.join(publicDir, 'rybki-page-assets', '01-cover-base-1800.webp') },
+  { slug: 'rybki', source: path.join(root, 'src', 'images', '3.png') },
 ];
 
 const caseImages = [

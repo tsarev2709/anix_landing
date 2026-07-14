@@ -1,25 +1,17 @@
-import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
+import React from 'react';
 import { ArrowDown, ArrowLeft, MessageCircle } from 'lucide-react';
 import './RybkiPage.css';
+import './RybkiPdfSlides.css';
 
 const telegramUrl = 'https://t.me/anix_helper';
 
-const slides = [
-  { slug: '01-cover', alt: 'Рыбки — антиутопия о памяти. Обложка проекта.', label: 'Обложка' },
-  { slug: '02-logline', alt: 'Логлайн полнометражного фильма «Рыбки».', label: 'Логлайн' },
-  { slug: '03-why-it-hooks', alt: 'Почему история «Рыбки» цепляет зрителя.', label: 'Почему это цепляет' },
-  { slug: '04-synopsis', alt: 'Синопсис полнометражного фильма «Рыбки».', label: 'Синопсис' },
-  { slug: '05-main-character', alt: 'Главный герой И-1.', label: 'Главный герой' },
-  { slug: '06-world', alt: 'Мир и контекст истории «Рыбки».', label: 'Мир' },
-  { slug: '08-audience', alt: 'Целевая аудитория фильма «Рыбки».', label: 'Для кого' },
-  { slug: '09-potential', alt: 'Потенциал проекта «Рыбки».', label: 'Потенциал' },
-];
+const slides = Array.from({ length: 10 }, (_, index) => ({
+  file: `Слайд ${index + 1}.pdf`,
+  label: `Слайд ${index + 1}`,
+}));
 
 function Slide({ slide, index }) {
-  const [failed, setFailed] = useState(false);
-  const optimizedBase = `/optimized/rybki-${slide.slug}`;
-  const fallbackSvg = `/rybki-assets/${slide.slug}.svg`;
+  const pdfUrl = `/rybki-assets/${encodeURIComponent(slide.file)}#toolbar=0&navpanes=0&scrollbar=0&view=FitH`;
 
   return (
     <section className="rybki-slide" id={`slide-${index + 1}`}>
@@ -28,30 +20,15 @@ function Slide({ slide, index }) {
         <span>{slide.label}</span>
       </div>
       <div className="rybki-slide-frame">
-        {failed ? (
-          <div className="rybki-asset-missing">
-            <strong>{slide.label}</strong>
-            <span>Изображение не удалось загрузить.</span>
-          </div>
-        ) : (
-          <picture>
-            <source
-              type="image/webp"
-              srcSet={`${optimizedBase}-640.webp 640w, ${optimizedBase}-1280.webp 1280w, ${optimizedBase}-1920.webp 1920w`}
-              sizes="(max-width: 800px) 94vw, calc(96vw - 174px)"
-            />
-            <img
-              src={fallbackSvg}
-              alt={slide.alt}
-              width="1920"
-              height="1080"
-              loading={index === 0 ? 'eager' : 'lazy'}
-              fetchPriority={index === 0 ? 'high' : 'auto'}
-              decoding={index === 0 ? 'sync' : 'async'}
-              onError={() => setFailed(true)}
-            />
-          </picture>
-        )}
+        <iframe
+          className="rybki-slide-pdf"
+          src={pdfUrl}
+          title={`Рыбки — ${slide.label}`}
+          loading={index === 0 ? 'eager' : 'lazy'}
+        />
+        <a className="rybki-slide-open" href={pdfUrl} target="_blank" rel="noreferrer">
+          Открыть слайд отдельно
+        </a>
       </div>
     </section>
   );
@@ -60,16 +37,6 @@ function Slide({ slide, index }) {
 export default function RybkiPage() {
   return (
     <main className="rybki-page">
-      <Helmet>
-        <title>Рыбки — полнометражный фильм | ANIX</title>
-        <meta name="description" content="Рыбки — научно-фантастический триллер и антиутопия о памяти, свободе и человеке внутри корпоративной системы будущего." />
-        <link rel="canonical" href="https://studio.anix-ai.pro/rybki" />
-        <meta property="og:title" content="Рыбки — антиутопия о памяти" />
-        <meta property="og:description" content="Полнометражный sci-fi триллер: логлайн, синопсис, герой, мир, аудитория и потенциал проекта." />
-        <meta property="og:url" content="https://studio.anix-ai.pro/rybki" />
-        <meta property="og:type" content="website" />
-      </Helmet>
-
       <header className="rybki-header">
         <a href="/" className="rybki-back">
           <ArrowLeft aria-hidden="true" />
@@ -94,7 +61,7 @@ export default function RybkiPage() {
 
       <div className="rybki-slides">
         {slides.map((slide, index) => (
-          <Slide slide={slide} index={index} key={slide.slug} />
+          <Slide slide={slide} index={index} key={slide.file} />
         ))}
       </div>
 

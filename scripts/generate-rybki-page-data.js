@@ -1,124 +1,26 @@
 const fs = require('fs');
 const path = require('path');
-const sharp = require('sharp');
 
 const root = path.resolve(__dirname, '..');
 const sourceDir = path.join(root, 'public', 'rybki-assets');
-const publicOutputDir = path.join(root, 'public', 'rybki-page-assets');
-const generatedDir = path.join(root, 'src', 'generated');
 
-const slides = [
-  { slug: '01-cover', label: 'Обложка', heading: 'РЫБКИ', fallback: ['Антиутопия о памяти, свободе и праве человека остаться собой', 'Полнометражный фильм'] },
-  { slug: '02-logline', label: 'Логлайн', heading: 'Логлайн', fallback: ['Полнометражный научно-фантастический триллер о памяти, идентичности и свободе.'] },
-  { slug: '03-why-it-hooks', label: 'Почему это цепляет', heading: 'Почему это цепляет', fallback: ['История соединяет личную драму героя и большую антиутопическую систему.'] },
-  { slug: '04-synopsis', label: 'Синопсис', heading: 'Синопсис', fallback: ['История раскрывается через столкновение героя с системой и собственной памятью.'] },
-  { slug: '05-main-character', label: 'Главный герой', heading: 'Главный герой', fallback: ['И-1 — человек внутри системы, которая знает о нём больше, чем он сам.'] },
-  { slug: '06-world', label: 'Мир', heading: 'Мир', fallback: ['Корпоративное будущее, где память становится инфраструктурой власти.'] },
-  { slug: '08-audience', label: 'Для кого', heading: 'Для кого', fallback: ['Интеллектуальный sci-fi, психологический триллер и сильная авторская идея.'] },
-  { slug: '09-potential', label: 'Потенциал', heading: 'Потенциал', fallback: ['Полнометражный фильм и самостоятельная визуальная вселенная.'] },
-];
-
-const embeddedPngPattern = /(?:xlink:href|href)=["']data:image\/png;base64,([^"']+)["']/i;
-const embeddedPngGroupPattern = /<g\b[^>]*>[\s\S]*?<image\b[^>]*(?:xlink:href|href)=["']data:image\/png;base64,[^"']+["'][^>]*\/?>(?:[\s\S]*?)<\/g>/i;
-
-function decodeEntities(value) {
-  return value
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&apos;/g, "'")
-    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)));
-}
-
-function extractTextBlocks(xml) {
-  const blocks = [];
-  const seen = new Set();
-  const matches = xml.matchAll(/<text\b[^>]*>([\s\S]*?)<\/text>/gi);
-
-  for (const match of matches) {
-    const value = decodeEntities(
-      match[1]
-        .replace(/<\/tspan\s*>/gi, ' ')
-        .replace(/<[^>]+>/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim()
-    );
-
-    if (value.length < 2 || seen.has(value)) continue;
-    seen.add(value);
-    blocks.push(value);
+function main() {
+  const missing = [];
+  for (let index = 1; index <= 10; index += 1) {
+    const file = path.join(sourceDir, `Слайд ${index}.pdf`);
+    if (!fs.existsSync(file)) missing.push(path.basename(file));
   }
 
-  return blocks;
-}
-
-function extractFontFamilies(xml) {
-  const families = new Set();
-  for (const match of xml.matchAll(/font-family=["']([^"']+)["']/gi)) {
-    families.add(match[1]);
-  }
-  return [...families].slice(0, 8);
-}
-
-function extractBasePng(xml, slug) {
-  const imageMatch = xml.match(embeddedPngPattern);
-  if (!imageMatch) throw new Error(`Embedded PNG not found in ${slug}`);
-  return Buffer.from(imageMatch[1].replace(/\s+/g, ''), 'base64');
-}
-
-function createOverlaySvg(xml) {
-  return xml
-    .replace(embeddedPngGroupPattern, '')
-    .replace(/<text\b[^>]*>[\s\S]*?<\/text>/gi, '')
-    .replace(/<title>[\s\S]*?<\/title>/i, '')
-    .replace(/<desc>[\s\S]*?<\/desc>/i, '');
-}
-
-async function buildSlide(slide) {
-  const sourcePath = path.join(sourceDir, `${slide.slug}.svg`);
-  const xml = fs.readFileSync(sourcePath, 'utf8');
-  const basePng = extractBasePng(xml, slide.slug);
-  const overlay = createOverlaySvg(xml);
-  const widths = [720, 1280, 1800];
-
-  for (const width of widths) {
-    const output = path.join(publicOutputDir, `${slide.slug}-base-${width}.webp`);
-    await sharp(basePng)
-      .resize({ width, withoutEnlargement: true })
-      .webp({ quality: width === 1800 ? 82 : 78, effort: 6 })
-      .toFile(output);
-    console.log(`[rybki-page] ${path.basename(output)} ${(fs.statSync(output).size / 1024).toFixed(1)} KiB`);
+  if (missing.length) {
+    throw new Error(`Missing Rybki PDF slides: ${missing.join(', ')}`);
   }
 
-  fs.writeFileSync(path.join(publicOutputDir, `${slide.slug}-overlay.svg`), overlay, 'utf8');
-
-  return {
-    ...slide,
-    text: extractTextBlocks(xml),
-    fontFamilies: extractFontFamilies(xml),
-  };
+  console.log('[rybki] verified 10 uploaded PDF slides; legacy layered SVG generation is disabled');
 }
 
-async function main() {
-  fs.mkdirSync(publicOutputDir, { recursive: true });
-  fs.mkdirSync(generatedDir, { recursive: true });
-
-  const data = [];
-  for (const slide of slides) data.push(await buildSlide(slide));
-
-  const json = JSON.stringify(data, null, 2);
-  fs.writeFileSync(path.join(publicOutputDir, 'content.json'), json, 'utf8');
-  fs.writeFileSync(
-    path.join(generatedDir, 'rybkiDeckData.js'),
-    `// Generated by scripts/generate-rybki-page-data.js\nconst rybkiDeckData = ${json};\nexport default rybkiDeckData;\n`,
-    'utf8'
-  );
-
-  console.log(`[rybki-page] generated ${data.length} layered sections`);
-}
-
-main().catch((error) => {
-  console.error('[rybki-page] generation failed', error);
+try {
+  main();
+} catch (error) {
+  console.error('[rybki] slide verification failed', error);
   process.exit(1);
-});
+}
