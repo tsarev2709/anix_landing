@@ -165,10 +165,23 @@ assert(animationLinks.has('/cases'), '/animation: SEO links must include /cases'
 assert(aiVideoLinks.has('/animation'), '/ai-video: SEO links must include /animation');
 assert(aiVideoLinks.has('/cases'), '/ai-video: SEO links must include /cases');
 
+for (const [routePath, route] of Object.entries(seoConfig.routes)) {
+  if (route.kind !== 'case') continue;
+  assert(Boolean(route.case), `${routePath}: case route is missing case data`);
+  assert(Boolean(route.case?.relatedPath), `${routePath}: case route is missing relatedPath`);
+  if (route.case?.relatedPath) {
+    assert(Boolean(seoConfig.routes[route.case.relatedPath]), `${routePath}: relatedPath does not exist (${route.case.relatedPath})`);
+  }
+  if (route.case?.image?.startsWith('/')) {
+    const localImage = path.join(buildDir, route.case.image.replace(/^\//, ''));
+    assert(fs.existsSync(localImage), `${routePath}: case image is missing (${route.case.image})`);
+  }
+}
+
 if (failures.length) {
   console.error('\nSEO build verification failed:');
   for (const failure of failures) console.error(` - ${failure}`);
   process.exit(1);
 }
 
-console.log(`[seo-check] verified ${indexableRoutes.length} indexable routes, ${requiredRoutes.length} required routes, commercial architecture, sitemap, robots and 404`);
+console.log(`[seo-check] verified ${indexableRoutes.length} indexable routes, ${requiredRoutes.length} required routes, commercial architecture, case data, sitemap, robots and 404`);
