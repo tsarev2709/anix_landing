@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import {
   Activity,
   ArrowRight,
@@ -29,15 +28,15 @@ import ventilationImage from '../images/hse/hse-ventilation.jpg';
 import alexeyPhoto from '../images/experts/alexey-lychko-hse.webp';
 
 const telegramUrl = 'https://t.me/anix_helper';
-const emailUrl = 'mailto:anix.ai@yandex.ru';
+const emailUrl = 'mailto:studio@anix-ai.pro';
 
 const navLinks = [
   { label: 'Главная', href: '/' },
   { label: 'Форматы', href: '#formats' },
   { label: 'Эксперт', href: '#expert' },
   { label: 'Демо', href: '/hse/mvp' },
-  { label: 'Medicine', href: '/medicine/' },
-  { label: 'CEO', href: '/ceo/' },
+  { label: 'Medicine', href: '/medicine' },
+  { label: 'CEO', href: '/ceo' },
 ];
 
 const heroStats = [
@@ -163,28 +162,10 @@ function IconCard({ item }) {
 export default function HsePage() {
   return (
     <main className="hse-page">
-      <Helmet>
-        <title>
-          ANIX - правила безопасности, которые запоминают
-        </title>
-        <meta
-          name="description"
-          content="ANIX делает ролики, карточки, инфографику, тесты и годовые кампании по охране труда, чтобы правила безопасности запоминали и применяли."
-        />
-        <link rel="canonical" href="https://studio.anix-ai.pro/hse/" />
-        <meta property="og:title" content="ANIX HSE" />
-        <meta
-          property="og:description"
-          content="Визуальные обучающие материалы по охране труда: ролики, карточки, страницы по QR-коду, тесты, маскоты и кампании."
-        />
-        <meta property="og:url" content="https://studio.anix-ai.pro/hse/" />
-        <meta property="og:type" content="website" />
-      </Helmet>
-
-      <header className="hse-header">
-        <nav className="hse-header-inner" aria-label="ANIX HSE">
-          <a className="hse-logo" href="/" aria-label="ANIX Studio">
-            <img src={logo} alt="ANIX" />
+<header className="hse-header">
+        <nav className="hse-header-inner" aria-label="Anix HSE">
+          <a className="hse-logo" href="/" aria-label="Anix Studio">
+            <img src={logo} alt="Anix" />
           </a>
           <div className="hse-nav-links">
             {navLinks.map((item) => (
@@ -193,6 +174,12 @@ export default function HsePage() {
               </a>
             ))}
           </div>
+          <a
+            className="hse-header-cta hse-header-cta-secondary"
+            href="/hse/mvp/test/login"
+          >
+            Войти
+          </a>
           <a
             className="hse-header-cta"
             href={telegramUrl}
@@ -210,8 +197,8 @@ export default function HsePage() {
             Охрана труда / промышленная безопасность
           </p>
           <h1>Делаем правила безопасности запоминаемыми</h1>
-                    <p className="hse-lead">
-            ANIX собирает серии материалов для отделов охраны труда: ролики,
+          <p className="hse-lead">
+            Anix собирает серии материалов для отделов охраны труда: ролики,
             карточки, страницы по QR-коду, тесты, инфографику, тексты для
             внутренних каналов и годовые кампании там, где инструкции должны
             предотвращать инциденты.
@@ -235,7 +222,7 @@ export default function HsePage() {
         <aside className="hse-hero-media" aria-label="Визуальный пример HSE">
           <img
             src={heroImage}
-            alt="Визуальные материалы ANIX по охране труда"
+            alt="Визуальные материалы Anix по охране труда"
           />
           <div className="hse-hero-stats">
             {heroStats.map(([value, label]) => (
@@ -254,7 +241,7 @@ export default function HsePage() {
             <p className="hse-eyebrow">Проблема</p>
             <h2>Правила не запоминают</h2>
           </div>
-                    <div className="hse-rich-text">
+          <div className="hse-rich-text">
             <p>
               Сотрудник вспоминает не номер пункта, а сцену: где риск, чем
               закончится ошибка и какое действие выбрать.
@@ -288,7 +275,7 @@ export default function HsePage() {
           <div>
             <p className="hse-eyebrow">От инструкции к сцене</p>
             <h2>Наглядно показываем риск</h2>
-                        <p>
+            <p>
               Сотрудник видит конкретную ситуацию: что может пойти не так, чем
               это закончится и какое действие нужно выбрать.
             </p>
@@ -352,10 +339,7 @@ export default function HsePage() {
           <div className="hse-section-head hse-section-head-row">
             <div>
               <p className="hse-eyebrow">Кейсы и демо</p>
-              <h2>
-                Уже есть кейсы и результаты
-
-              </h2>
+              <h2>Уже есть кейсы и результаты</h2>
             </div>
             <p>
               В HSE важно быстро увидеть, как это будет работать: карточка,
@@ -370,7 +354,7 @@ export default function HsePage() {
                 <Wrapper className="hse-case" key={item.title} {...props}>
                   <img
                     src={item.image}
-                    alt={`Кейс ANIX HSE: ${item.title}`}
+                    alt={`Кейс Anix HSE: ${item.title}`}
                     loading="lazy"
                   />
                   <div>
@@ -391,20 +375,20 @@ export default function HsePage() {
           <div className="hse-expert-photo">
             <img
               src={alexeyPhoto}
-              alt="Алексей Лычко, эксперт ANIX по охране труда"
+              alt="Алексей Лычко, эксперт Anix по охране труда"
               loading="lazy"
             />
           </div>
           <div className="hse-expert-copy">
             <p className="hse-eyebrow">Эксперт по охране труда</p>
             <h2>
-              Алексей Лычко помогает ANIX не путать красивый HSE-ролик с
+              Алексей Лычко помогает Anix не путать красивый HSE-ролик с
               полезным обучением
             </h2>
             <p>
               Алексей работает на стыке охраны труда, промышленной безопасности,
               пожарной и электробезопасности, культуры безопасности и игрового
-              обучения. Его роль в проектах ANIX простая и очень важная:
+              обучения. Его роль в проектах Anix простая и очень важная:
               проверить, что сценарий связан с реальным риском, говорит на языке
               ОТ и не превращает безопасность в декоративную анимацию.
             </p>
@@ -444,7 +428,7 @@ export default function HsePage() {
             </h2>
             <p>
               У проекта Б в Кубе заявлены 16 000+ обученных участников и 110+
-              турниров. Это не метрики ANIX, но хороший сигнал подхода Алексея:
+              турниров. Это не метрики Anix, но хороший сигнал подхода Алексея:
               обучение можно делать не как зубрежку, а как ситуацию, где есть
               выбор, риск, последствия и командное обсуждение.
             </p>

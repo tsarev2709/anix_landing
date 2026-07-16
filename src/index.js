@@ -89,7 +89,10 @@ class RuntimeErrorBoundary extends React.Component {
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
-const base = '';
+// Builds served under a path prefix (e.g. a fork preview at
+// /anix_landing/dev/) need this to come from PUBLIC_URL — it's empty for
+// the production root deploy, so this is a no-op there.
+const base = process.env.PUBLIC_URL || '';
 const relativePath = window.location.pathname.replace(base, '') || '/';
 const normalizedPath = (() => {
   const withoutIndex = relativePath.replace(/index\.html$/, '');

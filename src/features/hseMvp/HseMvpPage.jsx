@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Helmet } from 'react-helmet';
 import {
   Activity,
   ArrowLeft,
@@ -57,7 +56,7 @@ import {
   saveCourseProgress,
   saveModuleLearningState,
 } from './lib/storage';
-import { downloadCsv, downloadXlsxFallback } from './lib/export';
+import { downloadCsv, downloadXlsx, downloadXlsxFallback } from './lib/export';
 import { getRuleBasedRecommendations } from './lib/recommendations';
 import { generateAiRecommendation } from './lib/aiRecommendations';
 import { submitCourseRequest, getCrmMode } from './lib/crm';
@@ -67,8 +66,23 @@ import {
   getHseSupabaseConfig,
   isAllowedWorkEmail,
 } from './lib/hseSupabase';
+import {
+  SELF_REGISTER_ROLES,
+  fetchDepartmentSlug,
+  fetchOwnProfile,
+  getCurrentSession,
+  listAllAttempts,
+  listAllProfiles,
+  listMyAttempts,
+  listModulesByKey,
+  listRecentEvents,
+  signInWithPassword,
+  signOutCurrentUser,
+  signUpWithProfile,
+  updateProfileRole,
+} from './lib/auth';
 
-const base = '';
+const base = process.env.PUBLIC_URL || '';
 const rootPath = '/hse/mvp';
 const showcasePath = `${rootPath}/showcase`;
 const testPath = `${rootPath}/test`;
@@ -138,6 +152,21 @@ const getSourceTitle = (module, sourceId) =>
   module.sourceRefs?.find((source) => source.id === sourceId)?.title ||
   sourceId;
 const href = (path) => `${base}${path}`;
+
+const HSE_MVP_NAVIGATE_EVENT = 'hse-mvp-navigate';
+
+// Full-page navigations (window.location.assign) to a path with no matching
+// static file rely on the host's 404 fallback to boot the SPA again — that
+// mechanism is host-specific and has proven unreliable for the dynamic
+// /result/:attemptId route (generated at runtime, so it can never be
+// pre-built as a static file). This does the transition purely client-side
+// instead, so no navigation request is ever made for it.
+const navigateWithinApp = (path) => {
+  window.history.pushState(null, '', href(path));
+  window.dispatchEvent(
+    new CustomEvent(HSE_MVP_NAVIGATE_EVENT, { detail: path })
+  );
+};
 
 const navItems = [
   { label: 'Главная MVP', path: rootPath, icon: Gauge },
@@ -236,18 +265,14 @@ function Shell({ path, title, children, breadcrumbs = [] }) {
     <main
       className={`hse-mvp ${largeText ? 'hse-mvp-large-text' : ''} ${contrast ? 'hse-mvp-contrast' : ''}`}
     >
-      <Helmet>
-        <title>{title} | ANIX HSE MVP</title>
-        <meta name="description" content={HSE_MVP_PRODUCT_DESCRIPTION} />
-      </Helmet>
-      <aside className="hse-mvp-sidebar" aria-label="Навигация демополигона">
+<aside className="hse-mvp-sidebar" aria-label="Навигация демополигона">
         <a
           className="hse-mvp-brand"
           href={href(rootPath)}
-          aria-label="ANIX HSE MVP"
+          aria-label="Anix HSE MVP"
         >
           <ShieldCheck aria-hidden="true" />
-          <span>ANIX HSE</span>
+          <span>Anix HSE</span>
         </a>
         <nav>
           {navItems.map(({ label, path: itemPath, icon: Icon }) => (
@@ -350,7 +375,7 @@ function HomePage() {
       <section className="hse-mvp-hero">
         <div>
           <Badge tone="info">Демополигон цифрового решения</Badge>
-          <h1>ANIX. Единая визуальная система обучения по охране труда</h1>
+          <h1>Anix. Единая визуальная система обучения по охране труда</h1>
           <p>{HSE_MVP_PRODUCT_DESCRIPTION}</p>
           <div className="hse-mvp-disclaimer">
             <ShieldCheck aria-hidden="true" />
@@ -1282,7 +1307,7 @@ function TestPage({ courseId }) {
       progress: 100,
     });
 
-    window.location.assign(href(`${rootPath}/result/${storedAttempt.id}`));
+    navigateWithinApp(`${rootPath}/result/${storedAttempt.id}`);
   };
 
   return (
@@ -1748,7 +1773,7 @@ function AdminPage() {
     <>
       <section className="hse-mvp-page-head">
         <Badge tone="info">Кабинет администратора</Badge>
-        <h1>Управление курсами ANIX HSE</h1>
+        <h1>Управление курсами Anix HSE</h1>
         <p>
           Демо-админка показывает версии курсов, модули, технологический контур
           и сведения для конкурсной оценки.
@@ -1901,7 +1926,7 @@ function RequestCoursePage() {
     event.preventDefault();
     setSubmitting(true);
     const payload = {
-      source: 'ANIX HSE MVP',
+      source: 'Anix HSE MVP',
       product: 'Единая визуальная система обучения по охране труда',
       companyName: form.companyName,
       industry: form.industry,
@@ -1937,7 +1962,7 @@ function RequestCoursePage() {
         </Badge>
         <h1>Заявка принята</h1>
         <p>
-          {result.message}. Специалист ANIX свяжется для подготовки визуального
+          {result.message}. Специалист Anix свяжется для подготовки визуального
           курса.
         </p>
         <p className="hse-mvp-muted">
@@ -2045,7 +2070,7 @@ function IntegrationsPage() {
   const crmMode = getCrmMode();
   const testWebhook = async () => {
     const response = await submitCourseRequest({
-      source: 'ANIX HSE MVP',
+      source: 'Anix HSE MVP',
       product: 'Единая визуальная система обучения по охране труда',
       companyName: 'Тестовая компания',
       industry: 'Пищевая промышленность',
@@ -2160,7 +2185,7 @@ function SupportPage() {
         <article className="hse-mvp-card">
           <Mail aria-hidden="true" />
           <h2>Email поддержки</h2>
-          <a href="mailto:anix.ai@yandex.ru">anix.ai@yandex.ru</a>
+          <a href="mailto:studio@anix-ai.pro">studio@anix-ai.pro</a>
         </article>
         <article className="hse-mvp-card">
           <Phone aria-hidden="true" />
@@ -2312,7 +2337,15 @@ function TestModePage() {
 function TestAuthPage({ kind }) {
   const config = getHseSupabaseConfig();
   const [email, setEmail] = useState(kind === 'admin' ? config.adminEmail : '');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [role, setRole] = useState(SELF_REGISTER_ROLES[0].value);
+  const [departmentSlug, setDepartmentSlug] = useState(
+    hseDepartments[0]?.id || ''
+  );
   const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
   const domainOk = isAllowedWorkEmail(email);
   const title =
     kind === 'register'
@@ -2328,8 +2361,17 @@ function TestAuthPage({ kind }) {
         ? 'Войти как администратор'
         : 'Войти';
 
-  const handleSubmit = (event) => {
+  const roleToPath = (resolvedRole) =>
+    resolvedRole === 'admin'
+      ? `${testPath}/admin`
+      : resolvedRole === 'specialist'
+        ? `${testPath}/specialist`
+        : `${testPath}/me`;
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setError('');
+    setMessage('');
     if (!config.isConfigured) {
       setMessage(
         'Supabase не настроен: форма показана как безопасная демонстрация UX.'
@@ -2337,12 +2379,42 @@ function TestAuthPage({ kind }) {
       return;
     }
     if (kind === 'register' && !domainOk) {
-      setMessage('Домен почты не входит в список разрешенных для регистрации.');
+      setError('Домен почты не входит в список разрешенных для регистрации.');
       return;
     }
-    setMessage(
-      'Форма готова к отправке в Supabase Auth через защищенный публичный anon key.'
-    );
+    setBusy(true);
+    try {
+      if (kind === 'register') {
+        const result = await signUpWithProfile({
+          email,
+          password,
+          fullName,
+          role,
+          departmentSlug,
+        });
+        if (result.session) {
+          window.location.href = href(roleToPath(role));
+          return;
+        }
+        setMessage(
+          'Аккаунт создан. Проверьте почту и перейдите по ссылке подтверждения, затем войдите через "Вход".'
+        );
+        return;
+      }
+      await signInWithPassword({ email, password });
+      const profile = await fetchOwnProfile();
+      const resolvedRole = profile?.role || 'employee';
+      if (kind === 'admin' && resolvedRole !== 'admin') {
+        await signOutCurrentUser();
+        setError('Этот аккаунт не имеет роли администратора.');
+        return;
+      }
+      window.location.href = href(roleToPath(resolvedRole));
+    } catch (submitError) {
+      setError(submitError.message || 'Не удалось выполнить операцию.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -2353,15 +2425,20 @@ function TestAuthPage({ kind }) {
         </Badge>
         <h1>{title}</h1>
         <p>
-          В промышленном режиме вход и регистрация выполняются через Supabase
-          Auth, профиль и роль читаются из hse_profiles.
+          Вход и регистрация выполняются через Supabase Auth, профиль и роль
+          читаются из hse_profiles.
         </p>
       </section>
       <form className="hse-mvp-panel hse-mvp-auth-form" onSubmit={handleSubmit}>
         {kind === 'register' ? (
           <label>
             ФИО
-            <input required placeholder="Иванов Иван Иванович" />
+            <input
+              required
+              placeholder="Иванов Иван Иванович"
+              value={fullName}
+              onChange={(event) => setFullName(event.target.value)}
+            />
           </label>
         ) : null}
         <label>
@@ -2379,24 +2456,39 @@ function TestAuthPage({ kind }) {
           <input
             required
             type="password"
-            placeholder="Пароль хранится только в Supabase Auth"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            minLength={6}
+            placeholder="Минимум 6 символов"
           />
         </label>
         {kind === 'register' ? (
           <>
             <label>
+              Роль
+              <select
+                value={role}
+                onChange={(event) => setRole(event.target.value)}
+              >
+                {SELF_REGISTER_ROLES.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
               Отдел
-              <select defaultValue="production-lines">
+              <select
+                value={departmentSlug}
+                onChange={(event) => setDepartmentSlug(event.target.value)}
+              >
                 {hseDepartments.map((department) => (
                   <option key={department.id} value={department.id}>
                     {department.title}
                   </option>
                 ))}
               </select>
-            </label>
-            <label>
-              Должность / роль на площадке
-              <input placeholder="Оператор линии" />
             </label>
           </>
         ) : null}
@@ -2411,13 +2503,15 @@ function TestAuthPage({ kind }) {
           <button
             className="hse-mvp-button hse-mvp-button-primary"
             type="submit"
+            disabled={busy}
           >
-            {submitLabel}
+            {busy ? 'Обработка…' : submitLabel}
           </button>
           <a className="hse-mvp-button" href={href(testPath)}>
             Назад к тестовому контуру
           </a>
         </div>
+        {error ? <p className="hse-mvp-form-error">{error}</p> : null}
         {message ? <p className="hse-mvp-success">{message}</p> : null}
       </form>
       {!config.isConfigured ? <SupabaseSetupPanel /> : null}
@@ -2425,50 +2519,525 @@ function TestAuthPage({ kind }) {
   );
 }
 
-function TestMePage() {
-  const config = getHseSupabaseConfig();
-  if (!config.isConfigured) return <SupabaseSetupPanel />;
+function useHseSessionGuard() {
+  const [state, setState] = useState({
+    loading: true,
+    session: null,
+    profile: null,
+    error: '',
+  });
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const session = await getCurrentSession();
+        if (!session) {
+          if (active)
+            setState({
+              loading: false,
+              session: null,
+              profile: null,
+              error: '',
+            });
+          return;
+        }
+        const profile = await fetchOwnProfile();
+        if (active) setState({ loading: false, session, profile, error: '' });
+      } catch (guardError) {
+        if (active)
+          setState({
+            loading: false,
+            session: null,
+            profile: null,
+            error: guardError.message || 'Не удалось проверить сессию.',
+          });
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  return state;
+}
+
+function TestSignOutButton() {
+  return (
+    <button
+      type="button"
+      className="hse-mvp-button"
+      onClick={async () => {
+        await signOutCurrentUser();
+        window.location.href = href(testPath);
+      }}
+    >
+      Выйти
+    </button>
+  );
+}
+
+function TestAccessDenied({ loginPath, message }) {
   return (
     <section className="hse-mvp-panel">
-      <Badge tone="info">employee</Badge>
+      <Badge tone="warning">Доступ ограничен</Badge>
+      <h1>{message}</h1>
+      <div className="hse-mvp-actions">
+        <a
+          className="hse-mvp-button hse-mvp-button-primary"
+          href={href(loginPath)}
+        >
+          Войти
+        </a>
+        <a className="hse-mvp-button" href={href(testPath)}>
+          Назад к тестовому контуру
+        </a>
+      </div>
+    </section>
+  );
+}
+
+const roleLabels = {
+  employee: 'Сотрудник',
+  specialist: 'Специалист по охране труда',
+  admin: 'Администратор',
+};
+
+function RealEmployeeDashboard({ profile }) {
+  const [events, setEvents] = useState([]);
+  const [requiredModules, setRequiredModules] = useState([]);
+  const [attemptsByModuleKey, setAttemptsByModuleKey] = useState({});
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const [allEvents, departmentSlug, modules, myAttempts] =
+          await Promise.all([
+            listRecentEvents(20),
+            fetchDepartmentSlug(profile.department_id),
+            listModulesByKey(),
+            listMyAttempts(),
+          ]);
+        if (!active) return;
+        setEvents(
+          allEvents.filter((event) => event.user_id === profile.user_id)
+        );
+
+        const department = getDepartmentById(departmentSlug || 'all-employees');
+        setRequiredModules(
+          department.requiredModuleIds
+            .map((moduleId) => getModuleById(moduleId))
+            .filter(Boolean)
+        );
+
+        const idToKey = {};
+        modules.forEach((module) => {
+          idToKey[module.id] = module.module_key;
+        });
+        const byKey = {};
+        myAttempts.forEach((attempt) => {
+          const key = idToKey[attempt.module_id];
+          if (!key) return;
+          if (!byKey[key] || attempt.completed_at > byKey[key].completed_at) {
+            byKey[key] = attempt;
+          }
+        });
+        setAttemptsByModuleKey(byKey);
+      } catch (loadError) {
+        if (active)
+          setError(loadError.message || 'Не удалось загрузить данные.');
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, [profile.user_id, profile.department_id]);
+
+  return (
+    <div className="hse-mvp-grid">
+      <article className="hse-mvp-card">
+        <h2>Профиль</h2>
+        <dl>
+          <dt>ФИО</dt>
+          <dd>{profile.full_name || '—'}</dd>
+          <dt>Почта</dt>
+          <dd>{profile.email}</dd>
+          <dt>Роль</dt>
+          <dd>{roleLabels[profile.role] || profile.role}</dd>
+          <dt>Дата регистрации</dt>
+          <dd>{new Date(profile.created_at).toLocaleString('ru-RU')}</dd>
+        </dl>
+        <TestSignOutButton />
+      </article>
+      <article className="hse-mvp-card">
+        <h2>Мои курсы</h2>
+        {error ? <p className="hse-mvp-form-error">{error}</p> : null}
+        {requiredModules.length ? (
+          <ul className="hse-mvp-card-list">
+            {requiredModules.map((module) => {
+              const attempt = attemptsByModuleKey[module.id];
+              return (
+                <li key={module.id}>
+                  <div>
+                    <strong>{module.title}</strong>
+                    <p>{module.description}</p>
+                    {attempt ? (
+                      <Badge
+                        tone={
+                          attempt.status?.includes('пройден')
+                            ? 'success'
+                            : 'warning'
+                        }
+                      >
+                        {attempt.status} · {attempt.score}%
+                      </Badge>
+                    ) : (
+                      <Badge tone="neutral">Не начат</Badge>
+                    )}
+                  </div>
+                  <a
+                    className="hse-mvp-button hse-mvp-button-primary"
+                    href={href(`${rootPath}/course/${module.id}`)}
+                  >
+                    {attempt ? 'Пройти ещё раз' : 'Начать'}{' '}
+                    <ArrowRight aria-hidden="true" size={18} />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p>Для вашего отдела пока нет назначенных курсов.</p>
+        )}
+      </article>
+      <article className="hse-mvp-card">
+        <h2>Моя активность</h2>
+        {events.length ? (
+          <ul>
+            {events.map((event) => (
+              <li key={event.id}>
+                {new Date(event.created_at).toLocaleString('ru-RU')} —{' '}
+                {event.event_type}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>Событий пока нет.</p>
+        )}
+      </article>
+    </div>
+  );
+}
+
+function RealSpecialistDashboard({ profile }) {
+  const [profiles, setProfiles] = useState([]);
+  const [progressByUser, setProgressByUser] = useState({});
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const [all, attempts, modules] = await Promise.all([
+          listAllProfiles(),
+          listAllAttempts(),
+          listModulesByKey(),
+        ]);
+        if (!active) return;
+        const orgProfiles = all.filter(
+          (item) =>
+            !profile.organization_id ||
+            item.organization_id === profile.organization_id
+        );
+        setProfiles(orgProfiles);
+
+        const idToKey = {};
+        modules.forEach((module) => {
+          idToKey[module.id] = module.module_key;
+        });
+        const progress = {};
+        attempts.forEach((attempt) => {
+          const list = progress[attempt.user_id] || [];
+          list.push({ ...attempt, moduleKey: idToKey[attempt.module_id] });
+          progress[attempt.user_id] = list;
+        });
+        setProgressByUser(progress);
+      } catch (loadError) {
+        if (active)
+          setError(loadError.message || 'Не удалось загрузить пользователей.');
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, [profile.organization_id]);
+
+  const handleExportXlsx = () => {
+    const rows = profiles.map((item) => {
+      const attempts = progressByUser[item.user_id] || [];
+      const passed = attempts.filter((attempt) =>
+        attempt.status?.includes('пройден')
+      );
+      const latest = attempts[0];
+      return {
+        ФИО: item.full_name || '—',
+        Почта: item.email,
+        Роль: roleLabels[item.role] || item.role,
+        'Пройдено курсов':
+          item.role === 'employee'
+            ? `${passed.length} из ${attempts.length || 0}`
+            : '—',
+        'Последний модуль': latest?.moduleKey || '—',
+        'Последний результат, %': latest?.score ?? '—',
+        'Дата последнего прохождения': latest
+          ? new Date(latest.completed_at).toLocaleDateString('ru-RU')
+          : '—',
+      };
+    });
+    downloadXlsx(rows, 'hse-progress-report.xlsx', 'Прогресс сотрудников');
+  };
+
+  return (
+    <div className="hse-mvp-panel">
+      <div className="hse-mvp-actions">
+        <button
+          className="hse-mvp-button hse-mvp-button-primary"
+          type="button"
+          onClick={handleExportXlsx}
+        >
+          <Download aria-hidden="true" size={18} /> Экспорт в Excel
+        </button>
+        <TestSignOutButton />
+      </div>
+      <h2>Сотрудники организации</h2>
+      {error ? <p className="hse-mvp-form-error">{error}</p> : null}
+      <div className="hse-mvp-table-wrap">
+        <table className="hse-mvp-table">
+          <thead>
+            <tr>
+              <th>ФИО</th>
+              <th>Почта</th>
+              <th>Роль</th>
+              <th>Пройдено курсов</th>
+              <th>Последний результат</th>
+            </tr>
+          </thead>
+          <tbody>
+            {profiles.map((item) => {
+              const attempts = progressByUser[item.user_id] || [];
+              const passed = attempts.filter((attempt) =>
+                attempt.status?.includes('пройден')
+              );
+              const latest = attempts[0];
+              return (
+                <tr key={item.user_id}>
+                  <td>{item.full_name || '—'}</td>
+                  <td>{item.email}</td>
+                  <td>{roleLabels[item.role] || item.role}</td>
+                  <td>
+                    {item.role === 'employee'
+                      ? `${passed.length} из ${attempts.length || 0}`
+                      : '—'}
+                  </td>
+                  <td>
+                    {latest
+                      ? `${latest.moduleKey || '—'}: ${latest.score}% (${new Date(latest.completed_at).toLocaleDateString('ru-RU')})`
+                      : '—'}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function RealAdminDashboard() {
+  const [profiles, setProfiles] = useState([]);
+  const [events, setEvents] = useState([]);
+  const [error, setError] = useState('');
+  const [busyUserId, setBusyUserId] = useState('');
+
+  const reload = async () => {
+    try {
+      const [profileList, eventList] = await Promise.all([
+        listAllProfiles(),
+        listRecentEvents(50),
+      ]);
+      setProfiles(profileList);
+      setEvents(eventList);
+    } catch (loadError) {
+      setError(loadError.message || 'Не удалось загрузить данные.');
+    }
+  };
+
+  useEffect(() => {
+    reload();
+  }, []);
+
+  const handleRoleChange = async (userId, nextRole) => {
+    setBusyUserId(userId);
+    setError('');
+    try {
+      await updateProfileRole(userId, nextRole);
+      await reload();
+    } catch (updateError) {
+      setError(updateError.message || 'Не удалось изменить роль.');
+    } finally {
+      setBusyUserId('');
+    }
+  };
+
+  return (
+    <div className="hse-mvp-panel">
+      <div className="hse-mvp-actions">
+        <TestSignOutButton />
+      </div>
+      <h2>Пользователи</h2>
+      {error ? <p className="hse-mvp-form-error">{error}</p> : null}
+      <div className="hse-mvp-table-wrap">
+        <table className="hse-mvp-table">
+          <thead>
+            <tr>
+              <th>ФИО</th>
+              <th>Почта</th>
+              <th>Роль</th>
+              <th>Регистрация</th>
+              <th>Изменить роль</th>
+            </tr>
+          </thead>
+          <tbody>
+            {profiles.map((item) => (
+              <tr key={item.user_id}>
+                <td>{item.full_name || '—'}</td>
+                <td>{item.email}</td>
+                <td>{roleLabels[item.role] || item.role}</td>
+                <td>{new Date(item.created_at).toLocaleString('ru-RU')}</td>
+                <td>
+                  <select
+                    value={item.role}
+                    disabled={busyUserId === item.user_id}
+                    onChange={(event) =>
+                      handleRoleChange(item.user_id, event.target.value)
+                    }
+                  >
+                    <option value="employee">Сотрудник</option>
+                    <option value="specialist">Специалист</option>
+                    <option value="admin">Администратор</option>
+                  </select>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <h2>Последняя активность</h2>
+      <div className="hse-mvp-table-wrap">
+        <table className="hse-mvp-table">
+          <thead>
+            <tr>
+              <th>Дата</th>
+              <th>Событие</th>
+              <th>Пользователь</th>
+            </tr>
+          </thead>
+          <tbody>
+            {events.map((event) => (
+              <tr key={event.id}>
+                <td>{new Date(event.created_at).toLocaleString('ru-RU')}</td>
+                <td>{event.event_type}</td>
+                <td>
+                  {profiles.find((item) => item.user_id === event.user_id)
+                    ?.email ||
+                    event.user_id ||
+                    '—'}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function TestMePage() {
+  const config = getHseSupabaseConfig();
+  const { loading, session, profile } = useHseSessionGuard();
+  if (!config.isConfigured) return <SupabaseSetupPanel />;
+  if (loading) return <p className="hse-mvp-loading">Загрузка…</p>;
+  if (!session || !profile)
+    return (
+      <TestAccessDenied
+        loginPath={`${testPath}/login`}
+        message="Войдите, чтобы открыть свой кабинет."
+      />
+    );
+  return (
+    <section className="hse-mvp-panel">
+      <Badge tone="info">{profile.role}</Badge>
       <h1>Мой кабинет</h1>
-      <p>
-        Пользователь видит только свои назначенные модули, попытки, прогресс и
-        подтверждения прохождения.
-      </p>
-      <EmployeePage />
+      <RealEmployeeDashboard profile={profile} />
     </section>
   );
 }
 
 function TestAdminPage() {
   const config = getHseSupabaseConfig();
+  const { loading, session, profile } = useHseSessionGuard();
   if (!config.isConfigured) return <SupabaseSetupPanel />;
+  if (loading) return <p className="hse-mvp-loading">Загрузка…</p>;
+  if (!session)
+    return (
+      <TestAccessDenied
+        loginPath={`${testPath}/admin-login`}
+        message="Войдите как администратор, чтобы открыть админку."
+      />
+    );
+  if (profile?.role !== 'admin')
+    return (
+      <TestAccessDenied
+        loginPath={`${testPath}/admin-login`}
+        message="У этого аккаунта нет роли администратора."
+      />
+    );
   return (
     <section className="hse-mvp-panel">
       <Badge tone="info">admin</Badge>
       <h1>Админка тестового контура</h1>
-      <p>
-        В промышленном режиме этот экран читает организации, отделы, модули,
-        уроки, пользователей, события и заявки из Supabase.
-      </p>
-      <AdminPage />
+      <RealAdminDashboard />
     </section>
   );
 }
 
 function TestSpecialistPage() {
   const config = getHseSupabaseConfig();
+  const { loading, session, profile } = useHseSessionGuard();
   if (!config.isConfigured) return <SupabaseSetupPanel />;
+  if (loading) return <p className="hse-mvp-loading">Загрузка…</p>;
+  if (!session)
+    return (
+      <TestAccessDenied
+        loginPath={`${testPath}/login`}
+        message="Войдите, чтобы открыть кабинет специалиста."
+      />
+    );
+  if (profile?.role !== 'specialist' && profile?.role !== 'admin')
+    return (
+      <TestAccessDenied
+        loginPath={`${testPath}/login`}
+        message="У этого аккаунта нет роли специалиста по охране труда."
+      />
+    );
   return (
     <section className="hse-mvp-panel">
       <Badge tone="info">specialist</Badge>
       <h1>Кабинет специалиста тестового контура</h1>
-      <p>
-        Специалист видит прохождения по своей организации/отделам, фильтры,
-        ошибки, рекомендации и CSV-экспорт.
-      </p>
-      <SpecialistPage />
+      <RealSpecialistDashboard profile={profile} />
     </section>
   );
 }
@@ -2488,8 +3057,22 @@ function NotFoundMvp() {
 }
 
 export default function HseMvpPage({ path }) {
+  const [internalPath, setInternalPath] = useState(path);
+
+  useEffect(() => {
+    const handleNavigate = (event) => setInternalPath(event.detail);
+    const handlePopState = () =>
+      setInternalPath(window.location.pathname.replace(base, ''));
+    window.addEventListener(HSE_MVP_NAVIGATE_EVENT, handleNavigate);
+    window.addEventListener('popstate', handlePopState);
+    return () => {
+      window.removeEventListener(HSE_MVP_NAVIGATE_EVENT, handleNavigate);
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
   const rawPath =
-    path || window.location.pathname.replace(base, '') || rootPath;
+    internalPath || window.location.pathname.replace(base, '') || rootPath;
   const cleanPath =
     rawPath.endsWith('/') && rawPath.length > 1
       ? rawPath.slice(0, -1)

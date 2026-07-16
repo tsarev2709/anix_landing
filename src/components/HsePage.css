@@ -134,6 +134,17 @@
   background: var(--hse-green-dark);
 }
 
+.hse-header-cta-secondary {
+  background: transparent;
+  color: var(--hse-black);
+  border-color: currentColor;
+}
+
+.hse-header-cta-secondary:hover {
+  background: var(--hse-black);
+  color: var(--hse-white);
+}
+
 .hse-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.03fr) minmax(520px, 0.97fr);
@@ -916,3 +927,11 @@
   color: var(--hse-black) !important;
   -webkit-text-fill-color: var(--hse-black);
 }
+
+
+/* content-fixes-part-2 */
+.hse-page *, .hse-page *::before, .hse-page *::after { box-sizing: border-box; }
+.hse-page img { max-width: 100%; }
+.hse-container, .hse-two-col, .hse-hero, .hse-card-grid, .hse-case-grid, .hse-process-layout { min-width: 0; }
+.hse-card, .hse-case-card, .hse-rich-text, .hse-hero-copy, .hse-hero-media { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 760px) { .hse-two-col, .hse-process-layout { grid-template-columns: minmax(0, 1fr); } }

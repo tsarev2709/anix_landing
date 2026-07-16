@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import {
   BadgeCheck,
   BookOpen,
@@ -26,15 +25,15 @@ import clappyImage from '../images/cases/clappy.webp';
 import andreyPhoto from '../images/experts/andrey-tsarev-scientist.webp';
 
 const telegramUrl = 'https://t.me/anix_helper';
-const emailUrl = 'mailto:anix.ai@yandex.ru';
+const emailUrl = 'mailto:studio@anix-ai.pro';
 
 const navLinks = [
   { label: 'Главная', href: '/' },
   { label: 'Форматы', href: '#formats' },
   { label: 'Научный директор', href: '#expert' },
-  { label: 'HSE', href: '/hse/' },
+  { label: 'HSE', href: '/hse' },
   { label: 'HSE-демо', href: '/hse/mvp' },
-  { label: 'CEO', href: '/ceo/' },
+  { label: 'CEO', href: '/ceo' },
 ];
 
 const heroStats = [
@@ -46,12 +45,12 @@ const heroStats = [
 const formats = [
   {
     title: 'Механизм действия препарата',
-    text: 'Берем молекулу, рецептор, клеточный процесс или каскад и собираем сцену, где зритель понимает причинность. Что связывается, что меняется, почему это важно врачу.',
+    text: 'Переводим молекулу, рецептор, клеточный процесс или каскад — и делаем наглядными',
     icon: Microscope,
   },
   {
     title: 'Ролик для конференции',
-    text: 'Короткий материал для стенда, выступления или встречи с врачами. Без тяжелого рекламного пафоса. Смысл, ритм, визуальная память.',
+    text: 'Привлекающий внимание материал для стенда, выступления или встречи с врачами. Пробивает баннерную слепоту, собирает охваты',
     icon: Presentation,
   },
   {
@@ -216,31 +215,10 @@ function ExternalRow({ title, meta, href }) {
 export default function MedicinePage() {
   return (
     <main className="medicine-page">
-      <Helmet>
-        <title>
-          ANIX Medicine - ролики для продаж препаратов
-        </title>
-        <meta
-          name="description"
-          content="ANIX делает ролики, маскотов, инфографику и визуальную систему для продаж препаратов, медицинских платформ и технологий."
-        />
-        <link rel="canonical" href="https://studio.anix-ai.pro/medicine/" />
-        <meta property="og:title" content="ANIX Medicine" />
-        <meta
-          property="og:description"
-          content="Наглядно показываем работу препарата и собираем материалы для продаж врачам, пациентам и клиникам."
-        />
-        <meta
-          property="og:url"
-          content="https://studio.anix-ai.pro/medicine/"
-        />
-        <meta property="og:type" content="website" />
-      </Helmet>
-
-      <header className="medicine-header">
-        <nav className="medicine-header-inner" aria-label="ANIX Medicine">
-          <a className="medicine-logo" href="/" aria-label="ANIX Studio">
-            <img src={logo} alt="ANIX" />
+<header className="medicine-header">
+        <nav className="medicine-header-inner" aria-label="Anix Medicine">
+          <a className="medicine-logo" href="/" aria-label="Anix Studio">
+            <img src={logo} alt="Anix" />
           </a>
           <div className="medicine-nav-links">
             {navLinks.map((item) => (
@@ -263,7 +241,7 @@ export default function MedicinePage() {
       <section className="medicine-hero" id="top">
         <div className="medicine-hero-copy">
           <p className="medicine-eyebrow">
-            ANIX Medicine / фарма, медтех, медицина
+            Anix Medicine / фарма, медтех, медицина
           </p>
           <h1>Делаем ролики для продаж препаратов</h1>
                     <p className="medicine-lead">
@@ -290,7 +268,7 @@ export default function MedicinePage() {
             </a>
           </div>
         </div>
-        <aside className="medicine-hero-panel" aria-label="Фокус ANIX Medicine">
+        <aside className="medicine-hero-panel" aria-label="Фокус Anix Medicine">
           {heroStats.map(([value, label]) => (
             <div key={value}>
               <strong>{value}</strong>
@@ -349,7 +327,7 @@ export default function MedicinePage() {
               <article className="medicine-case" key={item.title}>
                 <img
                   src={item.image}
-                  alt={`Кейс ANIX: ${item.title}`}
+                  alt={`Кейс Anix: ${item.title}`}
                   loading="lazy"
                 />
                 <div>
@@ -369,7 +347,7 @@ export default function MedicinePage() {
           <div className="medicine-expert-photo">
             <img
               src={andreyPhoto}
-              alt="Андрей Царёв, научно-креативный директор ANIX"
+              alt="Андрей Царёв, научно-креативный директор Anix"
               loading="lazy"
             />
           </div>

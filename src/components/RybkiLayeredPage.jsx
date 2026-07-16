@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import { ArrowDown, ArrowLeft, MessageCircle } from 'lucide-react';
 import rybkiDeckData from '../generated/rybkiDeckData';
 import './RybkiLayeredPage.css';
@@ -97,26 +96,10 @@ function StorySection({ section, index }) {
 export default function RybkiLayeredPage() {
   return (
     <main className="rybki-layered-page">
-      <Helmet>
-        <title>Рыбки — сценарный проект | ANIX</title>
-        <meta
-          name="description"
-          content="Рыбки — полнометражный научно-фантастический триллер и антиутопия о памяти, свободе и праве человека остаться собой."
-        />
-        <link rel="canonical" href="https://studio.anix-ai.pro/rybki_page" />
-        <meta property="og:title" content="Рыбки — антиутопия о памяти" />
-        <meta
-          property="og:description"
-          content="Сценарный проект ANIX: логлайн, история, герой, мир, аудитория и потенциал фильма."
-        />
-        <meta property="og:url" content="https://studio.anix-ai.pro/rybki_page" />
-        <meta property="og:type" content="website" />
-      </Helmet>
-
-      <header className="rybki-layered-header">
+<header className="rybki-layered-header">
         <a href="/" className="rybki-layered-back">
           <ArrowLeft aria-hidden="true" />
-          <span>ANIX Studio</span>
+          <span>Anix Studio</span>
         </a>
         <span className="rybki-layered-title">РЫБКИ / SCREENPLAY</span>
         <a href={telegramUrl} target="_blank" rel="noreferrer" className="rybki-layered-contact">
@@ -147,7 +130,7 @@ export default function RybkiLayeredPage() {
         <h2>Обсудим сценарий, производство или совместную упаковку проекта</h2>
         <a href={telegramUrl} target="_blank" rel="noreferrer" className="rybki-layered-final-button">
           <MessageCircle aria-hidden="true" />
-          Написать ANIX
+          Написать Anix
         </a>
       </section>
     </main>

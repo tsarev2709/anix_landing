@@ -53,7 +53,7 @@ export default function RybkiPage() {
       <header className="rybki-header">
         <a href="/" className="rybki-back">
           <ArrowLeft aria-hidden="true" />
-          <span>ANIX Studio</span>
+          <span>Anix Studio</span>
         </a>
         <div className="rybki-header-title">РЫБКИ / PITCH DECK</div>
         <a className="rybki-contact" href={telegramUrl} target="_blank" rel="noreferrer">
@@ -83,7 +83,7 @@ export default function RybkiPage() {
         <h2>Обсудим сценарий, производство или совместную упаковку проекта</h2>
         <a href={telegramUrl} target="_blank" rel="noreferrer" className="rybki-final-button">
           <MessageCircle aria-hidden="true" />
-          Написать ANIX
+          Написать Anix
         </a>
       </section>
     </main>

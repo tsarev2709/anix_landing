@@ -1,5 +1,4 @@
 import React, { Suspense, useState } from 'react';
-import { Helmet } from 'react-helmet';
 import {
   ArrowRight,
   BadgeCheck,
@@ -59,13 +58,13 @@ const directions = [
     title: 'Р¤Р°СЂРјР°, MedTech Рё biotech',
     text: 'РњРµС…Р°РЅРёР·Рј РґРµР№СЃС‚РІРёСЏ, РґРѕРІРµСЂРёРµ РІСЂР°С‡РµР№, РјР°СЃРєРѕС‚С‹ РїСЂРµРїР°СЂР°С‚РѕРІ, РєРѕРЅС„РµСЂРµРЅС†РёРѕРЅРЅС‹Рµ СЂРѕР»РёРєРё Рё СЃРµСЂРёРё РјР°С‚РµСЂРёР°Р»РѕРІ.',
     icon: Pill,
-    href: '/medicine/',
+    href: '/medicine',
   },
   {
     title: 'РћС…СЂР°РЅР° С‚СЂСѓРґР° Рё HSE',
     text: 'Р’РёРґРµРѕ-onboarding, Life Saving Rules, QR-СЃС†РµРЅР°СЂРёРё, РєР°СЂС‚РѕС‡РєРё, РјР°СЃРєРѕС‚С‹ Рё РєР°РјРїР°РЅРёРё РґР»СЏ СЃРѕС‚СЂСѓРґРЅРёРєРѕРІ.',
     icon: HardHat,
-    href: '/hse/',
+    href: '/hse',
   },
   {
     title: 'Р РµР¶РёСЃСЃСѓСЂР° СЃРѕР±С‹С‚РёР№ Рё AI-СЂРѕР»РёРєРё',
@@ -157,7 +156,7 @@ const featuredCases = [
     result: 'РјР°СЃРєРѕС‚ Рё РєР°СЂС‚РѕС‡РєРё СЃС‚Р°Р»Рё СЃРёСЃС‚РµРјРѕР№',
     text: 'РЎ РЅСѓР»СЏ СЂР°Р·СЂР°Р±РѕС‚Р°Р»Рё РїРµСЂСЃРѕРЅР°Р¶Р° РєР°РјРїР°РЅРёРё Рё РІРёР·СѓР°Р»СЊРЅС‹Р№ С„РѕСЂРјР°С‚, РєРѕС‚РѕСЂС‹Р№ РґРµР»Р°РµС‚ РїСЂР°РІРёР»Р° РѕС…СЂР°РЅС‹ С‚СЂСѓРґР° Р·Р°РјРµС‚РЅРµРµ Рё Р¶РёРІРµРµ.',
     image: multonCaseImage,
-    href: '/hse/',
+    href: '/hse',
   },
 ];
 
@@ -240,15 +239,15 @@ const process = [
 
 const partnerPages = [
   {
-    title: 'ANIX Medicine',
+    title: 'Anix Medicine',
     text: 'РћС‚РґРµР»СЊРЅР°СЏ СЃС‚СЂР°РЅРёС†Р° РґР»СЏ С„Р°СЂРјС‹, MedTech, biotech, РІСЂР°С‡РµР№, РїСЂРµРїР°СЂР°С‚РѕРІ, РјР°СЃРєРѕС‚РѕРІ Рё visual sales kits.',
-    href: '/medicine/',
+    href: '/medicine',
     icon: Stethoscope,
   },
   {
-    title: 'ANIX HSE',
+    title: 'Anix HSE',
     text: 'РћС‚РґРµР»СЊРЅР°СЏ СЃС‚СЂР°РЅРёС†Р° РґР»СЏ РѕС…СЂР°РЅС‹ С‚СЂСѓРґР°: video-onboarding, LSR, QR, С‚РµСЃС‚С‹, РєР°СЂС‚РѕС‡РєРё Рё РєР°РјРїР°РЅРёРё.',
-    href: '/hse/',
+    href: '/hse',
     icon: ShieldCheck,
   },
 ];
@@ -272,7 +271,7 @@ function FeaturedCase({ item }) {
       <a className="sr-case-media" href={item.href}>
         <img
           src={item.image}
-          alt={`РљРµР№СЃ ANIX: ${item.name}`}
+          alt={`РљРµР№СЃ Anix: ${item.name}`}
           loading="lazy"
         />
       </a>
@@ -291,40 +290,17 @@ function DesignOldPage() {
 
   return (
     <main className="studio-refresh">
-      <Helmet>
-        <title>
-          ANIX Studio - AI-РІРёРґРµРѕ, С„Р°СЂРјР°, HSE Рё СЂРµР¶РёСЃСЃСѓСЂР°
-          СЃРѕР±С‹С‚РёР№
-        </title>
-        <meta
-          name="description"
-          content="ANIX Studio СЃРѕР·РґР°РµС‚ AI-РІРёРґРµРѕ, СЂРѕР»РёРєРё РґР»СЏ СЃР»РѕР¶РЅС‹С… B2B-РїСЂРѕРґСѓРєС‚РѕРІ, С„Р°СЂРјС‹, MedTech, РѕС…СЂР°РЅС‹ С‚СЂСѓРґР°, СЃРѕР±С‹С‚РёР№ Рё РІРЅСѓС‚СЂРµРЅРЅРёС… РєРѕРјРјСѓРЅРёРєР°С†РёР№."
-        />
-        <meta name="robots" content="noindex, nofollow" />
-        <link rel="canonical" href="https://studio.anix-ai.pro/design_old/" />
-        <meta property="og:title" content="ANIX Studio" />
-        <meta
-          property="og:description"
-          content="РЁРѕСѓСЂРёР», РєРµР№СЃС‹ Рё РЅР°РїСЂР°РІР»РµРЅРёСЏ ANIX: sales enablement, С„Р°СЂРјР°, MedTech, HSE Рё СЂРµР¶РёСЃСЃСѓСЂР° СЃРѕР±С‹С‚РёР№."
-        />
-        <meta
-          property="og:url"
-          content="https://studio.anix-ai.pro/design_old/"
-        />
-        <meta property="og:type" content="website" />
-      </Helmet>
-
-      <section className="sr-hero" id="top">
+<section className="sr-hero" id="top">
         <div className="sr-hero-shade" aria-hidden="true" />
 
-        <nav className="sr-nav" aria-label="РќР°РІРёРіР°С†РёСЏ ANIX">
-          <a className="sr-logo" href="#top" aria-label="ANIX Studio">
-            <img src={logo} alt="ANIX" />
+        <nav className="sr-nav" aria-label="РќР°РІРёРіР°С†РёСЏ Anix">
+          <a className="sr-logo" href="#top" aria-label="Anix Studio">
+            <img src={logo} alt="Anix" />
           </a>
           <div className="sr-nav-links">
             <a href="#cases">РљРµР№СЃС‹</a>
-            <a href="/medicine/">Medicine</a>
-            <a href="/hse/">HSE</a>
+            <a href="/medicine">Medicine</a>
+            <a href="/hse">HSE</a>
             <a href="#contact">РљРѕРЅС‚Р°РєС‚С‹</a>
           </div>
         </nav>
@@ -333,7 +309,7 @@ function DesignOldPage() {
           <p className="sr-eyebrow">
             AI video production / creative direction / sales enablement
           </p>
-          <h1>ANIX Studio</h1>
+          <h1>Anix Studio</h1>
           <p className="sr-hero-lead">
             РџСЂРµРІСЂР°С‰Р°РµРј СЃР»РѕР¶РЅС‹Рµ РїСЂРѕРґСѓРєС‚С‹,
             РїСЂРµРїР°СЂР°С‚С‹, РїСЂР°РІРёР»Р° Р±РµР·РѕРїР°СЃРЅРѕСЃС‚Рё Рё
@@ -364,7 +340,7 @@ function DesignOldPage() {
           </div>
           <div
             className="sr-showreel-panel"
-            aria-label="Р“Р»Р°РІРЅС‹Р№ showreel ANIX"
+            aria-label="Р“Р»Р°РІРЅС‹Р№ showreel Anix"
           >
             <div className="sr-showreel-frame">
               {isShowreelOpen ? (
@@ -372,7 +348,7 @@ function DesignOldPage() {
                   src={showreelUrl}
                   width="1280"
                   height="720"
-                  title="ANIX showreel"
+                  title="Anix showreel"
                   allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
                   frameBorder="0"
                   allowFullScreen
@@ -413,7 +389,7 @@ function DesignOldPage() {
 
       <section
         className="sr-direction-band"
-        aria-label="РќР°РїСЂР°РІР»РµРЅРёСЏ ANIX"
+        aria-label="РќР°РїСЂР°РІР»РµРЅРёСЏ Anix"
       >
         <div className="sr-container sr-direction-grid">
           {directions.map((item) => (
@@ -427,7 +403,7 @@ function DesignOldPage() {
           <div>
             <p className="sr-eyebrow">Р§С‚Рѕ РёР·РјРµРЅРёР»РѕСЃСЊ</p>
             <h2>
-              ANIX Р±РѕР»СЊС€Рµ РЅРµ С‚РѕР»СЊРєРѕ РїСЂРѕ РїРѕРґРґРµСЂР¶РєСѓ
+              Anix Р±РѕР»СЊС€Рµ РЅРµ С‚РѕР»СЊРєРѕ РїСЂРѕ РїРѕРґРґРµСЂР¶РєСѓ
               РїСЂРѕРґР°Р¶
             </h2>
           </div>
@@ -442,7 +418,7 @@ function DesignOldPage() {
             </p>
             <p>
               РџРѕСЌС‚РѕРјСѓ РЅРѕРІР°СЏ РіР»Р°РІРЅР°СЏ СЃС‚СЂР°РЅРёС†Р°
-              РїРѕРєР°Р·С‹РІР°РµС‚ ANIX РєР°Рє СЃС‚СѓРґРёСЋ РЅРѕРІРѕР№
+              РїРѕРєР°Р·С‹РІР°РµС‚ Anix РєР°Рє СЃС‚СѓРґРёСЋ РЅРѕРІРѕР№
               Р°РЅРёРјР°С†РёРё Рё AI-РїСЂРѕРґР°РєС€РµРЅР°: РѕС‚ СЃРјС‹СЃР»Р° Рё
               РґСЂР°РјР°С‚СѓСЂРіРёРё РґРѕ СЂРѕР»РёРєР°, Р°РґР°РїС‚Р°С†РёР№,
               Р·Р°РїСѓСЃРєР° Рё РёР·РјРµСЂРёРјРѕРіРѕ СЌС„С„РµРєС‚Р°.
@@ -508,7 +484,7 @@ function DesignOldPage() {
                 <span className="sr-compact-media">
                   <img
                     src={item.image}
-                    alt={`РљРµР№СЃ ANIX: ${item.name}`}
+                    alt={`РљРµР№СЃ Anix: ${item.name}`}
                     loading="lazy"
                   />
                 </span>
@@ -529,7 +505,7 @@ function DesignOldPage() {
               СЂРµР¶РёСЃСЃРµСЂСЃРєР°СЏ СЃРёСЃС‚РµРјР°
             </h2>
             <p>
-              Р’ СЌС‚РѕРј РїСЂРѕРµРєС‚Рµ ANIX СЂР°Р±РѕС‚Р°Р» РЅРµ РєР°Рє
+              Р’ СЌС‚РѕРј РїСЂРѕРµРєС‚Рµ Anix СЂР°Р±РѕС‚Р°Р» РЅРµ РєР°Рє
               РїРѕРґСЂСЏРґС‡РёРє РЅР° РѕРґРёРЅ СЂРѕР»РёРє. РњС‹
               СЂРµР¶РёСЃСЃРёСЂРѕРІР°Р»Рё СЃРѕР±С‹С‚РёРµ: СЃРѕР±СЂР°Р»Рё
               РѕР±С‰СѓСЋ РєРѕРЅС†РµРїС†РёСЋ, СЃРЅСЏР»Рё РјР°С‚РµСЂРёР°Р»С‹,
@@ -649,13 +625,13 @@ function DesignOldPage() {
             </a>
             <a
               className="sr-button sr-button-secondary"
-              href="mailto:anix.ai@yandex.ru"
+              href="mailto:studio@anix-ai.pro"
             >
               <Mail aria-hidden="true" />
-              anix.ai@yandex.ru
+              studio@anix-ai.pro
             </a>
           </div>
-          <div className="sr-trust-list" aria-label="РџСЂРёР·РЅР°РЅРёРµ ANIX">
+          <div className="sr-trust-list" aria-label="РџСЂРёР·РЅР°РЅРёРµ Anix">
             <span>
               <BadgeCheck aria-hidden="true" />
               Sber500

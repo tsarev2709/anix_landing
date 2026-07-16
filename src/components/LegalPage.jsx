@@ -1,12 +1,11 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import './LegalPage.css';
 import logo from '../images/logoanix.png';
 
 const pages = {
   privacy: {
     title: 'Политика конфиденциальности',
-    description: 'Как ANIX Studio работает с информацией посетителей сайта.',
+    description: 'Как Anix Studio работает с информацией посетителей сайта.',
     items: [
       {
         title: '1. Общие положения',
@@ -30,13 +29,13 @@ const pages = {
       },
       {
         title: '6. Контакты',
-        text: 'По вопросам конфиденциальности можно написать на anix.ai@yandex.ru или в Telegram @anix_helper.',
+        text: 'По вопросам конфиденциальности можно написать на studio@anix-ai.pro или в Telegram @anix_helper.',
       },
     ],
   },
   'personal-data': {
     title: 'Политика обработки персональных данных',
-    description: 'Правила обработки персональных данных посетителей сайта ANIX Studio.',
+    description: 'Правила обработки персональных данных посетителей сайта Anix Studio.',
     items: [
       {
         title: '1. Цель обработки',
@@ -60,7 +59,7 @@ const pages = {
       },
       {
         title: '6. Отзыв согласия',
-        text: 'Вы можете запросить уточнение, удаление данных или отозвать согласие на обработку, написав на anix.ai@yandex.ru или в Telegram @anix_helper.',
+        text: 'Вы можете запросить уточнение, удаление данных или отозвать согласие на обработку, написав на studio@anix-ai.pro или в Telegram @anix_helper.',
       },
     ],
   },
@@ -71,21 +70,15 @@ export default function LegalPage({ type = 'privacy' }) {
 
   return (
     <main className="legal-page">
-      <Helmet>
-        <title>{page.title} - ANIX Studio</title>
-        <meta name="description" content={page.description} />
-        <link rel="canonical" href={`https://studio.anix-ai.pro/${type}`} />
-      </Helmet>
-
-      <nav className="legal-nav" aria-label="ANIX Studio">
-        <a className="legal-logo" href="/" aria-label="ANIX Studio">
-          <img src={logo} alt="ANIX" />
+<nav className="legal-nav" aria-label="Anix Studio">
+        <a className="legal-logo" href="/" aria-label="Anix Studio">
+          <img src={logo} alt="Anix" />
         </a>
         <a className="legal-back" href="/">На главную</a>
       </nav>
 
       <section className="legal-hero">
-        <p>Документы ANIX Studio</p>
+        <p>Документы Anix Studio</p>
         <h1>{page.title}</h1>
         <span>Дата обновления: 6 июля 2026</span>
       </section>

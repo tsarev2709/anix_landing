@@ -10,9 +10,15 @@ The test contour is designed around three roles:
 
 ## Registration
 
-Employee self-registration should use Supabase Auth with allowed corporate email domains from `VITE_ALLOWED_EMAIL_DOMAINS` or `REACT_APP_ALLOWED_EMAIL_DOMAINS`.
+Self-registration (`/hse/mvp/test/register`) uses Supabase Auth with allowed corporate email domains from `VITE_ALLOWED_EMAIL_DOMAINS` or `REACT_APP_ALLOWED_EMAIL_DOMAINS`.
 
-The frontend may validate email domains for UX, but backend/Supabase policies remain the enforcement layer.
+The registrant picks their own role, but the choice is limited to `employee` and `specialist` — `admin` is never offered on the self-registration form. This is a deliberate security boundary: anyone who can reach the form must not be able to grant themselves administrator access. Since `supabase.auth.signUp` accepts arbitrary metadata from any caller (not just this form), the role is re-validated server-side too — see the trigger below. `admin` accounts are created only via `scripts/create-hse-admin.mjs` or promoted from the admin dashboard by an existing admin.
+
+The frontend may validate email domains for UX, but backend/Supabase policies (RLS) remain the enforcement layer.
+
+Email confirmation is enabled (Supabase default). `supabase.auth.signUp` returns no session until the user clicks the confirmation link in their inbox, so the register form shows a "check your email" message instead of redirecting straight to a dashboard.
+
+Because there is no session yet at signup time, the client cannot insert its own `hse_profiles` row (RLS would reject it: `auth.uid()` is null). Instead, `full_name`, `role`, and `department_slug` are passed as `auth.signUp` metadata, and a `security definer` trigger (`supabase/migrations/003_hse_mvp_signup_trigger.sql`, function `handle_new_hse_user`) creates the profile row when the `auth.users` row is inserted, whitelisting the role to `employee`/`specialist` regardless of what the metadata claims.
 
 ## Admin creation
 

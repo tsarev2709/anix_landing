@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
 import {
   ArrowRight,
   BadgeCheck,
@@ -33,7 +32,6 @@ import multonCaseImage from '../images/cases/multon-partners.webp';
 import startechCaseImage from '../images/cases/startech.webp';
 import tpesCaseImage from '../images/cases/tpes.webp';
 import yurrobotCaseImage from '../images/cases/yurrobot.webp';
-import visualThree from '../images/3.png';
 import '../Design1TestPage.css';
 
 const telegramUrl = 'https://t.me/anix_helper';
@@ -46,29 +44,25 @@ const heroLinks = {
   telegram: telegramUrl,
   cases: '#cases',
   videoFolder: videoFolderUrl,
-  email: 'mailto:anix.ai@yandex.ru',
+  email: 'mailto:studio@anix-ai.pro',
 };
 
 const metrics = [
   {
     value: '15%+',
-    label: 'средний рост конверсии в КП',
-    note: 'когда вместо длинного объяснения появляется нормальная визуальная история',
+    label: 'средний рост конверсии в кейсах',
   },
   {
     value: 'x10',
     label: 'x10 рост вовлечения у ролика фонда МФТИ',
-    note: 'теплая анимация сработала как инфоповод, а не просто как красивый файл',
   },
   {
     value: '+30%',
     label: 'к переходам и откликам в кейсе ТПЭС',
-    note: 'потому что проблему стало видно быстрее, чем ее можно объяснить на 50 слайдах',
   },
   {
     value: '3–7 дней',
     label: 'для быстрых форматов',
-    note: 'когда нужно не строить вечность, а быстро показать идею рынку или команде',
   },
 ];
 
@@ -103,7 +97,7 @@ const mainCases = [
     text: 'До ролика продукт приходилось долго объяснять. Мы собрали короткую историю, где человек быстрее понимает, что происходит, зачем это нужно и почему этим вообще стоит пользоваться.',
     tags: 'explainer / продукт / первые пилоты',
     image: clappyCaseImage,
-    href: 'https://drive.google.com/file/d/1EYWBYlhSgIK4Wd4F0nTKR1kQxYhXGc5j/view',
+    href: '/cases/clappy',
   },
   {
     title: 'Hemotech AI',
@@ -112,7 +106,7 @@ const mainCases = [
     text: 'Задача была тонкая: показать инновационный медицинский продукт спокойно, без фейерверков и тревожного AI-пафоса. Чтобы врачи, клиники и партнеры не напрягались, а понимали.',
     tags: 'medtech / врачи / доверие',
     image: hemoCaseImage,
-    href: 'https://drive.google.com/file/d/1Q6RQlNbAKBGugpo-MH1-_6omwwnmPQ8E/view',
+    href: '/cases/hemotech-ai',
   },
   {
     title: 'ТПЭС',
@@ -121,7 +115,7 @@ const mainCases = [
     text: 'Вместо 50-страничной презентации сделали ролик, который быстрее показывает проблему реактивных потерь, решение и миссию энергоэффективности. Иногда рынок надо не убеждать дольше, а объяснять яснее.',
     tags: 'промышленность / продажи / конференция',
     image: tpesCaseImage,
-    href: 'https://drive.google.com/file/d/1BgJs_mKyvEVtDlWeaXGY9rmFjPKrTes5/view',
+    href: '/cases/tpes',
   },
   {
     title: 'Эндаумент-фонд МФТИ',
@@ -130,7 +124,7 @@ const mainCases = [
     text: 'Мы взяли реальные фотографии МФТИ и перевели их в теплую анимационную систему. Получился не просто ролик, а инфоповод, который люди захотели пересылать.',
     tags: 'PR / анимационная система / охваты',
     image: mftiCaseImage,
-    href: '#cases',
+    href: '/cases/mfti-endowment',
   },
   {
     title: 'Мосфарма',
@@ -139,7 +133,7 @@ const mainCases = [
     text: 'Сохранили бренд-персонажей, но сделали их живее и теплее. В фарме доверие часто начинается с маленькой штуки: персонаж не должен выглядеть как пластиковый заложник брендбука.',
     tags: 'фарма / персонажи / ТВ',
     image: mosfarmaCaseImage,
-    href: 'https://drive.google.com/file/d/1Uw9e-ZFzg9AVK8NnoN_EHwfR0ZPvD_M0/view',
+    href: '/cases/mosfarma',
   },
   {
     title: 'Мултон Партнерс',
@@ -148,7 +142,7 @@ const mainCases = [
     text: 'С нуля разработали персонажа кампании и визуальный формат для правил охраны труда. Чтобы безопасность не выглядела как скучный PDF, который все открыли, закрыли и забыли.',
     tags: 'HSE / маскот / карточки',
     image: multonCaseImage,
-    href: '/hse/',
+    href: '/cases/multon-partners',
   },
 ];
 
@@ -258,19 +252,19 @@ const directions = [
   {
     title: 'Medicine',
     text: 'Фарма, медтех, препараты, механизмы действия, врачи, маскоты и визуальные материалы.',
-    href: '/medicine/',
+    href: '/medicine',
     icon: Stethoscope,
   },
   {
     title: 'HSE',
     text: 'Охрана труда, жизненно важные правила, страницы по QR-коду, карточки, маскоты и кампании для сотрудников.',
-    href: '/hse/',
+    href: '/hse',
     icon: ShieldCheck,
   },
   {
     title: 'Команда и CEO',
-    text: 'Кто собирает режиссуру, физтеховскую точность и бизнес-процесс внутри ANIX.',
-    href: '/ceo/',
+    text: 'Кто собирает режиссуру, физтеховскую точность и бизнес-процесс внутри Anix.',
+    href: '/ceo',
     icon: UserRound,
   },
   {
@@ -293,9 +287,9 @@ const trustChips = [
 const navigationLinks = [
   { label: 'Кейсы', href: '#cases' },
   { label: 'Что делаем', href: '#services' },
-  { label: 'Medicine', href: '/medicine/' },
-  { label: 'HSE', href: '/hse/' },
-  { label: 'CEO', href: '/ceo/' },
+  { label: 'Medicine', href: '/medicine' },
+  { label: 'HSE', href: '/hse' },
+  { label: 'CEO', href: '/ceo' },
   { label: 'Процесс', href: '#process' },
   { label: 'Видео', href: '#video' },
   { label: 'Контакты', href: '#contact' },
@@ -324,7 +318,6 @@ function MetricCard({ item }) {
     <article className="d1-metric-card">
       <strong>{item.value}</strong>
       <h3>{item.label}</h3>
-      <p>{item.note}</p>
     </article>
   );
 }
@@ -351,7 +344,7 @@ function CaseCard({ item }) {
         href={item.href}
         ariaLabel={`Смотреть кейс ${item.title}`}
       >
-        <img src={item.image} alt={`Кейс ANIX: ${item.title}`} loading="lazy" />
+        <img src={item.image} alt={`Кейс Anix: ${item.title}`} loading="lazy" />
       </SmartLink>
       <div className="d1-case-body">
         <span className="d1-case-category">{item.category}</span>
@@ -378,7 +371,7 @@ function CompactCaseCard({ item }) {
       ariaLabel={`Смотреть видео ${item.name}`}
     >
       <div className="d1-compact-media">
-        <img src={item.image} alt={`Кейс ANIX: ${item.name}`} loading="lazy" />
+        <img src={item.image} alt={`Кейс Anix: ${item.name}`} loading="lazy" />
       </div>
       <span className="d1-compact-title">{item.name}</span>
       <p>{item.text}</p>
@@ -435,7 +428,7 @@ function VideoShowreel({ variant = 'hero' }) {
             src={showreelUrl}
             width="1280"
             height="720"
-            title="ANIX showreel"
+            title="Anix showreel"
             allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
             frameBorder="0"
             allowFullScreen
@@ -446,7 +439,21 @@ function VideoShowreel({ variant = 'hero' }) {
             type="button"
             onClick={() => setIsOpen(true)}
           >
-            <img src={visualThree} alt="Постер showreel ANIX" />
+            <picture>
+              <source
+                type="image/webp"
+                srcSet="/optimized/showreel-640.webp 640w, /optimized/showreel-960.webp 960w, /optimized/showreel-1344.webp 1344w"
+                sizes="(max-width: 760px) 90vw, 48vw"
+              />
+              <img
+                src="/optimized/showreel-960.webp"
+                alt="Постер showreel ANIX"
+                width="1342"
+                height="752"
+                fetchPriority="high"
+                decoding="async"
+              />
+            </picture>
             <span className="d1-play">
               <PlayCircle aria-hidden="true" />
             </span>
@@ -464,35 +471,13 @@ function VideoShowreel({ variant = 'hero' }) {
 function Design1TestPage() {
   return (
     <main className="design1-test">
-      <Helmet>
-        <title>
-          ANIX Studio - ролики, маскоты и визуальные системы для сложных
-          продуктов
-        </title>
-        <meta
-          name="description"
-          content="ANIX Studio делает AI-видео, анимацию, маскотов, visual sales kits и обучающие материалы для B2B, фармы, MedTech, HSE и событий."
-        />
-        <link rel="canonical" href="https://studio.anix-ai.pro/" />
-        <meta
-          property="og:title"
-          content="ANIX Studio — дизайн-тест лендинга"
-        />
-        <meta
-          property="og:description"
-          content="Кейсы, showreel, метрики и направления ANIX в новой редакторской структуре."
-        />
-        <meta property="og:url" content="https://studio.anix-ai.pro/" />
-        <meta property="og:type" content="website" />
-      </Helmet>
-
-      <header className="d1-header">
+<header className="d1-header">
         <nav
           className="d1-header-inner"
-          aria-label="Навигация тестовой страницы ANIX"
+          aria-label="Навигация тестовой страницы Anix"
         >
-          <a className="d1-logo" href="#top" aria-label="ANIX Studio">
-            <img src={logo} alt="ANIX" />
+          <a className="d1-logo" href="#top" aria-label="Anix Studio">
+            <img src={logo} alt="Anix" />
           </a>
           <div className="d1-nav-links">
             {navigationLinks.map((item) => (
@@ -516,11 +501,11 @@ function Design1TestPage() {
       <section className="d1-hero d1-container" id="top">
         <div className="d1-hero-copy">
           <p className="d1-eyebrow">
-            ANIX / AI-видео, анимация и сложные продукты
+            Anix Studio (Студия Аникс) — анимационная студия для сложных продуктов.
           </p>
           <h1>Делаем сложное интересным</h1>
                     <p className="d1-lead">
-            Сначала понимание. Потом восхищение. ANIX помогает вовлекать в
+            Сначала понимание. Потом восхищение. Anix помогает вовлекать в
             сложные продукты, правила и идеи через 2D-анимацию, историю и ясную
             драматургию.
           </p>
@@ -546,7 +531,7 @@ function Design1TestPage() {
           </div>
         </div>
 
-        <aside className="d1-hero-visual" aria-label="Showreel ANIX">
+        <aside className="d1-hero-visual" aria-label="Showreel Anix">
           <VideoShowreel />
           <div className="d1-hero-note">
             <MonitorPlay aria-hidden="true" />
@@ -563,7 +548,7 @@ function Design1TestPage() {
           <div className="d1-proof-layout">
             <div>
               <p className="d1-eyebrow">Showreel + цифры</p>
-              <h2>Сначала человек должен понять, потом уже восхищаться</h2>
+              <h2>Сначала понимание — потом восхищение</h2>
             </div>
             <p className="d1-section-lead">
               Хороший ролик не просит у зрителя лишнюю минуту на расшифровку. Он
@@ -608,11 +593,6 @@ function Design1TestPage() {
                 событиях
               </h2>
             </div>
-            <p className="d1-section-lead">
-              Здесь важно оставить не только красоту. Оставить результат. Цифры,
-              контекст, ссылку на видео и ощущение, что за каждым роликом была
-              задача, а не просто желание сделать вау.
-            </p>
           </div>
           <div className="d1-case-grid">
             {mainCases.map((item) => (
@@ -628,8 +608,7 @@ function Design1TestPage() {
             <div>
               <p className="d1-eyebrow">Еще видео</p>
               <h2>
-                Не все надо превращать в огромный кейс. Иногда достаточно быстро
-                показать, что мы умеем
+                Хотите еще кейсы?
               </h2>
             </div>
             <a
@@ -655,14 +634,8 @@ function Design1TestPage() {
           <div className="d1-reasons-head">
             <p className="d1-eyebrow">Почему это работает</p>
             <h2>
-              Мы не начинаем с картинки. И это, кажется, сильно экономит всем
-              нервы
+              Начинаем с главного — с результата
             </h2>
-            <p>
-              Самая частая ошибка — сразу бежать делать красиво. А потом
-              выяснять, что красиво не объясняет, не продает, не обучает и
-              вообще живет отдельно от задачи. Мы так стараемся не делать.
-            </p>
           </div>
           <div className="d1-reason-grid">
             {reasons.map((item) => (
@@ -676,7 +649,7 @@ function Design1TestPage() {
         <div className="d1-container d1-process-layout">
           <div className="d1-process-copy">
             <p className="d1-eyebrow">Процесс</p>
-            <h2>Чтобы проект не расползся, мы заранее фиксируем маршрут</h2>
+            <h2>Заранее фиксируем маршрут</h2>
             <p className="d1-section-lead">
               Особенно в фарме, HSE и корпоративных проектах. Там много
               согласующих, правил, экспертов и внезапных правок. Поэтому процесс
@@ -695,7 +668,7 @@ function Design1TestPage() {
         <div className="d1-container">
           <div className="d1-section-head">
             <p className="d1-eyebrow">Направления</p>
-            <h2>ANIX уже шире, чем один формат роликов</h2>
+            <h2>Anix уже шире, чем один формат роликов</h2>
           </div>
           <div className="d1-direction-grid">
             {directions.map((item) => (
@@ -709,10 +682,10 @@ function Design1TestPage() {
         <div className="d1-container d1-trust-layout">
           <div>
             <p className="d1-eyebrow">Признание</p>
-            <h2>Нас уже замечали не только клиенты</h2>
+            <h2>Anix везде</h2>
           </div>
           <div>
-            <div className="d1-trust-chips" aria-label="Признание ANIX">
+            <div className="d1-trust-chips" aria-label="Признание Anix">
               {trustChips.map((item) => (
                 <span key={item}>
                   <BadgeCheck aria-hidden="true" />
@@ -720,11 +693,6 @@ function Design1TestPage() {
                 </span>
               ))}
             </div>
-            <p>
-              Для нас это не финальная медалька на стене. Скорее сигнал, что
-              студия выросла из эксперимента в нормальную рабочую систему. Все
-              еще живую. Все еще немного безумную. Но уже систему.
-            </p>
           </div>
         </div>
       </section>
@@ -738,9 +706,7 @@ function Design1TestPage() {
               объяснить
             </h2>
             <p>
-              Мы посмотрим, где там смысловая пробка, и предложим формат: ролик,
-              серия, маскот, visual sales kit, HSE-пилот, pharma-визуал или
-              экранная история для мероприятия.
+              Мы предложим лучший формат для вашего запроса и скажем, с чего начать
             </p>
           </div>
           <div className="d1-final-actions">
@@ -767,7 +733,7 @@ function Design1TestPage() {
               href={heroLinks.email}
             >
               <Mail aria-hidden="true" />
-              anix.ai@yandex.ru
+              studio@anix-ai.pro
             </a>
           </div>
         </div>

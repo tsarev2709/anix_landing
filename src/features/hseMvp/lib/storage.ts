@@ -1,3 +1,5 @@
+import { recordRealAttempt } from './auth';
+
 const ATTEMPTS_KEY = 'anix_hse_mvp_attempts';
 const COURSE_PROGRESS_KEY = 'anix_hse_mvp_course_progress';
 const COURSE_REQUESTS_KEY = 'anix_hse_mvp_course_requests';
@@ -46,6 +48,7 @@ export const saveAttempt = (attempt: any) => {
     completedAt: attempt.completedAt || new Date().toISOString(),
   };
   writeJson(ATTEMPTS_KEY, [...attempts, storedAttempt]);
+  recordRealAttempt(storedAttempt).catch(() => {});
   saveCourseProgress(attempt.moduleId, {
     status: attempt.passed ? 'Пройден' : 'Рекомендуется повторить',
     progress: 100,
