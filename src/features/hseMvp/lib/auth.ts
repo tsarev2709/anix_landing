@@ -146,6 +146,31 @@ export const updateProfileRole = async (userId: string, role: HseRole) => {
   if (error) throw error;
 };
 
+// Same constraint as deleteOwnAccount: deleting a user needs the
+// service-role key, so this calls admin-delete-user, which re-checks the
+// caller's own admin role server-side before deleting anyone.
+export const adminDeleteUser = async (targetUserId: string) => {
+  const client = requireClient();
+  const config = getHseSupabaseConfig();
+  const { data: sessionData } = await client.auth.getSession();
+  const token = sessionData?.session?.access_token;
+  if (!token) throw new Error('Не найдена активная сессия.');
+
+  const response = await fetch(`${config.url}/functions/v1/admin-delete-user`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      apikey: config.anonKey,
+    },
+    body: JSON.stringify({ targetUserId }),
+  });
+  if (!response.ok) {
+    const body = await response.json().catch(() => ({}) as any);
+    throw new Error(body?.error || 'Не удалось удалить пользователя.');
+  }
+};
+
 export const fetchDepartmentSlug = async (departmentId: string | null) => {
   if (!departmentId) return null;
   const client = getHseSupabaseClient();
