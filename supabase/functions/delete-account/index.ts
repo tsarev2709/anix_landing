@@ -1,4 +1,15 @@
-import { CORS } from '../_shared/cors.ts';
+// Inlined instead of importing ../_shared/cors.ts on purpose: the
+// Supabase Dashboard's Edge Function editor deploys a single file with no
+// access to the rest of the repo, so this needs to stand alone to be
+// deployable either via the CLI or by pasting straight into the dashboard.
+// '*' rather than a single fixed origin: this endpoint is protected by
+// verifying the caller's JWT server-side, not by CORS, and it needs to be
+// callable from both the GitHub Pages fork preview and studio.anix-ai.pro.
+const CORS = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'content-type, authorization, x-client-info, apikey',
+  'Access-Control-Allow-Methods': 'GET,POST,OPTIONS',
+};
 
 function json(body: any, status = 200) {
   return new Response(JSON.stringify(body), {
