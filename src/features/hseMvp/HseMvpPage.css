@@ -590,6 +590,27 @@
   font-weight: 850;
 }
 
+.hse-mvp-danger-zone {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(220, 38, 38, 0.24);
+}
+
+.hse-mvp-danger-zone h3 {
+  margin: 0 0 6px;
+  color: var(--mvp-red);
+}
+
+.hse-mvp-button-danger {
+  background: var(--mvp-red);
+  color: #fff;
+  border-color: var(--mvp-red);
+}
+
+.hse-mvp-button-danger:hover {
+  background: #b91c1c;
+}
+
 .hse-mvp-result-hero {
   display: grid;
   justify-items: start;
