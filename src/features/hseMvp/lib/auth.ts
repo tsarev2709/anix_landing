@@ -1,4 +1,4 @@
-import { getHseSupabaseClient } from './hseSupabase';
+import { getHseSupabaseClient, getHseSupabaseConfig } from './hseSupabase';
 
 export type HseRole = 'employee' | 'specialist' | 'admin';
 
@@ -243,4 +243,48 @@ export const listAllAttempts = async () => {
     .order('completed_at', { ascending: false });
   if (error) throw error;
   return data || [];
+};
+
+export const updateOwnFullName = async (fullName: string) => {
+  const client = requireClient();
+  const { data: userData } = await client.auth.getUser();
+  const userId = userData?.user?.id;
+  if (!userId) throw new Error('Не найдена активная сессия.');
+  const { error } = await table(client, 'hse_profiles')
+    .update({ full_name: fullName, updated_at: new Date().toISOString() })
+    .eq('user_id', userId);
+  if (error) throw error;
+};
+
+export const updateOwnPassword = async (newPassword: string) => {
+  const client = requireClient();
+  const { error } = await client.auth.updateUser({ password: newPassword });
+  if (error) throw error;
+};
+
+// Supabase has no client-callable "delete my own account" API — deleting a
+// user from auth.users requires the service-role key, which must never
+// reach the frontend. This calls a dedicated Edge Function
+// (supabase/functions/delete-account) that verifies the caller's own JWT
+// server-side and only then deletes that same user with the service role.
+export const deleteOwnAccount = async () => {
+  const client = requireClient();
+  const config = getHseSupabaseConfig();
+  const { data: sessionData } = await client.auth.getSession();
+  const token = sessionData?.session?.access_token;
+  if (!token) throw new Error('Не найдена активная сессия.');
+
+  const response = await fetch(`${config.url}/functions/v1/delete-account`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+      apikey: config.anonKey,
+    },
+  });
+  if (!response.ok) {
+    const body = await response.json().catch(() => ({}) as any);
+    throw new Error(body?.error || 'Не удалось удалить аккаунт.');
+  }
+  await client.auth.signOut();
 };

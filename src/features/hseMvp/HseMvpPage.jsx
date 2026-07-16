@@ -68,6 +68,7 @@ import {
 } from './lib/hseSupabase';
 import {
   SELF_REGISTER_ROLES,
+  deleteOwnAccount,
   fetchDepartmentSlug,
   fetchOwnProfile,
   getCurrentSession,
@@ -79,6 +80,8 @@ import {
   signInWithPassword,
   signOutCurrentUser,
   signUpWithProfile,
+  updateOwnFullName,
+  updateOwnPassword,
   updateProfileRole,
 } from './lib/auth';
 
@@ -265,7 +268,7 @@ function Shell({ path, title, children, breadcrumbs = [] }) {
     <main
       className={`hse-mvp ${largeText ? 'hse-mvp-large-text' : ''} ${contrast ? 'hse-mvp-contrast' : ''}`}
     >
-<aside className="hse-mvp-sidebar" aria-label="Навигация демополигона">
+      <aside className="hse-mvp-sidebar" aria-label="Навигация демополигона">
         <a
           className="hse-mvp-brand"
           href={href(rootPath)}
@@ -2603,6 +2606,177 @@ const roleLabels = {
   admin: 'Администратор',
 };
 
+function AccountSettingsPanel({ profile }) {
+  const [fullName, setFullName] = useState(profile.full_name || '');
+  const [nameStatus, setNameStatus] = useState('');
+  const [nameError, setNameError] = useState('');
+  const [nameBusy, setNameBusy] = useState(false);
+
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordStatus, setPasswordStatus] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [passwordBusy, setPasswordBusy] = useState(false);
+
+  const [deleteConfirming, setDeleteConfirming] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
+  const [deleteBusy, setDeleteBusy] = useState(false);
+
+  const handleNameSubmit = async (event) => {
+    event.preventDefault();
+    setNameError('');
+    setNameStatus('');
+    setNameBusy(true);
+    try {
+      await updateOwnFullName(fullName);
+      setNameStatus('Имя обновлено.');
+    } catch (err) {
+      setNameError(err.message || 'Не удалось обновить имя.');
+    } finally {
+      setNameBusy(false);
+    }
+  };
+
+  const handlePasswordSubmit = async (event) => {
+    event.preventDefault();
+    setPasswordError('');
+    setPasswordStatus('');
+    if (newPassword.length < 6) {
+      setPasswordError('Пароль должен быть не короче 6 символов.');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setPasswordError('Пароли не совпадают.');
+      return;
+    }
+    setPasswordBusy(true);
+    try {
+      await updateOwnPassword(newPassword);
+      setPasswordStatus('Пароль обновлён.');
+      setNewPassword('');
+      setConfirmPassword('');
+    } catch (err) {
+      setPasswordError(err.message || 'Не удалось обновить пароль.');
+    } finally {
+      setPasswordBusy(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    setDeleteError('');
+    setDeleteBusy(true);
+    try {
+      await deleteOwnAccount();
+      window.location.href = href(testPath);
+    } catch (err) {
+      setDeleteError(err.message || 'Не удалось удалить аккаунт.');
+      setDeleteBusy(false);
+    }
+  };
+
+  return (
+    <article className="hse-mvp-card">
+      <h2>Настройки аккаунта</h2>
+      <form className="hse-mvp-auth-form" onSubmit={handleNameSubmit}>
+        <label>
+          Имя
+          <input
+            value={fullName}
+            onChange={(event) => setFullName(event.target.value)}
+            required
+          />
+        </label>
+        <div className="hse-mvp-actions">
+          <button
+            className="hse-mvp-button hse-mvp-button-primary"
+            type="submit"
+            disabled={nameBusy}
+          >
+            {nameBusy ? 'Сохранение…' : 'Сохранить имя'}
+          </button>
+        </div>
+        {nameError ? <p className="hse-mvp-form-error">{nameError}</p> : null}
+        {nameStatus ? <p className="hse-mvp-success">{nameStatus}</p> : null}
+      </form>
+
+      <form className="hse-mvp-auth-form" onSubmit={handlePasswordSubmit}>
+        <label>
+          Новый пароль
+          <input
+            type="password"
+            value={newPassword}
+            onChange={(event) => setNewPassword(event.target.value)}
+            minLength={6}
+            placeholder="Минимум 6 символов"
+            required
+          />
+        </label>
+        <label>
+          Повторите пароль
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(event) => setConfirmPassword(event.target.value)}
+            minLength={6}
+            required
+          />
+        </label>
+        <div className="hse-mvp-actions">
+          <button
+            className="hse-mvp-button hse-mvp-button-primary"
+            type="submit"
+            disabled={passwordBusy}
+          >
+            {passwordBusy ? 'Сохранение…' : 'Сменить пароль'}
+          </button>
+        </div>
+        {passwordError ? (
+          <p className="hse-mvp-form-error">{passwordError}</p>
+        ) : null}
+        {passwordStatus ? (
+          <p className="hse-mvp-success">{passwordStatus}</p>
+        ) : null}
+      </form>
+
+      <div className="hse-mvp-danger-zone">
+        <h3>Удаление аккаунта</h3>
+        <p>Действие необратимо: аккаунт и вход по нему будут удалены.</p>
+        {!deleteConfirming ? (
+          <button
+            className="hse-mvp-button"
+            type="button"
+            onClick={() => setDeleteConfirming(true)}
+          >
+            Удалить аккаунт
+          </button>
+        ) : (
+          <div className="hse-mvp-actions">
+            <button
+              className="hse-mvp-button hse-mvp-button-danger"
+              type="button"
+              onClick={handleDelete}
+              disabled={deleteBusy}
+            >
+              {deleteBusy ? 'Удаление…' : 'Точно удалить'}
+            </button>
+            <button
+              className="hse-mvp-button"
+              type="button"
+              onClick={() => setDeleteConfirming(false)}
+              disabled={deleteBusy}
+            >
+              Отмена
+            </button>
+          </div>
+        )}
+        {deleteError ? (
+          <p className="hse-mvp-form-error">{deleteError}</p>
+        ) : null}
+      </div>
+    </article>
+  );
+}
+
 function RealEmployeeDashboard({ profile }) {
   const [events, setEvents] = useState([]);
   const [requiredModules, setRequiredModules] = useState([]);
@@ -2671,6 +2845,7 @@ function RealEmployeeDashboard({ profile }) {
         </dl>
         <TestSignOutButton />
       </article>
+      <AccountSettingsPanel profile={profile} />
       <article className="hse-mvp-card">
         <h2>Мои курсы</h2>
         {error ? <p className="hse-mvp-form-error">{error}</p> : null}
@@ -2852,6 +3027,7 @@ function RealSpecialistDashboard({ profile }) {
           </tbody>
         </table>
       </div>
+      <AccountSettingsPanel profile={profile} />
     </div>
   );
 }
