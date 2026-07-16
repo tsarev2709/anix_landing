@@ -1,42 +1,19 @@
-﻿self.addEventListener('install', event => {
+const legacyCachePrefix = 'anix-cache-';
+
+self.addEventListener('install', () => {
   self.skipWaiting();
 });
 
-const cacheName = 'anix-cache-v2';
-const cacheableContent = /javascript|css|image/;
-
-self.addEventListener('activate', event => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then(keys => Promise.all(keys.filter(key => key !== cacheName).map(key => caches.delete(key))))
-      .then(() => self.clients.claim())
+      .then((keys) => Promise.all(keys.filter((key) => key.indexOf(legacyCachePrefix) === 0).map((key) => caches.delete(key))))
+      .then(() => self.registration.unregister())
+      .then(() => self.clients.claim()),
   );
 });
 
-self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
-  event.respondWith(
-    fetch(event.request)
-      .then(networkResponse => {
-        if (networkResponse && networkResponse.status === 200) {
-          const contentType = networkResponse.headers.get('content-type') || '';
-          if (cacheableContent.test(contentType)) {
-            const responseToCache = networkResponse.clone();
-            caches.open(cacheName).then(cache => {
-              cache.put(event.request, responseToCache);
-            });
-          }
-        }
-        return networkResponse;
-      })
-      .catch(() =>
-        caches.open(cacheName).then(cache =>
-          cache.match(event.request).then(response => {
-            if (response) return response;
-            return Response.error();
-          })
-        )
-      )
-  );
-});
+// This worker intentionally does not intercept requests. It exists only so
+// devices controlled by an older ANIX worker receive an update, clear the
+// obsolete cache and return to normal browser networking.

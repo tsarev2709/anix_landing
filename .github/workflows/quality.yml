@@ -1,0 +1,55 @@
+name: Quality checks
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-build-seo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install PDF renderer
+        run: sudo apt-get update && sudo apt-get install -y poppler-utils
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Tests
+        env:
+          CI: true
+        run: npm test -- --watchAll=false
+
+      - name: Render Rybki slide previews
+        run: node scripts/render-rybki-pdf-slides.js
+
+      - name: Production build and SEO verification
+        env:
+          CI: false
+        run: npm run build
+
+      - name: Runtime smoke test
+        run: node scripts/runtime-smoke-test.js
+
+      - name: Collect production asset metrics
+        run: node scripts/report-build-metrics.js
+
+      - name: Upload production asset metrics
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-metrics
+          path: artifacts/build-metrics.json
+          if-no-files-found: error

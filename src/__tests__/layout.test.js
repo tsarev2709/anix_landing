@@ -1,65 +1,67 @@
-/* eslint-disable no-redeclare */
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import TestUtils from 'react-dom/test-utils';
 import fs from 'fs';
 import App from '../App';
 
-jest.mock(
-  'react-swipeable',
-  () => ({
-    useSwipeable: () => ({}),
-  }),
-  { virtual: true }
-);
+describe('current ANIX landing', () => {
+  let container;
+  let root;
 
-// Mock react-helmet to avoid dependency errors in tests
-jest.mock(
-  'react-helmet',
-  () => ({
-    Helmet: ({ children }) => <>{children}</>,
-  }),
-  { virtual: true }
-);
-
-test('hero section appears after loading and shows first value prop', () => {
-  jest.useFakeTimers();
-  // Polyfill IntersectionObserver for JSDOM
-  global.IntersectionObserver = class {
-    constructor() {}
-    observe() {}
-    unobserve() {}
-    disconnect() {}
-  };
-  const container = document.createElement('div');
-  document.body.appendChild(container);
-  TestUtils.act(() => {
-    createRoot(container).render(<App />);
+  beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    root = createRoot(container);
   });
 
-  expect(container.querySelector('.loading-screen')).toBeTruthy();
-
-  TestUtils.act(() => {
-    jest.advanceTimersByTime(1500);
+  afterEach(() => {
+    TestUtils.act(() => root.unmount());
+    container.remove();
   });
 
-  const heroTitle = container.querySelector('.hero-title');
-  expect(heroTitle).toBeTruthy();
-  expect(heroTitle.textContent).toBe(
-    'Увеличиваем конверсию на любом этапе воронки в среднем на 15% с помощью анимации'
-  );
-});
+  test('renders one meaningful H1 inside the main content', () => {
+    TestUtils.act(() => {
+      root.render(<App />);
+    });
 
-test('hero-content has expected max width', () => {
-  const css = fs.readFileSync('src/App.css', 'utf8');
-  const match = css.match(/\.hero-content\s*\{[^}]*\}/);
-  expect(match).not.toBeNull();
-  expect(match[0]).toMatch(/max-width:\s*800px/);
-});
+    const main = container.querySelector('main.design1-test');
+    const headings = container.querySelectorAll('h1');
 
-test('award card fits mobile width', () => {
-  const css = fs.readFileSync('src/App.css', 'utf8');
-  const match = css.match(/\.award-card\s*\{[^}]*\}/);
-  expect(match).not.toBeNull();
-  expect(match[0]).toMatch(/max-width:\s*300px/);
+    expect(main).toBeTruthy();
+    expect(headings).toHaveLength(1);
+    expect(headings[0].textContent).toBe('Делаем сложное интересным');
+  });
+
+  test('exposes real internal links to public direction pages', () => {
+    TestUtils.act(() => {
+      root.render(<App />);
+    });
+
+    const hrefs = Array.from(container.querySelectorAll('a[href]')).map((link) =>
+      link.getAttribute('href')
+    );
+
+    expect(hrefs).toContain('/medicine/');
+    expect(hrefs).toContain('/hse/');
+    expect(hrefs).toContain('/ceo/');
+  });
+
+  test('showreel is click-to-load and does not mount the iframe initially', () => {
+    TestUtils.act(() => {
+      root.render(<App />);
+    });
+
+    expect(container.querySelector('.d1-showreel-poster')).toBeTruthy();
+    expect(container.querySelector('.d1-showreel iframe')).toBeNull();
+  });
+
+  test('wide layout remains fluid instead of using a narrow fixed container', () => {
+    const css = fs.readFileSync('src/Design1TestPage.css', 'utf8');
+    const match = css.match(/\.d1-container\s*\{[^}]*\}/);
+
+    expect(match).not.toBeNull();
+    expect(match[0]).toMatch(/width:\s*100%/);
+    expect(match[0]).toMatch(/max-width:\s*none/);
+    expect(match[0]).toMatch(/padding-inline:\s*clamp\(/);
+  });
 });
