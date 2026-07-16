@@ -1,5 +1,4 @@
 ﻿import React from 'react';
-import { Helmet } from 'react-helmet';
 import {
   ArrowRight,
   BadgeCheck,
@@ -25,18 +24,18 @@ import speakingPhoto from '../images/ceo/alexandra-speaking.webp';
 import portraitPhoto from '../images/ceo/alexandra-portrait.webp';
 
 const telegramUrl = 'https://t.me/anix_helper';
-const emailUrl = 'mailto:anix.ai@yandex.ru';
+const emailUrl = 'mailto:studio@anix-ai.pro';
 
 const navLinks = [
   { label: 'Главная', href: '/' },
   { label: 'Кейсы', href: '/#cases' },
-  { label: 'Фарма', href: '/medicine/' },
-  { label: 'HSE', href: '/hse/' },
+  { label: 'Фарма', href: '/medicine' },
+  { label: 'HSE', href: '/hse' },
   { label: 'Контакт', href: '#contact' },
 ];
 
 const facts = [
-  'CEO ANIX',
+  'CEO Anix',
   'ФОПФ МФТИ',
   'Бизнес-школа МФТИ x Сбер',
   'Sber500',
@@ -57,7 +56,7 @@ const roles = [
   },
   {
     title: 'Предприниматель',
-    text: 'ANIX прошел путь от нейросетевого стартапа для 2D-анимации до студии, которая зарабатывает на сложных B2B-задачах.',
+    text: 'Anix прошел путь от нейросетевого стартапа для 2D-анимации до студии, которая зарабатывает на сложных B2B-задачах.',
     icon: BriefcaseBusiness,
   },
   {
@@ -108,9 +107,9 @@ const timeline = [
     text: 'Статья в Physics Letters B о 3d higher-spin theory. Не украшение биографии, а след от реальной работы в сложной математической теме.',
   },
   {
-    year: 'ANIX',
+    year: 'Anix',
     title: 'От AI-инструмента к студии',
-    text: 'Первый ANIX рос как нейросетевой продукт для ускорения 2D-анимации. Потом рынок показал, где ценность сильнее: в решении задач клиента целиком.',
+    text: 'Первый Anix рос как нейросетевой продукт для ускорения 2D-анимации. Потом рынок показал, где ценность сильнее: в решении задач клиента целиком.',
   },
   {
     year: 'Сейчас',
@@ -150,8 +149,8 @@ const photos = [
   },
   {
     src: andreyPhoto,
-    alt: 'Александра Севостьянова и Андрей Царев на мероприятии ANIX',
-    label: 'ANIX как команда',
+    alt: 'Александра Севостьянова и Андрей Царев на мероприятии Anix',
+    label: 'Anix как команда',
   },
   {
     src: portraitPhoto,
@@ -163,8 +162,8 @@ const photos = [
 function Header() {
   return (
     <header className="ceo-header">
-      <a className="ceo-logo" href="/" aria-label="ANIX Studio">
-        <img src={logo} alt="ANIX" />
+      <a className="ceo-logo" href="/" aria-label="Anix Studio">
+        <img src={logo} alt="Anix" />
       </a>
       <nav aria-label="Навигация по странице CEO">
         {navLinks.map((item) => (
@@ -218,20 +217,11 @@ function LinkCard({ item }) {
 export default function CeoPage() {
   return (
     <main className="ceo-page">
-      <Helmet>
-        <title>Александра Севостьянова, CEO ANIX</title>
-        <meta
-          name="description"
-          content="Страница Александры Севостьяновой, CEO ANIX: физтех, режиссер, сценарист и предприниматель, который превращает сложные продукты в понятные визуальные истории."
-        />
-        <link rel="canonical" href="https://studio.anix-ai.pro/ceo/" />
-      </Helmet>
-
-      <Header />
+<Header />
 
       <section className="ceo-hero">
         <div className="ceo-hero-copy">
-          <p className="ceo-eyebrow">CEO ANIX</p>
+          <p className="ceo-eyebrow">CEO Anix</p>
           <h1>
             Саша Севостьянова: физик, режиссер и человек, который собирает смысл
             в форму
@@ -240,7 +230,7 @@ export default function CeoPage() {
             Она умеет удерживать рядом вещи, которые обычно живут отдельно:
             физтеховскую точность, режиссерское внимание к человеку и
             предпринимательскую привычку проверять идеи рынком. Из этого вырос
-            ANIX: сначала нейросетевой стартап для 2D-анимации, потом студия,
+            Anix: сначала нейросетевой стартап для 2D-анимации, потом студия,
             которая объясняет сложные продукты через видео, маскотов и
             визуальные системы.
           </p>
@@ -255,7 +245,7 @@ export default function CeoPage() {
               Обсудить проект
             </a>
             <a className="ceo-button ceo-button-light" href="/#cases">
-              Кейсы ANIX
+              Кейсы Anix
               <ArrowRight aria-hidden="true" />
             </a>
           </div>
@@ -279,7 +269,7 @@ export default function CeoPage() {
           <img
             className="ceo-hero-main-photo"
             src={andreyPhoto}
-            alt="Александра Севостьянова и Андрей Царев на мероприятии ANIX"
+            alt="Александра Севостьянова и Андрей Царев на мероприятии Anix"
           />
           <div className="ceo-hero-photo-row">
             <img src={speakingPhoto} alt="Александра Севостьянова выступает" />
@@ -301,7 +291,7 @@ export default function CeoPage() {
             </h2>
           </div>
           <p>
-            В ANIX часто приходят с задачами, которые трудно уложить в обычный
+            В Anix часто приходят с задачами, которые трудно уложить в обычный
             рекламный формат: механизм действия препарата, охрана труда,
             B2B2C-продукт, инженерная технология, мероприятие с несколькими
             слоями смысла. Саша помогает не упростить это до пустоты, а найти
@@ -349,11 +339,11 @@ export default function CeoPage() {
         <div className="ceo-container ceo-story-layout">
           <div>
             <p className="ceo-eyebrow">Траектория</p>
-            <h2>Не биография для галочки, а путь, который объясняет ANIX</h2>
+            <h2>Не биография для галочки, а путь, который объясняет Anix</h2>
             <p>
               У Саши есть редкая для креативной студии связка: она понимает, как
               устроены сложные модели, как люди воспринимают историю и как
-              бизнесу жить после красивой премьеры. Поэтому в проектах ANIX
+              бизнесу жить после красивой премьеры. Поэтому в проектах Anix
               много внимания к смыслу, но не меньше - к дедлайнам, продажам,
               согласованиям и тому, чтобы материал потом реально использовали.
             </p>
@@ -379,7 +369,7 @@ export default function CeoPage() {
               Саша училась на ФОПФ МФТИ и прошла предпринимательскую траекторию
               Бизнес-школы МФТИ x Сбер. В ее бэкграунде есть не только питчи и
               акселераторы, но и научная публикация в Physics Letters B. Для
-              ANIX это не статусная строка, а привычка задавать неприятный
+              Anix это не статусная строка, а привычка задавать неприятный
               вопрос: что здесь на самом деле происходит?
             </p>
           </div>
@@ -395,7 +385,7 @@ export default function CeoPage() {
         <div className="ceo-container">
           <div className="ceo-section-head">
             <p className="ceo-eyebrow">Фото</p>
-            <h2>Саша в работе, на сцене и внутри ANIX</h2>
+            <h2>Саша в работе, на сцене и внутри Anix</h2>
           </div>
           <div className="ceo-gallery">
             {photos.map((photo) => (
@@ -421,7 +411,7 @@ export default function CeoPage() {
             </h2>
             <p>
               Можно прийти с презентацией, ТЗ, молекулярной схемой, правилами
-              безопасности или идеей мероприятия. ANIX разберется, что нужно
+              безопасности или идеей мероприятия. Anix разберется, что нужно
               объяснить, кому и в каком формате это сработает.
             </p>
           </div>
@@ -439,7 +429,7 @@ export default function CeoPage() {
               <Mail aria-hidden="true" />
               Email
             </a>
-            <a className="ceo-button ceo-button-outline-dark" href="/medicine/">
+            <a className="ceo-button ceo-button-outline-dark" href="/medicine">
               <BookOpen aria-hidden="true" />
               Фарма
             </a>

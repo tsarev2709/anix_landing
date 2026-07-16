@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Helmet } from 'react-helmet';
 import {
   Activity,
   ArrowLeft,
@@ -266,18 +265,14 @@ function Shell({ path, title, children, breadcrumbs = [] }) {
     <main
       className={`hse-mvp ${largeText ? 'hse-mvp-large-text' : ''} ${contrast ? 'hse-mvp-contrast' : ''}`}
     >
-      <Helmet>
-        <title>{title} | ANIX HSE MVP</title>
-        <meta name="description" content={HSE_MVP_PRODUCT_DESCRIPTION} />
-      </Helmet>
-      <aside className="hse-mvp-sidebar" aria-label="Навигация демополигона">
+<aside className="hse-mvp-sidebar" aria-label="Навигация демополигона">
         <a
           className="hse-mvp-brand"
           href={href(rootPath)}
-          aria-label="ANIX HSE MVP"
+          aria-label="Anix HSE MVP"
         >
           <ShieldCheck aria-hidden="true" />
-          <span>ANIX HSE</span>
+          <span>Anix HSE</span>
         </a>
         <nav>
           {navItems.map(({ label, path: itemPath, icon: Icon }) => (
@@ -380,7 +375,7 @@ function HomePage() {
       <section className="hse-mvp-hero">
         <div>
           <Badge tone="info">Демополигон цифрового решения</Badge>
-          <h1>ANIX. Единая визуальная система обучения по охране труда</h1>
+          <h1>Anix. Единая визуальная система обучения по охране труда</h1>
           <p>{HSE_MVP_PRODUCT_DESCRIPTION}</p>
           <div className="hse-mvp-disclaimer">
             <ShieldCheck aria-hidden="true" />
@@ -1778,7 +1773,7 @@ function AdminPage() {
     <>
       <section className="hse-mvp-page-head">
         <Badge tone="info">Кабинет администратора</Badge>
-        <h1>Управление курсами ANIX HSE</h1>
+        <h1>Управление курсами Anix HSE</h1>
         <p>
           Демо-админка показывает версии курсов, модули, технологический контур
           и сведения для конкурсной оценки.
@@ -1931,7 +1926,7 @@ function RequestCoursePage() {
     event.preventDefault();
     setSubmitting(true);
     const payload = {
-      source: 'ANIX HSE MVP',
+      source: 'Anix HSE MVP',
       product: 'Единая визуальная система обучения по охране труда',
       companyName: form.companyName,
       industry: form.industry,
@@ -1967,7 +1962,7 @@ function RequestCoursePage() {
         </Badge>
         <h1>Заявка принята</h1>
         <p>
-          {result.message}. Специалист ANIX свяжется для подготовки визуального
+          {result.message}. Специалист Anix свяжется для подготовки визуального
           курса.
         </p>
         <p className="hse-mvp-muted">
@@ -2075,7 +2070,7 @@ function IntegrationsPage() {
   const crmMode = getCrmMode();
   const testWebhook = async () => {
     const response = await submitCourseRequest({
-      source: 'ANIX HSE MVP',
+      source: 'Anix HSE MVP',
       product: 'Единая визуальная система обучения по охране труда',
       companyName: 'Тестовая компания',
       industry: 'Пищевая промышленность',
@@ -2190,7 +2185,7 @@ function SupportPage() {
         <article className="hse-mvp-card">
           <Mail aria-hidden="true" />
           <h2>Email поддержки</h2>
-          <a href="mailto:anix.ai@yandex.ru">anix.ai@yandex.ru</a>
+          <a href="mailto:studio@anix-ai.pro">studio@anix-ai.pro</a>
         </article>
         <article className="hse-mvp-card">
           <Phone aria-hidden="true" />

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
 import SiteFooter from './SiteFooter';
 
 const WhyItWorksPage = () => {
@@ -78,14 +77,7 @@ const WhyItWorksPage = () => {
 
   return (
     <main className="relative min-h-screen bg-anix-dark text-white">
-      <Helmet>
-        <title>Почему это работает — ANIX Studio</title>
-        <meta
-          name="description"
-          content="Почему видео и анимация продают лучше классического отдела продаж. Факты, сравнения и кейсы от ANIX Studio."
-        />
-      </Helmet>
-      <div
+<div
         className="absolute inset-0 bg-gradient-to-b from-[#1f1240] via-anix-dark/80 to-anix-darker pointer-events-none"
         aria-hidden
       />
@@ -191,7 +183,7 @@ const WhyItWorksPage = () => {
             <div className="mt-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <p className="text-white/70 max-w-2xl">
                 Мы строим стратегию контента под вашу воронку: от первого
-                касания до сделки. Команда ANIX Studio берёт на себя аналитику,
+                касания до сделки. Команда Anix Studio берёт на себя аналитику,
                 сценарии, продакшн и дистрибуцию.
               </p>
               <a
