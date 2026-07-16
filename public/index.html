@@ -11,6 +11,36 @@
     <link rel="icon" href="%PUBLIC_URL%/anix_wand.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <script>
+      (function retireLegacyWorker() {
+        if (!("serviceWorker" in navigator)) return;
+
+        var reloadKey = "anix-sw-retired-v1";
+        var cleanupCaches = "caches" in window
+          ? caches.keys().then(function (keys) {
+              return Promise.all(
+                keys
+                  .filter(function (key) { return key.indexOf("anix-cache-") === 0; })
+                  .map(function (key) { return caches.delete(key); })
+              );
+            })
+          : Promise.resolve();
+
+        Promise.all([
+          navigator.serviceWorker.getRegistrations().then(function (registrations) {
+            return Promise.all(registrations.map(function (registration) {
+              return registration.unregister();
+            }));
+          }),
+          cleanupCaches,
+        ]).then(function () {
+          if (navigator.serviceWorker.controller && sessionStorage.getItem(reloadKey) !== "1") {
+            sessionStorage.setItem(reloadKey, "1");
+            window.location.reload();
+          }
+        }).catch(function () {});
+      })();
+    </script>
+    <script>
       (function preloadRouteLcp() {
         var path = window.location.pathname.replace(/\/+$/, '') || '/';
         var link = document.createElement('link');
@@ -80,12 +110,5 @@
         <img src="https://mc.yandex.ru/watch/103290769" style="position:absolute; left:-9999px;" alt="" />
       </div>
     </noscript>
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('%PUBLIC_URL%/service-worker.js');
-        });
-      }
-    </script>
   </body>
 </html>
