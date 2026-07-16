@@ -68,6 +68,7 @@ import {
 } from './lib/hseSupabase';
 import {
   SELF_REGISTER_ROLES,
+  adminDeleteUser,
   deleteOwnAccount,
   fetchDepartmentSlug,
   fetchOwnProfile,
@@ -3037,6 +3038,7 @@ function RealAdminDashboard() {
   const [events, setEvents] = useState([]);
   const [error, setError] = useState('');
   const [busyUserId, setBusyUserId] = useState('');
+  const [deleteConfirmingId, setDeleteConfirmingId] = useState('');
 
   const reload = async () => {
     try {
@@ -3068,6 +3070,20 @@ function RealAdminDashboard() {
     }
   };
 
+  const handleDeleteUser = async (userId) => {
+    setBusyUserId(userId);
+    setError('');
+    try {
+      await adminDeleteUser(userId);
+      setDeleteConfirmingId('');
+      await reload();
+    } catch (deleteError) {
+      setError(deleteError.message || 'Не удалось удалить пользователя.');
+    } finally {
+      setBusyUserId('');
+    }
+  };
+
   return (
     <div className="hse-mvp-panel">
       <div className="hse-mvp-actions">
@@ -3084,6 +3100,7 @@ function RealAdminDashboard() {
               <th>Роль</th>
               <th>Регистрация</th>
               <th>Изменить роль</th>
+              <th>Удалить</th>
             </tr>
           </thead>
           <tbody>
@@ -3105,6 +3122,38 @@ function RealAdminDashboard() {
                     <option value="specialist">Специалист</option>
                     <option value="admin">Администратор</option>
                   </select>
+                </td>
+                <td>
+                  {deleteConfirmingId === item.user_id ? (
+                    <div className="hse-mvp-actions">
+                      <button
+                        className="hse-mvp-button hse-mvp-button-danger"
+                        type="button"
+                        disabled={busyUserId === item.user_id}
+                        onClick={() => handleDeleteUser(item.user_id)}
+                      >
+                        {busyUserId === item.user_id
+                          ? 'Удаление…'
+                          : 'Точно удалить'}
+                      </button>
+                      <button
+                        className="hse-mvp-button"
+                        type="button"
+                        disabled={busyUserId === item.user_id}
+                        onClick={() => setDeleteConfirmingId('')}
+                      >
+                        Отмена
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      className="hse-mvp-button"
+                      type="button"
+                      onClick={() => setDeleteConfirmingId(item.user_id)}
+                    >
+                      Удалить
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
