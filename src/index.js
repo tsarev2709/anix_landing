@@ -9,9 +9,12 @@ import CasesHubLinkPortal from './components/CasesHubLinkPortal';
 import RouteBreadcrumbsPortal from './seo/RouteBreadcrumbsPortal';
 import RouteRelatedLinksPortal from './seo/RouteRelatedLinksPortal';
 import SeoHead from './seo/SeoHead';
+import { installRuntimeRecovery, recoverFromRuntimeFailure } from './runtimeCompatibility';
 
 console.info('[CFG] SUBMIT:', CONFIG.SUBMIT_LEAD_URL);
 console.info('[CFG] TRACK :', CONFIG.TRACK_EVENT_URL);
+
+installRuntimeRecovery();
 
 const NotFound = lazy(() => import('./components/NotFound'));
 const WhyItWorksPage = lazy(() => import('./components/WhyItWorksPage'));
@@ -28,6 +31,61 @@ const RybkiPage = lazy(() => import('./components/RybkiPage'));
 const CasesHubPage = lazy(() => import('./components/CasesHubPage'));
 const CasesCategoryPage = lazy(() => import('./components/CasesCategoryPage'));
 const CasePage = lazy(() => import('./components/CasePage'));
+
+function RuntimeFallback({ failed = false }) {
+  return (
+    <main
+      role="status"
+      style={{
+        minHeight: '100vh',
+        display: 'grid',
+        placeItems: 'center',
+        padding: '32px',
+        boxSizing: 'border-box',
+        background: '#f7f4ef',
+        color: '#21162d',
+        textAlign: 'center',
+        fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif",
+      }}
+    >
+      <div>
+        <strong style={{ display: 'block', fontSize: '22px', marginBottom: '10px' }}>ANIX Studio</strong>
+        <p style={{ margin: '0 0 18px' }}>
+          {failed ? 'Страница не смогла загрузиться полностью.' : 'Загружаем страницу…'}
+        </p>
+        {failed ? (
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            style={{ padding: '12px 18px', border: 0, borderRadius: '999px', cursor: 'pointer' }}
+          >
+            Обновить страницу
+          </button>
+        ) : null}
+      </div>
+    </main>
+  );
+}
+
+class RuntimeErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { failed: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  componentDidCatch(error) {
+    recoverFromRuntimeFailure(error);
+  }
+
+  render() {
+    if (this.state.failed) return <RuntimeFallback failed />;
+    return this.props.children;
+  }
+}
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
@@ -46,14 +104,16 @@ const categoryCasePaths = new Set(['/cases/b2b', '/cases/medicine', '/cases/cine
 
 const renderInLayout = (component) => {
   root.render(
-    <AppLayout>
-      <SeoHead path={normalizedPath} />
-      <Suspense fallback={null}>{component}</Suspense>
-      <AboutStudioPortal path={normalizedPath} />
-      <CasesHubLinkPortal path={normalizedPath} />
-      <RouteBreadcrumbsPortal path={normalizedPath} />
-      <RouteRelatedLinksPortal path={normalizedPath} />
-    </AppLayout>,
+    <RuntimeErrorBoundary>
+      <AppLayout>
+        <SeoHead path={normalizedPath} />
+        <Suspense fallback={<RuntimeFallback />}>{component}</Suspense>
+        <AboutStudioPortal path={normalizedPath} />
+        <CasesHubLinkPortal path={normalizedPath} />
+        <RouteBreadcrumbsPortal path={normalizedPath} />
+        <RouteRelatedLinksPortal path={normalizedPath} />
+      </AppLayout>
+    </RuntimeErrorBoundary>,
   );
 };
 
@@ -106,12 +166,12 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       break;
     default:
       root.render(
-        <>
+        <RuntimeErrorBoundary>
           <SeoHead path={normalizedPath} />
-          <Suspense fallback={null}>
+          <Suspense fallback={<RuntimeFallback />}>
             <NotFound />
           </Suspense>
-        </>,
+        </RuntimeErrorBoundary>,
       );
   }
 }
