@@ -1,5 +1,6 @@
-const GEO_CACHE_KEY = 'anix-showreel-country-v1';
-const GEO_CACHE_TTL_MS = 24 * 60 * 60 * 1000;
+const GEO_CACHE_KEY = 'anix-showreel-country-v2';
+const LEGACY_GEO_CACHE_KEY = 'anix-showreel-country-v1';
+const GEO_CACHE_TTL_MS = 5 * 60 * 1000;
 const GEO_TIMEOUT_MS = 1800;
 
 export const SHOWREEL_URLS = {
@@ -22,7 +23,16 @@ function browserFallbackProvider() {
     : 'youtube';
 }
 
+function removeLegacyCache() {
+  try {
+    localStorage.removeItem(LEGACY_GEO_CACHE_KEY);
+  } catch {
+    // Storage may be blocked in private mode.
+  }
+}
+
 function readCachedCountry() {
+  removeLegacyCache();
   try {
     const cached = JSON.parse(localStorage.getItem(GEO_CACHE_KEY) || 'null');
     if (
@@ -58,17 +68,19 @@ export function getFallbackShowreelProvider() {
   return browserFallbackProvider();
 }
 
-export function resolveShowreelProvider() {
-  const cachedCountry = readCachedCountry();
-  if (cachedCountry) return Promise.resolve(cachedCountry === 'RU' ? 'vk' : 'youtube');
-  if (providerPromise) return providerPromise;
+export function resolveShowreelProvider({ forceRefresh = false } = {}) {
+  if (!forceRefresh) {
+    const cachedCountry = readCachedCountry();
+    if (cachedCountry) return Promise.resolve(cachedCountry === 'RU' ? 'vk' : 'youtube');
+    if (providerPromise) return providerPromise;
+  }
 
-  providerPromise = (async () => {
+  const request = (async () => {
     const controller = typeof AbortController === 'function' ? new AbortController() : null;
     const timeout = setTimeout(() => controller?.abort(), GEO_TIMEOUT_MS);
 
     try {
-      const response = await fetch('https://ipapi.co/country/', {
+      const response = await fetch(`https://ipapi.co/country/?t=${Date.now()}`, {
         method: 'GET',
         mode: 'cors',
         cache: 'no-store',
@@ -86,8 +98,10 @@ export function resolveShowreelProvider() {
       return browserFallbackProvider();
     } finally {
       clearTimeout(timeout);
+      if (providerPromise === request) providerPromise = null;
     }
   })();
 
-  return providerPromise;
+  providerPromise = request;
+  return request;
 }
