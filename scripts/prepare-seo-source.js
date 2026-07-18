@@ -45,6 +45,91 @@ const caseLinkReplacements = [
 
 const approvedBrandLine = 'Anix Studio (Студия Аникс) — анимационная студия для сложных продуктов.';
 
+const originalShowreelFunction = `function VideoShowreel({ variant = 'hero' }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className={\`d1-showreel d1-showreel-\${variant}\`}>
+      <div className="d1-showreel-frame">
+        {isOpen ? (
+          <iframe
+            src={showreelUrl}
+            width="1280"
+            height="720"
+            title="Anix showreel"
+            allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+            frameBorder="0"
+            allowFullScreen
+          />
+        ) : (
+          <button
+            className="d1-showreel-poster"
+            type="button"
+            onClick={() => setIsOpen(true)}
+          >`;
+
+const geoShowreelFunction = `function VideoShowreel({ variant = 'hero' }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [provider, setProvider] = useState(null);
+  const [isResolving, setIsResolving] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    resolveShowreelProvider().then((resolvedProvider) => {
+      if (active) setProvider(resolvedProvider);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const handleOpen = async () => {
+    setIsResolving(true);
+    try {
+      const resolvedProvider = await resolveShowreelProvider({ forceRefresh: true });
+      setProvider(resolvedProvider);
+      setIsOpen(true);
+    } finally {
+      setIsResolving(false);
+    }
+  };
+
+  const activeProvider = provider || getFallbackShowreelProvider();
+
+  return (
+    <div className={\`d1-showreel d1-showreel-\${variant}\`}>
+      <div className="d1-showreel-frame">
+        {isOpen ? (
+          <>
+            <iframe
+              src={SHOWREEL_URLS[activeProvider]}
+              width="1280"
+              height="720"
+              title={\`Anix showreel — \${activeProvider === 'vk' ? 'VK Video' : 'YouTube'}\`}
+              allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+              frameBorder="0"
+              allowFullScreen
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+            {activeProvider === 'youtube' ? (
+              <a
+                className="d1-showreel-external"
+                href={SHOWREEL_EXTERNAL_URLS.youtube}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Открыть на YouTube
+              </a>
+            ) : null}
+          </>
+        ) : (
+          <button
+            className="d1-showreel-poster"
+            type="button"
+            onClick={handleOpen}
+            disabled={isResolving}
+          >`;
+
 for (const relativePath of files) {
   const filePath = path.join(root, relativePath);
   if (!fs.existsSync(filePath)) continue;
@@ -58,16 +143,28 @@ for (const relativePath of files) {
 
   for (const [from, to] of cleanRouteReplacements) next = next.split(from).join(to);
   if (relativePath.endsWith('Design1TestPage.jsx')) {
-    // Keep this technical marker compatible with scripts/build.js. The build script
-    // replaces the original showreel <img> with responsive WebP markup and then
-    // removes the visualThree import. If this marker is normalized to "Anix" first,
-    // the replacement misses and production crashes with visualThree undefined.
     next = next.replace('Постер showreel Anix', 'Постер showreel ANIX');
     next = next.replace(
       'Anix / AI-видео, анимация и сложные продукты',
       approvedBrandLine,
     );
     for (const [from, to] of caseLinkReplacements) next = next.replace(from, to);
+
+    next = next
+      .replace("import React, { useState } from 'react';", "import React, { useEffect, useState } from 'react';")
+      .replace(
+        "import SiteFooter from './SiteFooter';",
+        "import SiteFooter from './SiteFooter';\nimport { getFallbackShowreelProvider, resolveShowreelProvider, SHOWREEL_EXTERNAL_URLS, SHOWREEL_URLS } from '../utils/showreelProvider';",
+      )
+      .replace(
+        /const showreelUrl =\s*\n\s*'https:\/\/vkvideo\.ru\/video_ext\.php\?[^']+';\s*\n/,
+        '',
+      )
+      .replace(originalShowreelFunction, geoShowreelFunction)
+      .replace(
+        '<span className="d1-showreel-label">Смотреть showreel</span>',
+        '<span className="d1-showreel-label">{isResolving ? \'Подбираем видеоплеер…\' : \'Смотреть showreel\'}</span>',
+      );
   }
 
   if (next !== current) {
