@@ -2,7 +2,8 @@
   "widget": {
     "name": "Anix HSE Integration",
     "description": "Server-side integration for receiving website course requests. No in-app UI.",
-    "short_description": "Headless API integration"
+    "short_description": "Headless API integration",
+    "tour_description": "The integration works purely via API, with no UI inside amoCRM."
   },
   "settings": {
     "note": "Note (unused)"
