@@ -9,5 +9,5 @@
     "locale": ["ru", "en"],
     "installation": true
   },
-  "locations": []
+  "locations": ["settings"]
 }
