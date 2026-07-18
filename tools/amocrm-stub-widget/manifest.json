@@ -19,14 +19,14 @@
         "en": ["/images/tour_1_en.png", "/images/tour_2_en.png", "/images/tour_3_en.png"]
       },
       "tour_description": "widget.tour_description"
+    },
+    "settings": {
+      "note": {
+        "name": "settings.note",
+        "type": "text",
+        "required": false
+      }
     }
   },
-  "locations": ["settings"],
-  "settings": {
-    "note": {
-      "name": "settings.note",
-      "type": "text",
-      "required": false
-    }
-  }
+  "locations": ["settings"]
 }
