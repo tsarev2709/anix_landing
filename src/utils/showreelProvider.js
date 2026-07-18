@@ -5,7 +5,12 @@ const GEO_TIMEOUT_MS = 1800;
 export const SHOWREEL_URLS = {
   vk: 'https://vkvideo.ru/video_ext.php?oid=-174933827&id=456239051&hash=8a2d51037c33a713&hd=3&autoplay=1',
   youtube:
-    'https://www.youtube-nocookie.com/embed/fD-ELPdniGQ?autoplay=1&rel=0&modestbranding=1',
+    'https://www.youtube.com/embed/fD-ELPdniGQ?autoplay=1&rel=0&playsinline=1&origin=https%3A%2F%2Fstudio.anix-ai.pro',
+};
+
+export const SHOWREEL_EXTERNAL_URLS = {
+  vk: 'https://vkvideo.ru/video-174933827_456239051',
+  youtube: 'https://youtu.be/fD-ELPdniGQ',
 };
 
 function browserFallbackProvider() {
