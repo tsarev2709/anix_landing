@@ -1,6 +1,7 @@
 {
   "widget": {
     "name": "Anix HSE Integration",
-    "description": "Server-side integration for receiving website course requests. No in-app UI."
+    "description": "Server-side integration for receiving website course requests. No in-app UI.",
+    "short_description": "Headless API integration"
   }
 }
