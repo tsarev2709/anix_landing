@@ -9,5 +9,12 @@
     "locale": ["ru", "en"],
     "installation": true
   },
-  "locations": ["settings"]
+  "locations": ["settings"],
+  "settings": {
+    "note": {
+      "name": "settings.note",
+      "type": "text",
+      "required": false
+    }
+  }
 }
