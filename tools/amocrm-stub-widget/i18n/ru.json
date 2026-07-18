@@ -1,0 +1,6 @@
+{
+  "widget": {
+    "name": "Anix HSE Integration",
+    "description": "Серверная интеграция для приёма заявок с сайта, без интерфейса внутри amoCRM."
+  }
+}

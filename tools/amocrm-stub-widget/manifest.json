@@ -1,0 +1,13 @@
+{
+  "widget": {
+    "name": "Anix HSE Integration",
+    "description": "Server-to-server API integration for course request forms. No visual UI inside amoCRM.",
+    "short_description": "Headless API integration",
+    "version": "1.0.0",
+    "interface_version": 2,
+    "init_once": true,
+    "locale": ["ru", "en"],
+    "installation": true
+  },
+  "locations": []
+}
