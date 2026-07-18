@@ -86,7 +86,7 @@ const geoShowreelFunction = `function VideoShowreel({ variant = 'hero' }) {
   const handleOpen = async () => {
     setIsResolving(true);
     try {
-      const resolvedProvider = provider || (await resolveShowreelProvider());
+      const resolvedProvider = await resolveShowreelProvider({ forceRefresh: true });
       setProvider(resolvedProvider);
       setIsOpen(true);
     } finally {
