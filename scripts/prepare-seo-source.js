@@ -100,15 +100,28 @@ const geoShowreelFunction = `function VideoShowreel({ variant = 'hero' }) {
     <div className={\`d1-showreel d1-showreel-\${variant}\`}>
       <div className="d1-showreel-frame">
         {isOpen ? (
-          <iframe
-            src={SHOWREEL_URLS[activeProvider]}
-            width="1280"
-            height="720"
-            title={\`Anix showreel — \${activeProvider === 'vk' ? 'VK Video' : 'YouTube'}\`}
-            allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-            frameBorder="0"
-            allowFullScreen
-          />
+          <>
+            <iframe
+              src={SHOWREEL_URLS[activeProvider]}
+              width="1280"
+              height="720"
+              title={\`Anix showreel — \${activeProvider === 'vk' ? 'VK Video' : 'YouTube'}\`}
+              allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+              frameBorder="0"
+              allowFullScreen
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+            {activeProvider === 'youtube' ? (
+              <a
+                className="d1-showreel-external"
+                href={SHOWREEL_EXTERNAL_URLS.youtube}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Открыть на YouTube
+              </a>
+            ) : null}
+          </>
         ) : (
           <button
             className="d1-showreel-poster"
@@ -141,7 +154,7 @@ for (const relativePath of files) {
       .replace("import React, { useState } from 'react';", "import React, { useEffect, useState } from 'react';")
       .replace(
         "import SiteFooter from './SiteFooter';",
-        "import SiteFooter from './SiteFooter';\nimport { getFallbackShowreelProvider, resolveShowreelProvider, SHOWREEL_URLS } from '../utils/showreelProvider';",
+        "import SiteFooter from './SiteFooter';\nimport { getFallbackShowreelProvider, resolveShowreelProvider, SHOWREEL_EXTERNAL_URLS, SHOWREEL_URLS } from '../utils/showreelProvider';",
       )
       .replace(
         /const showreelUrl =\s*\n\s*'https:\/\/vkvideo\.ru\/video_ext\.php\?[^']+';\s*\n/,
