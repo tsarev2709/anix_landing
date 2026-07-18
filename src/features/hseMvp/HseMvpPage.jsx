@@ -16,6 +16,7 @@ import {
   LifeBuoy,
   Link as LinkIcon,
   Mail,
+  MessageCircle,
   Phone,
   Plus,
   RotateCcw,
@@ -59,7 +60,11 @@ import {
 import { downloadCsv, downloadXlsx, downloadXlsxFallback } from './lib/export';
 import { getRuleBasedRecommendations } from './lib/recommendations';
 import { generateAiRecommendation } from './lib/aiRecommendations';
-import { submitCourseRequest, getCrmMode } from './lib/crm';
+import {
+  submitCourseRequest,
+  getCrmMode,
+  getSupportTelegramHandle,
+} from './lib/crm';
 import { openCompletionPrint } from './lib/pdf';
 import {
   getHseSupabaseClient,
@@ -1957,6 +1962,7 @@ function RequestCoursePage() {
   };
 
   if (result) {
+    const telegramHandle = getSupportTelegramHandle();
     return (
       <section className="hse-mvp-result-hero hse-mvp-success-screen">
         <Badge tone="success">
@@ -1964,7 +1970,7 @@ function RequestCoursePage() {
             ? 'Заявка передана в CRM'
             : 'Демо-заявка сохранена'}
         </Badge>
-        <h1>Заявка принята</h1>
+        <h1>Спасибо, мы свяжемся с Вами</h1>
         <p>
           {result.message}. Специалист Anix свяжется для подготовки визуального
           курса.
@@ -1973,12 +1979,19 @@ function RequestCoursePage() {
           В деморежиме файлы не сохраняются. В промышленной версии материалы
           передаются через защищенное хранилище.
         </p>
-        <a
-          className="hse-mvp-button hse-mvp-button-primary"
-          href={href(rootPath)}
-        >
-          Вернуться на демополигон
-        </a>
+        <div className="hse-mvp-actions">
+          <a
+            className="hse-mvp-button hse-mvp-button-primary"
+            href={`https://t.me/${telegramHandle}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <MessageCircle aria-hidden="true" size={18} /> Связаться в Telegram
+          </a>
+          <a className="hse-mvp-button" href={href(rootPath)}>
+            Вернуться на демополигон
+          </a>
+        </div>
       </section>
     );
   }

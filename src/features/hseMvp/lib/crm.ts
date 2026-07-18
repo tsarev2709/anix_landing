@@ -12,6 +12,11 @@ export const getCrmMode = () => {
     webhookUrl,
   };
 };
+
+export const getSupportTelegramHandle = () =>
+  process.env.VITE_SUPPORT_TELEGRAM ||
+  process.env.REACT_APP_SUPPORT_TELEGRAM ||
+  'anix_helper';
 export const buildCourseRequestPayload = (form: any, files: File[]) => ({
   source: 'ANIX HSE MVP',
   product: 'Единая визуальная система обучения по охране труда',
