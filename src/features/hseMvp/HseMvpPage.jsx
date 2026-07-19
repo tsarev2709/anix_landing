@@ -1936,7 +1936,6 @@ function RequestCoursePage() {
     event.preventDefault();
     setSubmitting(true);
     const uploaded = await uploadCourseRequestFiles(files);
-    const uploadedByName = new Map(uploaded.map((u) => [u.name, u.url]));
     const payload = {
       source: 'Anix HSE MVP',
       product: 'Единая визуальная система обучения по охране труда',
@@ -1951,12 +1950,12 @@ function RequestCoursePage() {
       phone: form.phone,
       email: form.email,
       comment: form.comment,
-      files: files.map((file) => ({
+      files: files.map((file, index) => ({
         name: file.name,
         size: file.size,
         type: file.type,
         lastModified: file.lastModified,
-        url: uploadedByName.get(file.name),
+        url: uploaded[index]?.url || undefined,
       })),
       createdAt: new Date().toISOString(),
     };
