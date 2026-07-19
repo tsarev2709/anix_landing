@@ -64,6 +64,7 @@ import {
   submitCourseRequest,
   getCrmMode,
   getSupportTelegramHandle,
+  uploadCourseRequestFiles,
 } from './lib/crm';
 import { openCompletionPrint } from './lib/pdf';
 import {
@@ -1934,6 +1935,8 @@ function RequestCoursePage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
+    const uploaded = await uploadCourseRequestFiles(files);
+    const uploadedByName = new Map(uploaded.map((u) => [u.name, u.url]));
     const payload = {
       source: 'Anix HSE MVP',
       product: 'Единая визуальная система обучения по охране труда',
@@ -1953,6 +1956,7 @@ function RequestCoursePage() {
         size: file.size,
         type: file.type,
         lastModified: file.lastModified,
+        url: uploadedByName.get(file.name),
       })),
       createdAt: new Date().toISOString(),
     };
@@ -1976,8 +1980,9 @@ function RequestCoursePage() {
           курса.
         </p>
         <p className="hse-mvp-muted">
-          В деморежиме файлы не сохраняются. В промышленной версии материалы
-          передаются через защищенное хранилище.
+          {crmMode.crmWebhookConfigured
+            ? 'Прикреплённые файлы загружены в защищённое хранилище — ссылки видны специалисту в CRM.'
+            : 'В деморежиме файлы не сохраняются. В промышленной версии материалы передаются через защищенное хранилище.'}
         </p>
         <div className="hse-mvp-actions">
           <a
@@ -2066,8 +2071,9 @@ function RequestCoursePage() {
             : 'VITE_CRM_WEBHOOK_URL не задан: заявка сохранится в demo localStorage.'}
         </p>
         <p className="hse-mvp-muted">
-          В деморежиме файлы не сохраняются. В промышленной версии материалы
-          передаются через защищенное хранилище.
+          {crmMode.crmWebhookConfigured
+            ? 'Прикреплённые файлы будут загружены в защищённое хранилище.'
+            : 'В деморежиме файлы не сохраняются. В промышленной версии материалы передаются через защищенное хранилище.'}
         </p>
         <button
           className="hse-mvp-button hse-mvp-button-primary"

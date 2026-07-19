@@ -14,10 +14,11 @@
 //   4. emails the team via Resend (same provider already used by
 //      supabase/functions/submit-lead in this repo).
 //
-// File attachments: the frontend currently only sends file metadata
-// (name/size/type), never the file bytes — see the Stage 0 audit. So this
-// function lists that metadata in the note for now; real file upload to
-// object storage is a separate, later increment.
+// File attachments: the frontend uploads files directly to the public
+// 'course-request-files' Supabase Storage bucket and sends the resulting
+// URLs here (see uploadCourseRequestFiles in lib/crm.ts) — this function
+// just links them in the note. Falls back to metadata-only if a URL is
+// missing (upload failed, or no Supabase client configured).
 const CORS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'content-type, authorization, x-client-info, apikey',
@@ -43,7 +44,7 @@ type CourseRequestPayload = {
   phone?: string;
   email?: string;
   comment?: string;
-  files?: { name: string; size: number; type: string }[];
+  files?: { name: string; size: number; type: string; url?: string }[];
 };
 
 async function amoFetch(
@@ -172,8 +173,12 @@ function buildNoteText(payload: CourseRequestPayload): string {
   ];
   if (payload.files?.length) {
     lines.push(
-      'Прикреплённые файлы (только метаданные, сами файлы уточнить у клиента):',
-      ...payload.files.map((f) => `  - ${f.name} (${f.type || 'unknown'}, ${f.size} bytes)`)
+      'Прикреплённые файлы:',
+      ...payload.files.map((f) =>
+        f.url
+          ? `  - ${f.name}: ${f.url}`
+          : `  - ${f.name} (${f.type || 'unknown'}, ${f.size} bytes) — ссылка не загружена, уточнить у клиента`
+      )
     );
   }
   return lines.join('\n');
