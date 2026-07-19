@@ -1897,6 +1897,9 @@ function AdminPage() {
     </>
   );
 }
+const MAX_COURSE_REQUEST_FILE_BYTES = 10 * 1024 * 1024;
+const MAX_COURSE_REQUEST_TOTAL_BYTES = 70 * 1024 * 1024;
+
 const requestFields = [
   ['companyName', 'Название компании', 'text'],
   ['industry', 'Отрасль', 'text'],
@@ -1926,9 +1929,32 @@ function RequestCoursePage() {
     email: '',
   });
   const [files, setFiles] = useState([]);
+  const [fileError, setFileError] = useState('');
   const [result, setResult] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const crmMode = getCrmMode();
+
+  const handleFilesSelected = (fileList) => {
+    const selected = Array.from(fileList || []);
+    const oversized = selected.find(
+      (file) => file.size > MAX_COURSE_REQUEST_FILE_BYTES
+    );
+    if (oversized) {
+      setFileError(
+        `Файл «${oversized.name}» больше 10 МБ — выберите файл меньшего размера.`
+      );
+      return;
+    }
+    const totalSize = selected.reduce((sum, file) => sum + file.size, 0);
+    if (totalSize > MAX_COURSE_REQUEST_TOTAL_BYTES) {
+      setFileError(
+        'Суммарный размер файлов превышает 70 МБ — уберите часть файлов.'
+      );
+      return;
+    }
+    setFileError('');
+    setFiles(selected);
+  };
 
   const update = (key, value) =>
     setForm((current) => ({ ...current, [key]: value }));
@@ -2045,9 +2071,7 @@ function RequestCoursePage() {
             <input
               type="file"
               multiple
-              onChange={(event) =>
-                setFiles(Array.from(event.target.files || []))
-              }
+              onChange={(event) => handleFilesSelected(event.target.files)}
               aria-label="Выбрать материалы для курса"
             />
             <span>
@@ -2055,6 +2079,10 @@ function RequestCoursePage() {
             </span>
           </label>
         </div>
+        <p className="hse-mvp-muted">
+          Каждый файл не более 10 МБ, суммарно не более 70 МБ.
+        </p>
+        {fileError ? <p className="hse-mvp-form-error">{fileError}</p> : null}
         {files.length ? (
           <div className="hse-mvp-file-list" aria-label="Выбранные файлы">
             {files.map((file) => (
@@ -2077,7 +2105,7 @@ function RequestCoursePage() {
         <button
           className="hse-mvp-button hse-mvp-button-primary"
           type="submit"
-          disabled={submitting}
+          disabled={submitting || Boolean(fileError)}
         >
           <Send aria-hidden="true" size={18} />{' '}
           {submitting ? 'Отправляем...' : 'Отправить заявку'}
