@@ -2,6 +2,18 @@ const fs = require('fs');
 const path = require('path');
 
 const filePath = path.resolve(__dirname, '../src/seo/routes.json');
+const sourceCoverPath = path.resolve(__dirname, '../src/images/cases/aviandr-cover.webp');
+const publicCoverDirectory = path.resolve(__dirname, '../public/seo-media/cases');
+const publicCoverPath = path.join(publicCoverDirectory, 'aviandr-cover.webp');
+const publicCoverUrl = '/seo-media/cases/aviandr-cover.webp';
+
+if (!fs.existsSync(sourceCoverPath)) {
+  throw new Error(`[aviandr-case] Missing cover source: ${sourceCoverPath}`);
+}
+
+fs.mkdirSync(publicCoverDirectory, { recursive: true });
+fs.copyFileSync(sourceCoverPath, publicCoverPath);
+
 const config = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 const routePath = '/cases/aviandr';
 
@@ -9,39 +21,53 @@ config.routes[routePath] = {
   indexable: true,
   kind: 'case',
   title: 'Кейс Авиандр: медицинская анимация и маскоты препарата — ANIX Studio',
-  description: 'Кейс ANIX Studio для Авиандра: научно корректный анимационный ролик, Доктор Коала, визуализация доказательной базы и работа ролика на конференционном стенде.',
+  description:
+    'Кейс ANIX Studio для Авиандра: научно корректный анимационный ролик, Доктор Коала, визуализация доказательной базы и работа ролика на конференционном стенде.',
   ogTitle: 'Авиандр — медицинская анимация и маскоты препарата',
-  ogDescription: 'Как превратить доказательную базу препарата в понятную визуальную историю и привлечь внимание врачей на конференции.',
-  ogImage: '/og/medicine.jpg',
+  ogDescription:
+    'Как превратить доказательную базу препарата в понятную визуальную историю и привлечь внимание врачей на конференции.',
+  ogImage: publicCoverUrl,
   h1: 'Авиандр: доказательная база, которая работает на доверие',
-  intro: 'Для препарата Авиандр мы собрали научно корректный анимационный ролик, визуальный язык и маскотов, которые помогают объяснять сложное и привлекать внимание врачей.',
+  intro:
+    'Для препарата Авиандр мы собрали научно корректный анимационный ролик, визуальный язык и маскотов, которые помогают объяснять сложное и привлекать внимание врачей.',
   case: {
     category: 'Фарма / медицинская анимация',
     result: 'Ролик стал центром внимания на стенде',
     tags: 'фарма / доказательная база / маскоты / конференция',
-    image: '/images/cases/aviandr.webp',
+    image: publicCoverUrl,
     imageAlt: 'Доктор Коала и маскот Авиандр — медицинский кейс ANIX Studio',
-    placeholder: 'А',
     videoUrl: 'https://vkvideo.ru/video-174933827_456239053',
-    relatedPath: '/medicine'
+    relatedPath: '/medicine',
   },
   sections: [
-    { heading: 'Задача', body: 'Перевести доказательную базу, механизм действия, безопасность и эффективность препарата в понятную визуальную историю для врачебной аудитории.' },
-    { heading: 'Маскоты', body: 'Мы исследовали разные варианты образов и остановились на Докторе Коале — спокойном, умном и заботливом проводнике по сложной медицинской информации.' },
-    { heading: 'На конференции', body: 'Клиент использовал ролик на стенде: видео привлекало внимание, люди подходили, останавливались и досматривали материал.' },
-    { heading: 'Результат', body: 'Ролик стал не только объясняющим материалом, но и заметным инструментом оформления стенда и коммуникации с врачами.' }
+    {
+      heading: 'Задача',
+      body: 'Перевести доказательную базу, механизм действия, безопасность и эффективность препарата в понятную визуальную историю для врачебной аудитории.',
+    },
+    {
+      heading: 'Маскоты',
+      body: 'Мы исследовали разные варианты образов и остановились на Докторе Коале — спокойном, умном и заботливом проводнике по сложной медицинской информации.',
+    },
+    {
+      heading: 'На конференции',
+      body: 'Клиент использовал ролик на стенде: видео привлекало внимание, люди подходили, останавливались и досматривали материал.',
+    },
+    {
+      heading: 'Результат',
+      body: 'Ролик стал не только объясняющим материалом, но и заметным инструментом оформления стенда и коммуникации с врачами.',
+    },
   ],
   links: [
     { label: 'Медицинские и фармацевтические ролики', href: '/medicine' },
     { label: 'Все кейсы ANIX', href: '/cases' },
-    { label: 'ANIX Studio', href: '/' }
+    { label: 'ANIX Studio', href: '/' },
   ],
   breadcrumbs: [
     { label: 'Главная', href: '/' },
     { label: 'Кейсы', href: '/cases' },
-    { label: 'Авиандр', href: routePath }
-  ]
+    { label: 'Авиандр', href: routePath },
+  ],
 };
 
 fs.writeFileSync(filePath, `${JSON.stringify(config, null, 2)}\n`, 'utf8');
-console.log(`[aviandr-case] ensured ${routePath}`);
+console.log(`[aviandr-case] ensured ${routePath} and copied ${publicCoverUrl}`);
