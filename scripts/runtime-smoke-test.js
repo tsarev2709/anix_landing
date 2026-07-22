@@ -20,7 +20,7 @@ const routes = [
   { path: '/cases/medicine/', marker: 'class="cases-hub-page cases-category-page"', extraMarker: 'Pharma, MedTech и медицина' },
   { path: '/cases/cinema/', marker: 'class="cases-hub-page cases-category-page"', extraMarker: 'Cinema &amp; Creative' },
   { path: '/cases/hse/', marker: 'class="cases-hub-page cases-category-page"', extraMarker: 'Охрана труда' },
-  { path: '/cases/aviandr/', marker: 'class="case-page"', extraMarker: 'Авиандр: маскот и ролик для врачебной аудитории' },
+  { path: '/cases/aviandr/', marker: 'class="aviandr-case-page"', extraMarker: 'Авиандр: доказательная база, которая работает на доверие' },
   { path: '/cases/little-prince/', marker: 'class="case-page"', extraMarker: 'Маленький принц' },
   { path: '/cases/borodino/', marker: 'class="case-page"', extraMarker: 'Бородино' },
 ];
