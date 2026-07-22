@@ -19,6 +19,7 @@ config.routes[routePath] = {
     category: 'Фарма / медицинская анимация',
     result: 'Ролик стал центром внимания на стенде',
     tags: 'фарма / доказательная база / маскоты / конференция',
+    image: '/images/cases/aviandr.webp',
     imageAlt: 'Доктор Коала и маскот Авиандр — медицинский кейс ANIX Studio',
     placeholder: 'А',
     videoUrl: 'https://vkvideo.ru/video-174933827_456239053',
