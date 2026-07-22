@@ -40,7 +40,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "node scripts/ensure-cases-hub-route.js && node scripts/ensure-animation-route.js && node scripts/ensure-ai-video-route.js && node scripts/ensure-very-sweet-case-route.js && node scripts/generate-rybki-page-data.js && node scripts/optimize-assets.js && node scripts/generate-seo-assets.js && node scripts/prepare-seo-source.js && node scripts/build.js",
+    "build": "node scripts/ensure-cases-hub-route.js && node scripts/ensure-animation-route.js && node scripts/ensure-ai-video-route.js && node scripts/ensure-very-sweet-case-route.js && node scripts/ensure-aviandr-case-route.js && node scripts/generate-rybki-page-data.js && node scripts/optimize-assets.js && node scripts/generate-seo-assets.js && node scripts/prepare-seo-source.js && node scripts/build.js",
     "postbuild": "node scripts/create-static-routes.js && node scripts/generate-static-seo.js && node scripts/inject-approved-brand-line.js && node scripts/normalize-seo-output.js && node scripts/verify-seo-build.js",
     "seo:verify": "node scripts/verify-seo-build.js && node scripts/verify-brand-seo.js",
     "optimize:assets": "node scripts/optimize-assets.js",
