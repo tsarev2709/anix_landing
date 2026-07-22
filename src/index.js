@@ -31,6 +31,7 @@ const CasesHubPage = lazy(() => import('./components/CasesHubPage'));
 const CasesCategoryPage = lazy(() => import('./components/CasesCategoryPage'));
 const CasePage = lazy(() => import('./components/CasePage'));
 const VerySweetCasePage = lazy(() => import('./components/VerySweetCasePage'));
+const AviandrCasePage = lazy(() => import('./components/AviandrCasePage'));
 
 function RuntimeFallback({ failed = false }) {
   return (
@@ -70,6 +71,8 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
   renderInLayout(<CasesCategoryPage path={normalizedPath} />);
 } else if (normalizedPath === '/cases/very-sweet-case') {
   renderInLayout(<VerySweetCasePage />);
+} else if (normalizedPath === '/cases/aviandr') {
+  renderInLayout(<AviandrCasePage />);
 } else if (normalizedPath.startsWith('/cases/')) {
   renderInLayout(<CasePage path={normalizedPath} />);
 } else {
