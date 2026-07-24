@@ -1,11 +1,11 @@
 {
   "files": {
     "main.css": "/static/css/main.de90d6a1.css",
-    "main.js": "/static/js/main.18b8575f.js",
+    "main.js": "/static/js/main.c8c0ef0b.js",
     "static/js/727.528ec5f6.chunk.js": "/static/js/727.528ec5f6.chunk.js",
     "static/js/84.163fd121.chunk.js": "/static/js/84.163fd121.chunk.js",
-    "static/css/552.ec4efaf1.chunk.css": "/static/css/552.ec4efaf1.chunk.css",
-    "static/js/552.5c124dfb.chunk.js": "/static/js/552.5c124dfb.chunk.js",
+    "static/css/925.ec4efaf1.chunk.css": "/static/css/925.ec4efaf1.chunk.css",
+    "static/js/925.921ad16b.chunk.js": "/static/js/925.921ad16b.chunk.js",
     "static/css/115.d8dfbd4e.chunk.css": "/static/css/115.d8dfbd4e.chunk.css",
     "static/js/115.c158b0b3.chunk.js": "/static/js/115.c158b0b3.chunk.js",
     "static/css/605.72926c02.chunk.css": "/static/css/605.72926c02.chunk.css",
@@ -16,8 +16,10 @@
     "static/js/954.4e3c183f.chunk.js": "/static/js/954.4e3c183f.chunk.js",
     "static/css/899.20a2c321.chunk.css": "/static/css/899.20a2c321.chunk.css",
     "static/js/899.9519e3f1.chunk.js": "/static/js/899.9519e3f1.chunk.js",
-    "static/css/705.33ee30c2.chunk.css": "/static/css/705.33ee30c2.chunk.css",
-    "static/js/705.c9286389.chunk.js": "/static/js/705.c9286389.chunk.js",
+    "static/css/999.33ee30c2.chunk.css": "/static/css/999.33ee30c2.chunk.css",
+    "static/js/999.51810b5e.chunk.js": "/static/js/999.51810b5e.chunk.js",
+    "static/css/718.360c2998.chunk.css": "/static/css/718.360c2998.chunk.css",
+    "static/js/718.14400ac4.chunk.js": "/static/js/718.14400ac4.chunk.js",
     "static/css/158.86428267.chunk.css": "/static/css/158.86428267.chunk.css",
     "static/js/158.9c7183d9.chunk.js": "/static/js/158.9c7183d9.chunk.js",
     "static/css/690.22aaaaa6.chunk.css": "/static/css/690.22aaaaa6.chunk.css",
@@ -35,7 +37,7 @@
     "static/css/663.df015aa0.chunk.css": "/static/css/663.df015aa0.chunk.css",
     "static/js/663.844ba145.chunk.js": "/static/js/663.844ba145.chunk.js",
     "static/js/82.ce785567.chunk.js": "/static/js/82.ce785567.chunk.js",
-    "static/js/790.09cc1ed9.chunk.js": "/static/js/790.09cc1ed9.chunk.js",
+    "static/js/790.52166dfc.chunk.js": "/static/js/790.52166dfc.chunk.js",
     "static/js/204.394f0050.chunk.js": "/static/js/204.394f0050.chunk.js",
     "static/js/777.04c5a81e.chunk.js": "/static/js/777.04c5a81e.chunk.js",
     "static/media/3.png": "/static/media/3.95d850bfd9557355a532.png",
@@ -65,12 +67,15 @@
     "static/media/startech.webp": "/static/media/startech.0d7eac7aa813c56d2857.webp",
     "static/media/mfti-endowment.webp": "/static/media/mfti-endowment.d96e5a56cd493f6006de.webp",
     "static/media/bondarchuk.webp": "/static/media/bondarchuk.2f89bc787951be733929.webp",
+    "static/media/andrey-portrait.webp": "/static/media/andrey-portrait.00be1a4a52b7acd3b2bb.webp",
     "static/media/alexandra-portrait.webp": "/static/media/alexandra-portrait.64af9542dd19171abf05.webp",
+    "static/media/andrey-tochka-theatre.webp": "/static/media/andrey-tochka-theatre.151c5a077ea63422490a.webp",
     "static/media/little-prince.webp": "/static/media/little-prince.89dcb347c89f4309e300.webp",
+    "static/media/andrey-theatre-promo.webp": "/static/media/andrey-theatre-promo.bd2265f77d1d4a4d9801.webp",
     "index.html": "/index.html"
   },
   "entrypoints": [
     "static/css/main.de90d6a1.css",
-    "static/js/main.18b8575f.js"
+    "static/js/main.c8c0ef0b.js"
   ]
 }
