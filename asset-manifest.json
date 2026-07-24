@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.de90d6a1.css",
-    "main.js": "/static/js/main.c8c0ef0b.js",
+    "main.js": "/static/js/main.3de3368c.js",
     "static/js/727.528ec5f6.chunk.js": "/static/js/727.528ec5f6.chunk.js",
     "static/js/84.163fd121.chunk.js": "/static/js/84.163fd121.chunk.js",
     "static/css/925.ec4efaf1.chunk.css": "/static/css/925.ec4efaf1.chunk.css",
@@ -18,8 +18,8 @@
     "static/js/899.9519e3f1.chunk.js": "/static/js/899.9519e3f1.chunk.js",
     "static/css/999.33ee30c2.chunk.css": "/static/css/999.33ee30c2.chunk.css",
     "static/js/999.51810b5e.chunk.js": "/static/js/999.51810b5e.chunk.js",
-    "static/css/718.360c2998.chunk.css": "/static/css/718.360c2998.chunk.css",
-    "static/js/718.14400ac4.chunk.js": "/static/js/718.14400ac4.chunk.js",
+    "static/css/908.bba976a4.chunk.css": "/static/css/908.bba976a4.chunk.css",
+    "static/js/908.40a68d30.chunk.js": "/static/js/908.40a68d30.chunk.js",
     "static/css/158.86428267.chunk.css": "/static/css/158.86428267.chunk.css",
     "static/js/158.9c7183d9.chunk.js": "/static/js/158.9c7183d9.chunk.js",
     "static/css/690.22aaaaa6.chunk.css": "/static/css/690.22aaaaa6.chunk.css",
@@ -70,12 +70,14 @@
     "static/media/andrey-portrait.webp": "/static/media/andrey-portrait.00be1a4a52b7acd3b2bb.webp",
     "static/media/alexandra-portrait.webp": "/static/media/alexandra-portrait.64af9542dd19171abf05.webp",
     "static/media/andrey-tochka-theatre.webp": "/static/media/andrey-tochka-theatre.151c5a077ea63422490a.webp",
+    "static/media/andrey-business-school-speaking.webp": "/static/media/andrey-business-school-speaking.479ca21ae1f98eb80daf.webp",
     "static/media/little-prince.webp": "/static/media/little-prince.89dcb347c89f4309e300.webp",
     "static/media/andrey-theatre-promo.webp": "/static/media/andrey-theatre-promo.bd2265f77d1d4a4d9801.webp",
+    "static/media/andrey-google-kafka.webp": "/static/media/andrey-google-kafka.f4dcd28a5e7564655aab.webp",
     "index.html": "/index.html"
   },
   "entrypoints": [
     "static/css/main.de90d6a1.css",
-    "static/js/main.c8c0ef0b.js"
+    "static/js/main.3de3368c.js"
   ]
 }
