@@ -41,6 +41,21 @@ jobs:
           CI: false
         run: npm run build
 
+      - name: Report Андрей photo source metrics
+        run: node scripts/report-andrey-photo-metrics.js
+
+      - name: Capture Андрей profile visual review
+        run: node scripts/capture-andrey-profile-screenshots.js
+
+      - name: Upload Андрей profile visual review
+        uses: actions/upload-artifact@v4
+        with:
+          name: andrey-profile-visual-review
+          path: |
+            artifacts/andrey-profile/*.png
+            artifacts/andrey-photo-metrics.json
+          if-no-files-found: error
+
       - name: Runtime smoke test
         run: node scripts/runtime-smoke-test.js
 
