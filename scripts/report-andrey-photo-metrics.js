@@ -20,9 +20,10 @@ async function main() {
     const metadata = await sharp(absolutePath).metadata();
     const stat = fs.statSync(absolutePath);
     if (!metadata.width || !metadata.height) throw new Error(`[andrey-photo-metrics] Invalid dimensions for ${relativePath}`);
-    if (metadata.width < 900 || metadata.height < 600) {
-      throw new Error(`[andrey-photo-metrics] Source is too small: ${relativePath} (${metadata.width}x${metadata.height})`);
-    }
+    const warnings = [];
+    if (metadata.width < 1400) warnings.push(`width ${metadata.width}px is below the preferred 1400px`);
+    if (metadata.height < 900) warnings.push(`height ${metadata.height}px is below the preferred 900px`);
+    if (stat.size < 120 * 1024) warnings.push(`file size ${Math.round(stat.size / 1024)}KB may indicate aggressive compression`);
     metrics.push({
       path: relativePath,
       width: metadata.width,
@@ -31,6 +32,7 @@ async function main() {
       bytes: stat.size,
       kilobytes: Number((stat.size / 1024).toFixed(1)),
       aspectRatio: Number((metadata.width / metadata.height).toFixed(4)),
+      warnings,
     });
   }
 
@@ -38,7 +40,8 @@ async function main() {
   const target = path.join(outputDir, 'andrey-photo-metrics.json');
   fs.writeFileSync(target, `${JSON.stringify({ generatedAt: new Date().toISOString(), assets: metrics }, null, 2)}\n`);
   for (const item of metrics) {
-    console.log(`[andrey-photo-metrics] ${item.path}: ${item.width}x${item.height}, ${item.kilobytes} KB`);
+    const warningText = item.warnings.length ? `; WARN: ${item.warnings.join('; ')}` : '';
+    console.log(`[andrey-photo-metrics] ${item.path}: ${item.width}x${item.height}, ${item.kilobytes} KB${warningText}`);
   }
 }
 
