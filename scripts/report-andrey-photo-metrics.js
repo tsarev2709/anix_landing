@@ -10,8 +10,6 @@ const assets = [
   'src/images/andrey/andrey-tochka-theatre.webp',
   'src/images/andrey/andrey-business-school-speaking.webp',
   'src/images/andrey/andrey-google-kafka.webp',
-  'src/images/experts/andrey-tsarev-scientist.webp',
-  'src/images/ceo/alexandra-andrey-anix.webp',
 ];
 
 async function main() {
