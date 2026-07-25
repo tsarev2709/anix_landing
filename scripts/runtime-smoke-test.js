@@ -15,6 +15,7 @@ const routes = [
   { path: '/hse/', marker: 'class="hse-page"' },
   { path: '/animation/', marker: 'class="animation-page"', extraMarker: 'Создание анимационных роликов для сложных продуктов' },
   { path: '/ai-video/', marker: 'class="ai-video-page"', extraMarker: 'AI-видео с режиссурой, продакшном и вкусом' },
+  { path: '/andrey-tsarev/', marker: 'class="andrey-page"', extraMarker: 'andrey-gallery-section' },
   { path: '/cases/', marker: 'class="cases-hub-page"', extraMarker: 'cases-hub-category' },
   { path: '/cases/b2b/', marker: 'class="cases-hub-page cases-category-page"', extraMarker: 'Технологии, B2B и сложные продукты' },
   { path: '/cases/medicine/', marker: 'class="cases-hub-page cases-category-page"', extraMarker: 'Pharma, MedTech и медицина' },
