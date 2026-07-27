@@ -39,7 +39,18 @@ jobs:
       - name: Production build and SEO verification
         env:
           CI: false
-        run: npm run build
+        run: |
+          mkdir -p artifacts
+          set -o pipefail
+          npm run build 2>&1 | tee artifacts/production-build.log
+
+      - name: Upload production build diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-build-diagnostics
+          path: artifacts/production-build.log
+          if-no-files-found: warn
 
       - name: Report Андрей photo source metrics
         run: node scripts/report-andrey-photo-metrics.js
