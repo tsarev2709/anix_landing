@@ -82,12 +82,15 @@ async function main() {
     fs.writeFileSync(filePath, source);
   }
 
-  const ogSource = path.join(root, 'src', 'images', 'experts', 'andrey-tsarev-scientist.webp');
+  const ogSource = path.join(root, 'src', 'images', 'andrey', 'andrey-business-school-speaking.avif');
   const ogTarget = path.join(root, 'public', 'og', 'andrey.jpg');
   fs.mkdirSync(path.dirname(ogTarget), { recursive: true });
-  await sharp(ogSource).resize(1200, 630, { fit: 'cover', position: 'attention' }).jpeg({ quality: 88, progressive: true }).toFile(ogTarget);
+  await sharp(ogSource)
+    .resize(1200, 630, { fit: 'cover', position: 'attention' })
+    .jpeg({ quality: 92, progressive: true })
+    .toFile(ogTarget);
 
-  console.log('[andrey-profile] route, SEO and OG asset are ready');
+  console.log('[andrey-profile] route, SEO and verified-original OG asset are ready');
 }
 
 main().catch((error) => {
