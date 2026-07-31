@@ -33,7 +33,8 @@ async function main() {
 
   const seo = JSON.parse(fs.readFileSync(routesPath, 'utf8'));
   seo.routes['/andrey-tsarev'] = {
-    indexable: true,
+    indexable: false,
+    robots: 'noindex, nofollow',
     kind: 'profile',
     title: 'Андрей Царёв — сооснователь и продуктовый директор Anix Studio',
     description: 'Андрей Царёв — предприниматель, сооснователь Anix Studio, режиссёр, сценарист и биофизик. Продукты, творчество, технологии, научная работа и подход к сложным проектам.',
@@ -87,7 +88,7 @@ async function main() {
   fs.mkdirSync(path.dirname(ogTarget), { recursive: true });
   await sharp(ogSource).resize(1200, 630, { fit: 'cover', position: 'attention' }).jpeg({ quality: 88, progressive: true }).toFile(ogTarget);
 
-  console.log('[andrey-profile] route, SEO and OG asset are ready');
+  console.log('[andrey-profile] direct route is ready and hidden from indexing');
 }
 
 main().catch((error) => {
