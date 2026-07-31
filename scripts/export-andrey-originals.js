@@ -1,3 +1,4 @@
+// One-time exporter: the final repair PR will contain only binary images, never these encoded sources.
 const fs = require('fs');
 const path = require('path');
 
