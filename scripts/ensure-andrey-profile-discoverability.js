@@ -4,7 +4,6 @@ const path = require('path');
 const root = path.resolve(__dirname, '..');
 const profilePath = path.join(root, 'src', 'components', 'AndreyProfilePage.jsx');
 const profileCssPath = path.join(root, 'src', 'components', 'AndreyProfilePage.css');
-const homePath = path.join(root, 'src', 'components', 'Design1TestPage.jsx');
 
 function replaceOnce(content, search, replacement, label) {
   if (content.includes(replacement)) return content;
@@ -36,13 +35,4 @@ profileCss = replaceOnce(
 );
 fs.writeFileSync(profileCssPath, profileCss);
 
-let home = fs.readFileSync(homePath, 'utf8');
-home = replaceOnce(
-  home,
-  "  { label: 'CEO', href: '/ceo' },\n  { label: 'Процесс', href: '#process' },",
-  "  { label: 'CEO', href: '/ceo' },\n  { label: 'Андрей', href: '/andrey-tsarev' },\n  { label: 'Процесс', href: '#process' },",
-  'homepage navigation',
-);
-fs.writeFileSync(homePath, home);
-
-console.log('[andrey-discoverability] gallery and homepage navigation are ready');
+console.log('[andrey-discoverability] profile gallery is ready without public navigation links');
