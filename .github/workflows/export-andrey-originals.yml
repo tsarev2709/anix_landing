@@ -1,0 +1,29 @@
+name: Export Андрей originals
+
+on:
+  push:
+    branches: [ agent/export-andrey-originals ]
+  workflow_dispatch:
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Export binary photos
+        run: node scripts/export-andrey-originals.js
+
+      - name: Upload original photos
+        uses: actions/upload-artifact@v4
+        with:
+          name: andrey-original-photo-export
+          path: artifacts/andrey-originals
+          if-no-files-found: error
+          compression-level: 0
