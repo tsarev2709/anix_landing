@@ -19,6 +19,17 @@ jobs:
           node-version: 18
           cache: npm
 
+      - name: Export Андрей original photo binaries
+        run: node scripts/export-andrey-originals.js
+
+      - name: Upload Андрей original photo binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: andrey-original-photo-export
+          path: artifacts/andrey-originals
+          if-no-files-found: error
+          compression-level: 0
+
       - name: Install PDF renderer
         run: sudo apt-get update && sudo apt-get install -y poppler-utils
 
