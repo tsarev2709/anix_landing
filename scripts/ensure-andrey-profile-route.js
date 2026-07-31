@@ -80,6 +80,10 @@ async function main() {
       "name: 'Александра Севостьянова',\n        jobTitle: 'CEO Anix Studio',",
       "name: route.person?.name || 'Александра Севостьянова',\n        jobTitle: route.person?.jobTitle || 'CEO Anix Studio',\n        ...(route.person?.sameAs ? { sameAs: route.person.sameAs } : {}),",
     );
+    source = source.replace(
+      "const robots = route.indexable ? 'index, follow' : 'noindex, follow';",
+      "const robots = route.robots || (route.indexable ? 'index, follow' : 'noindex, follow');",
+    );
     fs.writeFileSync(filePath, source);
   }
 
