@@ -3,6 +3,8 @@ name: Export Андрей originals
 on:
   push:
     branches: [ agent/export-andrey-originals ]
+  pull_request:
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
