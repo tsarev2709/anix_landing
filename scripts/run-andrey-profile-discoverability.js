@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const target = path.join(__dirname, 'ensure-andrey-profile-discoverability.js');
+const homePath = path.join(__dirname, '..', 'src', 'components', 'Design1TestPage.jsx');
 let source = fs.readFileSync(target, 'utf8');
 
 const strictChecksumBlock = `    const digest = crypto.createHash('sha256').update(buffer).digest('hex');
@@ -30,3 +31,15 @@ if (source.includes(strictChecksumBlock)) {
 }
 
 require(target);
+
+let home = fs.readFileSync(homePath, 'utf8');
+home = home
+  .replace("  { label: 'Андрей', href: '/andrey-tsarev' },\n", '')
+  .replace("  { label: \"Андрей\", href: \"/andrey-tsarev\" },\n", '');
+fs.writeFileSync(homePath, home);
+
+if (home.includes('/andrey-tsarev')) {
+  throw new Error('[andrey-discoverability-runner] Андрей profile is still linked from the homepage');
+}
+
+console.log('[andrey-discoverability-runner] Андрей profile remains available only by direct URL');
