@@ -504,8 +504,8 @@ function Design1TestPage() {
             Anix Studio (Студия Аникс) — анимационная студия для сложных продуктов.
           </p>
           <h1 className="d1-hero-title">
-            <span className="d1-hero-title-line">Делаем</span>
-            <span className="d1-hero-title-line">сложное</span>
+            <span className="d1-hero-title-line">Делаем </span>
+            <span className="d1-hero-title-line">сложное </span>
             <span className="d1-hero-title-line">интересным</span>
           </h1>
                     <p className="d1-lead">
