@@ -157,6 +157,7 @@
 
 .d1-hero-copy {
   max-width: 820px;
+  container-type: inline-size;
 }
 
 .d1-eyebrow {
@@ -179,9 +180,17 @@
 
 .d1-hero h1 {
   max-width: 930px;
-  font-size: clamp(64px, 8vw, 124px);
+  font-size: clamp(60px, 8vw, 124px);
+  font-size: clamp(60px, 15.5cqw, 124px);
   line-height: 0.9;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+
+.d1-hero-title-line {
+  display: block;
+  white-space: nowrap;
 }
 
 .d1-lead {
