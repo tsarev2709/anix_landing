@@ -29,10 +29,7 @@ function getJson(url) {
       response.setEncoding('utf8');
       response.on('data', (chunk) => { body += chunk; });
       response.on('end', () => {
-        if (!response.statusCode || response.statusCode >= 400) {
-          reject(new Error(`HTTP ${response.statusCode || 'unknown'} for ${url}`));
-          return;
-        }
+        if (!response.statusCode || response.statusCode >= 400) return reject(new Error(`HTTP ${response.statusCode || 'unknown'} for ${url}`));
         try { resolve(JSON.parse(body)); } catch (error) { reject(error); }
       });
     });
@@ -48,9 +45,7 @@ async function waitFor(check, label, timeoutMs = 15000) {
     try {
       const value = await check();
       if (value) return value;
-    } catch (error) {
-      lastError = error;
-    }
+    } catch (error) { lastError = error; }
     await new Promise((resolve) => setTimeout(resolve, 250));
   }
   throw new Error(`${label} was not ready in ${timeoutMs}ms${lastError ? `: ${lastError.message}` : ''}`);
@@ -61,7 +56,6 @@ function connectCdp(webSocketDebuggerUrl) {
     const socket = new WebSocket(webSocketDebuggerUrl);
     const pending = new Map();
     let nextId = 1;
-
     socket.once('open', () => {
       const send = (method, params = {}) => new Promise((commandResolve, commandReject) => {
         const id = nextId++;
@@ -79,38 +73,24 @@ function connectCdp(webSocketDebuggerUrl) {
       else command.resolve(message.result || {});
     });
     socket.once('error', reject);
-    socket.once('close', () => {
-      for (const command of pending.values()) command.reject(new Error('Chrome DevTools connection closed'));
-      pending.clear();
-    });
   });
 }
 
 async function capture(chromePath, name, width, height, selector, index) {
   const profileDir = fs.mkdtempSync(path.join(os.tmpdir(), 'anix-andrey-shot-'));
   const debugPort = debugPortBase + index;
-  const target = path.join(outputDir, `${name}.png`);
+  const outputPath = path.join(outputDir, `${name}.png`);
   const chrome = spawn(chromePath, [
-    '--headless=new',
-    '--no-sandbox',
-    '--disable-gpu',
-    '--disable-dev-shm-usage',
-    '--disable-background-networking',
-    '--disable-default-apps',
-    '--disable-extensions',
-    '--disable-sync',
-    '--hide-scrollbars',
-    '--no-first-run',
-    '--force-device-scale-factor=1',
-    `--remote-debugging-port=${debugPort}`,
-    '--remote-debugging-address=127.0.0.1',
-    `--user-data-dir=${profileDir}`,
-    'about:blank',
+    '--headless=new', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage',
+    '--disable-background-networking', '--disable-default-apps', '--disable-extensions',
+    '--disable-sync', '--hide-scrollbars', '--no-first-run', '--force-device-scale-factor=1',
+    `--remote-debugging-port=${debugPort}`, '--remote-debugging-address=127.0.0.1',
+    `--user-data-dir=${profileDir}`, 'about:blank',
   ], { stdio: ['ignore', 'ignore', 'pipe'] });
   let chromeError = '';
   chrome.stderr.on('data', (chunk) => { chromeError += chunk.toString(); });
-
   let cdp;
+
   try {
     const pageTarget = await waitFor(async () => {
       const targets = await getJson(`http://127.0.0.1:${debugPort}/json/list`);
@@ -120,12 +100,7 @@ async function capture(chromePath, name, width, height, selector, index) {
     await cdp.send('Page.enable');
     await cdp.send('Runtime.enable');
     await cdp.send('Emulation.setDeviceMetricsOverride', {
-      width,
-      height,
-      deviceScaleFactor: 1,
-      mobile: width <= 680,
-      screenWidth: width,
-      screenHeight: height,
+      width, height, deviceScaleFactor: 1, mobile: width <= 680, screenWidth: width, screenHeight: height,
     });
     await cdp.send('Page.navigate', { url: `${baseUrl}/andrey-tsarev/` });
     await new Promise((resolve) => setTimeout(resolve, 900));
@@ -137,49 +112,43 @@ async function capture(chromePath, name, width, height, selector, index) {
         while (!document.querySelector('.andrey-page') && Date.now() - startedAt < 15000) await sleep(100);
         if (!document.querySelector('.andrey-page')) throw new Error('Andrey profile did not render');
         if (document.fonts && document.fonts.ready) await document.fonts.ready;
-        await Promise.all(Array.from(document.images).map((image) => image.complete
-          ? Promise.resolve()
-          : new Promise((resolve) => {
-              image.addEventListener('load', resolve, { once: true });
-              image.addEventListener('error', resolve, { once: true });
-            })));
         const selector = ${JSON.stringify(selector)};
-        if (selector) {
-          const target = document.querySelector(selector);
-          if (!target) throw new Error('Screenshot target not found: ' + selector);
-          target.scrollIntoView({ block: 'start', inline: 'nearest' });
-        } else {
-          window.scrollTo(0, 0);
-        }
-        await sleep(700);
+        const target = selector ? document.querySelector(selector) : document.querySelector('.andrey-hero');
+        if (!target) throw new Error('Screenshot target not found: ' + (selector || '.andrey-hero'));
+        if (selector) target.scrollIntoView({ block: 'start', inline: 'nearest' });
+        else window.scrollTo(0, 0);
+        await sleep(250);
+        const images = Array.from(target.querySelectorAll('img'));
+        await Promise.race([
+          Promise.all(images.map((image) => image.complete
+            ? Promise.resolve()
+            : new Promise((resolve) => {
+                image.addEventListener('load', resolve, { once: true });
+                image.addEventListener('error', resolve, { once: true });
+              }))),
+          sleep(7000),
+        ]);
+        await sleep(450);
         return { scrollY: window.scrollY, width: document.documentElement.scrollWidth, viewport: window.innerWidth };
       })()
     `;
     const evaluation = await cdp.send('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true });
     if (evaluation.exceptionDetails) throw new Error(`Page preparation failed for ${name}`);
     const pageState = evaluation.result && evaluation.result.value;
-    if (!pageState || pageState.width > width + 1) {
-      throw new Error(`Horizontal overflow in ${name}: document ${pageState ? pageState.width : 'unknown'}px, viewport ${width}px`);
-    }
-    if (selector && pageState.scrollY < 500) {
-      throw new Error(`Gallery screenshot did not scroll: ${pageState.scrollY}px`);
-    }
+    if (!pageState || pageState.width > width + 1) throw new Error(`Horizontal overflow in ${name}: document ${pageState ? pageState.width : 'unknown'}px, viewport ${width}px`);
+    if (selector && pageState.scrollY < 500) throw new Error(`Gallery screenshot did not scroll: ${pageState.scrollY}px`);
 
-    const screenshot = await cdp.send('Page.captureScreenshot', {
-      format: 'png',
-      fromSurface: true,
-      captureBeyondViewport: false,
-    });
-    fs.writeFileSync(target, Buffer.from(screenshot.data, 'base64'));
-    const stat = fs.statSync(target);
+    const screenshot = await cdp.send('Page.captureScreenshot', { format: 'png', fromSurface: true, captureBeyondViewport: false });
+    fs.writeFileSync(outputPath, Buffer.from(screenshot.data, 'base64'));
+    const stat = fs.statSync(outputPath);
     if (stat.size < 20 * 1024) throw new Error(`Screenshot ${name} looks empty (${stat.size} bytes)`);
     console.log(`[andrey-screenshot] ${name}: ${Math.round(stat.size / 1024)} KB, scrollY ${Math.round(pageState.scrollY)}`);
   } finally {
-    if (cdp && cdp.socket.readyState === WebSocket.OPEN) cdp.socket.close();
-    chrome.kill('SIGTERM');
+    if (cdp && cdp.socket.readyState === WebSocket.OPEN) cdp.socket.terminate();
+    chrome.kill('SIGKILL');
     fs.rmSync(profileDir, { recursive: true, force: true });
   }
-  if (chrome.exitCode && chrome.exitCode !== 0) throw new Error(`Chrome exited unexpectedly for ${name}: ${chromeError}`);
+  if (chromeError.includes('ERROR:') && !fs.existsSync(outputPath)) throw new Error(`Chrome failed for ${name}: ${chromeError}`);
 }
 
 async function main() {
@@ -190,13 +159,10 @@ async function main() {
   let serverError = '';
   server.stderr.on('data', (chunk) => { serverError += chunk.toString(); });
   try {
-    await waitFor(async () => {
-      const response = await new Promise((resolve, reject) => {
-        const request = http.get(`${baseUrl}/`, (result) => { result.resume(); resolve(result.statusCode); });
-        request.on('error', reject);
-      });
-      return response && response < 500;
-    }, 'Static server');
+    await waitFor(async () => new Promise((resolve, reject) => {
+      const request = http.get(`${baseUrl}/`, (response) => { response.resume(); resolve(response.statusCode && response.statusCode < 500); });
+      request.on('error', reject);
+    }), 'Static server');
     await capture(chromePath, 'desktop-hero', 1440, 1600, null, 0);
     await capture(chromePath, 'desktop-gallery', 1440, 1800, '#gallery', 1);
     await capture(chromePath, 'mobile-hero', 390, 1500, null, 2);
