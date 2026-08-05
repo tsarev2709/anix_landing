@@ -135,9 +135,10 @@
 
   .andrey-gallery-section h2 {
     max-width: 100%;
-    font-size: clamp(32px, 8.8vw, 36px);
-    line-height: 0.98;
-    letter-spacing: -0.04em;
+    font-size: clamp(27px, 7.7vw, 30px);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+    word-break: normal;
     overflow-wrap: anywhere;
   }
 
