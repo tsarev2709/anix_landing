@@ -1033,6 +1033,11 @@
 }
 
 @media (max-width: 1180px) {
+  .d1-nav-links {
+    gap: 14px;
+    font-size: 13px;
+  }
+
   .d1-hero {
     grid-template-columns: 1fr;
     min-height: auto;
