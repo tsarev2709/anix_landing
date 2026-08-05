@@ -1,5 +1,12 @@
 /* Natural, uncropped presentation for the eight original photographs. */
 
+.andrey-hero-copy,
+.andrey-actions,
+.andrey-facts {
+  min-width: 0;
+  max-width: 100%;
+}
+
 .andrey-hero-visual[data-photo-layout='natural'] {
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(240px, 0.82fr);
@@ -106,9 +113,37 @@
 }
 
 @media (max-width: 680px) {
+  .andrey-page {
+    overflow-x: clip;
+  }
+
+  .andrey-hero-copy,
+  .andrey-actions,
+  .andrey-actions > *,
+  .andrey-button {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .andrey-hero h1 {
+    max-width: 100%;
+    font-size: clamp(44px, 13vw, 58px);
+    line-height: 0.92;
+    overflow-wrap: anywhere;
+  }
+
+  .andrey-button {
+    padding-inline: 18px;
+    white-space: normal;
+    text-align: center;
+  }
+
   .andrey-hero-visual[data-photo-layout='natural'] {
     grid-template-columns: 1fr;
     gap: 28px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .andrey-hero-visual[data-photo-layout='natural'] img,
