@@ -25,16 +25,20 @@ async function main() {
     const sourcePath = path.join(assetDir, file);
     if (!fs.existsSync(sourcePath)) throw new Error(`[andrey-photos] Missing ${file}`);
     const stat = fs.statSync(sourcePath);
-    if (stat.size < 30 * 1024) throw new Error(`[andrey-photos] ${file} is unexpectedly small (${stat.size} bytes)`);
-    const metadata = await sharp(sourcePath).metadata();
+    const image = sharp(sourcePath, { failOn: 'error' });
+    const metadata = await image.metadata();
     if (metadata.format !== 'webp') throw new Error(`[andrey-photos] ${file} is not WebP`);
     if (metadata.width !== width || metadata.height !== height) {
       throw new Error(`[andrey-photos] ${file} dimensions are ${metadata.width}x${metadata.height}, expected ${width}x${height}`);
     }
+    const decoded = await image.raw().toBuffer({ resolveWithObject: true });
+    if (decoded.info.width !== width || decoded.info.height !== height || decoded.data.length === 0) {
+      throw new Error(`[andrey-photos] ${file} could not be fully decoded`);
+    }
     if (!manifestText.includes(path.basename(file, '.webp'))) {
       throw new Error(`[andrey-photos] Built asset manifest does not contain ${file}`);
     }
-    console.log(`[andrey-photos] ${file}: ${width}x${height}, ${Math.round(stat.size / 1024)} KB`);
+    console.log(`[andrey-photos] ${file}: ${width}x${height}, ${Math.round(stat.size / 1024)} KB, decoded`);
   }
 
   console.log('[andrey-photos] eight original photographs are valid and included in the production build');
