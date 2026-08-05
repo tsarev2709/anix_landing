@@ -1,0 +1,97 @@
+name: Import Андрей profile photos
+
+on:
+  push:
+    branches:
+      - agent/refresh-andrey-profile-photos
+
+permissions:
+  contents: write
+
+jobs:
+  import-originals:
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout working branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/refresh-andrey-profile-photos
+          fetch-depth: 0
+
+      - name: Install image converter
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
+
+      - name: Extract original archive with correct Cyrillic names
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import zipfile
+
+          archive = Path('Фото для сайта Аникс.zip')
+          target = Path('/tmp/andrey-profile-originals')
+          target.mkdir(parents=True, exist_ok=True)
+
+          mapping = {
+              'Фото с фотосессии по спектаклю Разбитые каменные средца Черного Города.JPG': 'theatre-promo.jpg',
+              'Студийное фото на белом фоне.JPG': 'portrait.jpg',
+              'Фото с выступления на юбилее Бизнес-Школы МФТИ.png': 'business-school-speaking.png',
+              'Фото на Цветном бульваре в качестве победителя конкурса Новаторы Москвы.png': 'novator-moscow.png',
+              'Выпускная фотография Бизнес-школы МФТИ в Сберуниверситете.png': 'business-school-graduates.png',
+              'Фото в конце спектакля 2015 год Студенческий Театр Точка МФТИ.png': 'tochka-theatre.png',
+              'Фото в театре имени Гоголя с Францом Кафкой на стене.png': 'kafka.png',
+              'Выступление на Академии Инноваторов.png': 'academy-pitch.png',
+          }
+
+          with zipfile.ZipFile(archive) as source:
+              found = set()
+              for item in source.infolist():
+                  decoded = item.filename.encode('cp437').decode('cp866')
+                  if decoded not in mapping:
+                      raise RuntimeError(f'Unexpected archive item: {decoded}')
+                  destination = target / mapping[decoded]
+                  destination.write_bytes(source.read(item))
+                  found.add(decoded)
+
+          missing = set(mapping) - found
+          if missing:
+              raise RuntimeError(f'Missing archive items: {sorted(missing)}')
+          print(f'[andrey-import] extracted {len(found)} original photographs')
+          PY
+
+      - name: Convert originals once to production WebP
+        shell: bash
+        run: |
+          set -euo pipefail
+          src=/tmp/andrey-profile-originals
+          dst=src/images/andrey/profile
+          mkdir -p "$dst"
+
+          convert "$src/theatre-promo.jpg" -auto-orient -strip -quality 88 -define webp:method=6 "$dst/andrey-profile-theatre-promo.webp"
+          convert "$src/portrait.jpg" -auto-orient -resize '1800x1800>' -strip -quality 88 -define webp:method=6 "$dst/andrey-profile-portrait.webp"
+          convert "$src/business-school-speaking.png" -resize '1800x1800>' -background white -alpha remove -alpha off -strip -quality 88 -define webp:method=6 "$dst/andrey-profile-business-school-speaking.webp"
+          convert "$src/novator-moscow.png" -background white -alpha remove -alpha off -strip -quality 88 -define webp:method=6 "$dst/andrey-profile-novator-moscow.webp"
+          convert "$src/business-school-graduates.png" -resize '1800x1800>' -background white -alpha remove -alpha off -strip -quality 88 -define webp:method=6 "$dst/andrey-profile-business-school-graduates.webp"
+          convert "$src/tochka-theatre.png" -background white -alpha remove -alpha off -strip -quality 88 -define webp:method=6 "$dst/andrey-profile-tochka-theatre.webp"
+          convert "$src/kafka.png" -background white -alpha remove -alpha off -strip -quality 88 -define webp:method=6 "$dst/andrey-profile-kafka.webp"
+          convert "$src/academy-pitch.png" -resize '1800x1800>' -background white -alpha remove -alpha off -strip -quality 88 -define webp:method=6 "$dst/andrey-profile-academy-pitch.webp"
+
+          identify "$dst"/*.webp
+
+      - name: Update profile source
+        run: python3 scripts/apply-andrey-profile-photo-source.py
+
+      - name: Commit clean assets and remove one-time importer
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm 'Фото для сайта Аникс.zip'
+          git rm '.github/workflows/import-andrey-profile-photos.yml'
+          git rm 'scripts/apply-andrey-profile-photo-source.py'
+          git add src/images/andrey/profile src/components/AndreyProfilePage.jsx
+          git commit -m 'Import original Андрей profile photographs'
+          git push origin HEAD:agent/refresh-andrey-profile-photos
