@@ -1,0 +1,135 @@
+/* Natural, uncropped presentation for the eight original photographs. */
+
+.andrey-hero-visual[data-photo-layout='natural'] {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(240px, 0.82fr);
+  align-items: center;
+  gap: clamp(18px, 2.4vw, 38px);
+  min-width: 0;
+}
+
+.andrey-hero-visual[data-photo-layout='natural'] figure {
+  position: relative;
+  overflow: visible;
+  min-height: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.andrey-hero-visual[data-photo-layout='natural'] img,
+.andrey-creative-photo img,
+.andrey-gallery-item img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  border-radius: clamp(22px, 2.2vw, 42px);
+  background: #20191b;
+  box-shadow: 0 28px 74px rgba(23, 19, 21, 0.16);
+  image-rendering: auto;
+}
+
+.andrey-hero-visual[data-photo-layout='natural'] figcaption,
+.andrey-gallery-item figcaption {
+  position: static;
+  inset: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 5px 0;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(23, 19, 21, 0.66);
+  font-size: 12px;
+  font-weight: 760;
+  backdrop-filter: none;
+}
+
+.andrey-hero-side {
+  align-self: end;
+}
+
+.andrey-creative-photo {
+  overflow: visible;
+  aspect-ratio: auto;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.andrey-gallery {
+  display: block;
+  column-count: 3;
+  column-gap: clamp(16px, 2vw, 30px);
+}
+
+.andrey-gallery-item,
+.andrey-gallery-item-1,
+.andrey-gallery-item-2,
+.andrey-gallery-item-3,
+.andrey-gallery-item-4,
+.andrey-gallery-item-5,
+.andrey-gallery-item-6,
+.andrey-gallery-item-7,
+.andrey-gallery-item-8 {
+  display: inline-block;
+  width: 100%;
+  min-height: 0;
+  margin: 0 0 clamp(24px, 3vw, 44px);
+  overflow: visible;
+  break-inside: avoid;
+  grid-column: auto;
+  grid-row: auto;
+  border-radius: 0;
+  background: transparent;
+  vertical-align: top;
+}
+
+.andrey-gallery-item:hover img {
+  transform: none;
+}
+
+@media (max-width: 1180px) {
+  .andrey-hero-visual[data-photo-layout='natural'] {
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.82fr);
+    max-width: 980px;
+  }
+
+  .andrey-gallery {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 680px) {
+  .andrey-hero-visual[data-photo-layout='natural'] {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .andrey-hero-visual[data-photo-layout='natural'] img,
+  .andrey-creative-photo img,
+  .andrey-gallery-item img {
+    border-radius: 22px;
+  }
+
+  .andrey-gallery {
+    column-count: 1;
+  }
+
+  .andrey-gallery-item,
+  .andrey-gallery-item-1,
+  .andrey-gallery-item-2,
+  .andrey-gallery-item-3,
+  .andrey-gallery-item-4,
+  .andrey-gallery-item-5,
+  .andrey-gallery-item-6,
+  .andrey-gallery-item-7,
+  .andrey-gallery-item-8 {
+    margin-bottom: 28px;
+  }
+}
