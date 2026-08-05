@@ -23,6 +23,7 @@ const routes = [
   { path: '/cases/aviandr/', marker: 'class="aviandr-case-page"', extraMarker: 'Авиандр: доказательная база, которая работает на доверие' },
   { path: '/cases/little-prince/', marker: 'class="case-page"', extraMarker: 'Маленький принц' },
   { path: '/cases/borodino/', marker: 'class="case-page"', extraMarker: 'Бородино' },
+  { path: '/andrey-tsarev/', marker: 'class="andrey-page"', extraMarker: 'Собираю сложные идеи в продукты, истории и работающие системы' },
 ];
 
 function findChrome() {

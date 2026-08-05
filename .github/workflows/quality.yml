@@ -41,6 +41,16 @@ jobs:
           CI: false
         run: npm run build
 
+      - name: Capture Андрей profile visual QA
+        run: node scripts/capture-andrey-profile-screenshots.js
+
+      - name: Upload Андрей profile visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: andrey-profile-visual-qa
+          path: artifacts/andrey-profile/*.png
+          if-no-files-found: error
+
       - name: Runtime smoke test
         run: node scripts/runtime-smoke-test.js
 

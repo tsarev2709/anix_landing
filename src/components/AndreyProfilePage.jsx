@@ -17,12 +17,16 @@ import {
 } from 'lucide-react';
 import SiteFooter from './SiteFooter';
 import './AndreyProfilePage.css';
+import './AndreyProfilePhotos.css';
 import logo from '../images/logoanix.png';
-import theatrePromoPhoto from '../images/andrey/andrey-theatre-promo.webp';
-import portraitPhoto from '../images/andrey/andrey-portrait.webp';
-import scientistPhoto from '../images/experts/andrey-tsarev-scientist.webp';
-import theatreGroupPhoto from '../images/andrey/andrey-tochka-theatre.webp';
-import anixTeamPhoto from '../images/ceo/alexandra-andrey-anix.webp';
+import theatrePromoPhoto from '../images/andrey/profile/andrey-profile-theatre-promo.webp';
+import portraitPhoto from '../images/andrey/profile/andrey-profile-portrait.webp';
+import businessSchoolSpeakingPhoto from '../images/andrey/profile/andrey-profile-business-school-speaking.webp';
+import novatorMoscowPhoto from '../images/andrey/profile/andrey-profile-novator-moscow.webp';
+import businessSchoolGraduatesPhoto from '../images/andrey/profile/andrey-profile-business-school-graduates.webp';
+import theatreGroupPhoto from '../images/andrey/profile/andrey-profile-tochka-theatre.webp';
+import kafkaPhoto from '../images/andrey/profile/andrey-profile-kafka.webp';
+import academyPitchPhoto from '../images/andrey/profile/andrey-profile-academy-pitch.webp';
 
 const telegramUrl = 'https://t.me/tsarev2709';
 
@@ -136,11 +140,62 @@ const publications = [
 ];
 
 const gallery = [
-  { src: theatrePromoPhoto, alt: 'Андрей Царёв на фотосессии спектакля «Разбитые каменные сердца Чёрного Города»', label: 'Промо спектакля, 2021' },
-  { src: portraitPhoto, alt: 'Портрет Андрея Царёва', label: 'Портрет' },
-  { src: scientistPhoto, alt: 'Андрей Царёв — научный эксперт Anix Medicine', label: 'Наука и Medicine' },
-  { src: anixTeamPhoto, alt: 'Андрей Царёв и Александра Севостьянова на мероприятии Anix', label: 'Anix как партнёрство' },
-  { src: theatreGroupPhoto, alt: 'Команда студенческого театра «Точка» МФТИ после спектакля', label: 'Театр «Точка»' },
+  {
+    src: theatrePromoPhoto,
+    alt: 'Андрей Царёв на фотосессии спектакля «Разбитые каменные сердца Чёрного Города»',
+    label: 'Промо спектакля, 2021',
+    width: 1405,
+    height: 937,
+  },
+  {
+    src: portraitPhoto,
+    alt: 'Студийный портрет Андрея Царёва',
+    label: 'Студийный портрет',
+    width: 1800,
+    height: 1200,
+  },
+  {
+    src: businessSchoolSpeakingPhoto,
+    alt: 'Андрей Царёв выступает на юбилее Бизнес-школы МФТИ',
+    label: 'Выступление в Бизнес-школе МФТИ',
+    width: 1800,
+    height: 1200,
+  },
+  {
+    src: novatorMoscowPhoto,
+    alt: 'Плакат с Андреем Царёвым на Цветном бульваре — финалист конкурса «Новатор Москвы — 2024»',
+    label: '«Новатор Москвы — 2024»',
+    width: 1280,
+    height: 853,
+  },
+  {
+    src: businessSchoolGraduatesPhoto,
+    alt: 'Выпускники Бизнес-школы МФТИ и СберУниверситета',
+    label: 'Выпуск Бизнес-школы МФТИ и СберУниверситета',
+    width: 1800,
+    height: 1200,
+  },
+  {
+    src: theatreGroupPhoto,
+    alt: 'Состав студенческого театра «Точка» МФТИ после спектакля',
+    label: 'Театр «Точка» МФТИ',
+    width: 1200,
+    height: 800,
+  },
+  {
+    src: kafkaPhoto,
+    alt: 'Андрей Царёв в Гоголь-центре на фоне изображения Франца Кафки',
+    label: 'Гоголь-центр / Франц Кафка',
+    width: 1712,
+    height: 958,
+  },
+  {
+    src: academyPitchPhoto,
+    alt: 'Андрей Царёв презентует нейросеть Anix на Академии инноваторов',
+    label: 'Питчинг Академии инноваторов / Anix',
+    width: 1800,
+    height: 1200,
+  },
 ];
 
 function Header() {
@@ -198,13 +253,26 @@ export default function AndreyProfilePage() {
           </div>
         </div>
 
-        <div className="andrey-hero-visual" aria-label="Фотографии Андрея Царёва">
+        <div className="andrey-hero-visual" data-photo-layout="natural" aria-label="Фотографии Андрея Царёва">
           <figure className="andrey-hero-main">
-            <img src={portraitPhoto} alt="Портрет Андрея Царёва" fetchPriority="high" />
+            <img
+              src={portraitPhoto}
+              alt="Студийный портрет Андрея Царёва"
+              width={1800}
+              height={1200}
+              fetchPriority="high"
+              decoding="async"
+            />
             <figcaption>Предприниматель, автор, режиссёр</figcaption>
           </figure>
           <figure className="andrey-hero-side">
-            <img src={theatrePromoPhoto} alt="Андрей Царёв в промо спектакля" />
+            <img
+              src={theatrePromoPhoto}
+              alt="Андрей Царёв в промо спектакля «Разбитые каменные сердца Чёрного Города»"
+              width={1405}
+              height={937}
+              decoding="async"
+            />
             <figcaption>Чёрный Город / театр</figcaption>
           </figure>
         </div>
@@ -292,7 +360,14 @@ export default function AndreyProfilePage() {
 
       <section className="andrey-section andrey-creative" id="creative">
         <div className="andrey-creative-photo">
-          <img src={theatreGroupPhoto} alt="Команда театра «Точка» МФТИ" loading="lazy" />
+          <img
+            src={theatreGroupPhoto}
+            alt="Состав студенческого театра «Точка» МФТИ после спектакля"
+            width={1200}
+            height={800}
+            loading="lazy"
+            decoding="async"
+          />
         </div>
         <div className="andrey-creative-copy">
           <p className="andrey-eyebrow">Театр и авторство</p>
@@ -321,7 +396,7 @@ export default function AndreyProfilePage() {
         </ul>
       </section>
 
-      <section className="andrey-section andrey-gallery-section">
+      <section className="andrey-section andrey-gallery-section" id="gallery">
         <div className="andrey-section-head">
           <p className="andrey-eyebrow">Архив</p>
           <h2>Сцена, наука, предпринимательство и несколько жизней внутри одной</h2>
@@ -329,7 +404,7 @@ export default function AndreyProfilePage() {
         <div className="andrey-gallery">
           {gallery.map((photo, index) => (
             <figure className={`andrey-gallery-item andrey-gallery-item-${index + 1}`} key={photo.src}>
-              <img src={photo.src} alt={photo.alt} loading="lazy" />
+              <img src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} loading="lazy" decoding="async" />
               <figcaption><Camera aria-hidden="true" />{photo.label}</figcaption>
             </figure>
           ))}
