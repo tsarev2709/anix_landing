@@ -286,6 +286,7 @@ const trustChips = [
 
 const navigationLinks = [
   { label: 'Кейсы', href: '#cases' },
+  { label: 'Почему работает', href: '/why_it_works' },
   { label: 'Что делаем', href: '#services' },
   { label: 'Medicine', href: '/medicine' },
   { label: 'HSE', href: '/hse' },

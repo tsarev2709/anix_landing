@@ -5,7 +5,7 @@ const seoConfig = require('../src/seo/routes.json');
 const root = path.resolve(__dirname, '..');
 const buildDir = path.join(root, 'build');
 const requiredRoutes = ['/', '/medicine', '/hse', '/rybki', '/privacy', '/personal-data'];
-const requiredCommercialRoutes = ['/cases', '/animation', '/ai-video'];
+const requiredCommercialRoutes = ['/cases', '/animation', '/ai-video', '/why_it_works'];
 const failures = [];
 
 function normalizeBrandText(value = '') {

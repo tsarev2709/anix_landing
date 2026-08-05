@@ -28,7 +28,7 @@ const pageLinks = [
   { label: 'Medicine', href: '/medicine' },
   { label: 'HSE', href: '/hse' },
   { label: 'CEO', href: '/ceo' },
-  { label: 'Почему работает', href: '/why_it_works' },
+  { label: 'Почему это работает', href: '/why_it_works' },
   { label: 'Проект «Рыбки»', href: '/rybki' },
   { label: 'Кейс Hemotech AI', href: '/cases/hemotech-ai' },
   { label: 'Кейс Мултон Партнерс', href: '/cases/multon-partners' },
@@ -154,6 +154,9 @@ export default function SiteFooter() {
         </a>
         <a href={toPublicHref('/ceo')}>
           CEO <ArrowRight aria-hidden="true" />
+        </a>
+        <a href={toPublicHref('/why_it_works')}>
+          Почему это работает <ArrowRight aria-hidden="true" />
         </a>
         <a href={toPublicHref('/personal-data')}>Политика обработки персональных данных</a>
         <a href={toPublicHref('/privacy')}>Политика конфиденциальности</a>

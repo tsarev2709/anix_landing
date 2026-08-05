@@ -181,6 +181,21 @@ export const buildStructuredData = (route) => {
     });
   }
 
+  if (route.faq?.length) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: route.faq.map((item) => ({
+        '@type': 'Question',
+        name: normalizeBrandText(item.question),
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: normalizeBrandText(item.answer),
+        },
+      })),
+    });
+  }
+
   return schemas;
 };
 
