@@ -133,6 +133,14 @@
     overflow-wrap: anywhere;
   }
 
+  .andrey-gallery-section h2 {
+    max-width: 100%;
+    font-size: clamp(32px, 8.8vw, 36px);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    overflow-wrap: anywhere;
+  }
+
   .andrey-button {
     padding-inline: 18px;
     white-space: normal;
