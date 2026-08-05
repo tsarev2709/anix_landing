@@ -3,36 +3,50 @@ const path = require('path');
 
 const root = path.resolve(__dirname, '..');
 const profilePath = path.join(root, 'src', 'components', 'AndreyProfilePage.jsx');
-const profileCssPath = path.join(root, 'src', 'components', 'AndreyProfilePage.css');
+const homePath = path.join(root, 'src', 'components', 'Design1TestPage.jsx');
+const assetDir = path.join(root, 'src', 'images', 'andrey', 'profile');
 
-function replaceOnce(content, search, replacement, label) {
-  if (content.includes(replacement)) return content;
-  if (!content.includes(search)) throw new Error(`[andrey-discoverability] Cannot find ${label}`);
-  return content.replace(search, replacement);
+const requiredAssets = [
+  'andrey-profile-theatre-promo.webp',
+  'andrey-profile-portrait.webp',
+  'andrey-profile-business-school-speaking.webp',
+  'andrey-profile-novator-moscow.webp',
+  'andrey-profile-business-school-graduates.webp',
+  'andrey-profile-tochka-theatre.webp',
+  'andrey-profile-kafka.webp',
+  'andrey-profile-academy-pitch.webp',
+];
+
+for (const asset of requiredAssets) {
+  const assetPath = path.join(assetDir, asset);
+  if (!fs.existsSync(assetPath)) {
+    throw new Error(`[andrey-discoverability] Missing original profile asset: ${asset}`);
+  }
 }
 
-let profile = fs.readFileSync(profilePath, 'utf8');
-profile = replaceOnce(
-  profile,
-  "import theatreGroupPhoto from '../images/andrey/andrey-tochka-theatre.webp';",
-  "import theatreGroupPhoto from '../images/andrey/andrey-tochka-theatre.webp';\nimport businessSchoolSpeakingPhoto from '../images/andrey/andrey-business-school-speaking.webp';\nimport googleKafkaPhoto from '../images/andrey/andrey-google-kafka.webp';",
-  'profile photo imports',
-);
-profile = replaceOnce(
-  profile,
-  "  { src: theatreGroupPhoto, alt: 'Команда студенческого театра «Точка» МФТИ после спектакля', label: 'Театр «Точка»' },\n];",
-  "  { src: theatreGroupPhoto, alt: 'Команда студенческого театра «Точка» МФТИ после спектакля', label: 'Театр «Точка»' },\n  { src: businessSchoolSpeakingPhoto, alt: 'Андрей Царёв выступает на дне рождения Бизнес-школы МФТИ', label: 'Выступление в Бизнес-школе МФТИ' },\n  { src: googleKafkaPhoto, alt: 'Андрей Царёв в Google-центре на фоне Франца Кафки', label: 'Google-центр / Франц Кафка' },\n];",
-  'profile gallery',
-);
-fs.writeFileSync(profilePath, profile);
+const profile = fs.readFileSync(profilePath, 'utf8');
+for (const asset of requiredAssets) {
+  if (!profile.includes(asset)) {
+    throw new Error(`[andrey-discoverability] Profile does not import ${asset}`);
+  }
+}
 
-let profileCss = fs.readFileSync(profileCssPath, 'utf8');
-profileCss = replaceOnce(
-  profileCss,
-  '.andrey-gallery-item-5 { grid-column: span 5; }',
-  '.andrey-gallery-item-5 { grid-column: span 5; }\n.andrey-gallery-item-6, .andrey-gallery-item-7 { grid-column: span 6; }',
-  'gallery layout',
-);
-fs.writeFileSync(profileCssPath, profileCss);
+if (!profile.includes("import './AndreyProfilePhotos.css';")) {
+  throw new Error('[andrey-discoverability] Natural photo layout stylesheet is not imported');
+}
+if (!profile.includes('data-photo-layout="natural"')) {
+  throw new Error('[andrey-discoverability] Natural hero photo layout marker is missing');
+}
+if (!profile.includes('id="gallery"')) {
+  throw new Error('[andrey-discoverability] Gallery anchor is missing');
+}
+if (!profile.includes('width={photo.width}') || !profile.includes('height={photo.height}')) {
+  throw new Error('[andrey-discoverability] Gallery intrinsic dimensions are missing');
+}
 
-console.log('[andrey-discoverability] profile gallery is ready without public navigation links');
+const home = fs.readFileSync(homePath, 'utf8');
+if (home.includes('/andrey-tsarev')) {
+  throw new Error('[andrey-discoverability] Андрей profile is linked from the homepage');
+}
+
+console.log('[andrey-discoverability] eight original photos, natural geometry and hidden navigation verified');
