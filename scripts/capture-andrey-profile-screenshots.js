@@ -12,6 +12,8 @@ const serverPort = Number(process.env.ANDREY_SCREENSHOT_PORT || 4181);
 const debugPortBase = Number(process.env.ANDREY_DEBUG_PORT || 9281);
 const baseUrl = `http://127.0.0.1:${serverPort}`;
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 function findChrome() {
   const candidates = [process.env.CHROME_PATH, 'google-chrome-stable', 'google-chrome', 'chromium', 'chromium-browser'].filter(Boolean);
   for (const candidate of candidates) {
@@ -46,7 +48,7 @@ async function waitFor(check, label, timeoutMs = 15000) {
       const value = await check();
       if (value) return value;
     } catch (error) { lastError = error; }
-    await new Promise((resolve) => setTimeout(resolve, 250));
+    await sleep(250);
   }
   throw new Error(`${label} was not ready in ${timeoutMs}ms${lastError ? `: ${lastError.message}` : ''}`);
 }
@@ -76,6 +78,29 @@ function connectCdp(webSocketDebuggerUrl) {
   });
 }
 
+async function stopChromeAndClean(chrome, cdp, profileDir, name) {
+  if (cdp && cdp.socket.readyState === WebSocket.OPEN) cdp.socket.terminate();
+
+  if (chrome.exitCode === null) {
+    const exited = new Promise((resolve) => chrome.once('exit', resolve));
+    chrome.kill('SIGKILL');
+    await Promise.race([exited, sleep(1500)]);
+  }
+
+  for (let attempt = 1; attempt <= 5; attempt += 1) {
+    try {
+      fs.rmSync(profileDir, { recursive: true, force: true });
+      return;
+    } catch (error) {
+      if (attempt === 5) {
+        console.warn(`[andrey-screenshot] cleanup warning for ${name}: ${error.message}`);
+        return;
+      }
+      await sleep(200);
+    }
+  }
+}
+
 async function capture(chromePath, name, width, height, selector, index) {
   const profileDir = fs.mkdtempSync(path.join(os.tmpdir(), 'anix-andrey-shot-'));
   const debugPort = debugPortBase + index;
@@ -103,7 +128,7 @@ async function capture(chromePath, name, width, height, selector, index) {
       width, height, deviceScaleFactor: 1, mobile: width <= 680, screenWidth: width, screenHeight: height,
     });
     await cdp.send('Page.navigate', { url: `${baseUrl}/andrey-tsarev/` });
-    await new Promise((resolve) => setTimeout(resolve, 900));
+    await sleep(900);
 
     const expression = `
       (async () => {
@@ -144,9 +169,7 @@ async function capture(chromePath, name, width, height, selector, index) {
     if (stat.size < 20 * 1024) throw new Error(`Screenshot ${name} looks empty (${stat.size} bytes)`);
     console.log(`[andrey-screenshot] ${name}: ${Math.round(stat.size / 1024)} KB, scrollY ${Math.round(pageState.scrollY)}`);
   } finally {
-    if (cdp && cdp.socket.readyState === WebSocket.OPEN) cdp.socket.terminate();
-    chrome.kill('SIGKILL');
-    fs.rmSync(profileDir, { recursive: true, force: true });
+    await stopChromeAndClean(chrome, cdp, profileDir, name);
   }
   if (chromeError.includes('ERROR:') && !fs.existsSync(outputPath)) throw new Error(`Chrome failed for ${name}: ${chromeError}`);
 }
