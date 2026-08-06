@@ -31,12 +31,13 @@ function env(name: string): string {
 
 function allowedOrigins(): string[] {
   const configured = env('WEBSITE_LEAD_ALLOWED_ORIGINS');
-  return configured
+  const extraOrigins = configured
     ? configured
         .split(',')
         .map((value) => value.trim())
         .filter(Boolean)
-    : DEFAULT_ORIGINS;
+    : [];
+  return [...new Set([...DEFAULT_ORIGINS, ...extraOrigins])];
 }
 
 function isAllowedOrigin(origin: string): boolean {
