@@ -1,0 +1,81 @@
+/*
+ * One desktop grid for every public Anix page.
+ * The page uses the full viewport; readable copy keeps its own max-width.
+ * Mobile rules stay inside the page styles and are not changed here.
+ */
+
+:root {
+  --anix-page-gutter: clamp(24px, 3vw, 72px);
+  --anix-header-gutter: clamp(16px, 2.5vw, 48px);
+}
+
+@media (min-width: 901px) {
+  .why-hero,
+  .why-section,
+  .why-final,
+  .animation-hero,
+  .animation-section,
+  .animation-expertise,
+  .animation-cta,
+  .ai-video-hero,
+  .ai-video-section,
+  .ai-video-cta,
+  .rybki-intro,
+  .rybki-slides,
+  .rybki-final,
+  .rybki-layered-hero,
+  .rybki-layered-section,
+  .rybki-layered-final,
+  .cases-category-hero,
+  .cases-hub-page .cases-hub-hero,
+  .cases-hub-page .cases-hub-category,
+  .cases-hub-page .cases-hub-events,
+  .cases-hub-page .cases-hub-cta,
+  .case-page .case-hero,
+  .case-page .case-story,
+  .case-page .case-related,
+  .aviandr-case-page .aviandr-hero,
+  .aviandr-case-page .aviandr-section,
+  .aviandr-case-page .aviandr-result,
+  .aviandr-case-page .aviandr-cta,
+  .sweet-case-page .sweet-hero,
+  .sweet-case-page .sweet-section:not(.sweet-dark),
+  .sweet-case-page .sweet-note,
+  .sweet-case-page .sweet-final-cta,
+  .andrey-page .andrey-hero,
+  .andrey-page .andrey-statement,
+  .andrey-page .andrey-section:not(.andrey-trust-section),
+  .andrey-page .andrey-final {
+    width: 100%;
+    max-width: none;
+    padding-right: var(--anix-page-gutter);
+    padding-left: var(--anix-page-gutter);
+  }
+
+  .why-science,
+  .why-video-section,
+  .why-cases,
+  .animation-section--dark,
+  .ai-video-section--dark,
+  .sweet-case-page .sweet-dark,
+  .andrey-page .andrey-trust-section {
+    width: 100%;
+    max-width: none;
+    padding-right: var(--anix-page-gutter);
+    padding-left: var(--anix-page-gutter);
+  }
+
+  .why-header,
+  .animation-header,
+  .ai-video-header,
+  .rybki-header,
+  .rybki-layered-header,
+  .cases-hub-page .cases-hub-header,
+  .case-page .case-header,
+  .aviandr-case-page .aviandr-header,
+  .sweet-case-page .sweet-header,
+  .andrey-page .andrey-header {
+    width: calc(100% - (2 * var(--anix-header-gutter)));
+    max-width: none;
+  }
+}
