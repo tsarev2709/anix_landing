@@ -25,6 +25,9 @@ class Request {
   async json() {
     return JSON.parse(this.body || '{}');
   }
+  async text() {
+    return this.body || '';
+  }
 }
 class Response {
   constructor(body, init = {}) {
@@ -49,7 +52,7 @@ global.Deno = { env: { get: (k) => process.env[k] } };
 function compile(file) {
   try {
     execSync(
-      `npx tsc ${file} --target ES2020 --module commonjs --esModuleInterop --skipLibCheck --noEmitOnError false`
+      `node node_modules/typescript/bin/tsc ${file} --target ES2020 --module commonjs --esModuleInterop --skipLibCheck --noEmitOnError false`
     );
   } catch (e) {
     /* ignore */
@@ -60,6 +63,7 @@ beforeAll(() => {
   compile('supabase/functions/submit-lead/index.ts');
   compile('supabase/functions/email-open/index.ts');
   compile('supabase/functions/track-event/index.ts');
+  compile('supabase/functions/submit-website-lead/index.ts');
 });
 
 afterAll(() => {
@@ -75,6 +79,16 @@ afterAll(() => {
   }
   try {
     fs.unlinkSync('supabase/functions/track-event/index.js');
+  } catch (e) {
+    /* ignore */
+  }
+  try {
+    fs.unlinkSync('supabase/functions/submit-website-lead/index.js');
+  } catch (e) {
+    /* ignore */
+  }
+  try {
+    fs.unlinkSync('supabase/functions/_shared/cors.js');
   } catch (e) {
     /* ignore */
   }
@@ -178,5 +192,69 @@ describe('track-event', () => {
     });
     const res = await track(req);
     expect(res.status).toBe(400);
+  });
+});
+
+describe('submit-website-lead', () => {
+  afterEach(() => {
+    jest.resetModules();
+    jest.clearAllMocks();
+    delete global.fetch;
+    delete process.env.TURNSTILE_SECRET_KEY;
+    delete process.env.SUPABASE_URL;
+    delete process.env.SUPABASE_SERVICE_ROLE_KEY;
+  });
+
+  const validBody = {
+    idempotency_key: '12345678-1234-4234-9234-123456789abc',
+    turnstile_token: 'test-token',
+    name: 'Тестовый лид',
+    email: 'test@example.com',
+    contact_value: '',
+    message: 'Тестовая заявка с сайта Anix',
+    page_url: 'https://studio.anix-ai.pro/',
+    page_path: '/',
+    pages_viewed: [],
+  };
+
+  test('rejects an untrusted origin before processing the request', async () => {
+    const submitWebsiteLead =
+      require('../../supabase/functions/submit-website-lead/index.js').default;
+    const req = new Request('https://example.com', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        origin: 'https://attacker.example',
+      },
+      body: JSON.stringify(validBody),
+    });
+    const res = await submitWebsiteLead(req);
+    expect(res.status).toBe(403);
+    expect((await res.json()).error).toBe('origin_not_allowed');
+  });
+
+  test('does not store a lead when Turnstile validation fails', async () => {
+    process.env.TURNSTILE_SECRET_KEY = 'turnstile-secret';
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve({ success: false }),
+      })
+    );
+    const submitWebsiteLead =
+      require('../../supabase/functions/submit-website-lead/index.js').default;
+    const req = new Request('https://example.com', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        origin: 'https://studio.anix-ai.pro',
+      },
+      body: JSON.stringify(validBody),
+    });
+    const res = await submitWebsiteLead(req);
+    expect(res.status).toBe(400);
+    expect((await res.json()).error).toBe('turnstile_failed');
+    expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 });
