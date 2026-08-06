@@ -74,6 +74,7 @@ function runRoute(chromePath, route) {
   if (fatalRuntimePattern.test(stderr)) throw new Error(`Runtime error on ${route.path}:\n${stderr}`);
   if (!dom.includes(route.marker)) throw new Error(`React did not render ${route.path}. Expected DOM marker ${route.marker}. The page may have crashed and remained on the static SEO shell.`);
   if (route.extraMarker && !dom.includes(route.extraMarker)) throw new Error(`Route ${route.path} rendered, but required marker ${route.extraMarker} is missing.`);
+  if (route.path !== '/andrey-tsarev/' && !dom.includes('id="website-lead-form"')) throw new Error(`Route ${route.path} is missing the shared website lead form.`);
   if (dom.includes('data-seo-shell="true"')) throw new Error(`Route ${route.path} still contains the static SEO shell after the runtime render.`);
   console.log(`[runtime-smoke] PASS ${route.path}`);
 }

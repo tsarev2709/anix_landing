@@ -37,8 +37,8 @@ describe('current ANIX landing', () => {
       root.render(<App />);
     });
 
-    const hrefs = Array.from(container.querySelectorAll('a[href]')).map((link) =>
-      link.getAttribute('href')
+    const hrefs = Array.from(container.querySelectorAll('a[href]')).map(
+      (link) => link.getAttribute('href')
     );
 
     expect(hrefs).toContain('/medicine/');
@@ -79,5 +79,39 @@ describe('current ANIX landing', () => {
     expect(css).toMatch(/width:\s*100%/);
     expect(css).toMatch(/padding-right:\s*var\(--anix-page-gutter\)/);
     expect(css).toMatch(/padding-left:\s*var\(--anix-page-gutter\)/);
+  });
+
+  test('shows one native website lead form before the shared footer', () => {
+    TestUtils.act(() => {
+      root.render(<App />);
+    });
+
+    expect(container.querySelectorAll('.website-lead')).toHaveLength(1);
+    expect(container.querySelector('.website-lead h2').textContent).toBe(
+      'Обсудим ваш проект'
+    );
+    expect(container.querySelector('#website-lead-form')).toBeTruthy();
+    expect(container.querySelector('.anix-site-footer')).toBeTruthy();
+  });
+
+  test('publishes the company details in the shared footer', () => {
+    TestUtils.act(() => {
+      root.render(<App />);
+    });
+
+    const footerText = container.querySelector('.anix-site-footer').textContent;
+    expect(footerText).toContain('ООО «АНИКС»');
+    expect(footerText).toContain('ИНН 9714017729');
+    expect(footerText).toContain('КПП 772701001');
+  });
+
+  test('keeps the lead form fluid on desktop and single-column on mobile', () => {
+    const css = fs.readFileSync('src/components/WebsiteLeadForm.css', 'utf8');
+
+    expect(css).toMatch(/\.website-lead\s*\{[\s\S]*?width:\s*100%/);
+    expect(css).toMatch(/@media \(max-width:\s*980px\)/);
+    expect(css).toMatch(
+      /@media \(max-width:\s*640px\)[\s\S]*?\.website-lead__grid\s*\{[\s\S]*?grid-template-columns:\s*1fr/
+    );
   });
 });

@@ -12,10 +12,12 @@ import RouteBreadcrumbsPortal from './seo/RouteBreadcrumbsPortal';
 import RouteRelatedLinksPortal from './seo/RouteRelatedLinksPortal';
 import SeoHead from './seo/SeoHead';
 import { installRuntimeRecovery, recoverFromRuntimeFailure } from './runtimeCompatibility';
+import { initLeadSessionTracking } from './lib/leadSession';
 
 console.info('[CFG] SUBMIT:', CONFIG.SUBMIT_LEAD_URL);
 console.info('[CFG] TRACK :', CONFIG.TRACK_EVENT_URL);
 installRuntimeRecovery();
+initLeadSessionTracking();
 
 const NotFound = lazy(() => import('./components/NotFound'));
 const WhyItWorksPage = lazy(() => import('./components/WhyItWorksPage'));

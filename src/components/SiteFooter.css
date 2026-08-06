@@ -145,6 +145,17 @@
   color: #fff;
 }
 
+.anix-site-footer__legal-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  align-items: center;
+}
+
+.anix-site-footer__legal-details span:first-child {
+  color: rgba(255, 255, 255, 0.86);
+}
+
 @media (max-width: 980px) {
   .anix-site-footer__inner {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -171,6 +182,11 @@
   }
 
   .anix-site-footer__bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .anix-site-footer__legal-details {
     align-items: flex-start;
     flex-direction: column;
   }

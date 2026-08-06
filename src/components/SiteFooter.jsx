@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { toPublicHref } from '../seo/SeoHead';
 import BrandLogo from './BrandLogo';
+import WebsiteLeadForm from './WebsiteLeadForm';
 import './SiteFooter.css';
 
 const telegramUrl = 'https://t.me/anix_helper';
@@ -90,77 +91,91 @@ function FooterLink({ item }) {
 
 export default function SiteFooter() {
   return (
-    <footer className="anix-site-footer">
-      <div className="anix-site-footer__inner">
-        <div className="anix-site-footer__brand">
-          <a href="/" aria-label="Anix Studio">
-            <BrandLogo className="anix-site-footer__logo" alt="Anix Studio" width={120} height={44} />
-          </a>
-          <p>
-            AI-видео, анимация, маскоты и визуальные системы для сложных
-            продуктов, фармы, HSE и событий.
-          </p>
+    <>
+      <WebsiteLeadForm />
+      <footer className="anix-site-footer">
+        <div className="anix-site-footer__inner">
+          <div className="anix-site-footer__brand">
+            <a href="/" aria-label="Anix Studio">
+              <BrandLogo
+                className="anix-site-footer__logo"
+                alt="Anix Studio"
+                width={120}
+                height={44}
+              />
+            </a>
+            <p>
+              AI-видео, анимация, маскоты и визуальные системы для сложных
+              продуктов, фармы, HSE и событий.
+            </p>
+          </div>
+
+          <nav className="anix-site-footer__nav" aria-label="Страницы Anix">
+            <h2>Страницы</h2>
+            {pageLinks.map((item) => (
+              <FooterLink item={item} key={item.href} />
+            ))}
+          </nav>
+
+          <nav className="anix-site-footer__nav" aria-label="Направления Anix">
+            <h2>Направления</h2>
+            {directionLinks.map((item) => (
+              <FooterLink item={item} key={item.href} />
+            ))}
+          </nav>
+
+          <div className="anix-site-footer__contact">
+            <h2>Контакт</h2>
+            <a
+              className="anix-site-footer__button"
+              href={telegramUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <MessageCircle aria-hidden="true" />
+              Telegram
+            </a>
+            <a className="anix-site-footer__button" href={emailUrl}>
+              <Mail aria-hidden="true" />
+              Email
+            </a>
+            <p>
+              <Sparkles aria-hidden="true" />
+              Сложные штуки можно объяснять нормально.
+            </p>
+          </div>
         </div>
 
-        <nav className="anix-site-footer__nav" aria-label="Страницы Anix">
-          <h2>Страницы</h2>
-          {pageLinks.map((item) => (
-            <FooterLink item={item} key={item.href} />
-          ))}
-        </nav>
-
-        <nav className="anix-site-footer__nav" aria-label="Направления Anix">
-          <h2>Направления</h2>
-          {directionLinks.map((item) => (
-            <FooterLink item={item} key={item.href} />
-          ))}
-        </nav>
-
-        <div className="anix-site-footer__contact">
-          <h2>Контакт</h2>
-          <a
-            className="anix-site-footer__button"
-            href={telegramUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <MessageCircle aria-hidden="true" />
-            Telegram
+        <div className="anix-site-footer__bottom">
+          <div className="anix-site-footer__legal-details">
+            <span>ООО «АНИКС»</span>
+            <span>ИНН 9714017729</span>
+            <span>КПП 772701001</span>
+          </div>
+          <a href={toPublicHref('/animation')}>
+            Анимационные ролики <ArrowRight aria-hidden="true" />
           </a>
-          <a className="anix-site-footer__button" href={emailUrl}>
-            <Mail aria-hidden="true" />
-            Email
+          <a href={toPublicHref('/ai-video')}>
+            AI-видео <ArrowRight aria-hidden="true" />
           </a>
-          <p>
-            <Sparkles aria-hidden="true" />
-            Сложные штуки можно объяснять нормально.
-          </p>
+          <a href={toPublicHref('/medicine')}>
+            Medicine <ArrowRight aria-hidden="true" />
+          </a>
+          <a href={toPublicHref('/hse')}>
+            HSE <ArrowRight aria-hidden="true" />
+          </a>
+          <a href={toPublicHref('/ceo')}>
+            CEO <ArrowRight aria-hidden="true" />
+          </a>
+          <a href={toPublicHref('/why_it_works')}>
+            Почему это работает <ArrowRight aria-hidden="true" />
+          </a>
+          <a href={toPublicHref('/personal-data')}>
+            Политика обработки персональных данных
+          </a>
+          <a href={toPublicHref('/privacy')}>Политика конфиденциальности</a>
         </div>
-      </div>
-
-      <div className="anix-site-footer__bottom">
-        <span>Anix Studio</span>
-        <a href={toPublicHref('/animation')}>
-          Анимационные ролики <ArrowRight aria-hidden="true" />
-        </a>
-        <a href={toPublicHref('/ai-video')}>
-          AI-видео <ArrowRight aria-hidden="true" />
-        </a>
-        <a href={toPublicHref('/medicine')}>
-          Medicine <ArrowRight aria-hidden="true" />
-        </a>
-        <a href={toPublicHref('/hse')}>
-          HSE <ArrowRight aria-hidden="true" />
-        </a>
-        <a href={toPublicHref('/ceo')}>
-          CEO <ArrowRight aria-hidden="true" />
-        </a>
-        <a href={toPublicHref('/why_it_works')}>
-          Почему это работает <ArrowRight aria-hidden="true" />
-        </a>
-        <a href={toPublicHref('/personal-data')}>Политика обработки персональных данных</a>
-        <a href={toPublicHref('/privacy')}>Политика конфиденциальности</a>
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 name: Deploy Supabase Edge Functions
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
       - 'supabase/functions/**'
   workflow_dispatch:
@@ -24,4 +24,5 @@ jobs:
         run: |
           supabase functions deploy track-event
           supabase functions deploy submit-lead
+          supabase functions deploy submit-website-lead --no-verify-jwt
           supabase functions deploy email-open
