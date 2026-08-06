@@ -203,6 +203,7 @@ describe('submit-website-lead', () => {
     delete process.env.TURNSTILE_SECRET_KEY;
     delete process.env.SUPABASE_URL;
     delete process.env.SUPABASE_SERVICE_ROLE_KEY;
+    delete process.env.WEBSITE_LEAD_ALLOWED_ORIGINS;
   });
 
   const validBody = {
@@ -256,5 +257,30 @@ describe('submit-website-lead', () => {
     expect(res.status).toBe(400);
     expect((await res.json()).error).toBe('turnstile_failed');
     expect(global.fetch).toHaveBeenCalledTimes(1);
+  });
+
+  test('keeps the production origin when custom origins are configured', async () => {
+    process.env.WEBSITE_LEAD_ALLOWED_ORIGINS = 'https://preview.example';
+    process.env.TURNSTILE_SECRET_KEY = 'turnstile-secret';
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve({ success: false }),
+      })
+    );
+    const submitWebsiteLead =
+      require('../../supabase/functions/submit-website-lead/index.js').default;
+    const req = new Request('https://example.com', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        origin: 'https://studio.anix-ai.pro',
+      },
+      body: JSON.stringify(validBody),
+    });
+    const res = await submitWebsiteLead(req);
+    expect(res.status).toBe(400);
+    expect((await res.json()).error).toBe('turnstile_failed');
   });
 });
