@@ -1,0 +1,4 @@
+project_id = "ppoygmaqlaiqcisjetea"
+
+[functions.submit-website-lead]
+verify_jwt = false
