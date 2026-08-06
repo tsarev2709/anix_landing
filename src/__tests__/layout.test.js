@@ -64,4 +64,20 @@ describe('current ANIX landing', () => {
     expect(match[0]).toMatch(/max-width:\s*none/);
     expect(match[0]).toMatch(/padding-inline:\s*clamp\(/);
   });
+
+  test('all public desktop pages share the homepage fluid grid', () => {
+    const css = fs.readFileSync('src/styles/site-wide-layout.css', 'utf8');
+
+    expect(css).toMatch(/@media \(min-width:\s*901px\)/);
+    expect(css).toContain('.why-hero');
+    expect(css).toContain('.animation-hero');
+    expect(css).toContain('.ai-video-hero');
+    expect(css).toContain('.rybki-intro');
+    expect(css).toContain('.cases-category-hero');
+    expect(css).toContain('.case-page .case-hero');
+    expect(css).toContain('.andrey-page .andrey-hero');
+    expect(css).toMatch(/width:\s*100%/);
+    expect(css).toMatch(/padding-right:\s*var\(--anix-page-gutter\)/);
+    expect(css).toMatch(/padding-left:\s*var\(--anix-page-gutter\)/);
+  });
 });
