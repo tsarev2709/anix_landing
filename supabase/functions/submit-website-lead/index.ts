@@ -1,6 +1,8 @@
 declare const Deno: any;
 declare const process: any;
 
+// This public function is deployed by the Supabase Actions workflow.
+
 const DEFAULT_ORIGINS = [
   'https://studio.anix-ai.pro',
   'https://dev.studio.anix-ai.pro',
