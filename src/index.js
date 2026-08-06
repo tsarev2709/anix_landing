@@ -3,6 +3,7 @@ import { CONFIG } from '@/config';
 import ReactDOM from 'react-dom/client';
 import './App.css';
 import './styles/case-wide-layout.css';
+import './styles/site-wide-layout.css';
 import App from './App';
 import AppLayout from './AppLayout';
 import AboutStudioPortal from './components/AboutStudioPortal';
