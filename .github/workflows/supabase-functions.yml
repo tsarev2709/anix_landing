@@ -5,6 +5,7 @@ on:
     paths:
       - 'supabase/functions/**'
       - 'scripts/ensure-website-lead-consent.js'
+      - 'scripts/run-website-lead-consent-once.js'
       - '.github/workflows/supabase-functions.yml'
   workflow_dispatch:
 
@@ -17,7 +18,7 @@ jobs:
         with: { deno-version: v1.x }
       - uses: supabase/setup-cli@v1
       - name: Apply website lead consent and diagnostics
-        run: node scripts/ensure-website-lead-consent.js
+        run: node scripts/run-website-lead-consent-once.js
       - name: Link to Supabase project
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
