@@ -1,0 +1,16 @@
+/* Cross-page guard for the website lead success CTA.
+   Some page shells (for example .design1-test a) set anchor color with
+   higher selector specificity than the component-local CTA rule. */
+.website-lead-modal a.website-lead-modal__cta {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
+.website-lead-modal a.website-lead-modal__cta svg {
+  color: #fff;
+  stroke: currentColor;
+}
+
+.website-lead-modal a.website-lead-modal__cta:hover {
+  background: #087d70;
+}
