@@ -1,1 +1,0 @@
-Redeploy current gh-pages snapshot after GitHub Pages outage.
