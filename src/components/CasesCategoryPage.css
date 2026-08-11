@@ -1,0 +1,55 @@
+.cases-category-page {
+  min-height: 100vh;
+}
+
+.cases-category-hero {
+  width: min(94vw, 1680px);
+  margin: 0 auto;
+  padding: clamp(84px, 10vw, 180px) 0 clamp(56px, 7vw, 110px);
+}
+
+.cases-category-hero h1 {
+  max-width: 1180px;
+  margin: 18px 0 24px;
+  font-size: clamp(56px, 8vw, 132px);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
+}
+
+.cases-category-hero > p:last-child {
+  max-width: 900px;
+  margin: 0;
+  color: rgba(33, 22, 45, 0.68);
+  font-size: clamp(20px, 2vw, 30px);
+  line-height: 1.4;
+}
+
+.cases-category-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 42px;
+  color: rgba(33, 22, 45, 0.68);
+  font-size: 14px;
+  font-weight: 760;
+  text-decoration: none;
+}
+
+.cases-category-back svg {
+  width: 18px;
+  height: 18px;
+}
+
+.cases-category-listing {
+  padding-top: 0;
+}
+
+@media (max-width: 720px) {
+  .cases-category-hero {
+    padding-top: 72px;
+  }
+
+  .cases-category-hero h1 {
+    font-size: clamp(48px, 15vw, 78px);
+  }
+}

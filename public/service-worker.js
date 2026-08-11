@@ -1,27 +1,19 @@
-self.addEventListener('install', event => {
+const legacyCachePrefix = 'anix-cache-';
+
+self.addEventListener('install', () => {
   self.skipWaiting();
 });
 
-self.addEventListener('activate', event => {
-  event.waitUntil(self.clients.claim());
-});
-
-self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
-  event.respondWith(
-    caches.open('anix-cache').then(cache =>
-      cache.match(event.request).then(response => {
-        const fetchPromise = fetch(event.request).then(networkResponse => {
-          if (networkResponse && networkResponse.status === 200) {
-            const contentType = networkResponse.headers.get('content-type') || '';
-            if (/javascript|css|image/.test(contentType)) {
-              cache.put(event.request, networkResponse.clone());
-            }
-          }
-          return networkResponse;
-        });
-        return response || fetchPromise;
-      })
-    )
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches
+      .keys()
+      .then((keys) => Promise.all(keys.filter((key) => key.indexOf(legacyCachePrefix) === 0).map((key) => caches.delete(key))))
+      .then(() => self.registration.unregister())
+      .then(() => self.clients.claim()),
   );
 });
+
+// This worker intentionally does not intercept requests. It exists only so
+// devices controlled by an older ANIX worker receive an update, clear the
+// obsolete cache and return to normal browser networking.

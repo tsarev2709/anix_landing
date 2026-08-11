@@ -1,0 +1,14 @@
+.d1-cases-hub-link-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin: 28px 0 0;
+}
+
+.d1-cases-hub-link {
+  width: fit-content;
+}
+
+@media (max-width: 640px) {
+  .d1-cases-hub-link-wrap { justify-content: stretch; }
+  .d1-cases-hub-link { width: 100%; }
+}

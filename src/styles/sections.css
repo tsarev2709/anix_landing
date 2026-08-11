@@ -1,0 +1,42 @@
+:root {
+  --bg-global: #0f0f1f;
+}
+body {
+  background: var(--bg-global);
+  transition: background 0.4s ease;
+}
+
+.section {
+  position: relative;
+  background: var(--bg);
+  isolation: isolate;
+}
+
+/* Sticky мост между секциями */
+.sticky-bridge {
+  position: sticky;
+  top: 0;
+  height: 64px;
+  background: linear-gradient(to bottom, var(--bg) 0%, var(--next-bg) 100%);
+  z-index: 0;
+}
+@media (min-width: 768px) {
+  .sticky-bridge {
+    height: 96px;
+  }
+}
+
+/* Едва заметная микро-текстура без изображений */
+.page-grain {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.02;
+  background:
+    repeating-linear-gradient(0deg, #000 0 1px, transparent 1px 2px),
+    repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 2px);
+  mix-blend-mode: soft-light;
+}
+
+/* sticky CTA полоса removed */

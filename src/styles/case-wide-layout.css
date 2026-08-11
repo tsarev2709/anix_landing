@@ -1,0 +1,51 @@
+/* Keep all case-related pages on the same wide desktop grid as the homepage. */
+
+@media (min-width: 641px) {
+  .cases-hub-page .cases-hub-hero,
+  .cases-hub-page .cases-hub-category,
+  .cases-hub-page .cases-hub-events,
+  .cases-hub-page .cases-hub-cta {
+    width: calc(100% - clamp(48px, 6vw, 144px));
+    max-width: none;
+  }
+}
+
+@media (min-width: 681px) {
+  .aviandr-case-page .aviandr-header,
+  .sweet-case-page .sweet-header {
+    width: calc(100% - clamp(32px, 5vw, 96px));
+    max-width: none;
+  }
+
+  .aviandr-case-page .aviandr-hero,
+  .aviandr-case-page .aviandr-section,
+  .aviandr-case-page .aviandr-result,
+  .aviandr-case-page .aviandr-cta,
+  .sweet-case-page .sweet-hero,
+  .sweet-case-page .sweet-section:not(.sweet-dark),
+  .sweet-case-page .sweet-note,
+  .sweet-case-page .sweet-final-cta {
+    width: calc(100% - clamp(48px, 6vw, 144px));
+    max-width: none;
+  }
+
+  .sweet-case-page .sweet-dark {
+    width: 100%;
+    max-width: none;
+    padding-inline: clamp(24px, 3vw, 72px);
+  }
+}
+
+@media (min-width: 861px) {
+  .case-page .case-header {
+    width: calc(100% - clamp(32px, 5vw, 96px));
+    max-width: none;
+  }
+
+  .case-page .case-hero,
+  .case-page .case-story,
+  .case-page .case-related {
+    width: calc(100% - clamp(48px, 6vw, 144px));
+    max-width: none;
+  }
+}

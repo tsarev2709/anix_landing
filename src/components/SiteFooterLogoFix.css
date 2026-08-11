@@ -1,0 +1,4 @@
+/* Keep the footer logo identical to the header logo asset. */
+.anix-site-footer__brand img {
+  filter: none;
+}

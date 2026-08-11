@@ -1,0 +1,33 @@
+name: Deploy Supabase Edge Functions
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'supabase/functions/**'
+      - 'scripts/ensure-website-lead-consent.js'
+      - 'scripts/run-website-lead-consent-once.js'
+      - '.github/workflows/supabase-functions.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy-functions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v1
+        with: { deno-version: v1.x }
+      - uses: supabase/setup-cli@v1
+      - name: Apply website lead consent and diagnostics
+        run: node scripts/run-website-lead-consent-once.js
+      - name: Link to Supabase project
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: supabase link --project-ref ppoygmaqlaiqcisjetea
+      - name: Deploy all functions
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: |
+          supabase functions deploy track-event
+          supabase functions deploy submit-lead
+          supabase functions deploy submit-website-lead --no-verify-jwt
+          supabase functions deploy email-open
