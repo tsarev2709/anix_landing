@@ -1,5 +1,12 @@
 import React from 'react';
-import { ArrowRight, Camera, HardHat, Sparkles, Stethoscope, Workflow } from 'lucide-react';
+import {
+  ArrowRight,
+  Camera,
+  HardHat,
+  Sparkles,
+  Stethoscope,
+  Workflow,
+} from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import SiteFooter from './SiteFooter';
 import agrotechImage from '../images/cases/agrotech.webp';
@@ -158,6 +165,24 @@ const categories = [
       },
     ],
   },
+  {
+    id: 'events',
+    eyebrow: 'Events / AI production',
+    title: 'События и выступления',
+    description:
+      'Собираем сценические блоки как цельную историю: сценарий, режиссура, экранный контент, AI-визуалы, презентации и материалы вокруг события.',
+    icon: Sparkles,
+    cases: [
+      {
+        title: 'РЧК: технологическое шоу',
+        image: null,
+        note: 'Получасовое выступление и 5,5-минутный AI-ролик с реальными героями, суперспособностями и восемью мирами.',
+        href: '/cases/rchk/',
+        placeholder: 'Р',
+        featured: true,
+      },
+    ],
+  },
 ];
 
 function CaseCard({ item }) {
@@ -167,7 +192,11 @@ function CaseCard({ item }) {
         className={`cases-hub-card__media${item.image ? '' : ' cases-hub-card__media--placeholder'}`}
       >
         {item.image ? (
-          <img src={item.image} alt={`Кейс Anix: ${item.title}`} loading="lazy" />
+          <img
+            src={item.image}
+            alt={`Кейс Anix: ${item.title}`}
+            loading="lazy"
+          />
         ) : (
           <span>{item.placeholder}</span>
         )}
@@ -185,7 +214,9 @@ function CaseCard({ item }) {
 
   if (!item.href) {
     return (
-      <article className={`cases-hub-card${item.featured ? ' cases-hub-card--featured' : ''}`}>
+      <article
+        className={`cases-hub-card${item.featured ? ' cases-hub-card--featured' : ''}`}
+      >
         {content}
       </article>
     );
@@ -208,7 +239,11 @@ export default function CasesHubPage() {
   return (
     <main className="cases-hub-page">
       <header className="cases-hub-header">
-        <a href="/" className="cases-hub-logo" aria-label="Anix Studio — на главную">
+        <a
+          href="/"
+          className="cases-hub-logo"
+          aria-label="Anix Studio — на главную"
+        >
           <BrandLogo alt="Anix Studio" width={120} height={44} />
         </a>
         <a
@@ -223,20 +258,26 @@ export default function CasesHubPage() {
       <section className="cases-hub-hero">
         <p className="cases-hub-eyebrow">Кейсы Anix Studio</p>
         <h1>Сложные продукты, которые стали понятными историями</h1>
-        <p>Здесь собраны проекты для технологий, B2B, фармы, MedTech, кино и охраны труда.</p>
+        <p>
+          Здесь собраны проекты для технологий, B2B, фармы, MedTech, кино и
+          охраны труда.
+        </p>
         <nav className="cases-hub-jump" aria-label="Категории кейсов">
           {categories.map((category) => (
             <a href={`/cases/${category.id}/`} key={category.id}>
               {category.title}
             </a>
           ))}
-          <a href="#events">Events</a>
         </nav>
       </section>
       {categories.map((category) => {
         const Icon = category.icon;
         return (
-          <section className="cases-hub-category" id={category.id} key={category.id}>
+          <section
+            className="cases-hub-category"
+            id={category.id}
+            key={category.id}
+          >
             <div className="cases-hub-category__head">
               <div className="cases-hub-category__icon">
                 <Icon aria-hidden="true" />
@@ -262,20 +303,12 @@ export default function CasesHubPage() {
           </section>
         );
       })}
-      <section className="cases-hub-events" id="events">
-        <div className="cases-hub-events__icon">
-          <Sparkles aria-hidden="true" />
-        </div>
-        <p className="cases-hub-eyebrow">Events</p>
-        <h2>Скоро</h2>
-        <p>Добавим проекты с экранным контентом, AI-визуалами и режиссурой событий.</p>
-      </section>
       <section className="cases-hub-cta">
         <p className="cases-hub-eyebrow">Новая задача</p>
         <h2>Не нашли кейс ровно из вашей отрасли?</h2>
         <p>
-          Покажите продукт или идею. Разберёмся в задаче и предложим формат, который имеет смысл
-          именно для неё.
+          Покажите продукт или идею. Разберёмся в задаче и предложим формат,
+          который имеет смысл именно для неё.
         </p>
         <a href="https://t.me/anix_helper" target="_blank" rel="noreferrer">
           Обсудить проект <ArrowRight aria-hidden="true" />
