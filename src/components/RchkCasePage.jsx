@@ -7,13 +7,24 @@ import {
   Layers3,
   MessageCircle,
   Presentation,
-  Sparkles,
   Users,
   WandSparkles,
 } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import Breadcrumbs from './Breadcrumbs';
 import SiteFooter from './SiteFooter';
+import aiProductionImage from '../images/cases/rchk/ai-production.webp';
+import backstageInterviewImage from '../images/cases/rchk/bts-interview.webp';
+import backstageMonitorImage from '../images/cases/rchk/bts-monitor.webp';
+import backstageRooftopImage from '../images/cases/rchk/bts-rooftop.webp';
+import campusAerialImage from '../images/cases/rchk/campus-aerial.webp';
+import davidFutureImage from '../images/cases/rchk/david-future.webp';
+import heroPortalImage from '../images/cases/rchk/hero-portal.webp';
+import hologramBuildingImage from '../images/cases/rchk/hologram-building.webp';
+import moscowFutureImage from '../images/cases/rchk/moscow-future.webp';
+import partnerGauntletImage from '../images/cases/rchk/partner-gauntlet.webp';
+import robotTeamImage from '../images/cases/rchk/robot-team.webp';
+import talkingHeadImage from '../images/cases/rchk/talking-head.webp';
 import './RchkCasePage.css';
 
 const telegramUrl = 'https://t.me/anix_helper';
@@ -106,7 +117,7 @@ export default function RchkCasePage() {
           <p className="rchk-eyebrow">
             Anix Studio × АНО «Развитие человеческого капитала»
           </p>
-          <h1>Как превратить внутреннее выступление в технологическое шоу</h1>
+          <h1>Как сделать из выступления технологическое шоу</h1>
           <p className="rchk-lead">
             Полчаса сценического действия, шесть типов контента и главный герой
             — 5,5-минутный AI-ролик, ради которого мы собирали полноценный
@@ -131,17 +142,13 @@ export default function RchkCasePage() {
           </div>
         </div>
 
-        <div
-          className="rchk-hero-visual"
-          role="img"
-          aria-label="Визуальная схема AI-ролика РЧК продолжительностью пять с половиной минут"
-        >
-          <div className="rchk-orbit rchk-orbit-one" />
-          <div className="rchk-orbit rchk-orbit-two" />
+        <div className="rchk-hero-visual">
+          <img
+            src={heroPortalImage}
+            alt="Героиня ролика РЧК открывает световой портал в технологический центр"
+          />
           <span className="rchk-visual-chip rchk-chip-one">real shoot</span>
           <span className="rchk-visual-chip rchk-chip-two">AI worlds</span>
-          <span className="rchk-visual-chip rchk-chip-three">compositing</span>
-          <Sparkles className="rchk-visual-spark" aria-hidden="true" />
           <div className="rchk-visual-center">
             <span>главный ролик</span>
             <strong>5:30</strong>
@@ -159,6 +166,17 @@ export default function RchkCasePage() {
         ))}
       </section>
 
+      <figure className="rchk-showcase rchk-showcase-wide">
+        <img
+          src={campusAerialImage}
+          alt="Кампус с неоновыми AI-эффектами в кадре из ролика РЧК"
+          loading="lazy"
+        />
+        <figcaption>
+          Реальные локации стали частью единой фантастической Москвы
+        </figcaption>
+      </figure>
+
       <section className="rchk-section rchk-challenge" id="challenge">
         <div className="rchk-section-label">
           <span>01</span> Вызов
@@ -166,8 +184,8 @@ export default function RchkCasePage() {
         <div>
           <p className="rchk-eyebrow">Планку уже подняли до нас</p>
           <h2>
-            В прошлом году РЧК удивили зал «говорящей головой» руководителя. В
-            этом году нужно было сделать сильно мощнее.
+            Год назад РЧК уже удивили зал. Теперь планку нужно было поднять ещё
+            выше.
           </h2>
           <p>
             Запрос звучал не как «сделайте красивый ролик». Нужно было собрать
@@ -191,7 +209,7 @@ export default function RchkCasePage() {
         </div>
         <div>
           <p className="rchk-eyebrow">Anix отвечала за весь блок</p>
-          <h2>От первой реплики спикера до последнего пикселя на экране</h2>
+          <h2>От сценария — до последнего пикселя</h2>
           <div className="rchk-scope-grid">
             {scope.map(({ icon: Icon, title, text }) => (
               <article key={title}>
@@ -237,13 +255,43 @@ export default function RchkCasePage() {
         </div>
       </section>
 
+      <section
+        className="rchk-story-gallery"
+        aria-label="Кадры из AI-ролика РЧК"
+      >
+        <figure className="rchk-story-card rchk-story-card-tall">
+          <img
+            src={hologramBuildingImage}
+            alt="Героиня ролика демонстрирует голограмму здания Технограда"
+            loading="lazy"
+          />
+          <figcaption>Показывать возможности</figcaption>
+        </figure>
+        <figure className="rchk-story-card rchk-story-card-tall">
+          <img
+            src={partnerGauntletImage}
+            alt="Золотая перчатка партнёрской экосистемы в кадре из ролика"
+            loading="lazy"
+          />
+          <figcaption>Объединять партнёров</figcaption>
+        </figure>
+        <figure className="rchk-story-card rchk-story-card-wide">
+          <img
+            src={davidFutureImage}
+            alt="Футуристическая статуя держит модель инновационного центра"
+            loading="lazy"
+          />
+          <figcaption>Видеть будущее проектов</figcaption>
+        </figure>
+      </section>
+
       <section className="rchk-section rchk-production" id="production">
         <div className="rchk-section-label">
           <span>03</span> Production
         </div>
         <div>
           <p className="rchk-eyebrow">Съёмка + AI + post-production</p>
-          <h2>Мы не генерировали ролик. Мы его производили.</h2>
+          <h2>Это не генерация. Это production.</h2>
           <div className="rchk-production-list">
             {production.map(([number, title, text]) => (
               <article key={number}>
@@ -255,6 +303,23 @@ export default function RchkCasePage() {
               </article>
             ))}
           </div>
+          <div className="rchk-production-gallery">
+            <img
+              src={aiProductionImage}
+              alt="Визуализация AI-производства внутри ролика РЧК"
+              loading="lazy"
+            />
+            <img
+              src={moscowFutureImage}
+              alt="Герой ролика рядом с футуристической моделью Москвы-Сити"
+              loading="lazy"
+            />
+            <img
+              src={robotTeamImage}
+              alt="Команда человекоподобных роботов в кадре из ролика РЧК"
+              loading="lazy"
+            />
+          </div>
         </div>
       </section>
 
@@ -262,10 +327,7 @@ export default function RchkCasePage() {
         <div>
           <Clock3 aria-hidden="true" />
           <p className="rchk-eyebrow">Один месяц на всю работу</p>
-          <h2>
-            Три версии ролика, пересъёмки и параллельное производство всех
-            материалов.
-          </h2>
+          <h2>Три версии. Пересъёмки. Параллельно — всё выступление.</h2>
         </div>
         <p>
           Чистое производство главного ролика заняло две недели. На многих
@@ -275,13 +337,57 @@ export default function RchkCasePage() {
         </p>
       </section>
 
+      <section className="rchk-backstage">
+        <div className="rchk-backstage-heading">
+          <p className="rchk-eyebrow">За кадром</p>
+          <h2>Съёмки, с которых началось чудо</h2>
+          <p>
+            Снимали реальных сотрудников в нескольких локациях, а затем
+            превращали материал в миры, порталы и суперспособности.
+          </p>
+        </div>
+        <div className="rchk-backstage-grid">
+          <figure className="rchk-backstage-main">
+            <img
+              src={backstageInterviewImage}
+              alt="Съёмочная команда Anix на интервью с сотрудницей РЧК"
+              loading="lazy"
+            />
+          </figure>
+          <figure>
+            <img
+              src={backstageMonitorImage}
+              alt="Кадр с операторского монитора во время съёмок ролика"
+              loading="lazy"
+            />
+          </figure>
+          <figure>
+            <img
+              src={backstageRooftopImage}
+              alt="Съёмки сцены на крыше"
+              loading="lazy"
+            />
+          </figure>
+        </div>
+        <figure className="rchk-talking-head">
+          <img
+            src={talkingHeadImage}
+            alt="Тест оживлённой говорящей головы руководителя на ноутбуке"
+            loading="lazy"
+          />
+          <figcaption>
+            Прошлогодняя «говорящая голова» тоже получила новую жизнь
+          </figcaption>
+        </figure>
+      </section>
+
       <section className="rchk-section rchk-result" id="result">
         <div className="rchk-section-label">
           <span>04</span> Результат
         </div>
         <div>
           <p className="rchk-eyebrow">До премьеры</p>
-          <h2>Технологическое чудо готово к выходу на сцену</h2>
+          <h2>Технологическое чудо готово</h2>
           <p>
             РЧК получили не набор разрозненных материалов, а полностью собранное
             выступление: сценарий, режиссуру, видео, презентации и экранную
@@ -299,8 +405,7 @@ export default function RchkCasePage() {
       <section className="rchk-final-cta">
         <p className="rchk-eyebrow">Следующая высокая планка</p>
         <h2>
-          Нужно, чтобы после вашего выступления подходили и спрашивали: «Как вы
-          это сделали?»
+          Пусть после вашего выступления спрашивают: «Как вы это сделали?»
         </h2>
         <div className="rchk-actions">
           <a
