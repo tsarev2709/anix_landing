@@ -1,5 +1,13 @@
 import React from 'react';
-import { ArrowLeft, ArrowRight, Camera, HardHat, Stethoscope, Workflow } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  Camera,
+  HardHat,
+  Sparkles,
+  Stethoscope,
+  Workflow,
+} from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import SiteFooter from './SiteFooter';
 import agrotechImage from '../images/cases/agrotech.webp';
@@ -144,6 +152,22 @@ const categoryConfig = {
       },
     ],
   },
+  '/cases/events': {
+    eyebrow: 'Events / AI production',
+    title: 'События и выступления',
+    description:
+      'Проекты, где сценарий, сцена и экран работают как одно целое: AI-ролики, режиссура выступлений, презентации и контент для событий.',
+    icon: Sparkles,
+    cases: [
+      {
+        title: 'РЧК: технологическое шоу',
+        image: null,
+        placeholder: 'Р',
+        note: 'Получасовое выступление и 5,5-минутный AI-ролик с девятью реальными героями и восемью сгенерированными мирами.',
+        href: '/cases/rchk/',
+      },
+    ],
+  },
 };
 
 function CategoryCaseCard({ item }) {
@@ -153,7 +177,11 @@ function CategoryCaseCard({ item }) {
         className={`cases-hub-card__media${item.image ? '' : ' cases-hub-card__media--placeholder'}`}
       >
         {item.image ? (
-          <img src={item.image} alt={`Кейс Anix: ${item.title}`} loading="lazy" />
+          <img
+            src={item.image}
+            alt={`Кейс Anix: ${item.title}`}
+            loading="lazy"
+          />
         ) : (
           <span>{item.placeholder}</span>
         )}
@@ -169,7 +197,8 @@ function CategoryCaseCard({ item }) {
     </>
   );
 
-  if (!item.href) return <article className="cases-hub-card">{content}</article>;
+  if (!item.href)
+    return <article className="cases-hub-card">{content}</article>;
 
   const external = /^https?:\/\//.test(item.href);
   return (
@@ -192,7 +221,11 @@ export default function CasesCategoryPage({ path }) {
   return (
     <main className="cases-hub-page cases-category-page">
       <header className="cases-hub-header">
-        <a href="/" className="cases-hub-logo" aria-label="Anix Studio — на главную">
+        <a
+          href="/"
+          className="cases-hub-logo"
+          aria-label="Anix Studio — на главную"
+        >
           <BrandLogo alt="Anix Studio" width={120} height={44} />
         </a>
         <a
