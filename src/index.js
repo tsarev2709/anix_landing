@@ -37,6 +37,7 @@ const CasesCategoryPage = lazy(() => import('./components/CasesCategoryPage'));
 const CasePage = lazy(() => import('./components/CasePage'));
 const VerySweetCasePage = lazy(() => import('./components/VerySweetCasePage'));
 const AviandrCasePage = lazy(() => import('./components/AviandrCasePage'));
+const RchkCasePage = lazy(() => import('./components/RchkCasePage'));
 
 function RuntimeFallback({ failed = false }) {
   return (
@@ -63,7 +64,7 @@ const normalizedPath = (() => {
   return withoutIndex.endsWith('/') ? withoutIndex.slice(0, Math.max(1, withoutIndex.length - 1)) : withoutIndex;
 })();
 
-const categoryCasePaths = new Set(['/cases/b2b', '/cases/medicine', '/cases/cinema', '/cases/hse']);
+const categoryCasePaths = new Set(['/cases/b2b', '/cases/medicine', '/cases/cinema', '/cases/hse', '/cases/events']);
 const renderInLayout = (component) => {
   root.render(<RuntimeErrorBoundary><AppLayout><SeoHead path={normalizedPath} /><Suspense fallback={<RuntimeFallback />}>{component}</Suspense><AboutStudioPortal path={normalizedPath} /><CasesHubLinkPortal path={normalizedPath} /><RouteBreadcrumbsPortal path={normalizedPath} /><RouteRelatedLinksPortal path={normalizedPath} /></AppLayout></RuntimeErrorBoundary>);
 };
@@ -78,6 +79,8 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
   renderInLayout(<VerySweetCasePage />);
 } else if (normalizedPath === '/cases/aviandr') {
   renderInLayout(<AviandrCasePage />);
+} else if (normalizedPath === '/cases/rchk') {
+  renderInLayout(<RchkCasePage />);
 } else if (normalizedPath.startsWith('/cases/')) {
   renderInLayout(<CasePage path={normalizedPath} />);
 } else {
