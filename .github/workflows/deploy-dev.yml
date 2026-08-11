@@ -30,7 +30,12 @@ jobs:
         run: npm install
 
       - name: Build and verify static SEO
+        env:
+          PUBLIC_URL: /dev
         run: npm run build
+
+      - name: Keep preview isolated from the production domain
+        run: rm -f ./build/CNAME
 
       - name: Deploy to gh-pages dev folder
         uses: peaceiris/actions-gh-pages@v4
@@ -39,4 +44,3 @@ jobs:
           publish_dir: ./build
           publish_branch: gh-pages
           destination_dir: dev
-          cname: dev.studio.anix-ai.pro
