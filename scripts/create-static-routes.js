@@ -32,9 +32,9 @@ const lessonRoutes = [
 
 const routes = [
   'medicine','why_it_works','ceo','hse','animation','ai-video','rybki','rybki_page',
-  'cases','cases/b2b','cases/medicine','cases/cinema','cases/hse',
+  'cases','cases/b2b','cases/medicine','cases/cinema','cases/hse','cases/events',
   'cases/clappy','cases/hemotech-ai','cases/tpes','cases/mfti-endowment','cases/mosfarma','cases/multon-partners',
-  'cases/aviandr','cases/little-prince','cases/borodino',
+  'cases/aviandr','cases/little-prince','cases/borodino','cases/rchk',
   'hse/mvp','hse/mvp/showcase','hse/mvp/showcase/organization',
   ...departments.map((department) => `hse/mvp/showcase/departments/${department}`),
   ...modules.map((module) => `hse/mvp/showcase/modules/${module}`),
