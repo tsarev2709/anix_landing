@@ -4,6 +4,7 @@ import {
   buildGroundedReply,
   classifyGroundingIntent,
   inferGroundingVertical,
+  sanitizePublicReply,
   sourcesFromCases,
 } from '../supabase/functions/_shared/ai-grounding.mjs';
 
@@ -92,6 +93,12 @@ assert(videoReply.sources.some((item) => item.kind === 'video'));
 const publicSources = sourcesFromCases([mosfarma], { includeVideos: true });
 assert(publicSources.some((item) => item.kind === 'case_page'));
 assert(publicSources.every((item) => /^https:\/\//.test(item.url)));
+
+const sanitized = sanitizePublicReply(
+  'Бюджет кейса — 900 000 ₽.\nКонтакт: client@example.com, +7 999 123-45-67, @private_client.\nПишите @anix_helper.'
+);
+assert(!/900 000|example\.com|999 123|private_client/.test(sanitized));
+assert.match(sanitized, /@anix_helper/);
 
 assert(evaluation.cases.length >= 30);
 for (const scenario of evaluation.cases) {

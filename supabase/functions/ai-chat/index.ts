@@ -8,6 +8,7 @@ import {
   GROUNDING_POLICY_PROMPT,
   buildGroundedReply,
   classifyGroundingIntent,
+  sanitizePublicReply,
   sourcesFromCases,
   structuredCaseContext,
 } from '../_shared/ai-grounding.mjs';
@@ -1152,6 +1153,7 @@ async function handler(req: Request): Promise<Response> {
   );
   const sources = combinedSources(structuredCases, retrieval.chunks);
   envelope.reply = sanitizeReplyLinks(envelope.reply, sources);
+  envelope.reply = sanitizePublicReply(envelope.reply);
   if (!envelope.reply) {
     return storeAssistantFallback(
       sb,

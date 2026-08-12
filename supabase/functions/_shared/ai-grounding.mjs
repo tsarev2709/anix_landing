@@ -266,6 +266,23 @@ export function structuredCaseContext(cases = []) {
     .join('\n\n');
 }
 
+export function sanitizePublicReply(value) {
+  const withoutCommercialLines = String(value || '')
+    .split('\n')
+    .filter((line) => !/(?:₽|\bруб(?:ль|ля|лей)?\.?|\$|€)/i.test(line))
+    .join('\n');
+  return withoutCommercialLines
+    .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, '')
+    .replace(/https?:\/\/t\.me\/(?!anix_helper\b)[A-Za-z][A-Za-z0-9_]{4,31}/gi, '')
+    .replace(/@(?!anix_helper\b)[A-Za-z][A-Za-z0-9_]{4,31}/g, '')
+    .replace(/(?:\+?\d[\d\s().-]{8,}\d)/g, (candidate) =>
+      candidate.replace(/\D/g, '').length >= 10 ? '' : candidate
+    )
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/ {2,}/g, ' ')
+    .trim();
+}
+
 export const GROUNDING_POLICY_PROMPT = `
 Публичная политика Anix:
 - факты о кейсах, клиентах и результатах бери только из VERIFIED CASES и KNOWLEDGE CONTEXT;
