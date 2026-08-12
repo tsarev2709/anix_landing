@@ -150,12 +150,17 @@ for (const relativePath of files) {
     );
     for (const [from, to] of caseLinkReplacements) next = next.replace(from, to);
 
-    next = next
-      .replace("import React, { useState } from 'react';", "import React, { useEffect, useState } from 'react';")
-      .replace(
+    next = next.replace(
+      "import React, { useState } from 'react';",
+      "import React, { useEffect, useState } from 'react';",
+    );
+    if (!next.includes("from '../utils/showreelProvider'")) {
+      next = next.replace(
         "import SiteFooter from './SiteFooter';",
         "import SiteFooter from './SiteFooter';\nimport { getFallbackShowreelProvider, resolveShowreelProvider, SHOWREEL_EXTERNAL_URLS, SHOWREEL_URLS } from '../utils/showreelProvider';",
-      )
+      );
+    }
+    next = next
       .replace(
         /const showreelUrl =\s*\n\s*'https:\/\/vkvideo\.ru\/video_ext\.php\?[^']+';\s*\n/,
         '',
