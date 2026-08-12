@@ -1,6 +1,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import {
+  decodeHtml,
+  meaningfulHtml,
+  metadataFromUrl,
+  semanticChunks,
+} from './lib/knowledge-ingest-utils.mjs';
 
 function argsFrom(argv) {
   const options = { files: [], urls: [], sitemaps: [] };
@@ -12,6 +18,8 @@ function argsFrom(argv) {
     else if (value === '--source-title') options.sourceTitle = argv[++index];
     else if (value === '--vertical') options.vertical = argv[++index];
     else if (value === '--env') options.envFile = argv[++index];
+    else if (value === '--verify') options.verify = true;
+    else if (value === '--force') options.force = true;
     else if (value === '--help') options.help = true;
     else options.files.push(value);
   }
@@ -44,39 +52,14 @@ Options:
   --source-title "Anix product knowledge"
   --vertical medicine|hse|b2b|general
   --env path/to/private.env
+  --verify  Check that every document is retrievable after ingestion
+  --force   Re-embed documents even when their checksum is unchanged
 `);
-}
-
-function stripHtml(html) {
-  return html
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/gi, ' ')
-    .replace(/&amp;/gi, '&')
-    .replace(/&lt;/gi, '<')
-    .replace(/&gt;/gi, '>')
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;/gi, "'")
-    .replace(/\s+/g, ' ')
-    .trim();
 }
 
 function titleFromContent(content, fallback) {
   const heading = content.match(/^#{1,3}\s+(.+)$/m)?.[1];
   return (heading || fallback).trim().slice(0, 300);
-}
-
-function decodeHtml(value) {
-  return value
-    .replace(/&nbsp;/gi, ' ')
-    .replace(/&amp;/gi, '&')
-    .replace(/&lt;/gi, '<')
-    .replace(/&gt;/gi, '>')
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;/gi, "'")
-    .replace(/\s+/g, ' ')
-    .trim();
 }
 
 function titleFromHtml(html, fallback) {
@@ -87,21 +70,6 @@ function titleFromHtml(html, fallback) {
     0,
     300
   );
-}
-
-function verticalFromUrl(url, fallback = 'general') {
-  const pathname = new URL(url).pathname.toLowerCase();
-  if (
-    pathname.startsWith('/medicine') ||
-    /\/cases\/(medicine|hemotech-ai|mosfarma|aviandr)/.test(pathname)
-  )
-    return 'medicine';
-  if (
-    pathname.startsWith('/hse') ||
-    /\/cases\/(hse|multon-partners)/.test(pathname)
-  )
-    return 'hse';
-  return fallback;
 }
 
 async function urlsFromSitemap(sitemapUrl) {
@@ -125,35 +93,6 @@ async function urlsFromSitemap(sitemapUrl) {
     });
 }
 
-function chunksFrom(content, maxChars = 1500, overlapChars = 180) {
-  const paragraphs = content
-    .replace(/\r/g, '')
-    .split(/\n{2,}/)
-    .map((value) => value.replace(/\s+/g, ' ').trim())
-    .filter(Boolean)
-    .flatMap((paragraph) => {
-      if (paragraph.length <= maxChars) return [paragraph];
-      const parts = [];
-      const step = maxChars - overlapChars;
-      for (let start = 0; start < paragraph.length; start += step) {
-        parts.push(paragraph.slice(start, start + maxChars));
-      }
-      return parts;
-    });
-  const chunks = [];
-  let current = '';
-  for (const paragraph of paragraphs) {
-    if (current && current.length + paragraph.length + 2 > maxChars) {
-      chunks.push(current);
-      current = `${current.slice(-overlapChars)}\n\n${paragraph}`;
-    } else {
-      current = current ? `${current}\n\n${paragraph}` : paragraph;
-    }
-  }
-  if (current) chunks.push(current);
-  return chunks.filter((value) => value.length >= 40);
-}
-
 function hash(content) {
   return crypto.createHash('sha256').update(content).digest('hex');
 }
@@ -170,6 +109,7 @@ async function readInputs(options) {
       content,
       sourceType: 'file',
       vertical: options.vertical || 'general',
+      metadata: { vertical: options.vertical || 'general', page_type: 'document' },
     });
   }
   const sitemapUrls = (
@@ -181,14 +121,16 @@ async function readInputs(options) {
     if (!response.ok)
       throw new Error(`Cannot fetch ${url}: HTTP ${response.status}`);
     const html = await response.text();
-    const content = stripHtml(html);
+    const content = meaningfulHtml(html);
+    const metadata = metadataFromUrl(url, options.vertical || 'general');
     documents.push({
       externalId: `url:${url}`,
       title: titleFromHtml(html, new URL(url).pathname || url),
       sourceUrl: url,
       content,
       sourceType: 'url',
-      vertical: verticalFromUrl(url, options.vertical || 'general'),
+      vertical: metadata.vertical,
+      metadata,
     });
   }
   return documents;
@@ -295,7 +237,9 @@ async function upsertDocument(source, document, options) {
       title: document.title,
       source_url: document.sourceUrl,
       content_hash: hash(document.content),
-      metadata: { vertical: document.vertical || options.vertical || 'general' },
+      metadata: document.metadata || {
+        vertical: document.vertical || options.vertical || 'general',
+      },
       enabled: true,
       updated_at: new Date().toISOString(),
     },
@@ -303,9 +247,41 @@ async function upsertDocument(source, document, options) {
   return rows[0];
 }
 
+async function existingDocument(source, document) {
+  const rows = await rest('knowledge_documents', {
+    query: `?source_id=eq.${encodeURIComponent(source.id)}&external_id=eq.${encodeURIComponent(document.externalId)}&select=id,content_hash`,
+  });
+  return rows[0] || null;
+}
+
+async function verifyRetrieval(source, document, record, options) {
+  const [queryEmbedding] = await embed([
+    `${document.title}\n${document.content.slice(0, 500)}`,
+  ]);
+  const result = await rest('rpc/search_knowledge_chunks', {
+    method: 'POST',
+    body: {
+      query_embedding: queryEmbedding,
+      query_text: document.title,
+      match_count: 5,
+      filter_metadata: { vertical: document.vertical || options.vertical || 'general' },
+    },
+  });
+  if (!result.some((item) => item.document_id === record.id)) {
+    throw new Error(`Self-retrieval check failed for ${document.title}`);
+  }
+}
+
 async function ingestDocument(source, document, options) {
+  const contentHash = hash(document.content);
+  const existing = await existingDocument(source, document);
+  if (!options.force && existing?.content_hash === contentHash) {
+    console.log(`${document.title}: unchanged, skipped`);
+    return { status: 'skipped', chunks: 0 };
+  }
   const record = await upsertDocument(source, document, options);
-  const texts = chunksFrom(document.content);
+  const texts = semanticChunks(document.content);
+  if (!texts.length) throw new Error(`No meaningful chunks for ${document.title}`);
   const embeddings = [];
   for (let index = 0; index < texts.length; index += 16) {
     embeddings.push(...(await embed(texts.slice(index, index + 16))));
@@ -324,7 +300,9 @@ async function ingestDocument(source, document, options) {
     title: document.title,
     content,
     source_url: document.sourceUrl,
-    metadata: { vertical: document.vertical || options.vertical || 'general' },
+    metadata: document.metadata || {
+      vertical: document.vertical || options.vertical || 'general',
+    },
     embedding_model: process.env.EMBEDDING_MODEL || 'embeddinggemma',
     embedding: embeddings[index],
     enabled: true,
@@ -336,7 +314,9 @@ async function ingestDocument(source, document, options) {
       body: rows.slice(index, index + 100),
     });
   }
+  if (options.verify) await verifyRetrieval(source, document, record, options);
   console.log(`${document.title}: ${rows.length} chunks`);
+  return { status: 'ingested', chunks: rows.length };
 }
 
 const options = argsFrom(process.argv.slice(2));
@@ -358,6 +338,12 @@ const source = await upsertSource(
   options,
   sourceTypes.size === 1 ? documents[0].sourceType : 'manual'
 );
-for (const document of documents)
-  await ingestDocument(source, document, options);
-console.log(`Done: ${documents.length} documents into ${options.sourceSlug}`);
+const summary = { ingested: 0, skipped: 0, chunks: 0 };
+for (const document of documents) {
+  const result = await ingestDocument(source, document, options);
+  summary[result.status] += 1;
+  summary.chunks += result.chunks;
+}
+console.log(
+  `Done: ${documents.length} documents into ${options.sourceSlug}; ${summary.ingested} ingested, ${summary.skipped} unchanged, ${summary.chunks} chunks`
+);

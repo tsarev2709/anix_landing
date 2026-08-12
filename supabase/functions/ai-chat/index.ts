@@ -3,6 +3,15 @@ declare const process: any;
 
 // @ts-ignore Deno requires the explicit TypeScript extension.
 import { AmoIntegrationError, syncAmoLead } from '../_shared/amocrm.ts';
+// @ts-ignore Deno loads this shared ES module directly.
+import {
+  GROUNDING_POLICY_PROMPT,
+  buildGroundedReply,
+  classifyGroundingIntent,
+  sanitizePublicReply,
+  sourcesFromCases,
+  structuredCaseContext,
+} from '../_shared/ai-grounding.mjs';
 
 const DEFAULT_ORIGINS = [
   'https://studio.anix-ai.pro',
@@ -347,13 +356,16 @@ async function loadMessages(
 ): Promise<any[]> {
   const { data, error } = await sb
     .from('ai_chat_messages')
-    .select('id,created_at,role,content,delivery_status,model')
+    .select('id,created_at,role,content,delivery_status,model,metadata')
     .eq('session_id', sessionId)
     .in('role', ['user', 'assistant'])
     .order('created_at', { ascending: false })
     .limit(limit);
   if (error) throw new Error('message_history_failed');
-  return [...(data || [])].reverse();
+  return [...(data || [])].reverse().map((item) => ({
+    ...item,
+    sources: safePublicSources(item?.metadata?.sources),
+  }));
 }
 
 async function activePrompt(sb: any): Promise<string> {
@@ -428,6 +440,27 @@ function retrievalQuery(history: any[], currentMessage: string): string {
   return [...new Set(recentUserMessages)].join('\n').slice(-6000);
 }
 
+async function retrieveStructuredCases(
+  sb: any,
+  query: string,
+  intent: any
+): Promise<any[]> {
+  const result = await sb.rpc('search_ai_public_cases', {
+    query_text: intent?.broadCatalog ? '' : query,
+    filter_vertical: intent?.vertical || null,
+    match_count: intent?.broadCatalog ? 10 : 8,
+  });
+  if (result.error) {
+    console.error(
+      `[ai-chat] Structured case search failed: ${result.error.message}`
+    );
+    const error = new Error('structured_retrieval_failed') as GatewayFailure;
+    error.errorClass = 'retrieval_error';
+    throw error;
+  }
+  return Array.isArray(result.data) ? result.data : [];
+}
+
 function knowledgeContext(chunks: any[]): string {
   if (!chunks.length) return 'Подходящих подтверждённых источников не найдено.';
   return chunks
@@ -453,10 +486,48 @@ function normalizedSourceUrl(value: unknown): string {
   }
 }
 
-function sanitizeReplyLinks(reply: string, chunks: any[]): string {
+function safePublicSources(value: unknown): any[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .slice(0, 20)
+    .map((item) => ({
+      kind: text(item?.kind, 50) || 'page',
+      label: text(item?.label, 300) || 'Открыть материал',
+      title: text(item?.title, 300),
+      url: text(item?.url, 2000),
+    }))
+    .filter((item) => normalizedSourceUrl(item.url))
+    .filter(
+      (item, index, all) =>
+        all.findIndex(
+          (candidate) =>
+            normalizedSourceUrl(candidate.url) === normalizedSourceUrl(item.url)
+        ) === index
+    );
+}
+
+function sourcesFromChunks(chunks: any[]): any[] {
+  return safePublicSources(
+    chunks.map((chunk) => ({
+      kind: 'page',
+      label: 'Открыть источник',
+      title: text(chunk?.title, 300),
+      url: text(chunk?.source_url, 2000),
+    }))
+  );
+}
+
+function combinedSources(cases: any[], chunks: any[] = []): any[] {
+  return safePublicSources([
+    ...sourcesFromCases(cases, { includeVideos: true }),
+    ...sourcesFromChunks(chunks),
+  ]).slice(0, 12);
+}
+
+function sanitizeReplyLinks(reply: string, sources: any[]): string {
   const allowed = new Set(
-    chunks
-      .map((chunk) => normalizedSourceUrl(chunk?.source_url))
+    sources
+      .map((source) => normalizedSourceUrl(source?.url))
       .filter(Boolean)
   );
   const isAllowed = (url: string) => allowed.has(normalizedSourceUrl(url));
@@ -477,14 +548,13 @@ function sanitizeReplyLinks(reply: string, chunks: any[]): string {
     .trim();
   if (!rejectedUnsupportedUrl) return cleaned;
 
-  const confirmedSources = chunks
-    .filter((chunk) => normalizedSourceUrl(chunk?.source_url))
+  const confirmedSources = sources
+    .filter((source) => normalizedSourceUrl(source?.url))
     .filter(
-      (chunk, index, items) =>
+      (source, index, items) =>
         items.findIndex(
           (item) =>
-            normalizedSourceUrl(item?.source_url) ===
-            normalizedSourceUrl(chunk?.source_url)
+            normalizedSourceUrl(item?.url) === normalizedSourceUrl(source?.url)
         ) === index
     )
     .slice(0, 4);
@@ -494,7 +564,7 @@ function sanitizeReplyLinks(reply: string, chunks: any[]): string {
   return [
     'Вот материалы, которые подтверждены базой Anix:',
     ...confirmedSources.map(
-      (chunk) => `— ${text(chunk?.title, 300)}: ${chunk.source_url}`
+      (source) => `— ${text(source?.title || source?.label, 300)}: ${source.url}`
     ),
   ].join('\n');
 }
@@ -747,6 +817,101 @@ async function syncChatLead(
   }
 }
 
+async function completeGroundedReply(
+  sb: any,
+  session: any,
+  sessionToken: string | null,
+  id: string,
+  started: number,
+  origin: string,
+  history: any[],
+  message: string,
+  intent: any,
+  cases: any[],
+  grounded: any
+): Promise<Response> {
+  const sources = safePublicSources(grounded?.sources);
+  const reply = text(grounded?.reply, 6000);
+  const caseIds = cases.map((item) => item?.id).filter(Boolean);
+  const assistantInsert = await sb.from('ai_chat_messages').insert({
+    session_id: session.id,
+    request_id: id,
+    role: 'assistant',
+    content: reply,
+    delivery_status: 'completed',
+    retrieved_chunk_ids: [],
+    model: 'grounded-policy-v1',
+    total_latency_ms: Date.now() - started,
+    metadata: {
+      grounding: {
+        reason: text(grounded?.reason, 100),
+        mode: text(intent?.mode, 50),
+        vertical: text(intent?.vertical, 50),
+        case_ids: caseIds,
+      },
+      sources,
+    },
+  });
+  if (assistantInsert.error) {
+    return json({ error: 'message_store_failed' }, 500, origin);
+  }
+
+  const deterministicContact = extractContact(message);
+  const contact = {
+    ...safeObject(session.contact),
+    ...normalizedContact(session.qualification, deterministicContact),
+  };
+  const update = {
+    updated_at: new Date().toISOString(),
+    last_message_at: new Date().toISOString(),
+    last_error_class: null,
+    message_count: Number(session.message_count || 0) + 2,
+    contact,
+  };
+  await sb.from('ai_chat_sessions').update(update).eq('id', session.id);
+
+  const crmSync = deterministicContact.explicit
+    ? await syncChatLead(
+        sb,
+        { ...session, ...update },
+        [...history, { role: 'assistant', content: reply }],
+        safeObject(session.qualification),
+        contact,
+        text(session.recommended_next_action, 1000)
+      )
+    : 'not_requested';
+
+  console.info(
+    JSON.stringify({
+      event: 'ai_chat_request',
+      request_id: id,
+      session_id: session.id,
+      status: 'grounded',
+      grounding_reason: grounded?.reason,
+      structured_cases: cases.length,
+      total_latency_ms: Date.now() - started,
+      crm_sync: crmSync,
+    })
+  );
+
+  return json(
+    {
+      ok: true,
+      reply,
+      sources,
+      fallback: false,
+      deterministic: true,
+      session_id: session.id,
+      session_token: sessionToken || undefined,
+      llm_status: session.llm_status,
+      qualification: session.qualification,
+      crm_sync: crmSync,
+    },
+    200,
+    origin
+  );
+}
+
 async function handler(req: Request): Promise<Response> {
   const origin = req.headers.get('origin') || '';
   if (req.method === 'OPTIONS') {
@@ -833,7 +998,7 @@ async function handler(req: Request): Promise<Response> {
 
   const existing = await sb
     .from('ai_chat_messages')
-    .select('role,content,delivery_status,model')
+    .select('role,content,delivery_status,model,metadata')
     .eq('request_id', id)
     .eq('role', 'assistant')
     .maybeSingle();
@@ -844,6 +1009,7 @@ async function handler(req: Request): Promise<Response> {
         duplicate: true,
         reply: existing.data.content,
         fallback: existing.data.delivery_status === 'fallback',
+        sources: safePublicSources(existing.data.metadata?.sources),
         session_id: session.id,
       },
       200,
@@ -864,23 +1030,72 @@ async function handler(req: Request): Promise<Response> {
   }
 
   let history: any[];
+  let intent: any;
+  let structuredCases: any[];
+  try {
+    history = await loadMessages(sb, session.id, MAX_HISTORY_MESSAGES);
+    const recentUserMessages = history
+      .filter((item) => item?.role === 'user')
+      .map((item) => text(item?.content, MAX_MESSAGE_LENGTH));
+    intent = classifyGroundingIntent({
+      message,
+      recentUserMessages,
+      pagePath: session.page_path || '',
+    });
+    structuredCases = await retrieveStructuredCases(
+      sb,
+      retrievalQuery(history, message),
+      intent
+    );
+  } catch (error) {
+    console.error(
+      `[ai-chat] Grounding bootstrap failed: ${error instanceof Error ? error.message : 'unknown'}`
+    );
+    return storeAssistantFallback(
+      sb,
+      session,
+      id,
+      started,
+      (error as GatewayFailure)?.errorClass || 'retrieval_error',
+      sessionResult.sessionToken,
+      origin
+    );
+  }
+
+  const grounded = intent?.providesContact
+    ? null
+    : buildGroundedReply(intent, structuredCases);
+  if (grounded) {
+    return completeGroundedReply(
+      sb,
+      session,
+      sessionResult.sessionToken,
+      id,
+      started,
+      origin,
+      history,
+      message,
+      intent,
+      structuredCases,
+      grounded
+    );
+  }
+
   let prompt: string;
   let retrieval: any;
   try {
-    [history, prompt] = await Promise.all([
-      loadMessages(sb, session.id, MAX_HISTORY_MESSAGES),
+    [prompt, retrieval] = await Promise.all([
       activePrompt(sb),
+      retrieveKnowledge(
+        sb,
+        retrievalQuery(history, message),
+        session.page_path || '',
+        id
+      ),
     ]);
     if (!prompt) throw new Error('system_prompt_missing');
-    retrieval = await retrieveKnowledge(
-      sb,
-      retrievalQuery(history, message),
-      session.page_path || '',
-      id
-    );
   } catch (error) {
-    const errorClass =
-      (error as GatewayFailure)?.errorClass || 'retrieval_error';
+    const errorClass = (error as GatewayFailure)?.errorClass || 'retrieval_error';
     return storeAssistantFallback(
       sb,
       session,
@@ -903,8 +1118,13 @@ async function handler(req: Request): Promise<Response> {
           role: item.role,
           content: item.content,
         })),
-        system_prompt: prompt,
-        retrieved_context: knowledgeContext(retrieval.chunks),
+        system_prompt: `${prompt}\n\n${GROUNDING_POLICY_PROMPT}`,
+        retrieved_context: [
+          'VERIFIED CASES',
+          structuredCaseContext(structuredCases),
+          'KNOWLEDGE CONTEXT',
+          knowledgeContext(retrieval.chunks),
+        ].join('\n\n'),
         model: env('CHAT_MODEL') || 'qwen3:8b',
         model_parameters: {
           temperature: 0.15,
@@ -931,7 +1151,9 @@ async function handler(req: Request): Promise<Response> {
   const envelope = parseModelEnvelope(
     gateway?.message?.content || gateway?.content
   );
-  envelope.reply = sanitizeReplyLinks(envelope.reply, retrieval.chunks);
+  const sources = combinedSources(structuredCases, retrieval.chunks);
+  envelope.reply = sanitizeReplyLinks(envelope.reply, sources);
+  envelope.reply = sanitizePublicReply(envelope.reply);
   if (!envelope.reply) {
     return storeAssistantFallback(
       sb,
@@ -978,6 +1200,14 @@ async function handler(req: Request): Promise<Response> {
         lexical_rank: Number(chunk.lexical_rank || 0),
         retrieval_score: Number(chunk.retrieval_score || 0),
       })),
+      structured_cases: structuredCases.map((item: any) => ({
+        id: item.id,
+        slug: text(item.slug, 100),
+        display_name: text(item.display_name, 300),
+        exact_match: item.exact_match === true,
+        retrieval_score: Number(item.retrieval_score || 0),
+      })),
+      sources,
     },
   });
   if (assistantInsert.error)
@@ -1048,6 +1278,7 @@ async function handler(req: Request): Promise<Response> {
       llm_status: 'online',
       qualification,
       crm_sync: crmSync,
+      sources,
     },
     200,
     origin
