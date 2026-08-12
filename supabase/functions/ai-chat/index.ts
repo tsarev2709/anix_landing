@@ -369,7 +369,7 @@ async function activePrompt(sb: any): Promise<string> {
 
 async function retrieveKnowledge(
   sb: any,
-  message: string,
+  query: string,
   pagePath: string,
   id: string
 ): Promise<{ chunks: any[]; latencyMs: number }> {
@@ -377,7 +377,7 @@ async function retrieveKnowledge(
   const embeddingResponse = await gatewayRequest(
     '/v1/embed',
     {
-      input: [message],
+      input: [query],
       model: env('EMBEDDING_MODEL') || 'embeddinggemma',
       request_id: id,
     },
@@ -396,7 +396,7 @@ async function retrieveKnowledge(
       : {};
   let result = await sb.rpc('search_knowledge_chunks', {
     query_embedding: embedding,
-    query_text: message,
+    query_text: query,
     match_count: 6,
     filter_metadata: metadataFilter,
   });
@@ -407,13 +407,25 @@ async function retrieveKnowledge(
   ) {
     result = await sb.rpc('search_knowledge_chunks', {
       query_embedding: embedding,
-      query_text: message,
+      query_text: query,
       match_count: 6,
       filter_metadata: {},
     });
   }
   if (result.error) throw new Error('retrieval_failed');
   return { chunks: result.data || [], latencyMs: Date.now() - started };
+}
+
+function retrievalQuery(history: any[], currentMessage: string): string {
+  const recentUserMessages = history
+    .filter((item) => item?.role === 'user')
+    .map((item) => text(item?.content, MAX_MESSAGE_LENGTH))
+    .filter(Boolean)
+    .slice(-3);
+  if (!recentUserMessages.includes(currentMessage)) {
+    recentUserMessages.push(currentMessage);
+  }
+  return [...new Set(recentUserMessages)].join('\n').slice(-6000);
 }
 
 function knowledgeContext(chunks: any[]): string {
@@ -425,6 +437,66 @@ function knowledgeContext(chunks: any[]): string {
     )
     .join('\n\n---\n\n')
     .slice(0, 24_000);
+}
+
+function normalizedSourceUrl(value: unknown): string {
+  const candidate = text(value, 2000);
+  if (!candidate) return '';
+  try {
+    const url = new URL(candidate);
+    if (!['http:', 'https:'].includes(url.protocol)) return '';
+    url.hash = '';
+    url.search = '';
+    return url.toString().replace(/\/$/, '').toLowerCase();
+  } catch {
+    return '';
+  }
+}
+
+function sanitizeReplyLinks(reply: string, chunks: any[]): string {
+  const allowed = new Set(
+    chunks
+      .map((chunk) => normalizedSourceUrl(chunk?.source_url))
+      .filter(Boolean)
+  );
+  const isAllowed = (url: string) => allowed.has(normalizedSourceUrl(url));
+  let rejectedUnsupportedUrl = false;
+  const cleaned = reply
+    .replace(/\[([^\]]+)]\((https?:\/\/[^\s)]+)\)/gi, (_match, label, url) => {
+      if (isAllowed(url)) return `${label}: ${url}`;
+      rejectedUnsupportedUrl = true;
+      return label;
+    })
+    .replace(/https?:\/\/[^\s)\]]+/gi, (url) => {
+      if (isAllowed(url.replace(/[.,;:!?]+$/, ''))) return url;
+      rejectedUnsupportedUrl = true;
+      return '';
+    })
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/ {2,}/g, ' ')
+    .trim();
+  if (!rejectedUnsupportedUrl) return cleaned;
+
+  const confirmedSources = chunks
+    .filter((chunk) => normalizedSourceUrl(chunk?.source_url))
+    .filter(
+      (chunk, index, items) =>
+        items.findIndex(
+          (item) =>
+            normalizedSourceUrl(item?.source_url) ===
+            normalizedSourceUrl(chunk?.source_url)
+        ) === index
+    )
+    .slice(0, 4);
+  if (!confirmedSources.length) {
+    return 'В найденных материалах нет подтверждённых ссылок по этому вопросу.';
+  }
+  return [
+    'Вот материалы, которые подтверждены базой Anix:',
+    ...confirmedSources.map(
+      (chunk) => `— ${text(chunk?.title, 300)}: ${chunk.source_url}`
+    ),
+  ].join('\n');
 }
 
 function parseModelEnvelope(value: unknown): any {
@@ -791,16 +863,21 @@ async function handler(req: Request): Promise<Response> {
     return json({ error: 'message_store_failed' }, 500, origin);
   }
 
-  let retrieval: any;
   let history: any[];
   let prompt: string;
+  let retrieval: any;
   try {
-    [retrieval, history, prompt] = await Promise.all([
-      retrieveKnowledge(sb, message, session.page_path || '', id),
+    [history, prompt] = await Promise.all([
       loadMessages(sb, session.id, MAX_HISTORY_MESSAGES),
       activePrompt(sb),
     ]);
     if (!prompt) throw new Error('system_prompt_missing');
+    retrieval = await retrieveKnowledge(
+      sb,
+      retrievalQuery(history, message),
+      session.page_path || '',
+      id
+    );
   } catch (error) {
     const errorClass =
       (error as GatewayFailure)?.errorClass || 'retrieval_error';
@@ -830,7 +907,7 @@ async function handler(req: Request): Promise<Response> {
         retrieved_context: knowledgeContext(retrieval.chunks),
         model: env('CHAT_MODEL') || 'qwen3:8b',
         model_parameters: {
-          temperature: 0.35,
+          temperature: 0.15,
           num_ctx: Number(env('CHAT_NUM_CTX') || 8192),
           format: 'json',
           think: false,
@@ -854,6 +931,7 @@ async function handler(req: Request): Promise<Response> {
   const envelope = parseModelEnvelope(
     gateway?.message?.content || gateway?.content
   );
+  envelope.reply = sanitizeReplyLinks(envelope.reply, retrieval.chunks);
   if (!envelope.reply) {
     return storeAssistantFallback(
       sb,
@@ -894,6 +972,7 @@ async function handler(req: Request): Promise<Response> {
       retrieval: retrieval.chunks.map((chunk: any) => ({
         id: chunk.id,
         title: text(chunk.title, 300),
+        source_url: text(chunk.source_url, 2000),
         vertical: text(chunk.metadata?.vertical, 50),
         similarity: Number(chunk.similarity || 0),
         lexical_rank: Number(chunk.lexical_rank || 0),
