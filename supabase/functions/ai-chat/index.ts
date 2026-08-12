@@ -450,8 +450,12 @@ async function retrieveStructuredCases(
     match_count: intent?.broadCatalog ? 10 : 8,
   });
   if (result.error) {
-    console.error(`[ai-chat] Structured case search failed: ${result.error.message}`);
-    return [];
+    console.error(
+      `[ai-chat] Structured case search failed: ${result.error.message}`
+    );
+    const error = new Error('structured_retrieval_failed') as GatewayFailure;
+    error.errorClass = 'retrieval_error';
+    throw error;
   }
   return Array.isArray(result.data) ? result.data : [];
 }
@@ -1046,7 +1050,15 @@ async function handler(req: Request): Promise<Response> {
     console.error(
       `[ai-chat] Grounding bootstrap failed: ${error instanceof Error ? error.message : 'unknown'}`
     );
-    return json({ error: 'message_history_failed' }, 500, origin);
+    return storeAssistantFallback(
+      sb,
+      session,
+      id,
+      started,
+      (error as GatewayFailure)?.errorClass || 'retrieval_error',
+      sessionResult.sessionToken,
+      origin
+    );
   }
 
   const grounded = intent?.providesContact
