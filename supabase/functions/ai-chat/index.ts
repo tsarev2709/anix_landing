@@ -394,10 +394,10 @@ async function retrieveKnowledge(
     : pagePath.startsWith('/hse')
       ? { vertical: 'hse' }
       : {};
-  let result = await sb.rpc('match_knowledge_chunks', {
+  let result = await sb.rpc('search_knowledge_chunks', {
     query_embedding: embedding,
+    query_text: message,
     match_count: 6,
-    match_threshold: 0.35,
     filter_metadata: metadataFilter,
   });
   if (
@@ -405,10 +405,10 @@ async function retrieveKnowledge(
     !result.data?.length &&
     Object.keys(metadataFilter).length
   ) {
-    result = await sb.rpc('match_knowledge_chunks', {
+    result = await sb.rpc('search_knowledge_chunks', {
       query_embedding: embedding,
+      query_text: message,
       match_count: 6,
-      match_threshold: 0.35,
       filter_metadata: {},
     });
   }
@@ -889,7 +889,17 @@ async function handler(req: Request): Promise<Response> {
     retrieval_latency_ms: retrieval.latencyMs,
     llm_latency_ms: llmLatency,
     total_latency_ms: Date.now() - started,
-    metadata: { usage: safeObject(gateway?.usage) },
+    metadata: {
+      usage: safeObject(gateway?.usage),
+      retrieval: retrieval.chunks.map((chunk: any) => ({
+        id: chunk.id,
+        title: text(chunk.title, 300),
+        vertical: text(chunk.metadata?.vertical, 50),
+        similarity: Number(chunk.similarity || 0),
+        lexical_rank: Number(chunk.lexical_rank || 0),
+        retrieval_score: Number(chunk.retrieval_score || 0),
+      })),
+    },
   });
   if (assistantInsert.error)
     return json({ error: 'message_store_failed' }, 500, origin);
