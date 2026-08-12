@@ -57,6 +57,7 @@
     "gateway:start": "node local-ai-gateway/server.mjs",
     "gateway:check": "node scripts/check-local-ai-gateway.mjs",
     "knowledge:ingest": "node scripts/knowledge-ingest.mjs",
+    "knowledge:ingest:site": "node scripts/knowledge-ingest.mjs --sitemap https://studio.anix-ai.pro/sitemap.xml --source-slug anix-site --source-title \"Публичный сайт Anix\" --vertical general --verify",
     "ai:catalog:generate": "node scripts/generate-ai-case-catalog-sql.mjs",
     "ai:catalog:check": "node scripts/generate-ai-case-catalog-sql.mjs --check",
     "test:rag-quality": "node scripts/test-ai-rag-quality.mjs && node scripts/test-ai-grounding.mjs && node scripts/test-knowledge-ingest-utils.mjs && npm run ai:catalog:check",
