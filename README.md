@@ -13,22 +13,27 @@ This project contains the source code for the Anix landing page built with React
 ## Development
 
 Run the development server with:
+
 ```bash
 npm start
 ```
+
 The app will be available at `http://localhost:3000/`.
 
 ## Building
 
 Create a production build with:
+
 ```bash
 npm run build
 ```
+
 The output will be placed in the `build/` directory.
 
 ## Testing
 
 Execute the test suite using:
+
 ```bash
 npm test
 ```
@@ -37,6 +42,7 @@ npm test
 
 The project can be deployed to GitHub Pages. Use the provided script to build and push the
 contents of the `build/` directory to the `gh-pages` branch:
+
 ```bash
 npm run deploy
 ```
@@ -54,6 +60,15 @@ Lead events are stored in the `lead_events` table. The following events are reco
 - `cta_click`
 
 Use the Supabase SQL editor to query `lead_events` and inspect conversion rates.
+
+## AI consultant
+
+The production AI consultant uses Supabase for sessions and RAG and a protected local Ollama gateway for inference. The public site does not depend on the local computer being online.
+
+- Architecture: `docs/ai-consultant-architecture.md`
+- Windows, Ollama and Cloudflare setup: `docs/ai-consultant-windows.md`
+- Local gateway: `npm run gateway:start`
+- Knowledge ingestion: `npm run knowledge:ingest -- --help`
 
 ## Section transitions & CTA
 

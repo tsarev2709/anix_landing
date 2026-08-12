@@ -53,7 +53,13 @@
     "format": "prettier --write \"src/**/*.{js,jsx,css}\"",
     "lint:css": "stylelint \"src/**/*.{css,scss}\"",
     "prepare": "husky install",
-    "hse:create-admin": "node scripts/create-hse-admin.mjs"
+    "hse:create-admin": "node scripts/create-hse-admin.mjs",
+    "gateway:start": "node local-ai-gateway/server.mjs",
+    "gateway:check": "node scripts/check-local-ai-gateway.mjs",
+    "knowledge:ingest": "node scripts/knowledge-ingest.mjs",
+    "test:gateway": "node scripts/test-local-ai-gateway.mjs",
+    "typecheck:edge": "node node_modules/typescript/bin/tsc supabase/functions/_shared/remote.d.ts supabase/functions/ai-chat/index.ts supabase/functions/_shared/amocrm.ts supabase/functions/submit-website-lead/index.ts --target ES2020 --module ESNext --moduleResolution node --skipLibCheck --noEmit",
+    "check:ai-scripts": "node --check local-ai-gateway/server.mjs && node --check scripts/knowledge-ingest.mjs && node --check scripts/check-local-ai-gateway.mjs && node --check scripts/test-local-ai-gateway.mjs"
   },
   "browserslist": {
     "production": [

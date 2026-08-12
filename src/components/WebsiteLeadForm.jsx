@@ -22,6 +22,7 @@ const initialValues = {
   email: '',
   contact: '',
   message: '',
+  privacyConsent: false,
 };
 
 const publicFormRoutes = new Set([
@@ -85,6 +86,9 @@ function validate(values) {
   if (!message) errors.message = 'Расскажите хотя бы немного о задаче';
   else if (message.length < 10) {
     errors.message = 'Добавьте пару слов о задаче';
+  }
+  if (!values.privacyConsent) {
+    errors.privacyConsent = 'Подтвердите согласие на обработку данных';
   }
 
   return errors;
@@ -260,8 +264,11 @@ export default function WebsiteLeadForm() {
   };
 
   const onChange = (event) => {
-    const { name, value } = event.target;
-    setValues((current) => ({ ...current, [name]: value }));
+    const { name, value, type, checked } = event.target;
+    setValues((current) => ({
+      ...current,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
     setErrors((current) => ({ ...current, [name]: undefined }));
     setServerError('');
   };
@@ -273,9 +280,13 @@ export default function WebsiteLeadForm() {
     const nextErrors = validate(values);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) {
-      const firstInvalidName = ['name', 'email', 'contact', 'message'].find(
-        (name) => nextErrors[name]
-      );
+      const firstInvalidName = [
+        'name',
+        'email',
+        'contact',
+        'message',
+        'privacyConsent',
+      ].find((name) => nextErrors[name]);
       event.currentTarget.elements[firstInvalidName]?.focus();
       return;
     }
@@ -291,6 +302,9 @@ export default function WebsiteLeadForm() {
     const payload = {
       idempotency_key: idempotencyKeyRef.current,
       turnstile_token: turnstileToken,
+      privacy_consent: values.privacyConsent,
+      privacy_consent_at: new Date().toISOString(),
+      privacy_policy_version: '2026-08-07',
       name: values.name.trim(),
       company: values.company.trim(),
       email: values.email.trim(),
@@ -326,7 +340,15 @@ export default function WebsiteLeadForm() {
       });
     } catch (error) {
       setStatus('failed');
-      if (error.code === 'turnstile_failed') {
+      if (error.code === 'privacy_consent_required') {
+        setServerError(
+          'Подтвердите согласие на обработку персональных данных.'
+        );
+      } else if (error.code === 'turnstile_configuration_error') {
+        setServerError(
+          'Защита формы настроена неверно. Мы уже видим проблему; пока напишите нам в Telegram или на email.'
+        );
+      } else if (error.code === 'turnstile_failed') {
         setServerError('Проверка защиты не прошла. Попробуйте ещё раз.');
       } else if (error.code === 'delivery_pending') {
         setServerError(
@@ -475,6 +497,29 @@ export default function WebsiteLeadForm() {
           />
           {errors.message ? (
             <small id="message-error">{errors.message}</small>
+          ) : null}
+        </label>
+
+        <label className="website-lead__consent">
+          <input
+            name="privacyConsent"
+            type="checkbox"
+            checked={values.privacyConsent}
+            onChange={onChange}
+            aria-invalid={Boolean(errors.privacyConsent)}
+            aria-describedby={fieldError('privacyConsent')}
+          />
+          <span>
+            Я ознакомлен с{' '}
+            <a href={toPublicHref('/privacy')}>политикой конфиденциальности</a>{' '}
+            и даю согласие на{' '}
+            <a href={toPublicHref('/personal-data')}>
+              обработку персональных данных
+            </a>
+            .
+          </span>
+          {errors.privacyConsent ? (
+            <small id="privacyConsent-error">{errors.privacyConsent}</small>
           ) : null}
         </label>
 

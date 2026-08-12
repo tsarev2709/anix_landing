@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { track } from './lib/analytics';
+import AiChatWidget from './components/AiChatWidget';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const lastSection = useRef<string | null>(null);
@@ -20,6 +21,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     <>
       <div className="page-grain" aria-hidden />
       {children}
+      <AiChatWidget />
     </>
   );
 }

@@ -1,6 +1,9 @@
 declare const Deno: any;
 declare const process: any;
 
+// @ts-ignore Deno requires the explicit TypeScript extension.
+import { AmoIntegrationError, syncAmoLead } from '../_shared/amocrm.ts';
+
 // This public function is deployed by the Supabase Actions workflow.
 
 const DEFAULT_ORIGINS = [
@@ -11,10 +14,6 @@ const DEFAULT_ORIGINS = [
 ];
 const MAX_BODY_BYTES = 80_000;
 const MAX_PAGES = 80;
-const AMO_PIPELINE_NAME = 'Входящие заявки';
-
-let amoContextCache: { expiresAt: number; value: any } | null = null;
-let amoFieldsCache: { expiresAt: number; value: any[] } | null = null;
 
 function env(name: string): string {
   try {
@@ -79,19 +78,6 @@ function integer(value: unknown, min = 0, max = 2_000_000_000): number | null {
   const parsed = Number(value);
   if (!Number.isFinite(parsed)) return null;
   return Math.min(max, Math.max(min, Math.round(parsed)));
-}
-
-function normalizedPhone(value: string): string {
-  return value.replace(/\D/g, '');
-}
-
-function normalizedTelegram(value: string): string {
-  return value
-    .toLowerCase()
-    .replace(/^https?:\/\/t\.me\//, '')
-    .replace(/^tg:\/\/resolve\?domain=/, '')
-    .replace(/^@/, '')
-    .replace(/[/?#].*$/, '');
 }
 
 function inferContact(value: string): {
@@ -200,12 +186,15 @@ async function fetchWithTimeout(
   }
 }
 
+type TurnstileResult = { ok: boolean; error: string };
+
 async function verifyTurnstile(
   token: string,
   origin: string
-): Promise<boolean> {
+): Promise<TurnstileResult> {
   const secret = env('TURNSTILE_SECRET_KEY');
-  if (!secret || !token) return false;
+  if (!secret) return { ok: false, error: 'turnstile_configuration_error' };
+  if (!token) return { ok: false, error: 'turnstile_failed' };
 
   const body = new URLSearchParams({ secret, response: token });
   const response = await fetchWithTimeout(
@@ -217,9 +206,25 @@ async function verifyTurnstile(
     },
     8000
   );
-  if (!response.ok) return false;
+  if (!response.ok) return { ok: false, error: 'turnstile_failed' };
   const result = await response.json().catch(() => null);
-  if (!result?.success || result.action !== 'website_lead') return false;
+  const errorCodes = Array.isArray(result?.['error-codes'])
+    ? result['error-codes'].map(String)
+    : [];
+  if (!result?.success) {
+    console.error(
+      `[website-lead] Turnstile rejected: ${errorCodes.join(',') || 'unknown'}`
+    );
+    return {
+      ok: false,
+      error: errorCodes.includes('invalid-input-secret')
+        ? 'turnstile_configuration_error'
+        : 'turnstile_failed',
+    };
+  }
+  if (result.action !== 'website_lead') {
+    return { ok: false, error: 'turnstile_failed' };
+  }
 
   const expectedHostname = (() => {
     try {
@@ -228,248 +233,11 @@ async function verifyTurnstile(
       return '';
     }
   })();
-  return !result.hostname || result.hostname === expectedHostname;
-}
-
-class IntegrationError extends Error {
-  retryable: boolean;
-  constructor(message: string, retryable = false) {
-    super(message);
-    this.retryable = retryable;
-  }
-}
-
-function amoBaseUrl(): string {
-  return env('AMOCRM_BASE_URL').replace(/\/+$/, '');
-}
-
-async function amoRequest(path: string, init: RequestInit = {}): Promise<any> {
-  const baseUrl = amoBaseUrl();
-  const token = env('AMOCRM_LONG_LIVED_TOKEN');
-  if (!baseUrl || !/^https:\/\/[^/]+\.amocrm\.ru$/i.test(baseUrl) || !token) {
-    throw new IntegrationError('amocrm_not_configured');
-  }
-
-  let response: Response;
-  try {
-    response = await fetchWithTimeout(`${baseUrl}${path}`, {
-      ...init,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        ...(init.headers || {}),
-      },
-    });
-  } catch {
-    throw new IntegrationError('amocrm_network_error', true);
-  }
-
-  if (!response.ok) {
-    const retryable = response.status === 429 || response.status >= 500;
-    throw new IntegrationError(`amocrm_http_${response.status}`, retryable);
-  }
-  if (response.status === 204) return null;
-  return response.json().catch(() => null);
-}
-
-async function getAmoContext(): Promise<any> {
-  if (amoContextCache && amoContextCache.expiresAt > Date.now()) {
-    return amoContextCache.value;
-  }
-
-  const [account, pipelinesResponse] = await Promise.all([
-    amoRequest('/api/v4/account'),
-    amoRequest('/api/v4/leads/pipelines'),
-  ]);
-  const pipelineName = env('AMOCRM_PIPELINE_NAME') || AMO_PIPELINE_NAME;
-  const pipelines = pipelinesResponse?._embedded?.pipelines || [];
-  const pipeline = pipelines.find(
-    (item: any) =>
-      !item.is_archive &&
-      String(item.name || '')
-        .trim()
-        .toLowerCase() === pipelineName.toLowerCase()
-  );
-  if (!pipeline) throw new IntegrationError('amocrm_pipeline_not_found');
-
-  const statuses = [...(pipeline?._embedded?.statuses || [])]
-    .filter(
-      (item: any) => item.type === 0 && item.id !== 142 && item.id !== 143
-    )
-    .sort((a: any, b: any) => Number(a.sort || 0) - Number(b.sort || 0));
-  if (!statuses[0])
-    throw new IntegrationError('amocrm_working_status_not_found');
-
-  const value = {
-    accountId: Number(account?.id),
-    pipelineId: Number(pipeline.id),
-    statusId: Number(statuses[0].id),
-  };
-  if (!value.accountId || !value.pipelineId || !value.statusId) {
-    throw new IntegrationError('amocrm_context_invalid');
-  }
-  amoContextCache = { value, expiresAt: Date.now() + 10 * 60 * 1000 };
-  return value;
-}
-
-async function getAmoContactFields(): Promise<any[]> {
-  if (amoFieldsCache && amoFieldsCache.expiresAt > Date.now()) {
-    return amoFieldsCache.value;
-  }
-  try {
-    const response = await amoRequest(
-      '/api/v4/contacts/custom_fields?limit=250'
-    );
-    const fields = response?._embedded?.custom_fields || [];
-    amoFieldsCache = { value: fields, expiresAt: Date.now() + 30 * 60 * 1000 };
-    return fields;
-  } catch {
-    return [];
-  }
-}
-
-function contactFieldValues(contact: any, fieldCode: string): string[] {
-  const fields = contact?.custom_fields_values || [];
-  return fields
-    .filter(
-      (field: any) => String(field.field_code || '').toUpperCase() === fieldCode
-    )
-    .flatMap((field: any) => field.values || [])
-    .map((item: any) => String(item.value || ''));
-}
-
-function contactMatches(contact: any, payload: any): boolean {
-  const emailMatch =
-    payload.email &&
-    contactFieldValues(contact, 'EMAIL').some(
-      (value) => value.trim().toLowerCase() === payload.email
-    );
-  const phoneDigits = normalizedPhone(payload.phone || '');
-  const phoneMatch =
-    phoneDigits &&
-    contactFieldValues(contact, 'PHONE').some(
-      (value) => normalizedPhone(value) === phoneDigits
-    );
-  return Boolean(emailMatch || phoneMatch);
-}
-
-async function findExistingContact(payload: any): Promise<number | null> {
-  const queries = [payload.email, payload.phone].filter(Boolean);
-  const matches = new Map<number, any>();
-
-  for (const query of queries) {
-    const response = await amoRequest(
-      `/api/v4/contacts?query=${encodeURIComponent(query)}&limit=20`
-    );
-    for (const contact of response?._embedded?.contacts || []) {
-      if (contactMatches(contact, payload))
-        matches.set(Number(contact.id), contact);
-    }
-  }
-  return matches.size === 1 ? Number(matches.keys().next().value) : null;
-}
-
-function optionalContactCustomFields(fields: any[], payload: any): any[] {
-  const values: any[] = [];
-  const normalizedName = (value: string) => value.trim().toLowerCase();
-  const telegramField = fields.find((field: any) =>
-    ['telegram', 'телеграм'].some((needle) =>
-      normalizedName(String(field.name || '')).includes(needle)
-    )
-  );
-  const companyField = fields.find((field: any) =>
-    ['компания', 'company'].includes(normalizedName(String(field.name || '')))
-  );
-
-  if (payload.telegram && telegramField) {
-    values.push({
-      field_id: Number(telegramField.id),
-      values: [{ value: payload.telegram }],
-    });
-  }
-  if (payload.company && companyField) {
-    values.push({
-      field_id: Number(companyField.id),
-      values: [{ value: payload.company }],
-    });
-  }
-  return values;
-}
-
-async function createContact(payload: any): Promise<number> {
-  const fields = await getAmoContactFields();
-  const customFields: any[] = [];
-  if (payload.email) {
-    customFields.push({
-      field_code: 'EMAIL',
-      values: [{ value: payload.email, enum_code: 'WORK' }],
-    });
-  }
-  if (payload.phone) {
-    customFields.push({
-      field_code: 'PHONE',
-      values: [{ value: payload.phone, enum_code: 'WORK' }],
-    });
-  }
-  customFields.push(...optionalContactCustomFields(fields, payload));
-
-  const response = await amoRequest('/api/v4/contacts', {
-    method: 'POST',
-    body: JSON.stringify([
-      {
-        name: payload.name,
-        custom_fields_values: customFields,
-        _embedded: { tags: [{ name: 'website' }] },
-      },
-    ]),
-  });
-  const contactId = Number(response?._embedded?.contacts?.[0]?.id);
-  if (!contactId) throw new IntegrationError('amocrm_contact_create_failed');
-  return contactId;
-}
-
-async function findRecentLead(
-  contactId: number,
-  leadName: string
-): Promise<number | null> {
-  const contact = await amoRequest(`/api/v4/contacts/${contactId}?with=leads`);
-  const candidates = (contact?._embedded?.leads || []).slice(-5).reverse();
-  const cutoff = Math.floor(Date.now() / 1000) - 30 * 60;
-  for (const item of candidates) {
-    const lead = await amoRequest(`/api/v4/leads/${Number(item.id)}`);
-    if (lead?.name === leadName && Number(lead?.created_at || 0) >= cutoff) {
-      return Number(lead.id);
-    }
-  }
-  return null;
-}
-
-async function createLead(
-  payload: any,
-  contactId: number,
-  context: any
-): Promise<number> {
-  const leadName = `Заявка с сайта — ${payload.company || payload.name}`.slice(
-    0,
-    250
-  );
-  const response = await amoRequest('/api/v4/leads', {
-    method: 'POST',
-    body: JSON.stringify([
-      {
-        name: leadName,
-        pipeline_id: context.pipelineId,
-        status_id: context.statusId,
-        _embedded: {
-          contacts: [{ id: contactId, is_main: true }],
-          tags: [{ name: 'website' }],
-        },
-      },
-    ]),
-  });
-  const leadId = Number(response?._embedded?.leads?.[0]?.id);
-  if (!leadId) throw new IntegrationError('amocrm_lead_create_failed');
-  return leadId;
+  const hostnameMatches =
+    !result.hostname || result.hostname === expectedHostname;
+  return hostnameMatches
+    ? { ok: true, error: '' }
+    : { ok: false, error: 'turnstile_failed' };
 }
 
 function routeSummary(pages: any[]): string {
@@ -505,6 +273,10 @@ function buildLeadNote(row: any): string {
     'Сообщение:',
     row.message,
     '',
+    `Согласие на обработку данных: ${row.payload?.privacy_consent ? 'да' : 'нет'}`,
+    `Дата согласия: ${row.payload?.privacy_consent_at || '—'}`,
+    `Версия политики: ${row.payload?.privacy_policy_version || '—'}`,
+    '',
     `Страница отправки: ${row.page_url || row.page_path || '—'}`,
     `Первая страница: ${row.landing_page || '—'}`,
     `Referrer: ${row.initial_referrer || row.referrer || '—'}`,
@@ -521,23 +293,6 @@ function buildLeadNote(row: any): string {
     row.id,
   ].join('\n');
   return note.slice(0, 20_000);
-}
-
-async function ensureLeadNote(leadId: number, row: any): Promise<void> {
-  const marker = `Supabase Lead ID:\n${row.id}`;
-  const existing = await amoRequest(`/api/v4/leads/${leadId}/notes?limit=100`);
-  const alreadyExists = (existing?._embedded?.notes || []).some(
-    (note: any) =>
-      note?.note_type === 'common' &&
-      String(note?.params?.text || '').includes(marker)
-  );
-  if (alreadyExists) return;
-  await amoRequest(`/api/v4/leads/${leadId}/notes`, {
-    method: 'POST',
-    body: JSON.stringify([
-      { note_type: 'common', params: { text: buildLeadNote(row) } },
-    ]),
-  });
 }
 
 async function updateLead(sb: any, id: string, patch: any): Promise<any> {
@@ -559,45 +314,31 @@ async function syncToAmo(sb: any, row: any): Promise<any> {
     integration_error: null,
   });
 
-  const context = await getAmoContext();
-  let contactId = Number(row.amocrm_contact_id || 0);
-  if (!contactId) {
-    contactId = (await findExistingContact(row)) || (await createContact(row));
-    row = await updateLead(sb, row.id, {
-      amocrm_account_id: context.accountId,
-      amocrm_contact_id: contactId,
-      amocrm_pipeline_id: context.pipelineId,
-      amocrm_status_id: context.statusId,
-    });
-  }
+  const leadName = `Заявка с сайта — ${row.company || row.name}`.slice(0, 250);
+  const result = await syncAmoLead({
+    sourceId: row.id,
+    markerLabel: 'Supabase Lead ID',
+    leadName,
+    contactName: row.name,
+    company: row.company,
+    email: row.email,
+    phone: row.phone,
+    telegram: row.telegram,
+    note: buildLeadNote(row),
+    tags: ['website'],
+    existingContactId: row.amocrm_contact_id,
+    existingLeadId: row.amocrm_lead_id,
+    retryAttempt: attempt,
+  });
 
-  let leadId = Number(row.amocrm_lead_id || 0);
-  if (!leadId) {
-    const leadName = `Заявка с сайта — ${row.company || row.name}`.slice(
-      0,
-      250
-    );
-    if (attempt > 1) leadId = (await findRecentLead(contactId, leadName)) || 0;
-    if (!leadId) leadId = await createLead(row, contactId, context);
-    row = await updateLead(sb, row.id, {
-      status: 'sent_to_amocrm',
-      amocrm_account_id: context.accountId,
-      amocrm_lead_id: leadId,
-      amocrm_contact_id: contactId,
-      amocrm_pipeline_id: context.pipelineId,
-      amocrm_status_id: context.statusId,
-    });
-  }
-
-  await ensureLeadNote(leadId, row);
   return updateLead(sb, row.id, {
     status: 'completed',
     integration_error: null,
-    amocrm_account_id: context.accountId,
-    amocrm_lead_id: leadId,
-    amocrm_contact_id: contactId,
-    amocrm_pipeline_id: context.pipelineId,
-    amocrm_status_id: context.statusId,
+    amocrm_account_id: result.accountId,
+    amocrm_lead_id: result.leadId,
+    amocrm_contact_id: result.contactId,
+    amocrm_pipeline_id: result.pipelineId,
+    amocrm_status_id: result.statusId,
   });
 }
 
@@ -613,7 +354,7 @@ async function syncWithRetries(sb: any, row: any): Promise<any> {
     } catch (error) {
       lastError = error;
       if (
-        !(error instanceof IntegrationError) ||
+        !(error instanceof AmoIntegrationError) ||
         !error.retryable ||
         attempt === 2
       )
@@ -630,7 +371,11 @@ async function syncWithRetries(sb: any, row: any): Promise<any> {
   throw lastError;
 }
 
-async function findOrInsertLead(sb: any, payload: any): Promise<any> {
+async function findOrInsertLead(
+  sb: any,
+  payload: any,
+  consentSnapshot: any
+): Promise<any> {
   const existing = await sb
     .from('website_leads')
     .select('*')
@@ -644,7 +389,7 @@ async function findOrInsertLead(sb: any, payload: any): Promise<any> {
     .insert({
       ...payload,
       status: 'saved',
-      payload,
+      payload: { ...payload, ...consentSnapshot },
     })
     .select()
     .single();
@@ -688,20 +433,41 @@ async function handler(req: Request): Promise<Response> {
     return json({ error: 'invalid_json' }, 400, origin);
   }
 
+  const privacyConsent = input?.privacy_consent === true;
+  const privacyConsentAt = text(input?.privacy_consent_at, 64);
+  const privacyPolicyVersion = text(input?.privacy_policy_version, 64);
+  if (!privacyConsent || !privacyConsentAt || !privacyPolicyVersion) {
+    return json({ error: 'privacy_consent_required' }, 400, origin);
+  }
+  const consentSnapshot = {
+    privacy_consent: true,
+    privacy_consent_at: privacyConsentAt,
+    privacy_policy_version: privacyPolicyVersion,
+  };
+
   const payload = sanitizePayload(input);
   if (!validatePayload(payload))
     return json({ error: 'invalid_payload' }, 400, origin);
 
-  let turnstileOk = false;
+  let turnstileResult: TurnstileResult = {
+    ok: false,
+    error: 'turnstile_failed',
+  };
   try {
-    turnstileOk = await verifyTurnstile(
+    turnstileResult = await verifyTurnstile(
       text(input?.turnstile_token, 3000),
       origin
     );
   } catch {
-    turnstileOk = false;
+    turnstileResult = { ok: false, error: 'turnstile_failed' };
   }
-  if (!turnstileOk) return json({ error: 'turnstile_failed' }, 400, origin);
+  if (!turnstileResult.ok) {
+    return json(
+      { error: turnstileResult.error },
+      turnstileResult.error === 'turnstile_configuration_error' ? 503 : 400,
+      origin
+    );
+  }
 
   const sbUrl = env('SUPABASE_URL') || env('SB_URL');
   const serviceRoleKey =
@@ -711,12 +477,13 @@ async function handler(req: Request): Promise<Response> {
 
   try {
     // @ts-ignore Deno resolves this remote ESM dependency at deploy time.
-    const supabaseModule = await import('https://esm.sh/@supabase/supabase-js@2');
+    const supabaseModule =
+      await import('https://esm.sh/@supabase/supabase-js@2');
     const { createClient } = supabaseModule;
     const sb = createClient(sbUrl, serviceRoleKey, {
       auth: { persistSession: false, autoRefreshToken: false },
     });
-    let row = await findOrInsertLead(sb, payload);
+    let row = await findOrInsertLead(sb, payload, consentSnapshot);
 
     if (row.status === 'completed' && row.amocrm_lead_id) {
       return json(

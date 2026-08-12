@@ -27,6 +27,41 @@
     sans-serif;
 }
 
+.website-lead__consent {
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 10px 12px !important;
+  align-items: start;
+  margin-top: 20px;
+  color: rgba(17, 17, 17, 0.66) !important;
+  font-size: 13px !important;
+  font-weight: 650 !important;
+  line-height: 1.45;
+}
+
+.website-lead__consent input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  min-height: 20px;
+  margin: 1px 0 0;
+  padding: 0;
+  border-radius: 5px;
+  accent-color: #087d70;
+  cursor: pointer;
+}
+
+.website-lead__consent > span {
+  display: inline !important;
+}
+
+.website-lead__consent a {
+  color: #075f56;
+  text-underline-offset: 2px;
+}
+
+.website-lead__consent small {
+  grid-column: 2;
+}
+
 .website-lead *,
 .website-lead *::before,
 .website-lead *::after {
