@@ -59,7 +59,7 @@
     "knowledge:ingest": "node scripts/knowledge-ingest.mjs",
     "ai:catalog:generate": "node scripts/generate-ai-case-catalog-sql.mjs",
     "ai:catalog:check": "node scripts/generate-ai-case-catalog-sql.mjs --check",
-    "test:rag-quality": "node scripts/test-ai-rag-quality.mjs && npm run ai:catalog:check",
+    "test:rag-quality": "node scripts/test-ai-rag-quality.mjs && node scripts/test-ai-grounding.mjs && node scripts/test-knowledge-ingest-utils.mjs && npm run ai:catalog:check",
     "test:gateway": "node scripts/test-local-ai-gateway.mjs",
     "typecheck:edge": "node node_modules/typescript/bin/tsc supabase/functions/_shared/remote.d.ts supabase/functions/ai-chat/index.ts supabase/functions/_shared/amocrm.ts supabase/functions/submit-website-lead/index.ts --target ES2020 --module ESNext --moduleResolution node --skipLibCheck --noEmit",
     "check:ai-scripts": "node --check local-ai-gateway/server.mjs && node --check scripts/knowledge-ingest.mjs && node --check scripts/check-local-ai-gateway.mjs && node --check scripts/test-local-ai-gateway.mjs"

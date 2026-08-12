@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowUp,
+  ExternalLink,
   LoaderCircle,
   MessageCircle,
   Sparkles,
@@ -188,12 +189,35 @@ function Message({ item }) {
         </span>
       ) : null}
       <div>
-        {item.content.split('\n').map((line, index) => (
-          <React.Fragment key={`${index}-${line.slice(0, 12)}`}>
-            {index ? <br /> : null}
-            {line}
-          </React.Fragment>
-        ))}
+        <div className="anix-ai-chat__message-copy">
+          {item.content.split('\n').map((line, index) => (
+            <React.Fragment key={`${index}-${line.slice(0, 12)}`}>
+              {index ? <br /> : null}
+              {line}
+            </React.Fragment>
+          ))}
+        </div>
+        {item.sources?.length ? (
+          <div
+            className="anix-ai-chat__sources"
+            aria-label="Материалы к ответу"
+          >
+            {item.sources.map((source) => (
+              <a
+                href={source.url}
+                target="_blank"
+                rel="noreferrer"
+                key={`${source.kind}-${source.url}`}
+              >
+                <span>
+                  <strong>{source.title || source.label}</strong>
+                  <small>{source.label}</small>
+                </span>
+                <ExternalLink aria-hidden="true" />
+              </a>
+            ))}
+          </div>
+        ) : null}
         {item.fallback ? (
           <span className="anix-ai-chat__fallback-label">
             Сообщение сохранено
@@ -373,6 +397,7 @@ export default function AiChatWidget() {
           role: 'assistant',
           content: result.reply,
           fallback: Boolean(result.fallback),
+          sources: Array.isArray(result.sources) ? result.sources : [],
         },
       ]);
       track(result.fallback ? 'ai_chat_fallback' : 'ai_chat_message', {

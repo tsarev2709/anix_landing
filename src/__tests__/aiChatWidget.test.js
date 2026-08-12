@@ -50,6 +50,14 @@ describe('AiChatWidget', () => {
             reply: 'Покажем клинический workflow без перегруза.',
             fallback: false,
             crm_sync: 'not_requested',
+            sources: [
+              {
+                kind: 'case_page',
+                label: 'Открыть кейс',
+                title: 'Hemotech AI',
+                url: 'https://studio.anix-ai.pro/cases/hemotech-ai/',
+              },
+            ],
           }),
       })
     );
@@ -109,6 +117,10 @@ describe('AiChatWidget', () => {
     expect(payload.privacy_consent).toBe(true);
     expect(payload.context.page_path).toBe('/medicine');
     expect(container.textContent).toContain('Покажем клинический workflow');
+    expect(container.textContent).toContain('Hemotech AI');
+    expect(container.querySelector('.anix-ai-chat__sources a').href).toBe(
+      'https://studio.anix-ai.pro/cases/hemotech-ai/'
+    );
     expect(
       JSON.parse(window.localStorage.getItem('anix_ai_chat_session_v1'))
     ).toEqual({

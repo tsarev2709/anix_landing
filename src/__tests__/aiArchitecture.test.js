@@ -9,10 +9,13 @@ describe('AI consultant production architecture', () => {
     expect(edge).toContain("'/v1/chat'");
     expect(edge).toContain("'/v1/embed'");
     expect(edge).toContain("'search_knowledge_chunks'");
+    expect(edge).toContain("'search_ai_public_cases'");
     expect(edge).toContain('retrieval_score');
     expect(edge).toContain('retrievalQuery(history, message)');
     expect(edge).toContain('sanitizeReplyLinks(envelope.reply');
     expect(edge).toContain('storeAssistantFallback');
+    expect(edge).toContain('buildGroundedReply');
+    expect(edge).toContain('GROUNDING_POLICY_PROMPT');
     expect(gateway).toContain("'/api/chat'");
     expect(gateway).toContain("'/api/embed'");
   });
