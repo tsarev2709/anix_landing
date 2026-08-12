@@ -20,6 +20,14 @@ function json(value) {
   return `${sql(JSON.stringify(value))}::jsonb`;
 }
 
+function normalizedAlias(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replaceAll('ё', 'е')
+    .replace(/[^a-zа-я0-9]+/gi, ' ')
+    .trim();
+}
+
 const catalog = JSON.parse(await fs.readFile(catalogPath, 'utf8'));
 const clients = new Map();
 for (const item of catalog.cases) {
@@ -46,9 +54,12 @@ const caseRows = catalog.cases
 
 const aliasRows = catalog.cases
   .flatMap((item) =>
-    [...new Set([item.displayName, ...(item.aliases || [])])].map(
-      (alias) => `  (${sql(item.slug)}, ${sql(alias)})`
-    )
+    [...new Map(
+      [item.displayName, ...(item.aliases || [])].map((alias) => [
+        normalizedAlias(alias),
+        alias,
+      ])
+    ).values()].map((alias) => `  (${sql(item.slug)}, ${sql(alias)})`)
   )
   .join(',\n');
 
