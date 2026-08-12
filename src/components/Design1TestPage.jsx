@@ -169,13 +169,13 @@ const compactCases = [
     name: 'АгроТех',
     text: 'История с героиней, где агротех выглядит как сфера будущего, а не сухая отрасль из отчета.',
     image: agrotechCaseImage,
-    href: '#cases',
+    href: '/cases/b2b/',
   },
   {
     name: 'Стартех',
     text: 'Переупаковка продукта под региональные B2B-компании и ролик, который говорит с рынком проще.',
     image: startechCaseImage,
-    href: '#cases',
+    href: '/cases/b2b/',
   },
   {
     name: 'Бондарчук',
@@ -193,7 +193,7 @@ const compactCases = [
     name: 'Factory Director',
     text: 'Конференционный ролик на базе маскота, который стал рабочей визитной карточкой бренда.',
     image: factoryDirectorCaseImage,
-    href: '#cases',
+    href: '/cases/b2b/',
   },
 ];
 
@@ -472,7 +472,7 @@ function VideoShowreel({ variant = 'hero' }) {
 function Design1TestPage() {
   return (
     <main className="design1-test">
-<header className="d1-header">
+      <header className="d1-header">
         <nav
           className="d1-header-inner"
           aria-label="Навигация тестовой страницы Anix"
@@ -501,18 +501,25 @@ function Design1TestPage() {
 
       <section className="d1-hero d1-container" id="top">
         <div className="d1-hero-copy">
-          <p className="d1-eyebrow">
-            Anix Studio (Студия Аникс) — анимационная студия для сложных продуктов.
+          <p className="d1-eyebrow d1-hero-eyebrow">
+            Anix Studio (Студия Аникс) — анимационная студия для сложных
+            продуктов.
           </p>
           <h1 className="d1-hero-title">
             <span className="d1-hero-title-line">Делаем </span>
             <span className="d1-hero-title-line">сложное </span>
             <span className="d1-hero-title-line">интересным</span>
           </h1>
-                    <p className="d1-lead">
-            Сначала понимание. Потом восхищение. Anix помогает вовлекать в
-            сложные продукты, правила и идеи через 2D-анимацию, историю и ясную
-            драматургию.
+          <p className="d1-lead">
+            <span className="d1-desktop-copy">
+              Сначала понимание. Потом восхищение. Anix помогает вовлекать в
+              сложные продукты, правила и идеи через 2D-анимацию, историю и
+              ясную драматургию.
+            </span>
+            <span className="d1-mobile-copy">
+              Объясняем сложные продукты через историю, анимацию и сильный
+              визуал.
+            </span>
           </p>
           <p className="d1-microcopy">
             Разбираемся, кто будет смотреть ролик, ищем, где теряется внимание,
@@ -553,7 +560,12 @@ function Design1TestPage() {
           <div className="d1-proof-layout">
             <div>
               <p className="d1-eyebrow">Showreel + цифры</p>
-              <h2>Сначала понимание — потом восхищение</h2>
+              <h2>
+                <span className="d1-desktop-copy">
+                  Сначала понимание — потом восхищение
+                </span>
+                <span className="d1-mobile-copy">Цифры, не обещания</span>
+              </h2>
             </div>
             <p className="d1-section-lead">
               Хороший ролик не просит у зрителя лишнюю минуту на расшифровку. Он
@@ -573,11 +585,16 @@ function Design1TestPage() {
         <div className="d1-container">
           <div className="d1-section-head">
             <p className="d1-eyebrow">Что делаем</p>
-                        <h2>Перерабатываем сложное в интересное</h2>
+            <h2>
+              <span className="d1-desktop-copy">
+                Перерабатываем сложное в интересное
+              </span>
+              <span className="d1-mobile-copy">Что мы делаем</span>
+            </h2>
             <p className="d1-section-lead">
               Сначала ищем, где ломается внимание. Потом выбираем формат: ролик,
-              серия карточек, страница, визуальная система, презентационное видео
-              или экранный контент для события.
+              серия карточек, страница, визуальная система, презентационное
+              видео или экранный контент для события.
             </p>
           </div>
           <div className="d1-service-grid">
@@ -594,8 +611,11 @@ function Design1TestPage() {
             <div>
               <p className="d1-eyebrow">Наши кейсы</p>
               <h2>
-                Видео, которые уже работали в продажах, PR, фарме, HSE и на
-                событиях
+                <span className="d1-desktop-copy">
+                  Видео, которые уже работали в продажах, PR, фарме, HSE и на
+                  событиях
+                </span>
+                <span className="d1-mobile-copy">Кейсы, которые работают</span>
               </h2>
             </div>
           </div>
@@ -612,9 +632,7 @@ function Design1TestPage() {
           <div className="d1-section-head d1-section-head-row">
             <div>
               <p className="d1-eyebrow">Еще видео</p>
-              <h2>
-                Хотите еще кейсы?
-              </h2>
+              <h2>Еще видео</h2>
             </div>
             <a
               className="d1-button d1-button-primary"
@@ -639,7 +657,10 @@ function Design1TestPage() {
           <div className="d1-reasons-head">
             <p className="d1-eyebrow">Почему это работает</p>
             <h2>
-              Начинаем с главного — с результата
+              <span className="d1-desktop-copy">
+                Начинаем с главного — с результата
+              </span>
+              <span className="d1-mobile-copy">Цель → история → продакшн</span>
             </h2>
           </div>
           <div className="d1-reason-grid">
@@ -654,7 +675,10 @@ function Design1TestPage() {
         <div className="d1-container d1-process-layout">
           <div className="d1-process-copy">
             <p className="d1-eyebrow">Процесс</p>
-            <h2>Заранее фиксируем маршрут</h2>
+            <h2>
+              <span className="d1-desktop-copy">Заранее фиксируем маршрут</span>
+              <span className="d1-mobile-copy">Как работаем</span>
+            </h2>
             <p className="d1-section-lead">
               Особенно в фарме, HSE и корпоративных проектах. Там много
               согласующих, правил, экспертов и внезапных правок. Поэтому процесс
@@ -673,7 +697,12 @@ function Design1TestPage() {
         <div className="d1-container">
           <div className="d1-section-head">
             <p className="d1-eyebrow">Направления</p>
-            <h2>Anix уже шире, чем один формат роликов</h2>
+            <h2>
+              <span className="d1-desktop-copy">
+                Anix уже шире, чем один формат роликов
+              </span>
+              <span className="d1-mobile-copy">Выберите направление</span>
+            </h2>
           </div>
           <div className="d1-direction-grid">
             {directions.map((item) => (
@@ -707,11 +736,15 @@ function Design1TestPage() {
           <div>
             <p className="d1-eyebrow">Контакты</p>
             <h2>
-              Покажите нам продукт, правило или событие, которое сложно
-              объяснить
+              <span className="d1-desktop-copy">
+                Покажите нам продукт, правило или событие, которое сложно
+                объяснить
+              </span>
+              <span className="d1-mobile-copy">Есть сложная задача?</span>
             </h2>
             <p>
-              Мы предложим лучший формат для вашего запроса и скажем, с чего начать
+              Мы предложим лучший формат для вашего запроса и скажем, с чего
+              начать
             </p>
           </div>
           <div className="d1-final-actions">
@@ -745,6 +778,25 @@ function Design1TestPage() {
       </section>
 
       <SiteFooter />
+
+      <nav className="d1-mobile-dock" aria-label="Быстрая навигация">
+        <a href="#services">
+          <Workflow aria-hidden="true" />
+          <span>Услуги</span>
+        </a>
+        <a href="#cases">
+          <PlayCircle aria-hidden="true" />
+          <span>Кейсы</span>
+        </a>
+        <a href="#process">
+          <BadgeCheck aria-hidden="true" />
+          <span>Процесс</span>
+        </a>
+        <a href={heroLinks.telegram} target="_blank" rel="noreferrer">
+          <MessageCircle aria-hidden="true" />
+          <span>Написать</span>
+        </a>
+      </nav>
     </main>
   );
 }
