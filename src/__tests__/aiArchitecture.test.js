@@ -8,6 +8,8 @@ describe('AI consultant production architecture', () => {
     expect(widget).not.toMatch(/localhost:11434|\/api\/chat|\/api\/embed/);
     expect(edge).toContain("'/v1/chat'");
     expect(edge).toContain("'/v1/embed'");
+    expect(edge).toContain("'search_knowledge_chunks'");
+    expect(edge).toContain('retrieval_score');
     expect(edge).toContain('storeAssistantFallback');
     expect(gateway).toContain("'/api/chat'");
     expect(gateway).toContain("'/api/embed'");
