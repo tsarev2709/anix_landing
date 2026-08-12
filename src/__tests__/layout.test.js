@@ -94,6 +94,18 @@ describe('current ANIX landing', () => {
     expect(container.querySelector('.anix-site-footer')).toBeTruthy();
   });
 
+  test('publishes all additional video cards with useful destinations', () => {
+    TestUtils.act(() => {
+      root.render(<App />);
+    });
+
+    const cards = Array.from(container.querySelectorAll('.d1-compact-case'));
+    expect(cards).toHaveLength(8);
+    expect(cards.every((card) => card.getAttribute('href') !== '#cases')).toBe(
+      true
+    );
+  });
+
   test('publishes the company details in the shared footer', () => {
     TestUtils.act(() => {
       root.render(<App />);

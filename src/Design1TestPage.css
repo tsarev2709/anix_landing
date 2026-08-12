@@ -2071,10 +2071,6 @@
     border-radius: 17px;
   }
 
-  .design1-test .d1-compact-grid > :nth-child(n + 5) {
-    display: none;
-  }
-
   .design1-test .d1-compact-media {
     margin-bottom: 10px;
     border-radius: 12px;
@@ -2160,11 +2156,18 @@
 
   .design1-test .d1-trust-chips {
     flex-wrap: nowrap;
-    width: calc(100% + 18px);
+    width: 100%;
     margin: 0;
-    padding-right: 18px;
+    padding-right: 0;
     overflow-x: auto;
+    overscroll-behavior-inline: contain;
     scrollbar-width: none;
+  }
+
+  .design1-test .d1-trust-chips::after {
+    width: 18px;
+    min-width: 18px;
+    content: '';
   }
 
   .design1-test .d1-trust-chips span {
@@ -2199,7 +2202,70 @@
   }
 
   .design1-test .website-lead {
+    display: grid;
+    gap: 22px;
+    padding: 44px 16px;
+  }
+
+  .design1-test .website-lead__intro h2 {
+    font-size: clamp(32px, 9vw, 40px);
+    line-height: 0.98;
+  }
+
+  .design1-test .website-lead__intro > p:not(.website-lead__eyebrow) {
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .design1-test .website-lead__direct {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .design1-test .website-lead__direct > span {
     display: none;
+  }
+
+  .design1-test .website-lead__direct a {
+    min-height: 44px;
+    padding-inline: 10px;
+    font-size: 12px;
+  }
+
+  .design1-test .website-lead__form {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .design1-test .website-lead__grid {
+    gap: 13px;
+  }
+
+  .design1-test .website-lead__form label {
+    gap: 6px;
+    font-size: 12px;
+  }
+
+  .design1-test .website-lead__form input {
+    min-height: 48px;
+    padding-inline: 13px;
+  }
+
+  .design1-test .website-lead__form textarea {
+    min-height: 110px;
+    padding: 13px;
+  }
+
+  .design1-test .website-lead__message,
+  .design1-test .website-lead__submit-row {
+    margin-top: 14px;
+  }
+
+  .design1-test .website-lead__form button[type='submit'] {
+    min-height: 50px;
   }
 
   .design1-test .anix-site-footer {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ArrowRight,
   BadgeCheck,
@@ -17,6 +17,12 @@ import {
   Workflow,
 } from 'lucide-react';
 import SiteFooter from './SiteFooter';
+import {
+  getFallbackShowreelProvider,
+  resolveShowreelProvider,
+  SHOWREEL_EXTERNAL_URLS,
+  SHOWREEL_URLS,
+} from '../utils/showreelProvider';
 import logo from '../images/logoanix.png';
 import agrotechCaseImage from '../images/cases/agrotech.webp';
 import bondarchukCaseImage from '../images/cases/bondarchuk.webp';
@@ -35,8 +41,6 @@ import yurrobotCaseImage from '../images/cases/yurrobot.webp';
 import '../Design1TestPage.css';
 
 const telegramUrl = 'https://t.me/anix_helper';
-const showreelUrl =
-  'https://vkvideo.ru/video_ext.php?oid=-174933827&id=456239051&hash=8a2d51037c33a713&hd=3&autoplay=1';
 const videoFolderUrl =
   'https://drive.google.com/drive/folders/1XzaVX00V5xukMZwEF9Vb_WCbco2M7erA';
 
@@ -169,13 +173,13 @@ const compactCases = [
     name: 'АгроТех',
     text: 'История с героиней, где агротех выглядит как сфера будущего, а не сухая отрасль из отчета.',
     image: agrotechCaseImage,
-    href: '#cases',
+    href: '/cases/b2b/',
   },
   {
     name: 'Стартех',
     text: 'Переупаковка продукта под региональные B2B-компании и ролик, который говорит с рынком проще.',
     image: startechCaseImage,
-    href: '#cases',
+    href: '/cases/b2b/',
   },
   {
     name: 'Бондарчук',
@@ -193,7 +197,7 @@ const compactCases = [
     name: 'Factory Director',
     text: 'Конференционный ролик на базе маскота, который стал рабочей визитной карточкой бренда.',
     image: factoryDirectorCaseImage,
-    href: '#cases',
+    href: '/cases/b2b/',
   },
 ];
 
@@ -420,25 +424,66 @@ function DirectionCard({ item }) {
 
 function VideoShowreel({ variant = 'hero' }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [provider, setProvider] = useState(null);
+  const [isResolving, setIsResolving] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    resolveShowreelProvider().then((resolvedProvider) => {
+      if (active) setProvider(resolvedProvider);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const handleOpen = async () => {
+    setIsResolving(true);
+    try {
+      const resolvedProvider = await resolveShowreelProvider({
+        forceRefresh: true,
+      });
+      setProvider(resolvedProvider);
+      setIsOpen(true);
+    } finally {
+      setIsResolving(false);
+    }
+  };
+
+  const activeProvider = provider || getFallbackShowreelProvider();
 
   return (
     <div className={`d1-showreel d1-showreel-${variant}`}>
       <div className="d1-showreel-frame">
         {isOpen ? (
-          <iframe
-            src={showreelUrl}
-            width="1280"
-            height="720"
-            title="Anix showreel"
-            allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
-            frameBorder="0"
-            allowFullScreen
-          />
+          <>
+            <iframe
+              src={SHOWREEL_URLS[activeProvider]}
+              width="1280"
+              height="720"
+              title={`Anix showreel — ${activeProvider === 'vk' ? 'VK Video' : 'YouTube'}`}
+              allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+              frameBorder="0"
+              allowFullScreen
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+            {activeProvider === 'youtube' ? (
+              <a
+                className="d1-showreel-external"
+                href={SHOWREEL_EXTERNAL_URLS.youtube}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Открыть на YouTube
+              </a>
+            ) : null}
+          </>
         ) : (
           <button
             className="d1-showreel-poster"
             type="button"
-            onClick={() => setIsOpen(true)}
+            onClick={handleOpen}
+            disabled={isResolving}
           >
             <picture>
               <source
@@ -458,7 +503,9 @@ function VideoShowreel({ variant = 'hero' }) {
             <span className="d1-play">
               <PlayCircle aria-hidden="true" />
             </span>
-            <span className="d1-showreel-label">Смотреть showreel</span>
+            <span className="d1-showreel-label">
+              {isResolving ? 'Подбираем видеоплеер…' : 'Смотреть showreel'}
+            </span>
             <span className="d1-showreel-tag">
               AI-видео / фарма / HSE / маскоты / события
             </span>
