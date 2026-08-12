@@ -27,6 +27,18 @@ for (const item of catalog.cases) {
   assert(!forbidden.test(JSON.stringify(item)), `${item.slug} contains private/commercial data`);
   assert(item.task && item.solution && item.result, `${item.slug} lacks evidence fields`);
   assert(item.aliases.includes(item.displayName), `${item.slug} lacks canonical alias`);
+  const normalizedAliases = item.aliases.map((alias) =>
+    alias
+      .toLowerCase()
+      .replaceAll('ё', 'е')
+      .replace(/[^a-zа-я0-9]+/gi, ' ')
+      .trim()
+  );
+  assert.equal(
+    new Set(normalizedAliases).size,
+    normalizedAliases.length,
+    `${item.slug} contains aliases that collide after normalization`
+  );
 }
 
 const medicine = catalog.cases.filter((item) => item.vertical === 'medicine');

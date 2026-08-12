@@ -77,7 +77,7 @@
       "slug": "mosfarma",
       "displayName": "Мосфарма",
       "client": { "slug": "mosfarma", "name": "Мосфарма", "aliases": ["MosPharma", "МосФарма"] },
-      "aliases": ["Мосфарма", "МосФарма", "MosPharma", "Mosfarma"],
+      "aliases": ["Мосфарма", "MosPharma"],
       "vertical": "medicine",
       "category": "Фарма / ТВ-реклама",
       "title": "Мосфарма: анимационный ролик с бренд-персонажами",
