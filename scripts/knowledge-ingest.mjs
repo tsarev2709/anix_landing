@@ -3,10 +3,11 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 
 function argsFrom(argv) {
-  const options = { files: [], urls: [] };
+  const options = { files: [], urls: [], sitemaps: [] };
   for (let index = 0; index < argv.length; index += 1) {
     const value = argv[index];
     if (value === '--url') options.urls.push(argv[++index]);
+    else if (value === '--sitemap') options.sitemaps.push(argv[++index]);
     else if (value === '--source-slug') options.sourceSlug = argv[++index];
     else if (value === '--source-title') options.sourceTitle = argv[++index];
     else if (value === '--vertical') options.vertical = argv[++index];
@@ -36,6 +37,7 @@ function usage() {
 Usage:
   npm run knowledge:ingest -- <file.txt> <file.md> [options]
   npm run knowledge:ingest -- --url https://studio.anix-ai.pro/medicine/ [options]
+  npm run knowledge:ingest -- --sitemap https://studio.anix-ai.pro/sitemap.xml [options]
 
 Options:
   --source-slug anix-product
@@ -63,6 +65,64 @@ function stripHtml(html) {
 function titleFromContent(content, fallback) {
   const heading = content.match(/^#{1,3}\s+(.+)$/m)?.[1];
   return (heading || fallback).trim().slice(0, 300);
+}
+
+function decodeHtml(value) {
+  return value
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function titleFromHtml(html, fallback) {
+  const value =
+    html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ||
+    html.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1];
+  return decodeHtml(String(value || fallback).replace(/<[^>]+>/g, ' ')).slice(
+    0,
+    300
+  );
+}
+
+function verticalFromUrl(url, fallback = 'general') {
+  const pathname = new URL(url).pathname.toLowerCase();
+  if (
+    pathname.startsWith('/medicine') ||
+    /\/cases\/(medicine|hemotech-ai|mosfarma|aviandr)/.test(pathname)
+  )
+    return 'medicine';
+  if (
+    pathname.startsWith('/hse') ||
+    /\/cases\/(hse|multon-partners)/.test(pathname)
+  )
+    return 'hse';
+  return fallback;
+}
+
+async function urlsFromSitemap(sitemapUrl) {
+  const response = await fetch(sitemapUrl, { redirect: 'follow' });
+  if (!response.ok)
+    throw new Error(`Cannot fetch ${sitemapUrl}: HTTP ${response.status}`);
+  const xml = await response.text();
+  const origin = new URL(sitemapUrl).origin;
+  return [...xml.matchAll(/<loc>\s*([^<]+?)\s*<\/loc>/gi)]
+    .map((match) => decodeHtml(match[1]))
+    .filter((value) => {
+      try {
+        const url = new URL(value);
+        return (
+          url.origin === origin &&
+          !/^\/(privacy|personal-data|hse\/mvp)(\/|$)/.test(url.pathname)
+        );
+      } catch {
+        return false;
+      }
+    });
 }
 
 function chunksFrom(content, maxChars = 1500, overlapChars = 180) {
@@ -109,9 +169,14 @@ async function readInputs(options) {
       sourceUrl: null,
       content,
       sourceType: 'file',
+      vertical: options.vertical || 'general',
     });
   }
-  for (const url of options.urls) {
+  const sitemapUrls = (
+    await Promise.all(options.sitemaps.map(urlsFromSitemap))
+  ).flat();
+  const urls = [...new Set([...options.urls, ...sitemapUrls])];
+  for (const url of urls) {
     const response = await fetch(url, { redirect: 'follow' });
     if (!response.ok)
       throw new Error(`Cannot fetch ${url}: HTTP ${response.status}`);
@@ -119,10 +184,11 @@ async function readInputs(options) {
     const content = stripHtml(html);
     documents.push({
       externalId: `url:${url}`,
-      title: titleFromContent(content, new URL(url).pathname || url),
+      title: titleFromHtml(html, new URL(url).pathname || url),
       sourceUrl: url,
       content,
       sourceType: 'url',
+      vertical: verticalFromUrl(url, options.vertical || 'general'),
     });
   }
   return documents;
@@ -229,7 +295,7 @@ async function upsertDocument(source, document, options) {
       title: document.title,
       source_url: document.sourceUrl,
       content_hash: hash(document.content),
-      metadata: { vertical: options.vertical || 'general' },
+      metadata: { vertical: document.vertical || options.vertical || 'general' },
       enabled: true,
       updated_at: new Date().toISOString(),
     },
@@ -258,7 +324,7 @@ async function ingestDocument(source, document, options) {
     title: document.title,
     content,
     source_url: document.sourceUrl,
-    metadata: { vertical: options.vertical || 'general' },
+    metadata: { vertical: document.vertical || options.vertical || 'general' },
     embedding_model: process.env.EMBEDDING_MODEL || 'embeddinggemma',
     embedding: embeddings[index],
     enabled: true,
@@ -279,7 +345,7 @@ if (options.help) {
   process.exit(0);
 }
 await loadEnv(options.envFile);
-if (!options.files.length && !options.urls.length) {
+if (!options.files.length && !options.urls.length && !options.sitemaps.length) {
   usage();
   process.exit(1);
 }

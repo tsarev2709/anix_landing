@@ -154,6 +154,8 @@ npm run knowledge:ingest -- "C:\Anix\knowledge\rasshirennaya_baza_znaniy_video_o
 npm run knowledge:ingest -- "C:\Anix\knowledge\medtech_sales_kit_expanded_knowledge_base.txt" --source-slug anix-medtech --source-title "Anix MedTech" --vertical medicine --env "C:\Anix\knowledge.env"
 
 npm run knowledge:ingest -- --url https://studio.anix-ai.pro/medicine/ --url https://studio.anix-ai.pro/hse/ --source-slug anix-site --source-title "Сайт Anix" --vertical general --env "C:\Anix\knowledge.env"
+
+npm run knowledge:ingest -- --sitemap https://studio.anix-ai.pro/sitemap.xml --source-slug anix-site --source-title "Публичный сайт Anix" --vertical general --env "C:\Anix\knowledge.env"
 ```
 
 Внутренние базы знаний нельзя копировать в публичный репозиторий. Ingestion отправляет chunks и embeddings напрямую в закрытые Supabase-таблицы.
