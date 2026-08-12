@@ -34,6 +34,9 @@ jobs:
       - name: Check local AI scripts
         run: npm run check:ai-scripts
 
+      - name: Verify grounded AI case catalog
+        run: npm run test:rag-quality
+
       - name: Test local AI gateway contract
         run: npm run test:gateway
 
