@@ -10,6 +10,8 @@ describe('AI consultant production architecture', () => {
     expect(edge).toContain("'/v1/embed'");
     expect(edge).toContain("'search_knowledge_chunks'");
     expect(edge).toContain('retrieval_score');
+    expect(edge).toContain('retrievalQuery(history, message)');
+    expect(edge).toContain('sanitizeReplyLinks(envelope.reply');
     expect(edge).toContain('storeAssistantFallback');
     expect(gateway).toContain("'/api/chat'");
     expect(gateway).toContain("'/api/embed'");
