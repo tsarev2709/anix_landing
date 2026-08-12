@@ -56,9 +56,7 @@ const gateway = spawn(process.execPath, ['local-ai-gateway/server.mjs'], {
 async function waitForGateway() {
   for (let attempt = 0; attempt < 30; attempt += 1) {
     try {
-      const result = await fetch(`http://127.0.0.1:${GATEWAY_PORT}/health`, {
-        headers: { Authorization: `Bearer ${secret}` },
-      });
+      const result = await fetch(`http://127.0.0.1:${GATEWAY_PORT}/health`);
       if (result.ok) return;
     } catch {
       // Gateway is still starting.
@@ -71,7 +69,14 @@ async function waitForGateway() {
 try {
   await waitForGateway();
 
-  const unauthorized = await fetch(`http://127.0.0.1:${GATEWAY_PORT}/health`);
+  const health = await fetch(`http://127.0.0.1:${GATEWAY_PORT}/health`);
+  assert.equal(health.status, 200);
+
+  const unauthorized = await fetch(`http://127.0.0.1:${GATEWAY_PORT}/v1/embed`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ request_id: 'unauthorized-test', input: ['Anix'] }),
+  });
   assert.equal(unauthorized.status, 401);
 
   const embed = await fetch(`http://127.0.0.1:${GATEWAY_PORT}/v1/embed`, {

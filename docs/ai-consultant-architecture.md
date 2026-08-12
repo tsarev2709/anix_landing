@@ -7,7 +7,7 @@ React AiChatWidget
   → Supabase Edge Function ai-chat
     → Postgres: sessions, messages, rate limit, prompt
     → pgvector: knowledge chunks
-    → Cloudflare Access + Tunnel: https://llm.anix-ai.pro
+    → Cloudflare Tunnel: https://llm.anix-ai.pro
       → local-ai-gateway/server.mjs
         → Ollama: qwen3:8b + embeddinggemma
     → shared amoCRM service, только для квалифицированного контакта
@@ -50,7 +50,7 @@ React AiChatWidget
 
 ## Local AI Gateway
 
-Все маршруты требуют `Authorization: Bearer <LOCAL_AI_GATEWAY_SECRET>`. Cloudflare Access дополнительно проверяет сервисный токен по заголовкам `CF-Access-Client-Id` и `CF-Access-Client-Secret`.
+`POST /v1/chat` и `POST /v1/embed` требуют `Authorization: Bearer <LOCAL_AI_GATEWAY_SECRET>`. `GET /health` доступен без секрета и не принимает пользовательские данные.
 
 ### `GET /health`
 
@@ -89,9 +89,9 @@ Prompt хранится в `ai_chat_prompts`, а не в React и не внут�
 ## Security
 
 - React знает только публичный URL Edge Function и публичный Turnstile Site Key.
-- Service role, amoCRM token, Cloudflare service token и gateway secret хранятся только в Supabase Secrets или локальном environment.
+- Service role, amoCRM token и gateway secret хранятся только в Supabase Secrets или локальном environment.
 - Ollama слушает только localhost. Порт 11434 не публикуется.
-- Gateway слушает `127.0.0.1:8787`; наружу выходит только Cloudflare Tunnel.
+- Gateway слушает `127.0.0.1:8788`; наружу выходит только Cloudflare Tunnel.
 - Новая chat-сессия требует Turnstile и согласие на обработку данных.
 - Все запросы ограничены серверным rate limit по хешу IP + User-Agent. Сырые IP в chat-таблицы не пишутся.
 - RLS закрывает прямой доступ `anon` и `authenticated` ко всем chat и knowledge таблицам.

@@ -78,7 +78,7 @@ tunnel: <TUNNEL-UUID>
 credentials-file: C:\Users\<USER>\.cloudflared\<TUNNEL-UUID>.json
 ingress:
   - hostname: llm.anix-ai.pro
-    service: http://127.0.0.1:8787
+    service: http://127.0.0.1:8788
   - service: http_status:404
 ```
 
@@ -90,27 +90,15 @@ cloudflared tunnel run anix-local-ai
 
 Входящие порты на роутере и Windows Firewall открывать не нужно. Tunnel создаёт исходящее соединение.
 
-## 5. Закрыть hostname через Cloudflare Access
+## 5. Проверить внешний gateway
 
-В Zero Trust создать self-hosted application для `llm.anix-ai.pro`.
-
-Создать Service Token, затем policy типа Service Auth, разрешающую только этот token. Сохранить:
-
-- Client ID;
-- Client Secret.
-
-Проверка внешнего health endpoint:
+`GET /health` публичен для мониторинга. Он не принимает пользовательские данные:
 
 ```powershell
-$headers = @{
-  Authorization = "Bearer <LOCAL_AI_GATEWAY_SECRET>"
-  "CF-Access-Client-Id" = "<CLIENT_ID>"
-  "CF-Access-Client-Secret" = "<CLIENT_SECRET>"
-}
-Invoke-RestMethod https://llm.anix-ai.pro/health -Headers $headers
+Invoke-RestMethod https://llm.anix-ai.pro/health
 ```
 
-Без всех трёх значений endpoint не должен отвечать данными Ollama.
+`POST /v1/chat` и `POST /v1/embed` должны без `Authorization: Bearer <LOCAL_AI_GATEWAY_SECRET>` возвращать `401`.
 
 ## 6. Добавить Supabase Secrets
 
@@ -119,8 +107,6 @@ Invoke-RestMethod https://llm.anix-ai.pro/health -Headers $headers
 ```text
 LOCAL_AI_GATEWAY_URL=https://llm.anix-ai.pro
 LOCAL_AI_GATEWAY_SECRET=<тот же локальный gateway secret>
-CF_ACCESS_CLIENT_ID=<Cloudflare Service Token Client ID>
-CF_ACCESS_CLIENT_SECRET=<Cloudflare Service Token Client Secret>
 CHAT_MODEL=qwen3:8b
 EMBEDDING_MODEL=embeddinggemma
 LOCAL_AI_CHAT_TIMEOUT_MS=45000
@@ -155,7 +141,7 @@ powershell -ExecutionPolicy Bypass -File scripts\windows\register-local-ai-autos
 ```text
 SUPABASE_URL=https://ppoygmaqlaiqcisjetea.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=<service role>
-LOCAL_AI_GATEWAY_LOCAL_URL=http://127.0.0.1:8787
+LOCAL_AI_GATEWAY_LOCAL_URL=http://127.0.0.1:8788
 LOCAL_AI_GATEWAY_SECRET=<gateway secret>
 EMBEDDING_MODEL=embeddinggemma
 ```
@@ -176,7 +162,7 @@ npm run knowledge:ingest -- --url https://studio.anix-ai.pro/medicine/ --url htt
 
 Проверить по порядку:
 
-1. `/health` через Cloudflare Access.
+1. Публичный `/health` возвращает `200`.
 2. Обычный чат на главной.
 3. Контекстный вопрос на `/medicine/`.
 4. Контекстный вопрос на `/hse/`.

@@ -2,7 +2,7 @@ import http from 'node:http';
 import { timingSafeEqual } from 'node:crypto';
 
 const HOST = process.env.GATEWAY_HOST || '127.0.0.1';
-const PORT = Number(process.env.GATEWAY_PORT || 8787);
+const PORT = Number(process.env.GATEWAY_PORT || 8788);
 const OLLAMA_BASE_URL = (
   process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434'
 ).replace(/\/+$/, '');
@@ -244,13 +244,13 @@ if (!SHARED_SECRET) {
 }
 
 const server = http.createServer(async (req, res) => {
-  if (!authorized(req)) return json(res, 401, { error: 'unauthorized' });
   try {
     const url = new URL(
       req.url || '/',
       `http://${req.headers.host || 'localhost'}`
     );
     if (req.method === 'GET' && url.pathname === '/health') return health(res);
+    if (!authorized(req)) return json(res, 401, { error: 'unauthorized' });
     if (req.method === 'POST' && url.pathname === '/v1/chat')
       return chat(req, res);
     if (req.method === 'POST' && url.pathname === '/v1/embed')

@@ -1,5 +1,5 @@
 const base = (
-  process.env.LOCAL_AI_GATEWAY_LOCAL_URL || 'http://127.0.0.1:8787'
+  process.env.LOCAL_AI_GATEWAY_LOCAL_URL || 'http://127.0.0.1:8788'
 ).replace(/\/+$/, '');
 const secret = process.env.LOCAL_AI_GATEWAY_SECRET || '';
 
