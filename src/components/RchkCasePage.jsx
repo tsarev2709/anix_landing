@@ -12,15 +12,17 @@ import BrandLogo from './BrandLogo';
 import Breadcrumbs from './Breadcrumbs';
 import SiteFooter from './SiteFooter';
 import aiProductionImage from '../images/cases/rchk/ai-production.webp';
-import backstageInterviewImage from '../images/cases/rchk/bts-interview.webp';
 import backstageMonitorImage from '../images/cases/rchk/bts-monitor.webp';
 import backstageRooftopImage from '../images/cases/rchk/bts-rooftop.webp';
 import campusAerialImage from '../images/cases/rchk/campus-aerial.webp';
+import challengeTechnogradImage from '../images/cases/rchk/challenge-technograd.webp';
 import davidFutureImage from '../images/cases/rchk/david-future.webp';
 import heroPortalImage from '../images/cases/rchk/hero-portal.webp';
 import hologramBuildingImage from '../images/cases/rchk/hologram-building.webp';
 import moscowFutureImage from '../images/cases/rchk/moscow-future.webp';
 import partnerGauntletImage from '../images/cases/rchk/partner-gauntlet.webp';
+import productionDramaturgyImage from '../images/cases/rchk/production-dramaturgy.webp';
+import productionHybridImage from '../images/cases/rchk/production-hybrid.webp';
 import robotTeamImage from '../images/cases/rchk/robot-team.webp';
 import talkingHeadImage from '../images/cases/rchk/talking-head.webp';
 import './RchkCasePage.css';
@@ -57,8 +59,8 @@ const production = [
     number: '01',
     title: 'Собрали драматургию',
     text: 'Превратили деятельность РЧК в понятный путь героя и репортажную историю.',
-    image: backstageInterviewImage,
-    alt: 'Съёмочная команда Anix записывает интервью с сотрудницей РЧК',
+    image: productionDramaturgyImage,
+    alt: 'Футуристическая героиня ролика РЧК как образ продуманной драматургии',
   },
   {
     number: '02',
@@ -85,8 +87,8 @@ const production = [
     number: '05',
     title: 'Соединили съёмку и ИИ',
     text: 'Собирали кадры слоями, исправляли артефакты и вручную дорабатывали детали.',
-    image: moscowFutureImage,
-    alt: 'Герой ролика рядом с футуристической моделью Москвы-Сити',
+    image: productionHybridImage,
+    alt: 'Реальный герой ролика РЧК, преобразованный с помощью ИИ',
   },
   {
     number: '06',
@@ -108,7 +110,7 @@ const timing = [
   ['1 месяц', 'всё производство'],
   ['2 недели', 'чистое время на ролик с ИИ'],
   ['3 версии', 'главного ролика'],
-  ['2 съёмочных дня', 'включая пересъёмки'],
+  ['4 съёмочных дня', 'в рамках производства'],
 ];
 
 export default function RchkCasePage() {
@@ -172,6 +174,10 @@ export default function RchkCasePage() {
           <img
             src={heroPortalImage}
             alt="Героиня ролика РЧК открывает световой портал в технологический центр"
+            width="1600"
+            height="900"
+            fetchPriority="high"
+            decoding="async"
           />
           <span className="rchk-visual-chip rchk-chip-one">
             реальная съёмка
@@ -198,7 +204,10 @@ export default function RchkCasePage() {
         <img
           src={campusAerialImage}
           alt="Кампус с неоновыми эффектами в кадре из ролика РЧК"
+          width="1600"
+          height="900"
           loading="lazy"
+          decoding="async"
         />
         <figcaption>
           Реальные локации стали частью единой фантастической Москвы
@@ -211,9 +220,12 @@ export default function RchkCasePage() {
         </div>
         <figure className="rchk-challenge-visual">
           <img
-            src={hologramBuildingImage}
-            alt="Героиня ролика показывает голограмму будущего центра"
+            src={challengeTechnogradImage}
+            alt="Героиня ролика РЧК у цифрового здания Технограда"
+            width="700"
+            height="940"
             loading="lazy"
+            decoding="async"
           />
         </figure>
         <div className="rchk-challenge-copy">
@@ -260,7 +272,10 @@ export default function RchkCasePage() {
         <img
           src={moscowFutureImage}
           alt="Герой ролика РЧК в футуристической Москве"
+          width="1500"
+          height="844"
           loading="lazy"
+          decoding="async"
         />
         <figcaption>Реальная съёмка стала входом в новую Москву</figcaption>
       </figure>
@@ -306,7 +321,10 @@ export default function RchkCasePage() {
           <img
             src={hologramBuildingImage}
             alt="Героиня ролика демонстрирует голограмму здания Технограда"
+            width="1500"
+            height="844"
             loading="lazy"
+            decoding="async"
           />
           <figcaption>Показывать возможности</figcaption>
         </figure>
@@ -314,7 +332,10 @@ export default function RchkCasePage() {
           <img
             src={partnerGauntletImage}
             alt="Золотая перчатка партнёрской экосистемы в кадре из ролика"
+            width="1500"
+            height="844"
             loading="lazy"
+            decoding="async"
           />
           <figcaption>Объединять партнёров</figcaption>
         </figure>
@@ -322,7 +343,10 @@ export default function RchkCasePage() {
           <img
             src={davidFutureImage}
             alt="Футуристическая статуя держит модель инновационного центра"
+            width="1600"
+            height="900"
             loading="lazy"
+            decoding="async"
           />
           <figcaption>Видеть будущее проектов</figcaption>
         </figure>
@@ -341,7 +365,7 @@ export default function RchkCasePage() {
           >
             {production.map(({ number, title, text, image, alt }) => (
               <article key={number}>
-                <img src={image} alt={alt} loading="lazy" />
+                <img src={image} alt={alt} loading="lazy" decoding="async" />
                 <div className="rchk-production-caption">
                   <span>{number}</span>
                   <h3>{title}</h3>
