@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -55,6 +55,7 @@ jobs:
         env:
           REACT_APP_SUBMIT_LEAD_URL: ${{ secrets.REACT_APP_SUBMIT_LEAD_URL }}
           REACT_APP_TRACK_EVENT_URL: ${{ secrets.REACT_APP_TRACK_EVENT_URL }}
+          REACT_APP_AI_CHAT_URL: ${{ secrets.REACT_APP_AI_CHAT_URL }}
           REACT_APP_TURNSTILE_SITE_KEY: ${{ secrets.REACT_APP_TURNSTILE_SITE_KEY }}
           REACT_APP_SUPABASE_ANON_KEY: ${{ secrets.REACT_APP_SUPABASE_ANON_KEY }}
           CI: false

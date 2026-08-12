@@ -2,7 +2,7 @@ name: Quality checks
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -27,6 +27,15 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+      - name: Typecheck AI Edge Functions
+        run: npm run typecheck:edge
+
+      - name: Check local AI scripts
+        run: npm run check:ai-scripts
+
+      - name: Test local AI gateway contract
+        run: npm run test:gateway
 
       - name: Tests
         env:

@@ -209,6 +209,9 @@ describe('submit-website-lead', () => {
   const validBody = {
     idempotency_key: '12345678-1234-4234-9234-123456789abc',
     turnstile_token: 'test-token',
+    privacy_consent: true,
+    privacy_consent_at: '2026-08-07T00:00:00.000Z',
+    privacy_policy_version: '2026-08-07',
     name: 'Тестовый лид',
     email: 'test@example.com',
     contact_value: '',
@@ -217,6 +220,22 @@ describe('submit-website-lead', () => {
     page_path: '/',
     pages_viewed: [],
   };
+
+  test('rejects a lead without privacy consent', async () => {
+    const submitWebsiteLead =
+      require('../../supabase/functions/submit-website-lead/index.js').default;
+    const req = new Request('https://example.com', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        origin: 'https://studio.anix-ai.pro',
+      },
+      body: JSON.stringify({ ...validBody, privacy_consent: false }),
+    });
+    const res = await submitWebsiteLead(req);
+    expect(res.status).toBe(400);
+    expect((await res.json()).error).toBe('privacy_consent_required');
+  });
 
   test('rejects an untrusted origin before processing the request', async () => {
     const submitWebsiteLead =

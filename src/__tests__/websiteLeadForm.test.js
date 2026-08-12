@@ -79,6 +79,9 @@ describe('WebsiteLeadForm', () => {
     expect(container.textContent).toContain(
       'Расскажите хотя бы немного о задаче'
     );
+    expect(container.textContent).toContain(
+      'Подтвердите согласие на обработку данных'
+    );
     expect(global.fetch).not.toHaveBeenCalled();
   });
 
@@ -92,6 +95,15 @@ describe('WebsiteLeadForm', () => {
       change('name', 'Андрей');
       change('email', 'andrey@example.com');
       change('message', 'Нужен объясняющий ролик о сложном продукте.');
+      const checkbox = container.querySelector('[name="privacyConsent"]');
+      TestUtils.Simulate.change(checkbox, {
+        target: {
+          name: 'privacyConsent',
+          type: 'checkbox',
+          checked: true,
+          value: 'on',
+        },
+      });
     });
 
     await TestUtils.act(async () => {

@@ -15,10 +15,15 @@ const allowedEvents = [
   'section_transition',
   'cta_view',
   'cta_click',
+  'ai_chat_open',
+  'ai_chat_message',
+  'ai_chat_fallback',
+  'ai_chat_lead',
 ];
 
 async function handler(req: Request): Promise<Response> {
-  if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
+  if (req.method === 'OPTIONS')
+    return new Response(null, { status: 204, headers: CORS });
   if (req.method !== 'POST') return json({ error: 'method_not_allowed' }, 405);
 
   try {
@@ -30,9 +35,11 @@ async function handler(req: Request): Promise<Response> {
     const SB_URL = Deno.env.get('SB_URL') || process.env.SB_URL;
     const SB_SERVICE_ROLE_KEY =
       Deno.env.get('SB_SERVICE_ROLE_KEY') || process.env.SB_SERVICE_ROLE_KEY;
-    if (!SB_URL || !SB_SERVICE_ROLE_KEY) return json({ error: 'misconfigured' }, 500);
+    if (!SB_URL || !SB_SERVICE_ROLE_KEY)
+      return json({ error: 'misconfigured' }, 500);
 
-    const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
+    const { createClient } =
+      await import('https://esm.sh/@supabase/supabase-js@2');
     const sb = createClient(SB_URL, SB_SERVICE_ROLE_KEY);
     const ip =
       req.headers.get('x-forwarded-for') ||
