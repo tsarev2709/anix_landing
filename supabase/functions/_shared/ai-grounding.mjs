@@ -3,16 +3,16 @@ const TELEGRAM_URL = 'https://t.me/anix_helper';
 const CASE_WORDS =
   /(?:кейс|проект|клиент|портфолио|пример|работал|сделал|создал|компани)/i;
 const DETAIL_WORDS =
-  /(?:подробнее|детал|задач|решени|результат|что сделали|как сделали)/i;
+  /(?:подробнее|детал|задач|решени|результат|показател|вырос|что сделали|как сделали|что получилось|подход использовал|работе с)/i;
 const LIST_WORDS =
   /(?:кейсы|проекты|клиенты|компании|назови|перечисли|несколько|примеры|какие|три|ссылки)/i;
 const SOURCE_WORDS =
-  /(?:ссылк|где посмотреть|покажи|открой|материал|источник|видео)/i;
+  /(?:ссылк|где.*посмотреть|покажи|открой|источник)|(?:видео.*(?:есть|найд|смотр))|(?:(?:дай|отправь|пришли|скинь)\s+.*(?:видео|материал))/i;
 const FILE_WORDS =
-  /(?:файл|pdf|презентац|документ|бриф|скачать|отправь|пришли)/i;
-const PRICE_WORDS = /(?:цен[аы]|стоимост|сколько стоит|бюджет|прайс)/i;
+  /(?:файл|pdf|документ|бриф|скачать|исходник|договор)|(?:(?:отправь|пришли|скинь|дай)\s+.*(?:презентац|коммерческ.*предложен))/i;
+const PRICE_WORDS = /(?:цен[а-я]*|стоимост|сколько.*стои|бюджет|прайс)/i;
 const CONTACT_WORDS =
-  /(?:контакт|телефон|почт|e-?mail|связаться|свяж|написать вам|менеджер)/i;
+  /(?:контакт|телефон|почт|e-?mail|связаться|свяж|написать вам|напишите мне|кому написать|менеджер|номер.*(?:директор|клиент)|(?:директор|клиент).*номер)/i;
 
 export function normalizeGroundingText(value) {
   return String(value || '')
@@ -23,25 +23,46 @@ export function normalizeGroundingText(value) {
     .trim();
 }
 
+const SEARCH_STEM_LENGTH = 5;
+
+export function groundingSearchSignature(value) {
+  return [...new Set(
+    normalizeGroundingText(value)
+      .split(' ')
+      .filter(Boolean)
+      .map((token) =>
+        token.length > SEARCH_STEM_LENGTH
+          ? token.slice(0, SEARCH_STEM_LENGTH)
+          : token
+      )
+  )];
+}
+
+export function groundingAliasMatches(query, alias) {
+  const queryTokens = new Set(groundingSearchSignature(query));
+  const aliasTokens = groundingSearchSignature(alias);
+  return aliasTokens.length > 0 && aliasTokens.every((token) => queryTokens.has(token));
+}
+
 export function inferGroundingVertical(messages = [], pagePath = '') {
   const combined = normalizeGroundingText(
     `${messages.slice(-4).join(' ')} ${pagePath}`
   );
   if (
-    /(?:фарм|medtech|medicine|медицин|препарат|врач|диагност|гемотех|hemotech|мосфарма|авинейро|авиандр)/.test(
+    /(?:фарм|medtech|medicine|медицин|препарат|врач|диагност|гемотех|хемотех|hemotech|мосфарм|авинейр|авиандр)/.test(
       combined
     )
   ) {
     return 'medicine';
   }
-  if (/(?:hse|охран.*труд|безопасност|инструктаж|onboarding|мултон|multon)/.test(combined)) {
+  if (/(?:hse|охран.*труд|безопасност|инструктаж|жизненно важн.*правил|onboarding|онбординг|мултон|multon)/.test(combined)) {
     return 'hse';
   }
   if (/(?:событи|выступлен|шоу|конференц|рчк)/.test(combined)) return 'events';
-  if (/(?:кино|cinema|историчес|бородино|маленький принц)/.test(combined)) {
+  if (/(?:кино|cinema|историчес|бородин|маленьк.*принц)/.test(combined)) {
     return 'cinema';
   }
-  if (/(?:b2b|промышлен|технолог|продукт|продаж|тпэс|tpes|clappy|клаппи)/.test(combined)) return 'b2b';
+  if (/(?:b2b|промышлен|технолог|продукт|продаж|тпэс|tpes|clappy|клаппи|мфти|физтех|эндаумент)/.test(combined)) return 'b2b';
   return null;
 }
 
@@ -76,7 +97,8 @@ export function classifyGroundingIntent({ message, recentUserMessages = [], page
   if (
     CASE_WORDS.test(cleanMessage) ||
     DETAIL_WORDS.test(cleanMessage) ||
-    /расскажи про/.test(cleanMessage) ||
+    /расскажи (?:про|о работе с)/.test(cleanMessage) ||
+    (vertical && /расскажи (?:о|об)\s/.test(cleanMessage)) ||
     recent.some((item) => CASE_WORDS.test(item))
   ) {
     return {

@@ -3,6 +3,8 @@ import fs from 'node:fs/promises';
 import {
   buildGroundedReply,
   classifyGroundingIntent,
+  groundingAliasMatches,
+  groundingSearchSignature,
   inferGroundingVertical,
   sanitizePublicReply,
   sourcesFromCases,
@@ -14,6 +16,15 @@ const catalog = JSON.parse(
 const evaluation = JSON.parse(
   await fs.readFile(new URL('../data/ai-rag-eval-cases.json', import.meta.url), 'utf8')
 );
+const morphologyMigration = await fs.readFile(
+  new URL('../supabase/migrations/011_ai_case_morphology_and_prompt_v6.sql', import.meta.url),
+  'utf8'
+);
+
+assert.match(morphologyMigration, /create or replace function public\.ai_search_signature/);
+assert.match(morphologyMigration, /length\(token\) > 5 then left\(token, 5\)/);
+assert.match(morphologyMigration, /query\.signature @> public\.ai_search_signature/);
+assert.match(morphologyMigration, /anix-consultant-v6/);
 
 const cases = catalog.cases.map((item) => ({
   display_name: item.displayName,
@@ -37,6 +48,33 @@ assert.equal(
   inferGroundingVertical(['Расскажи про кейсы с фармкомпаниями'], '/'),
   'medicine'
 );
+
+for (const form of ['Мосфарма', 'Мосфарму', 'Мосфарме', 'Мосфармой']) {
+  assert.equal(
+    groundingAliasMatches(`Расскажи подробнее про ${form}`, 'Мосфарма'),
+    true,
+    `Russian case form was not matched: ${form}`
+  );
+}
+const resolveCatalogCase = (query) =>
+  catalog.cases.find((item) =>
+    [item.displayName, ...(item.aliases || [])].some((alias) =>
+      groundingAliasMatches(query, alias)
+    )
+  );
+assert.equal(resolveCatalogCase('Подробнее про Мосфарму')?.slug, 'mosfarma');
+assert.equal(resolveCatalogCase('Что сделали для Гемотеха?')?.slug, 'hemotech-ai');
+assert.equal(resolveCatalogCase('Расскажи про Aventis'), undefined);
+for (const [query, alias] of [
+  ['Что сделали для Гемотеха?', 'Гемотех'],
+  ['Подробнее об Авинейре', 'Авинейро'],
+  ['Расскажите о Мултоне', 'Мултон'],
+  ['Какой результат у Бородина?', 'Бородино'],
+]) {
+  assert.equal(groundingAliasMatches(query, alias), true, `Alias was not matched: ${query}`);
+}
+assert.equal(groundingAliasMatches('Расскажи про Aventis', 'Мосфарма'), false);
+assert.deepEqual(groundingSearchSignature('Мосфарма и Мосфарму'), ['мосфа', 'и']);
 
 const pharmaIntent = classifyGroundingIntent({
   message: 'Расскажи про ваши кейсы с фармкомпаниями',
@@ -100,7 +138,7 @@ const sanitized = sanitizePublicReply(
 assert(!/900 000|example\.com|999 123|private_client/.test(sanitized));
 assert.match(sanitized, /@anix_helper/);
 
-assert(evaluation.cases.length >= 30);
+assert(evaluation.cases.length >= 80);
 for (const scenario of evaluation.cases) {
   const actual = classifyGroundingIntent({
     message: scenario.input,
@@ -115,6 +153,16 @@ for (const scenario of evaluation.cases) {
   );
   if (scenario.providesContact) {
     assert.equal(actual.providesContact, true, `Contact missed: ${scenario.input}`);
+  }
+  if (scenario.caseAlias) {
+    assert.equal(
+      groundingAliasMatches(
+        [...(scenario.history || []), scenario.input].join(' '),
+        scenario.caseAlias
+      ),
+      true,
+      `Case alias missed: ${scenario.input}`
+    );
   }
 }
 
