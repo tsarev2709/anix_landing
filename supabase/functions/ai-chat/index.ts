@@ -8,9 +8,15 @@ import {
   GROUNDING_POLICY_PROMPT,
   buildGroundedReply,
   classifyGroundingIntent,
+  groundingPageContext,
+  groundingPageContextText,
+  groundingRetrievalQuery,
+  publicCaseCards,
   sanitizePublicReply,
+  shouldOfferProjectHandoff,
   sourcesFromCases,
   structuredCaseContext,
+  suggestedFollowUps,
 } from '../_shared/ai-grounding.mjs';
 
 const DEFAULT_ORIGINS = [
@@ -22,6 +28,14 @@ const DEFAULT_ORIGINS = [
 const MAX_BODY_BYTES = 48_000;
 const MAX_MESSAGE_LENGTH = 4000;
 const MAX_HISTORY_MESSAGES = 16;
+const FEEDBACK_REASONS = new Set([
+  '',
+  'not_specific',
+  'wrong_fact',
+  'missing_source',
+  'did_not_understand',
+  'other',
+]);
 const FALLBACK_REPLY =
   'Сейчас AI-консультант временно недоступен. Опишите задачу и оставьте удобный контакт — команда Anix продолжит разговор.';
 
@@ -113,6 +127,15 @@ function requestId(value: unknown): string {
   )
     ? candidate
     : crypto.randomUUID();
+}
+
+function uuid(value: unknown): string {
+  const candidate = text(value, 64);
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
+    candidate
+  )
+    ? candidate
+    : '';
 }
 
 async function sha256(value: string): Promise<string> {
@@ -290,6 +313,15 @@ function contextFromInput(input: any): any {
   };
 }
 
+function pageHintsFromInput(input: any): any {
+  const raw = safeObject(input?.context);
+  const clientPageContext = safeObject(raw.page_context);
+  return {
+    title: text(raw.page_title || clientPageContext.title, 500),
+    heading: text(clientPageContext.heading, 500),
+  };
+}
+
 async function createSession(
   sb: any,
   input: any,
@@ -306,6 +338,8 @@ async function createSession(
 
   const token = randomToken();
   const context = contextFromInput(input);
+  const pageContext = groundingPageContext(context.page_path);
+  const pageHints = pageHintsFromInput(input);
   const { data, error } = await sb
     .from('ai_chat_sessions')
     .insert({
@@ -316,12 +350,49 @@ async function createSession(
         privacy_consent_at: new Date().toISOString(),
         privacy_policy_version:
           text(input?.privacy_policy_version, 64) || '2026-08-07',
+        page_context: { ...pageContext, ...pageHints },
       },
     })
     .select('*')
     .single();
   if (error || !data) throw new Error('session_create_failed');
   return { session: data, sessionToken: token };
+}
+
+async function refreshSessionContext(
+  sb: any,
+  session: any,
+  input: any
+): Promise<any> {
+  if (!input?.context || typeof input.context !== 'object') return session;
+  const incoming = contextFromInput(input);
+  const pagePath = incoming.page_path || session.page_path || '/';
+  const pageContext = groundingPageContext(pagePath);
+  const pageHints = pageHintsFromInput(input);
+  const update: Record<string, any> = {
+    updated_at: new Date().toISOString(),
+    page_path: pagePath,
+    page_url: incoming.page_url || session.page_url,
+    pages_viewed: incoming.pages_viewed.length
+      ? incoming.pages_viewed
+      : session.pages_viewed,
+    attribution: {
+      ...safeObject(session.attribution),
+      ...safeObject(incoming.attribution),
+    },
+    metadata: {
+      ...safeObject(session.metadata),
+      page_context: { ...pageContext, ...pageHints },
+    },
+  };
+  const { data, error } = await sb
+    .from('ai_chat_sessions')
+    .update(update)
+    .eq('id', session.id)
+    .select('*')
+    .single();
+  if (error || !data) throw new Error('session_context_update_failed');
+  return data;
 }
 
 async function loadSession(sb: any, input: any): Promise<any> {
@@ -362,9 +433,28 @@ async function loadMessages(
     .order('created_at', { ascending: false })
     .limit(limit);
   if (error) throw new Error('message_history_failed');
-  return [...(data || [])].reverse().map((item) => ({
+  const ordered = [...(data || [])].reverse();
+  const messageIds = ordered.map((item) => item?.id).filter(Boolean);
+  let feedbackByMessage = new Map<string, any>();
+  if (messageIds.length) {
+    const feedback = await sb
+      .from('ai_chat_feedback')
+      .select('message_id,rating,reason')
+      .eq('session_id', sessionId)
+      .in('message_id', messageIds);
+    if (!feedback.error) {
+      feedbackByMessage = new Map(
+        (feedback.data || []).map((item: any) => [item.message_id, item])
+      );
+    }
+  }
+  return ordered.map((item) => ({
     ...item,
     sources: safePublicSources(item?.metadata?.sources),
+    case_cards: safeCaseCards(item?.metadata?.case_cards),
+    suggestions: safeSuggestions(item?.metadata?.suggestions),
+    handoff: safeHandoffOffer(item?.metadata?.handoff),
+    feedback: feedbackByMessage.get(item.id) || null,
   }));
 }
 
@@ -506,6 +596,86 @@ function safePublicSources(value: unknown): any[] {
     );
 }
 
+function safeResponseUrl(value: unknown): string {
+  const candidate = text(value, 2000);
+  if (!candidate) return '';
+  try {
+    const url = new URL(candidate);
+    return ['http:', 'https:'].includes(url.protocol) ? url.toString() : '';
+  } catch {
+    return '';
+  }
+}
+
+function safeSuggestions(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return [
+    ...new Set(value.map((item) => text(item, 240)).filter(Boolean)),
+  ].slice(0, 3);
+}
+
+function safeCaseCards(value: unknown): any[] {
+  if (!Array.isArray(value)) return [];
+  return value.slice(0, 5).map((item) => ({
+    id: text(item?.id, 64),
+    slug: text(item?.slug, 100),
+    name: text(item?.name, 240),
+    vertical: text(item?.vertical, 50),
+    category: text(item?.category, 120),
+    summary: text(item?.summary, 1600),
+    task: text(item?.task, 1600),
+    solution: text(item?.solution, 1600),
+    result: text(item?.result, 1600),
+    image_url: safeResponseUrl(item?.image_url),
+    links: Array.isArray(item?.links)
+      ? item.links
+          .slice(0, 3)
+          .map((link: any) => ({
+            kind: text(link?.kind, 50),
+            label: text(link?.label, 120) || 'Открыть материал',
+            url: safeResponseUrl(link?.url),
+          }))
+          .filter((link: any) => link.url)
+      : [],
+  }));
+}
+
+function safeHandoffOffer(value: unknown): any {
+  const offer = safeObject(value);
+  if (offer.show !== true) return null;
+  const qualification = safeObject(offer.qualification);
+  return {
+    show: true,
+    title: text(offer.title, 160) || 'Передать бриф команде',
+    summary: text(offer.summary, 1600),
+    qualification: {
+      name: text(qualification.name, 200),
+      company: text(qualification.company, 300),
+      industry: text(qualification.industry, 300),
+      task_type: text(qualification.task_type, 300),
+      audience: text(qualification.audience, 500),
+      format: text(qualification.format, 500),
+      deadline: text(qualification.deadline, 300),
+      current_problem: text(qualification.current_problem, 1200),
+    },
+  };
+}
+
+function handoffOffer(
+  show: boolean,
+  session: any,
+  qualification: any,
+  summary: string
+): any {
+  if (!show) return null;
+  return safeHandoffOffer({
+    show: true,
+    title: 'Передать бриф команде',
+    summary: summary || session.summary || qualification.current_problem || '',
+    qualification,
+  });
+}
+
 function sourcesFromChunks(chunks: any[]): any[] {
   return safePublicSources(
     chunks.map((chunk) => ({
@@ -526,9 +696,7 @@ function combinedSources(cases: any[], chunks: any[] = []): any[] {
 
 function sanitizeReplyLinks(reply: string, sources: any[]): string {
   const allowed = new Set(
-    sources
-      .map((source) => normalizedSourceUrl(source?.url))
-      .filter(Boolean)
+    sources.map((source) => normalizedSourceUrl(source?.url)).filter(Boolean)
   );
   const isAllowed = (url: string) => allowed.has(normalizedSourceUrl(url));
   let rejectedUnsupportedUrl = false;
@@ -564,7 +732,8 @@ function sanitizeReplyLinks(reply: string, sources: any[]): string {
   return [
     'Вот материалы, которые подтверждены базой Anix:',
     ...confirmedSources.map(
-      (source) => `— ${text(source?.title || source?.label, 300)}: ${source.url}`
+      (source) =>
+        `— ${text(source?.title || source?.label, 300)}: ${source.url}`
     ),
   ].join('\n');
 }
@@ -817,6 +986,142 @@ async function syncChatLead(
   }
 }
 
+async function handleFeedback(
+  sb: any,
+  session: any,
+  input: any,
+  origin: string
+): Promise<Response> {
+  const messageId = uuid(input?.message_id);
+  const rating = text(input?.rating, 20);
+  const reason = text(input?.reason, 50);
+  if (!messageId || !['positive', 'negative'].includes(rating)) {
+    return json({ error: 'invalid_feedback' }, 400, origin);
+  }
+  if (!FEEDBACK_REASONS.has(reason)) {
+    return json({ error: 'invalid_feedback_reason' }, 400, origin);
+  }
+  const message = await sb
+    .from('ai_chat_messages')
+    .select('id')
+    .eq('id', messageId)
+    .eq('session_id', session.id)
+    .eq('role', 'assistant')
+    .maybeSingle();
+  if (message.error || !message.data) {
+    return json({ error: 'message_not_found' }, 404, origin);
+  }
+  const stored = await sb.from('ai_chat_feedback').upsert(
+    {
+      session_id: session.id,
+      message_id: messageId,
+      rating,
+      reason: reason || null,
+      page_path: session.page_path,
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: 'session_id,message_id' }
+  );
+  if (stored.error)
+    return json({ error: 'feedback_store_failed' }, 500, origin);
+  return json({ ok: true, feedback: { rating, reason } }, 200, origin);
+}
+
+async function handleHandoff(
+  sb: any,
+  session: any,
+  input: any,
+  id: string,
+  origin: string
+): Promise<Response> {
+  const contactInput = text(input?.contact, 500);
+  const deterministicContact = extractContact(contactInput);
+  if (!deterministicContact.explicit) {
+    return json({ error: 'invalid_contact' }, 400, origin);
+  }
+
+  const submitted = safeObject(input?.qualification);
+  const taskSummary = text(input?.task_summary, 1600);
+  const qualification = mergeQualification(session.qualification, {
+    name: text(input?.name || submitted.name, 200),
+    company: text(input?.company || submitted.company, 300),
+    contact: contactInput,
+    industry: text(submitted.industry, 300),
+    task_type: text(submitted.task_type, 300),
+    audience: text(submitted.audience, 500),
+    format: text(submitted.format, 500),
+    deadline: text(submitted.deadline, 300),
+    current_problem: taskSummary || text(submitted.current_problem, 1200),
+    desired_next_step: 'Обсудить задачу с командой Anix',
+  });
+  const contact = {
+    ...safeObject(session.contact),
+    ...normalizedContact(qualification, deterministicContact),
+  };
+  const summary =
+    taskSummary || text(session.summary, 3000) || 'Бриф из AI-чата сайта';
+  const recommendedNextAction = 'Связаться по брифу из AI-чата сайта';
+  const update = {
+    updated_at: new Date().toISOString(),
+    last_message_at: new Date().toISOString(),
+    qualification,
+    contact,
+    summary,
+    recommended_next_action: recommendedNextAction,
+    commercial_readiness: 'ready',
+    status: 'qualified',
+  };
+  const sessionUpdate = await sb
+    .from('ai_chat_sessions')
+    .update(update)
+    .eq('id', session.id);
+  if (sessionUpdate.error) {
+    return json({ error: 'handoff_store_failed' }, 500, origin);
+  }
+
+  const history = await loadMessages(sb, session.id, 40).catch(() => []);
+  const crmSync = await syncChatLead(
+    sb,
+    { ...session, ...update },
+    history,
+    qualification,
+    contact,
+    recommendedNextAction
+  );
+  const reply =
+    crmSync === 'completed'
+      ? 'Бриф передан команде Anix вместе с контекстом разговора. Свяжемся по указанному контакту.'
+      : 'Бриф сохранён. Передача в CRM временно задержалась; повторно заполнять данные не нужно.';
+  const inserted = await sb
+    .from('ai_chat_messages')
+    .insert({
+      session_id: session.id,
+      request_id: id,
+      role: 'assistant',
+      content: reply,
+      delivery_status: crmSync === 'completed' ? 'completed' : 'fallback',
+      model: 'handoff-policy-v1',
+      metadata: { handoff_completed: crmSync === 'completed' },
+    })
+    .select('id')
+    .single();
+  await sb
+    .from('ai_chat_sessions')
+    .update({ message_count: Number(session.message_count || 0) + 1 })
+    .eq('id', session.id);
+  return json(
+    {
+      ok: true,
+      reply,
+      message_id: inserted.data?.id,
+      fallback: crmSync !== 'completed',
+      crm_sync: crmSync,
+    },
+    200,
+    origin
+  );
+}
+
 async function completeGroundedReply(
   sb: any,
   session: any,
@@ -827,31 +1132,50 @@ async function completeGroundedReply(
   history: any[],
   message: string,
   intent: any,
+  pageContext: any,
   cases: any[],
   grounded: any
 ): Promise<Response> {
   const sources = safePublicSources(grounded?.sources);
   const reply = text(grounded?.reply, 6000);
   const caseIds = cases.map((item) => item?.id).filter(Boolean);
-  const assistantInsert = await sb.from('ai_chat_messages').insert({
-    session_id: session.id,
-    request_id: id,
-    role: 'assistant',
-    content: reply,
-    delivery_status: 'completed',
-    retrieved_chunk_ids: [],
-    model: 'grounded-policy-v1',
-    total_latency_ms: Date.now() - started,
-    metadata: {
-      grounding: {
-        reason: text(grounded?.reason, 100),
-        mode: text(intent?.mode, 50),
-        vertical: text(intent?.vertical, 50),
-        case_ids: caseIds,
+  const caseCards = safeCaseCards(publicCaseCards(cases, 3));
+  const suggestions = safeSuggestions(
+    suggestedFollowUps({ intent, cases, pageContext, currentMessage: message })
+  );
+  const offer = handoffOffer(
+    shouldOfferProjectHandoff({ message, intent }),
+    session,
+    safeObject(session.qualification),
+    message
+  );
+  const assistantInsert = await sb
+    .from('ai_chat_messages')
+    .insert({
+      session_id: session.id,
+      request_id: id,
+      role: 'assistant',
+      content: reply,
+      delivery_status: 'completed',
+      retrieved_chunk_ids: [],
+      model: 'grounded-policy-v1',
+      total_latency_ms: Date.now() - started,
+      metadata: {
+        grounding: {
+          reason: text(grounded?.reason, 100),
+          mode: text(intent?.mode, 50),
+          vertical: text(intent?.vertical, 50),
+          case_ids: caseIds,
+        },
+        page_context: pageContext,
+        sources,
+        case_cards: caseCards,
+        suggestions,
+        handoff: offer,
       },
-      sources,
-    },
-  });
+    })
+    .select('id')
+    .single();
   if (assistantInsert.error) {
     return json({ error: 'message_store_failed' }, 500, origin);
   }
@@ -898,7 +1222,11 @@ async function completeGroundedReply(
     {
       ok: true,
       reply,
+      message_id: assistantInsert.data?.id,
       sources,
+      case_cards: caseCards,
+      suggestions,
+      handoff: offer,
       fallback: false,
       deterministic: true,
       session_id: session.id,
@@ -975,9 +1303,18 @@ async function handler(req: Request): Promise<Response> {
           : 401;
     return json({ error: code }, status, origin);
   }
-  const session = sessionResult.session;
+  let session = sessionResult.session;
+  try {
+    session = await refreshSessionContext(sb, session, input);
+  } catch (error) {
+    console.error(
+      `[ai-chat] Session context refresh failed: ${error instanceof Error ? error.message : 'unknown'}`
+    );
+  }
 
-  if (input?.action === 'resume') {
+  const action = text(input?.action, 32);
+
+  if (action === 'resume') {
     const messages = await loadMessages(sb, session.id).catch(() => []);
     return json(
       {
@@ -986,10 +1323,19 @@ async function handler(req: Request): Promise<Response> {
         messages,
         llm_status: session.llm_status,
         qualification: session.qualification,
+        page_context: groundingPageContext(session.page_path || '/'),
       },
       200,
       origin
     );
+  }
+
+  if (action === 'feedback') {
+    return handleFeedback(sb, session, input, origin);
+  }
+
+  if (action === 'handoff') {
+    return handleHandoff(sb, session, input, id, origin);
   }
 
   const message = text(input?.message, MAX_MESSAGE_LENGTH);
@@ -998,7 +1344,7 @@ async function handler(req: Request): Promise<Response> {
 
   const existing = await sb
     .from('ai_chat_messages')
-    .select('role,content,delivery_status,model,metadata')
+    .select('id,role,content,delivery_status,model,metadata')
     .eq('request_id', id)
     .eq('role', 'assistant')
     .maybeSingle();
@@ -1007,9 +1353,13 @@ async function handler(req: Request): Promise<Response> {
       {
         ok: true,
         duplicate: true,
+        message_id: existing.data.id,
         reply: existing.data.content,
         fallback: existing.data.delivery_status === 'fallback',
         sources: safePublicSources(existing.data.metadata?.sources),
+        case_cards: safeCaseCards(existing.data.metadata?.case_cards),
+        suggestions: safeSuggestions(existing.data.metadata?.suggestions),
+        handoff: safeHandoffOffer(existing.data.metadata?.handoff),
         session_id: session.id,
       },
       200,
@@ -1023,7 +1373,12 @@ async function handler(req: Request): Promise<Response> {
     role: 'user',
     content: message,
     delivery_status: 'stored',
-    metadata: { page_path: text(input?.context?.page_path, 1000) },
+    metadata: {
+      page_path: text(input?.context?.page_path, 1000),
+      page_context: groundingPageContext(
+        text(input?.context?.page_path, 1000) || session.page_path || '/'
+      ),
+    },
   });
   if (userInsert.error && userInsert.error.code !== '23505') {
     return json({ error: 'message_store_failed' }, 500, origin);
@@ -1032,6 +1387,9 @@ async function handler(req: Request): Promise<Response> {
   let history: any[];
   let intent: any;
   let structuredCases: any[];
+  const pageContext = groundingPageContext(
+    text(input?.context?.page_path, 1000) || session.page_path || '/'
+  );
   try {
     history = await loadMessages(sb, session.id, MAX_HISTORY_MESSAGES);
     const recentUserMessages = history
@@ -1040,11 +1398,15 @@ async function handler(req: Request): Promise<Response> {
     intent = classifyGroundingIntent({
       message,
       recentUserMessages,
-      pagePath: session.page_path || '',
+      pagePath: pageContext.path,
     });
+    if (!intent.vertical && pageContext.vertical) {
+      intent = { ...intent, vertical: pageContext.vertical };
+    }
+    const baseQuery = retrievalQuery(history, message);
     structuredCases = await retrieveStructuredCases(
       sb,
-      retrievalQuery(history, message),
+      groundingRetrievalQuery(baseQuery, message, pageContext),
       intent
     );
   } catch (error) {
@@ -1076,6 +1438,7 @@ async function handler(req: Request): Promise<Response> {
       history,
       message,
       intent,
+      pageContext,
       structuredCases,
       grounded
     );
@@ -1083,19 +1446,20 @@ async function handler(req: Request): Promise<Response> {
 
   let prompt: string;
   let retrieval: any;
+  const contextualRetrievalQuery = groundingRetrievalQuery(
+    retrievalQuery(history, message),
+    message,
+    pageContext
+  );
   try {
     [prompt, retrieval] = await Promise.all([
       activePrompt(sb),
-      retrieveKnowledge(
-        sb,
-        retrievalQuery(history, message),
-        session.page_path || '',
-        id
-      ),
+      retrieveKnowledge(sb, contextualRetrievalQuery, pageContext.path, id),
     ]);
     if (!prompt) throw new Error('system_prompt_missing');
   } catch (error) {
-    const errorClass = (error as GatewayFailure)?.errorClass || 'retrieval_error';
+    const errorClass =
+      (error as GatewayFailure)?.errorClass || 'retrieval_error';
     return storeAssistantFallback(
       sb,
       session,
@@ -1118,8 +1482,10 @@ async function handler(req: Request): Promise<Response> {
           role: item.role,
           content: item.content,
         })),
-        system_prompt: `${prompt}\n\n${GROUNDING_POLICY_PROMPT}`,
+        system_prompt: `${prompt}\n\n${GROUNDING_POLICY_PROMPT}\n\n${groundingPageContextText(pageContext)}`,
         retrieved_context: [
+          'PAGE CONTEXT',
+          groundingPageContextText(pageContext),
           'VERIFIED CASES',
           structuredCaseContext(structuredCases),
           'KNOWLEDGE CONTEXT',
@@ -1177,39 +1543,66 @@ async function handler(req: Request): Promise<Response> {
     ...normalizedContact(qualification, deterministicContact),
   };
   const chunkIds = retrieval.chunks.map((chunk: any) => chunk.id);
+  const caseCards = safeCaseCards(publicCaseCards(structuredCases, 3));
+  const suggestions = safeSuggestions(
+    suggestedFollowUps({
+      intent,
+      cases: structuredCases,
+      pageContext,
+      currentMessage: message,
+    })
+  );
+  const offer = handoffOffer(
+    shouldOfferProjectHandoff({
+      message,
+      intent,
+      commercialReadiness: envelope.commercial_readiness,
+    }),
+    session,
+    qualification,
+    envelope.summary
+  );
 
-  const assistantInsert = await sb.from('ai_chat_messages').insert({
-    session_id: session.id,
-    request_id: id,
-    role: 'assistant',
-    content: envelope.reply,
-    delivery_status: 'completed',
-    retrieved_chunk_ids: chunkIds,
-    model: text(gateway?.model, 200) || env('CHAT_MODEL') || 'qwen3:8b',
-    retrieval_latency_ms: retrieval.latencyMs,
-    llm_latency_ms: llmLatency,
-    total_latency_ms: Date.now() - started,
-    metadata: {
-      usage: safeObject(gateway?.usage),
-      retrieval: retrieval.chunks.map((chunk: any) => ({
-        id: chunk.id,
-        title: text(chunk.title, 300),
-        source_url: text(chunk.source_url, 2000),
-        vertical: text(chunk.metadata?.vertical, 50),
-        similarity: Number(chunk.similarity || 0),
-        lexical_rank: Number(chunk.lexical_rank || 0),
-        retrieval_score: Number(chunk.retrieval_score || 0),
-      })),
-      structured_cases: structuredCases.map((item: any) => ({
-        id: item.id,
-        slug: text(item.slug, 100),
-        display_name: text(item.display_name, 300),
-        exact_match: item.exact_match === true,
-        retrieval_score: Number(item.retrieval_score || 0),
-      })),
-      sources,
-    },
-  });
+  const assistantInsert = await sb
+    .from('ai_chat_messages')
+    .insert({
+      session_id: session.id,
+      request_id: id,
+      role: 'assistant',
+      content: envelope.reply,
+      delivery_status: 'completed',
+      retrieved_chunk_ids: chunkIds,
+      model: text(gateway?.model, 200) || env('CHAT_MODEL') || 'qwen3:8b',
+      retrieval_latency_ms: retrieval.latencyMs,
+      llm_latency_ms: llmLatency,
+      total_latency_ms: Date.now() - started,
+      metadata: {
+        usage: safeObject(gateway?.usage),
+        page_context: pageContext,
+        retrieval: retrieval.chunks.map((chunk: any) => ({
+          id: chunk.id,
+          title: text(chunk.title, 300),
+          source_url: text(chunk.source_url, 2000),
+          vertical: text(chunk.metadata?.vertical, 50),
+          similarity: Number(chunk.similarity || 0),
+          lexical_rank: Number(chunk.lexical_rank || 0),
+          retrieval_score: Number(chunk.retrieval_score || 0),
+        })),
+        structured_cases: structuredCases.map((item: any) => ({
+          id: item.id,
+          slug: text(item.slug, 100),
+          display_name: text(item.display_name, 300),
+          exact_match: item.exact_match === true,
+          retrieval_score: Number(item.retrieval_score || 0),
+        })),
+        sources,
+        case_cards: caseCards,
+        suggestions,
+        handoff: offer,
+      },
+    })
+    .select('id')
+    .single();
   if (assistantInsert.error)
     return json({ error: 'message_store_failed' }, 500, origin);
 
@@ -1272,6 +1665,7 @@ async function handler(req: Request): Promise<Response> {
     {
       ok: true,
       reply: envelope.reply,
+      message_id: assistantInsert.data?.id,
       fallback: false,
       session_id: session.id,
       session_token: sessionResult.sessionToken || undefined,
@@ -1279,6 +1673,9 @@ async function handler(req: Request): Promise<Response> {
       qualification,
       crm_sync: crmSync,
       sources,
+      case_cards: caseCards,
+      suggestions,
+      handoff: offer,
     },
     200,
     origin

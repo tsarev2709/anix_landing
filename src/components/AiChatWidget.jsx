@@ -1,16 +1,24 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowUp,
+  CheckCircle2,
+  ClipboardList,
   ExternalLink,
   LoaderCircle,
   MessageCircle,
   Sparkles,
+  ThumbsDown,
+  ThumbsUp,
   X,
 } from 'lucide-react';
 import { CONFIG } from '../config';
 import { getLeadSessionSnapshot } from '../lib/leadSession';
 import { loadTurnstile } from '../lib/turnstile';
 import { track } from '../lib/analytics';
+import {
+  currentAiChatPageContext,
+  normalizeAiChatPath,
+} from '../lib/aiChatPageContext';
 import { toPublicHref } from '../seo/SeoHead';
 import './AiChatWidget.css';
 
@@ -21,54 +29,11 @@ const START_MESSAGE = {
   local: true,
 };
 
-const pagePrompts = {
-  medicine: {
-    intro:
-      'Что вы продвигаете: препарат, медицинское устройство или технологию?',
-    options: [
-      'Препарат для врачей',
-      'MedTech или диагностика',
-      'Обучение медицинской команды',
-    ],
-  },
-  hse: {
-    intro:
-      'Что нужно решить: onboarding, критический риск, инструктаж или другую задачу по безопасности?',
-    options: [
-      'Onboarding сотрудников',
-      'Критический риск',
-      'Инструктаж или микрообучение',
-    ],
-  },
-  animation: {
-    intro: 'Что нужно объяснить с помощью анимации?',
-    options: [
-      'Сложный продукт',
-      'Процесс или технологию',
-      'Нужен рекламный ролик',
-    ],
-  },
-  cases: {
-    intro: 'Подберём подход к вашей задаче. Что вы хотите показать?',
-    options: ['B2B-продукт', 'Медицинскую тему', 'Охрану труда'],
-  },
-  default: {
-    intro: 'Что вы хотите объяснить?',
-    options: [
-      'Продукт или технологию',
-      'Медицинскую тему',
-      'Охрану труда',
-      'Нужен рекламный ролик',
-      'Пока не знаю — помогите разобраться',
-    ],
-  },
-};
-
 function normalizedPath() {
   if (typeof window === 'undefined') return '/';
   const base = process.env.PUBLIC_URL || '';
   const value = window.location.pathname.replace(base, '') || '/';
-  return value === '/' ? '/' : value.replace(/\/+$/, '');
+  return normalizeAiChatPath(value);
 }
 
 function widgetVisible() {
@@ -93,20 +58,6 @@ function widgetVisible() {
     path.startsWith('/cases/') ||
     path === '/ceo'
   );
-}
-
-function promptForPath() {
-  const path = normalizedPath();
-  if (path.startsWith('/medicine') || path.startsWith('/cases/medicine')) {
-    return pagePrompts.medicine;
-  }
-  if (path.startsWith('/hse') || path.startsWith('/cases/hse')) {
-    return pagePrompts.hse;
-  }
-  if (path === '/animation' || path === '/ai-video')
-    return pagePrompts.animation;
-  if (path.startsWith('/cases')) return pagePrompts.cases;
-  return pagePrompts.default;
 }
 
 function readStoredSession() {
@@ -178,10 +129,105 @@ async function chatRequest(body, timeoutMs = 70_000) {
   }
 }
 
-function Message({ item }) {
+const FEEDBACK_OPTIONS = [
+  ['not_specific', 'Мало конкретики'],
+  ['wrong_fact', 'Неверный факт'],
+  ['missing_source', 'Нет источника'],
+  ['did_not_understand', 'Не понял вопрос'],
+  ['other', 'Другое'],
+];
+
+function pageRequestContext(pageContext) {
+  return {
+    ...getLeadSessionSnapshot(),
+    page_context: {
+      kind: pageContext.kind,
+      vertical: pageContext.vertical,
+      case_slug: pageContext.caseSlug,
+      case_name: pageContext.caseName,
+      title: pageContext.title,
+      heading: pageContext.heading,
+    },
+  };
+}
+
+function CaseCards({ cards = [] }) {
+  if (!cards.length) return null;
+  return (
+    <div className="anix-ai-chat__case-cards" aria-label="Подходящие кейсы">
+      {cards.map((card) => (
+        <article key={card.id || card.slug || card.name}>
+          {card.image_url ? (
+            <img src={card.image_url} alt="" loading="lazy" />
+          ) : null}
+          <div className="anix-ai-chat__case-card-copy">
+            <span>{card.category || card.vertical || 'Кейс Anix'}</span>
+            <strong>{card.name}</strong>
+            {card.summary ? <p>{card.summary}</p> : null}
+            {card.result ? (
+              <p className="anix-ai-chat__case-result">
+                <b>Результат:</b> {card.result}
+              </p>
+            ) : null}
+            {card.task || card.solution ? (
+              <details>
+                <summary>Задача и решение</summary>
+                {card.task ? (
+                  <p>
+                    <b>Задача:</b> {card.task}
+                  </p>
+                ) : null}
+                {card.solution ? (
+                  <p>
+                    <b>Решение:</b> {card.solution}
+                  </p>
+                ) : null}
+              </details>
+            ) : null}
+            {card.links?.length ? (
+              <div className="anix-ai-chat__case-links">
+                {card.links.map((link) => (
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    key={`${link.kind}-${link.url}`}
+                  >
+                    {link.label}
+                    <ExternalLink aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
+            ) : null}
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function Message({
+  item,
+  showActions = false,
+  disabled = false,
+  onSuggestion,
+  onFeedback,
+  onHandoff,
+}) {
+  const [feedbackReasonsOpen, setFeedbackReasonsOpen] = useState(false);
+  const cardUrls = new Set(
+    (item.case_cards || []).flatMap((card) =>
+      (card.links || []).map((link) => link.url)
+    )
+  );
+  const extraSources = (item.sources || []).filter(
+    (source) => !cardUrls.has(source.url)
+  );
+  const feedbackRating = item.feedback?.rating || '';
+
   return (
     <div
-      className={`anix-ai-chat__message anix-ai-chat__message--${item.role}`}
+      className={`anix-ai-chat__message anix-ai-chat__message--${item.role}${item.case_cards?.length ? ' anix-ai-chat__message--rich' : ''}`}
     >
       {item.role === 'assistant' ? (
         <span className="anix-ai-chat__avatar" aria-hidden="true">
@@ -190,19 +236,22 @@ function Message({ item }) {
       ) : null}
       <div>
         <div className="anix-ai-chat__message-copy">
-          {item.content.split('\n').map((line, index) => (
-            <React.Fragment key={`${index}-${line.slice(0, 12)}`}>
-              {index ? <br /> : null}
-              {line}
-            </React.Fragment>
-          ))}
+          {String(item.content || '')
+            .split('\n')
+            .map((line, index) => (
+              <React.Fragment key={`${index}-${line.slice(0, 12)}`}>
+                {index ? <br /> : null}
+                {line}
+              </React.Fragment>
+            ))}
         </div>
-        {item.sources?.length ? (
+        <CaseCards cards={item.case_cards} />
+        {extraSources.length ? (
           <div
             className="anix-ai-chat__sources"
             aria-label="Материалы к ответу"
           >
-            {item.sources.map((source) => (
+            {extraSources.map((source) => (
               <a
                 href={source.url}
                 target="_blank"
@@ -218,6 +267,75 @@ function Message({ item }) {
             ))}
           </div>
         ) : null}
+        {showActions && item.suggestions?.length ? (
+          <div className="anix-ai-chat__follow-ups" aria-label="Уточнить ответ">
+            {item.suggestions.map((suggestion) => (
+              <button
+                type="button"
+                key={suggestion}
+                onClick={() => onSuggestion(suggestion)}
+                disabled={disabled}
+              >
+                {suggestion}
+              </button>
+            ))}
+          </div>
+        ) : null}
+        {showActions && item.handoff?.show ? (
+          <button
+            type="button"
+            className="anix-ai-chat__handoff-button"
+            onClick={() => onHandoff(item.handoff)}
+            disabled={disabled}
+          >
+            <ClipboardList aria-hidden="true" />
+            {item.handoff.title || 'Передать бриф команде'}
+          </button>
+        ) : null}
+        {item.role === 'assistant' && item.id && !item.local ? (
+          <div className="anix-ai-chat__feedback">
+            <span>Полезный ответ?</span>
+            <button
+              type="button"
+              className={feedbackRating === 'positive' ? 'is-active' : ''}
+              aria-label="Ответ полезен"
+              onClick={() => {
+                setFeedbackReasonsOpen(false);
+                onFeedback(item.id, 'positive', '');
+              }}
+            >
+              <ThumbsUp aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className={feedbackRating === 'negative' ? 'is-active' : ''}
+              aria-label="Ответ не помог"
+              onClick={() => {
+                setFeedbackReasonsOpen(true);
+                onFeedback(item.id, 'negative', '');
+              }}
+            >
+              <ThumbsDown aria-hidden="true" />
+            </button>
+          </div>
+        ) : null}
+        {feedbackReasonsOpen ? (
+          <div className="anix-ai-chat__feedback-reasons">
+            {FEEDBACK_OPTIONS.map(([value, label]) => (
+              <button
+                type="button"
+                key={value}
+                className={item.feedback?.reason === value ? 'is-active' : ''}
+                onClick={() => {
+                  onFeedback(item.id, 'negative', value);
+                  setFeedbackReasonsOpen(false);
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        ) : null}
         {item.fallback ? (
           <span className="anix-ai-chat__fallback-label">
             Сообщение сохранено
@@ -228,12 +346,92 @@ function Message({ item }) {
   );
 }
 
+function BriefForm({ form, status, error, onChange, onClose, onSubmit }) {
+  return (
+    <form
+      className="anix-ai-chat__brief"
+      onSubmit={(event) => {
+        event.preventDefault();
+        onSubmit();
+      }}
+    >
+      <div className="anix-ai-chat__brief-heading">
+        <span className="anix-ai-chat__brief-icon" aria-hidden="true">
+          <ClipboardList />
+        </span>
+        <div>
+          <strong>Передать бриф команде</strong>
+          <span>В amoCRM уйдут задача и контекст разговора.</span>
+        </div>
+        <button type="button" onClick={onClose} aria-label="Закрыть бриф">
+          <X aria-hidden="true" />
+        </button>
+      </div>
+      <label>
+        <span>Имя</span>
+        <input
+          value={form.name}
+          onChange={(event) => onChange('name', event.target.value)}
+          maxLength={200}
+          placeholder="Как к вам обращаться"
+        />
+      </label>
+      <label>
+        <span>Компания</span>
+        <input
+          value={form.company}
+          onChange={(event) => onChange('company', event.target.value)}
+          maxLength={300}
+          placeholder="Необязательно"
+        />
+      </label>
+      <label>
+        <span>Телефон, email или Telegram</span>
+        <input
+          value={form.contact}
+          onChange={(event) => onChange('contact', event.target.value)}
+          maxLength={500}
+          placeholder="+7…, name@company.ru или @username"
+          required
+        />
+      </label>
+      <label>
+        <span>Задача</span>
+        <textarea
+          value={form.task_summary}
+          onChange={(event) => onChange('task_summary', event.target.value)}
+          maxLength={1600}
+          rows={3}
+          placeholder="Что нужно сделать и для кого"
+        />
+      </label>
+      {error ? (
+        <p className="anix-ai-chat__brief-error" role="alert">
+          {error}
+        </p>
+      ) : null}
+      <button
+        type="submit"
+        className="anix-ai-chat__brief-submit"
+        disabled={status === 'sending' || !form.contact.trim()}
+      >
+        {status === 'sending' ? (
+          <LoaderCircle className="anix-ai-chat__spinner" />
+        ) : (
+          <CheckCircle2 aria-hidden="true" />
+        )}
+        {status === 'sending' ? 'Передаём…' : 'Передать команде Anix'}
+      </button>
+    </form>
+  );
+}
+
 export default function AiChatWidget() {
   const visible = useMemo(widgetVisible, []);
-  const pagePrompt = useMemo(promptForPath, []);
+  const pageContext = useMemo(currentAiChatPageContext, []);
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { ...START_MESSAGE, content: pagePrompt.intro },
+    { ...START_MESSAGE, content: pageContext.intro },
   ]);
   const [draft, setDraft] = useState('');
   const [sending, setSending] = useState(false);
@@ -243,6 +441,16 @@ export default function AiChatWidget() {
   const [restoring, setRestoring] = useState(true);
   const [turnstileToken, setTurnstileToken] = useState('');
   const [turnstileError, setTurnstileError] = useState('');
+  const [briefOpen, setBriefOpen] = useState(false);
+  const [briefStatus, setBriefStatus] = useState('idle');
+  const [briefError, setBriefError] = useState('');
+  const [briefForm, setBriefForm] = useState({
+    name: '',
+    company: '',
+    contact: '',
+    task_summary: '',
+    qualification: {},
+  });
   const panelRef = useRef(null);
   const inputRef = useRef(null);
   const messagesRef = useRef(null);
@@ -261,6 +469,7 @@ export default function AiChatWidget() {
       action: 'resume',
       session_id: stored.id,
       session_token: stored.token,
+      context: pageRequestContext(pageContext),
     })
       .then((result) => {
         if (cancelled) return;
@@ -274,7 +483,7 @@ export default function AiChatWidget() {
     return () => {
       cancelled = true;
     };
-  }, [visible]);
+  }, [pageContext, visible]);
 
   useEffect(() => {
     if (!visible || !open || session || restoring) return undefined;
@@ -383,7 +592,7 @@ export default function AiChatWidget() {
         turnstile_token: session ? undefined : turnstileToken,
         privacy_consent: session ? undefined : privacyConsent,
         privacy_policy_version: '2026-08-07',
-        context: getLeadSessionSnapshot(),
+        context: pageRequestContext(pageContext),
       });
       let activeSession = session;
       if (!session && result.session_id && result.session_token) {
@@ -394,10 +603,16 @@ export default function AiChatWidget() {
       setMessages((current) => [
         ...current,
         {
+          id: result.message_id,
           role: 'assistant',
           content: result.reply,
           fallback: Boolean(result.fallback),
           sources: Array.isArray(result.sources) ? result.sources : [],
+          case_cards: Array.isArray(result.case_cards) ? result.case_cards : [],
+          suggestions: Array.isArray(result.suggestions)
+            ? result.suggestions
+            : [],
+          handoff: result.handoff || null,
         },
       ]);
       track(result.fallback ? 'ai_chat_fallback' : 'ai_chat_message', {
@@ -431,6 +646,108 @@ export default function AiChatWidget() {
     }
   };
 
+  const submitFeedback = async (messageId, rating, reason) => {
+    if (!session || !messageId) return;
+    setMessages((current) =>
+      current.map((item) =>
+        item.id === messageId ? { ...item, feedback: { rating, reason } } : item
+      )
+    );
+    try {
+      await chatRequest({
+        action: 'feedback',
+        session_id: session.id,
+        session_token: session.token,
+        message_id: messageId,
+        rating,
+        reason,
+        context: pageRequestContext(pageContext),
+      });
+      track('ai_chat_feedback', {
+        page_path: pageContext.path,
+        rating,
+        reason,
+      });
+    } catch {
+      setMessages((current) =>
+        current.map((item) =>
+          item.id === messageId ? { ...item, feedback: null } : item
+        )
+      );
+    }
+  };
+
+  const openBrief = (offer) => {
+    const qualification = offer?.qualification || {};
+    setBriefForm({
+      name: qualification.name || '',
+      company: qualification.company || '',
+      contact: '',
+      task_summary: offer?.summary || qualification.current_problem || '',
+      qualification,
+    });
+    setBriefError('');
+    setBriefStatus('idle');
+    setBriefOpen(true);
+    track('ai_chat_handoff_open', { page_path: pageContext.path });
+    window.setTimeout(() => {
+      messagesRef.current?.scrollTo?.({
+        top: messagesRef.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }, 30);
+  };
+
+  const submitBrief = async () => {
+    if (!session || briefStatus === 'sending') return;
+    setBriefStatus('sending');
+    setBriefError('');
+    try {
+      const result = await chatRequest({
+        action: 'handoff',
+        request_id: makeRequestId(),
+        session_id: session.id,
+        session_token: session.token,
+        name: briefForm.name,
+        company: briefForm.company,
+        contact: briefForm.contact,
+        task_summary: briefForm.task_summary,
+        qualification: briefForm.qualification,
+        context: pageRequestContext(pageContext),
+      });
+      setMessages((current) => [
+        ...current,
+        {
+          id: result.message_id,
+          role: 'assistant',
+          content: result.reply,
+          fallback: Boolean(result.fallback),
+        },
+      ]);
+      setBriefStatus('success');
+      setBriefOpen(false);
+      track('ai_chat_handoff_submit', {
+        page_path: pageContext.path,
+        crm_sync: result.crm_sync,
+      });
+      if (result.crm_sync === 'completed') {
+        track('ai_chat_lead', { page_path: pageContext.path });
+      }
+    } catch (requestError) {
+      setBriefStatus('error');
+      setBriefError(
+        requestError.code === 'invalid_contact'
+          ? 'Укажите телефон, email или Telegram.'
+          : 'Не удалось передать бриф. Попробуйте ещё раз.'
+      );
+    }
+  };
+
+  const latestAssistantIndex = messages.reduce(
+    (last, item, index) => (item.role === 'assistant' ? index : last),
+    -1
+  );
+
   return (
     <div className={`anix-ai-chat${open ? ' anix-ai-chat--open' : ''}`}>
       {open ? (
@@ -445,7 +762,7 @@ export default function AiChatWidget() {
             </span>
             <div>
               <strong>Спросить Anix</strong>
-              <span>Консультант по сложным задачам</span>
+              <span>Контекст: {pageContext.label}</span>
             </div>
             <button
               type="button"
@@ -464,12 +781,17 @@ export default function AiChatWidget() {
             {messages.map((item, index) => (
               <Message
                 item={item}
+                showActions={index === latestAssistantIndex}
+                disabled={sending}
+                onSuggestion={submit}
+                onFeedback={submitFeedback}
+                onHandoff={openBrief}
                 key={`${item.role}-${index}-${item.content.slice(0, 16)}`}
               />
             ))}
             {messages.length === 1 ? (
               <div className="anix-ai-chat__quick-list">
-                {pagePrompt.options.map((option) => (
+                {pageContext.options.map((option) => (
                   <button
                     type="button"
                     onClick={() => submit(option)}
@@ -479,6 +801,19 @@ export default function AiChatWidget() {
                   </button>
                 ))}
               </div>
+            ) : null}
+            {briefOpen ? (
+              <BriefForm
+                form={briefForm}
+                status={briefStatus}
+                error={briefError}
+                onChange={(field, value) => {
+                  setBriefForm((current) => ({ ...current, [field]: value }));
+                  setBriefError('');
+                }}
+                onClose={() => setBriefOpen(false)}
+                onSubmit={submitBrief}
+              />
             ) : null}
             {messages.some((item) => item.fallback) ? (
               <button

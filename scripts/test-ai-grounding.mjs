@@ -4,27 +4,61 @@ import {
   buildGroundedReply,
   classifyGroundingIntent,
   groundingAliasMatches,
+  groundingPageContext,
+  groundingPageContextText,
+  groundingRetrievalQuery,
   groundingSearchSignature,
   inferGroundingVertical,
+  publicCaseCards,
   sanitizePublicReply,
+  shouldOfferProjectHandoff,
   sourcesFromCases,
+  suggestedFollowUps,
 } from '../supabase/functions/_shared/ai-grounding.mjs';
 
 const catalog = JSON.parse(
-  await fs.readFile(new URL('../data/ai-public-cases.json', import.meta.url), 'utf8')
+  await fs.readFile(
+    new URL('../data/ai-public-cases.json', import.meta.url),
+    'utf8'
+  )
 );
 const evaluation = JSON.parse(
-  await fs.readFile(new URL('../data/ai-rag-eval-cases.json', import.meta.url), 'utf8')
+  await fs.readFile(
+    new URL('../data/ai-rag-eval-cases.json', import.meta.url),
+    'utf8'
+  )
 );
 const morphologyMigration = await fs.readFile(
-  new URL('../supabase/migrations/011_ai_case_morphology_and_prompt_v6.sql', import.meta.url),
+  new URL(
+    '../supabase/migrations/011_ai_case_morphology_and_prompt_v6.sql',
+    import.meta.url
+  ),
+  'utf8'
+);
+const experienceMigration = await fs.readFile(
+  new URL(
+    '../supabase/migrations/012_ai_chat_context_feedback_and_handoff.sql',
+    import.meta.url
+  ),
   'utf8'
 );
 
-assert.match(morphologyMigration, /create or replace function public\.ai_search_signature/);
+assert.match(
+  morphologyMigration,
+  /create or replace function public\.ai_search_signature/
+);
 assert.match(morphologyMigration, /length\(token\) > 5 then left\(token, 5\)/);
-assert.match(morphologyMigration, /query\.signature @> public\.ai_search_signature/);
+assert.match(
+  morphologyMigration,
+  /query\.signature @> public\.ai_search_signature/
+);
 assert.match(morphologyMigration, /anix-consultant-v6/);
+assert.match(
+  experienceMigration,
+  /create table if not exists public\.ai_chat_feedback/
+);
+assert.match(experienceMigration, /feedback_rating/);
+assert.match(experienceMigration, /anix-consultant-v7/);
 
 const cases = catalog.cases.map((item) => ({
   display_name: item.displayName,
@@ -63,7 +97,10 @@ const resolveCatalogCase = (query) =>
     )
   );
 assert.equal(resolveCatalogCase('Подробнее про Мосфарму')?.slug, 'mosfarma');
-assert.equal(resolveCatalogCase('Что сделали для Гемотеха?')?.slug, 'hemotech-ai');
+assert.equal(
+  resolveCatalogCase('Что сделали для Гемотеха?')?.slug,
+  'hemotech-ai'
+);
 assert.equal(resolveCatalogCase('Расскажи про Aventis'), undefined);
 for (const [query, alias] of [
   ['Что сделали для Гемотеха?', 'Гемотех'],
@@ -71,10 +108,39 @@ for (const [query, alias] of [
   ['Расскажите о Мултоне', 'Мултон'],
   ['Какой результат у Бородина?', 'Бородино'],
 ]) {
-  assert.equal(groundingAliasMatches(query, alias), true, `Alias was not matched: ${query}`);
+  assert.equal(
+    groundingAliasMatches(query, alias),
+    true,
+    `Alias was not matched: ${query}`
+  );
 }
 assert.equal(groundingAliasMatches('Расскажи про Aventis', 'Мосфарма'), false);
-assert.deepEqual(groundingSearchSignature('Мосфарма и Мосфарму'), ['мосфа', 'и']);
+assert.deepEqual(groundingSearchSignature('Мосфарма и Мосфарму'), [
+  'мосфа',
+  'и',
+]);
+
+const casePageContext = groundingPageContext('/cases/mosfarma/');
+assert.equal(casePageContext.kind, 'case');
+assert.equal(casePageContext.vertical, 'medicine');
+assert.equal(casePageContext.caseName, 'Мосфарма');
+assert.match(groundingPageContextText(casePageContext), /прямо сейчас смотрит/);
+assert.match(
+  groundingRetrievalQuery(
+    'Какой результат?',
+    'Какой результат?',
+    casePageContext
+  ),
+  /Текущий кейс: Мосфарма/
+);
+assert.doesNotMatch(
+  groundingRetrievalQuery(
+    'Расскажи про Hemotech AI',
+    'Расскажи про Hemotech AI',
+    casePageContext
+  ),
+  /Текущий кейс: Мосфарма/
+);
 
 const pharmaIntent = classifyGroundingIntent({
   message: 'Расскажи про ваши кейсы с фармкомпаниями',
@@ -123,7 +189,9 @@ const missingFile = buildGroundedReply(
 assert.match(missingFile.reply, /нет файла/);
 assert.equal(missingFile.sources[0].url, 'https://t.me/anix_helper');
 
-const videoIntent = classifyGroundingIntent({ message: 'Отправь видео по Мосфарме' });
+const videoIntent = classifyGroundingIntent({
+  message: 'Отправь видео по Мосфарме',
+});
 assert.equal(videoIntent.mode, 'source');
 const videoReply = buildGroundedReply(videoIntent, [mosfarma]);
 assert(videoReply.sources.some((item) => item.kind === 'video'));
@@ -131,6 +199,35 @@ assert(videoReply.sources.some((item) => item.kind === 'video'));
 const publicSources = sourcesFromCases([mosfarma], { includeVideos: true });
 assert(publicSources.some((item) => item.kind === 'case_page'));
 assert(publicSources.every((item) => /^https:\/\//.test(item.url)));
+
+const cards = publicCaseCards([mosfarma]);
+assert.equal(cards.length, 1);
+assert.equal(cards[0].name, 'Мосфарма');
+assert.match(cards[0].result, /Первого канала/);
+assert(cards[0].links.some((item) => item.kind === 'case_page'));
+
+const followUps = suggestedFollowUps({
+  intent: { mode: 'case', vertical: 'medicine' },
+  cases: [mosfarma],
+  pageContext: casePageContext,
+  currentMessage: 'Расскажи подробнее',
+});
+assert.equal(followUps.length, 3);
+assert(followUps.some((item) => item.includes('результат')));
+assert.equal(
+  shouldOfferProjectHandoff({
+    message: 'Нам нужен ролик для врачей',
+    intent: { mode: 'general' },
+  }),
+  true
+);
+assert.equal(
+  shouldOfferProjectHandoff({
+    message: 'Расскажи про Мосфарму',
+    intent: { mode: 'case' },
+  }),
+  false
+);
 
 const sanitized = sanitizePublicReply(
   'Бюджет кейса — 900 000 ₽.\nКонтакт: client@example.com, +7 999 123-45-67, @private_client.\nПишите @anix_helper.'
@@ -152,7 +249,11 @@ for (const scenario of evaluation.cases) {
     `Wrong vertical for: ${scenario.input}`
   );
   if (scenario.providesContact) {
-    assert.equal(actual.providesContact, true, `Contact missed: ${scenario.input}`);
+    assert.equal(
+      actual.providesContact,
+      true,
+      `Contact missed: ${scenario.input}`
+    );
   }
   if (scenario.caseAlias) {
     assert.equal(
@@ -166,4 +267,6 @@ for (const scenario of evaluation.cases) {
   }
 }
 
-console.log(`AI grounding policy tests passed: ${evaluation.cases.length} scenarios`);
+console.log(
+  `AI grounding policy tests passed: ${evaluation.cases.length} scenarios`
+);

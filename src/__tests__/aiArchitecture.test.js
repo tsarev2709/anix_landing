@@ -16,6 +16,10 @@ describe('AI consultant production architecture', () => {
     expect(edge).toContain('storeAssistantFallback');
     expect(edge).toContain('buildGroundedReply');
     expect(edge).toContain('GROUNDING_POLICY_PROMPT');
+    expect(edge).toContain("action === 'feedback'");
+    expect(edge).toContain("action === 'handoff'");
+    expect(edge).toContain('groundingPageContextText(pageContext)');
+    expect(edge).toContain('publicCaseCards(structuredCases');
     expect(gateway).toContain("'/api/chat'");
     expect(gateway).toContain("'/api/embed'");
   });
@@ -30,5 +34,19 @@ describe('AI consultant production architecture', () => {
     ]) {
       expect(config).not.toContain(secret);
     }
+  });
+
+  test('keeps feedback and explicit CRM handoff server-owned', () => {
+    const migration = fs.readFileSync(
+      'supabase/migrations/012_ai_chat_context_feedback_and_handoff.sql',
+      'utf8'
+    );
+    const widget = fs.readFileSync('src/components/AiChatWidget.jsx', 'utf8');
+    expect(migration).toContain('public.ai_chat_feedback');
+    expect(migration).toContain('enable row level security');
+    expect(migration).toContain('anix-consultant-v7');
+    expect(widget).toContain("action: 'feedback'");
+    expect(widget).toContain("action: 'handoff'");
+    expect(widget).not.toContain('AMOCRM_LONG_LIVED_TOKEN');
   });
 });
