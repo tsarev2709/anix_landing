@@ -47,6 +47,7 @@ describe('AiChatWidget', () => {
             ok: true,
             session_id: '12345678-1234-4234-9234-123456789abc',
             session_token: 'session-secret',
+            message_id: '12345678-1234-4234-9234-123456789abe',
             reply: 'Покажем клинический workflow без перегруза.',
             fallback: false,
             crm_sync: 'not_requested',
@@ -58,6 +59,23 @@ describe('AiChatWidget', () => {
                 url: 'https://studio.anix-ai.pro/cases/hemotech-ai/',
               },
             ],
+            case_cards: [
+              {
+                id: 'case-hemotech',
+                slug: 'hemotech-ai',
+                name: 'Hemotech AI',
+                summary: 'Спокойно объяснили сложный медицинский AI-продукт.',
+                result: 'Ролик стал частью визуального языка бренда.',
+                links: [
+                  {
+                    kind: 'case_page',
+                    label: 'Открыть кейс',
+                    url: 'https://studio.anix-ai.pro/cases/hemotech-ai/',
+                  },
+                ],
+              },
+            ],
+            suggestions: ['Как сохранить научную точность?'],
           }),
       })
     );
@@ -92,7 +110,9 @@ describe('AiChatWidget', () => {
       );
       await Promise.resolve();
     });
-    expect(container.textContent).toContain('Что вы продвигаете');
+    expect(container.textContent).toContain(
+      'Вы изучаете направление Pharma и MedTech'
+    );
 
     const consent = container.querySelector(
       '.anix-ai-chat__verification input'
@@ -116,11 +136,14 @@ describe('AiChatWidget', () => {
     expect(payload.turnstile_token).toBe('turnstile-ai-token');
     expect(payload.privacy_consent).toBe(true);
     expect(payload.context.page_path).toBe('/medicine');
+    expect(payload.context.page_context.vertical).toBe('medicine');
+    expect(payload.context.page_context.kind).toBe('service');
     expect(container.textContent).toContain('Покажем клинический workflow');
     expect(container.textContent).toContain('Hemotech AI');
-    expect(container.querySelector('.anix-ai-chat__sources a').href).toBe(
+    expect(container.querySelector('.anix-ai-chat__case-links a').href).toBe(
       'https://studio.anix-ai.pro/cases/hemotech-ai/'
     );
+    expect(container.textContent).toContain('Как сохранить научную точность?');
     expect(
       JSON.parse(window.localStorage.getItem('anix_ai_chat_session_v1'))
     ).toEqual({
@@ -163,5 +186,119 @@ describe('AiChatWidget', () => {
     });
     expect(container.textContent).toContain('Сообщение сохранено');
     expect(container.textContent).toContain('Оставить контакт');
+  });
+
+  test('stores feedback for a concrete assistant message', async () => {
+    await TestUtils.act(async () => {
+      TestUtils.Simulate.click(
+        container.querySelector('.anix-ai-chat__launcher')
+      );
+      await Promise.resolve();
+    });
+    TestUtils.act(() => {
+      TestUtils.Simulate.change(
+        container.querySelector('.anix-ai-chat__verification input'),
+        { target: { checked: true } }
+      );
+      TestUtils.Simulate.change(container.querySelector('textarea'), {
+        target: { value: 'Покажите фармкейс.' },
+      });
+    });
+    await TestUtils.act(async () => {
+      TestUtils.Simulate.submit(
+        container.querySelector('.anix-ai-chat__composer')
+      );
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    await TestUtils.act(async () => {
+      TestUtils.Simulate.click(
+        container.querySelector('button[aria-label="Ответ полезен"]')
+      );
+      await Promise.resolve();
+    });
+
+    const payload = JSON.parse(global.fetch.mock.calls[1][1].body);
+    expect(payload.action).toBe('feedback');
+    expect(payload.message_id).toBe('12345678-1234-4234-9234-123456789abe');
+    expect(payload.rating).toBe('positive');
+  });
+
+  test('lets a visitor review and hand off a structured brief', async () => {
+    global.fetch.mockResolvedValueOnce({
+      ok: true,
+      json: () =>
+        Promise.resolve({
+          ok: true,
+          session_id: '12345678-1234-4234-9234-123456789abc',
+          session_token: 'session-secret',
+          message_id: '12345678-1234-4234-9234-123456789abe',
+          reply: 'Для задачи подойдут объясняющий ролик и серия карточек.',
+          handoff: {
+            show: true,
+            title: 'Передать бриф команде',
+            summary: 'Нужно объяснить медицинскую технологию врачам.',
+            qualification: { industry: 'medicine', audience: 'врачи' },
+          },
+        }),
+    });
+    await TestUtils.act(async () => {
+      TestUtils.Simulate.click(
+        container.querySelector('.anix-ai-chat__launcher')
+      );
+      await Promise.resolve();
+    });
+    TestUtils.act(() => {
+      TestUtils.Simulate.change(
+        container.querySelector('.anix-ai-chat__verification input'),
+        { target: { checked: true } }
+      );
+      TestUtils.Simulate.change(container.querySelector('textarea'), {
+        target: { value: 'Нам нужен ролик для врачей.' },
+      });
+    });
+    await TestUtils.act(async () => {
+      TestUtils.Simulate.submit(
+        container.querySelector('.anix-ai-chat__composer')
+      );
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    TestUtils.act(() => {
+      TestUtils.Simulate.click(
+        container.querySelector('.anix-ai-chat__handoff-button')
+      );
+    });
+    const contactInput = container.querySelector('input[placeholder^="+7"]');
+    TestUtils.act(() => {
+      TestUtils.Simulate.change(contactInput, {
+        target: { value: '@project_owner' },
+      });
+    });
+    global.fetch.mockResolvedValueOnce({
+      ok: true,
+      json: () =>
+        Promise.resolve({
+          ok: true,
+          message_id: '12345678-1234-4234-9234-123456789abf',
+          reply: 'Бриф передан команде Anix.',
+          crm_sync: 'completed',
+        }),
+    });
+    await TestUtils.act(async () => {
+      TestUtils.Simulate.submit(
+        container.querySelector('.anix-ai-chat__brief')
+      );
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    const payload = JSON.parse(global.fetch.mock.calls[1][1].body);
+    expect(payload.action).toBe('handoff');
+    expect(payload.contact).toBe('@project_owner');
+    expect(payload.task_summary).toContain('медицинскую технологию');
+    expect(container.textContent).toContain('Бриф передан команде Anix');
   });
 });
