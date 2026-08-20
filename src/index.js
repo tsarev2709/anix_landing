@@ -15,6 +15,182 @@ import SeoHead from './seo/SeoHead';
 import { installRuntimeRecovery, recoverFromRuntimeFailure } from './runtimeCompatibility';
 import { initLeadSessionTracking } from './lib/leadSession';
 
+const LEAD_FORM_HASH = '#website-lead-form';
+const LEAD_FORM_ID = 'website-lead-form';
+
+function initLeadFormAnchorStabilizer() {
+  if (typeof window === 'undefined' || window.location.hash !== LEAD_FORM_HASH) {
+    return;
+  }
+
+  const cleanUrl = `${window.location.pathname}${window.location.search}`;
+  const finalUrl = `${cleanUrl}${LEAD_FORM_HASH}`;
+  const previousScrollRestoration =
+    'scrollRestoration' in window.history
+      ? window.history.scrollRestoration
+      : null;
+  const previousOverflowAnchor = document.documentElement.style.overflowAnchor;
+
+  let userInteracted = false;
+  let pageLoaded = document.readyState === 'complete';
+  let target = null;
+  let rafId = 0;
+  let mutationObserver = null;
+  let resizeObserver = null;
+  const settleTimers = [];
+
+  try {
+    if (previousScrollRestoration !== null) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.history.replaceState(window.history.state, '', cleanUrl);
+  } catch {
+    // If history manipulation is unavailable, the stabilizer still recenters.
+  }
+
+  document.documentElement.style.overflowAnchor = 'none';
+
+  const restoreHashInAddressBar = () => {
+    if (window.location.hash === LEAD_FORM_HASH) return;
+    try {
+      window.history.replaceState(window.history.state, '', finalUrl);
+    } catch {
+      // The form remains usable even if the address bar cannot be rewritten.
+    }
+  };
+
+  const removeInteractionListeners = () => {
+    window.removeEventListener('wheel', handControlToUser);
+    window.removeEventListener('touchstart', handControlToUser);
+    window.removeEventListener('pointerdown', handControlToUser);
+    window.removeEventListener('mousedown', handControlToUser);
+    window.removeEventListener('keydown', handControlToUser);
+  };
+
+  const stopAutomaticPositioning = () => {
+    if (userInteracted) return;
+    userInteracted = true;
+
+    if (rafId) cancelAnimationFrame(rafId);
+    mutationObserver?.disconnect();
+    resizeObserver?.disconnect();
+    settleTimers.forEach((timer) => window.clearTimeout(timer));
+    window.removeEventListener('resize', scheduleStabilize);
+    removeInteractionListeners();
+
+    document.documentElement.style.overflowAnchor = previousOverflowAnchor;
+    if (previousScrollRestoration !== null) {
+      try {
+        window.history.scrollRestoration = previousScrollRestoration;
+      } catch {
+        // Ignore browsers that do not allow changing this value at runtime.
+      }
+    }
+
+    if (pageLoaded) restoreHashInAddressBar();
+    else window.addEventListener('load', restoreHashInAddressBar, { once: true });
+  };
+
+  function handControlToUser() {
+    stopAutomaticPositioning();
+  }
+
+  function stabilize() {
+    if (userInteracted || !target || !document.contains(target)) return;
+
+    const rect = target.getBoundingClientRect();
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const fitsComfortably = rect.height + 32 <= viewportHeight;
+    const desiredTop = fitsComfortably
+      ? Math.max(16, (viewportHeight - rect.height) / 2)
+      : Math.max(24, viewportHeight * 0.1);
+    const delta = rect.top - desiredTop;
+
+    if (Math.abs(delta) > 2) {
+      window.scrollTo({
+        top: Math.max(0, window.scrollY + delta),
+        left: 0,
+        behavior: 'auto',
+      });
+    }
+  }
+
+  function scheduleStabilize() {
+    if (userInteracted) return;
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+      rafId = 0;
+      stabilize();
+    });
+  }
+
+  function startWatchingLayout() {
+    if (!target || userInteracted) return;
+
+    scheduleStabilize();
+
+    if ('ResizeObserver' in window) {
+      resizeObserver = new ResizeObserver(scheduleStabilize);
+      resizeObserver.observe(target);
+      if (document.body) resizeObserver.observe(document.body);
+    }
+
+    window.addEventListener('resize', scheduleStabilize, { passive: true });
+
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(scheduleStabilize).catch(() => {});
+    }
+
+    [50, 150, 350, 750, 1500, 3000].forEach((delay) => {
+      settleTimers.push(window.setTimeout(scheduleStabilize, delay));
+    });
+  }
+
+  function findTarget() {
+    if (userInteracted || target) return;
+    const nextTarget = document.getElementById(LEAD_FORM_ID);
+    if (!nextTarget) return;
+
+    target = nextTarget;
+    mutationObserver?.disconnect();
+    mutationObserver = null;
+    startWatchingLayout();
+  }
+
+  window.addEventListener('wheel', handControlToUser, { passive: true });
+  window.addEventListener('touchstart', handControlToUser, { passive: true });
+  window.addEventListener('pointerdown', handControlToUser, { passive: true });
+  window.addEventListener('mousedown', handControlToUser, { passive: true });
+  window.addEventListener('keydown', handControlToUser);
+
+  mutationObserver = new MutationObserver(findTarget);
+  mutationObserver.observe(document.documentElement, {
+    childList: true,
+    subtree: true,
+  });
+  findTarget();
+
+  const onLoad = () => {
+    pageLoaded = true;
+
+    if (!userInteracted) {
+      findTarget();
+      scheduleStabilize();
+      settleTimers.push(window.setTimeout(scheduleStabilize, 100));
+      settleTimers.push(window.setTimeout(scheduleStabilize, 500));
+    }
+
+    // replaceState does not trigger native anchor scrolling or hashchange.
+    // Restoring only after load also neutralizes the legacy load-time anchor helper.
+    restoreHashInAddressBar();
+  };
+
+  if (pageLoaded) onLoad();
+  else window.addEventListener('load', onLoad, { once: true });
+}
+
+initLeadFormAnchorStabilizer();
+
 console.info('[CFG] SUBMIT:', CONFIG.SUBMIT_LEAD_URL);
 console.info('[CFG] TRACK :', CONFIG.TRACK_EVENT_URL);
 installRuntimeRecovery();
