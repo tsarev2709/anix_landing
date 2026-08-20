@@ -71,10 +71,60 @@
     </script>
     <style>
       body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#f7f4ef;color:#111;line-height:1.6;overflow-x:hidden}
+      #website-lead-form{scroll-margin-top:24px}
     </style>
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      (function restoreLateHashNavigation() {
+        var retryTimer = null;
+
+        function getHashId() {
+          if (!window.location.hash || window.location.hash.length < 2) return '';
+          var raw = window.location.hash.slice(1);
+          try {
+            return decodeURIComponent(raw);
+          } catch (error) {
+            return raw;
+          }
+        }
+
+        function scrollToHashTarget(attempt) {
+          var id = getHashId();
+          if (!id) return;
+
+          var target = document.getElementById(id);
+          if (!target) {
+            if (attempt < 60) {
+              clearTimeout(retryTimer);
+              retryTimer = setTimeout(function () {
+                scrollToHashTarget(attempt + 1);
+              }, 50);
+            }
+            return;
+          }
+
+          requestAnimationFrame(function () {
+            if (getHashId() !== id) return;
+            target.scrollIntoView({ block: 'start', inline: 'nearest' });
+          });
+        }
+
+        function restoreHash() {
+          clearTimeout(retryTimer);
+          scrollToHashTarget(0);
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', restoreHash, { once: true });
+        } else {
+          restoreHash();
+        }
+        window.addEventListener('load', restoreHash, { once: true });
+        window.addEventListener('hashchange', restoreHash);
+      })();
+    </script>
     <script>
       function loadAnalytics() {
         (function (m, e, t, r, i, k, a) {
