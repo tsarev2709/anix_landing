@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ArrowRight,
   ExternalLink,
   Film,
   HardHat,
@@ -34,6 +33,9 @@ const pageLinks = [
   { label: 'Кейс Hemotech AI', href: '/cases/hemotech-ai' },
   { label: 'Кейс Мултон Партнерс', href: '/cases/multon-partners' },
   { label: 'HSE-демо', href: '/hse/mvp' },
+];
+
+const legalLinks = [
   { label: 'Политика обработки персональных данных', href: '/personal-data' },
   { label: 'Политика конфиденциальности', href: '/privacy' },
 ];
@@ -110,35 +112,47 @@ export default function SiteFooter() {
             </p>
           </div>
 
-          <nav className="anix-site-footer__nav" aria-label="Страницы Anix">
+          <nav
+            className="anix-site-footer__nav anix-site-footer__nav--pages"
+            aria-label="Страницы Anix"
+          >
             <h2>Страницы</h2>
-            {pageLinks.map((item) => (
-              <FooterLink item={item} key={item.href} />
-            ))}
+            <div className="anix-site-footer__link-cloud">
+              {pageLinks.map((item) => (
+                <FooterLink item={item} key={item.href} />
+              ))}
+            </div>
           </nav>
 
-          <nav className="anix-site-footer__nav" aria-label="Направления Anix">
+          <nav
+            className="anix-site-footer__nav anix-site-footer__nav--directions"
+            aria-label="Направления Anix"
+          >
             <h2>Направления</h2>
-            {directionLinks.map((item) => (
-              <FooterLink item={item} key={item.href} />
-            ))}
+            <div className="anix-site-footer__link-cloud">
+              {directionLinks.map((item) => (
+                <FooterLink item={item} key={item.href} />
+              ))}
+            </div>
           </nav>
 
           <div className="anix-site-footer__contact">
             <h2>Контакт</h2>
-            <a
-              className="anix-site-footer__button"
-              href={telegramUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <MessageCircle aria-hidden="true" />
-              Telegram
-            </a>
-            <a className="anix-site-footer__button" href={emailUrl}>
-              <Mail aria-hidden="true" />
-              Email
-            </a>
+            <div className="anix-site-footer__contact-buttons">
+              <a
+                className="anix-site-footer__button"
+                href={telegramUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <MessageCircle aria-hidden="true" />
+                Telegram
+              </a>
+              <a className="anix-site-footer__button" href={emailUrl}>
+                <Mail aria-hidden="true" />
+                Email
+              </a>
+            </div>
             <p>
               <Sparkles aria-hidden="true" />
               Сложные штуки можно объяснять нормально.
@@ -152,28 +166,13 @@ export default function SiteFooter() {
             <span>ИНН 9714017729</span>
             <span>КПП 772701001</span>
           </div>
-          <a href={toPublicHref('/animation')}>
-            Анимационные ролики <ArrowRight aria-hidden="true" />
-          </a>
-          <a href={toPublicHref('/ai-video')}>
-            AI-видео <ArrowRight aria-hidden="true" />
-          </a>
-          <a href={toPublicHref('/medicine')}>
-            Medicine <ArrowRight aria-hidden="true" />
-          </a>
-          <a href={toPublicHref('/hse')}>
-            HSE <ArrowRight aria-hidden="true" />
-          </a>
-          <a href={toPublicHref('/ceo')}>
-            CEO <ArrowRight aria-hidden="true" />
-          </a>
-          <a href={toPublicHref('/why_it_works')}>
-            Почему это работает <ArrowRight aria-hidden="true" />
-          </a>
-          <a href={toPublicHref('/personal-data')}>
-            Политика обработки персональных данных
-          </a>
-          <a href={toPublicHref('/privacy')}>Политика конфиденциальности</a>
+          <nav className="anix-site-footer__legal-links" aria-label="Юридическая информация">
+            {legalLinks.map((item) => (
+              <a href={toPublicHref(item.href)} key={item.href}>
+                {item.label}
+              </a>
+            ))}
+          </nav>
         </div>
       </footer>
     </>
