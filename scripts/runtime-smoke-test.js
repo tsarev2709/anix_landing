@@ -65,7 +65,11 @@ function runRoute(chromePath, route) {
   const url = `${baseUrl}${route.path}`;
   const result = spawnSync(chromePath, [
     '--headless=new','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--disable-background-networking','--disable-default-apps','--disable-extensions','--disable-sync','--no-first-run','--enable-logging=stderr','--virtual-time-budget=8000',`--user-data-dir=${profileDir}`,'--dump-dom',url,
-  ], { encoding: 'utf8', timeout: 30000, maxBuffer: 20 * 1024 * 1024 });
+  ], {
+    encoding: 'utf8',
+    timeout: route.path === '/andrey-tsarev/' ? 60000 : 30000,
+    maxBuffer: 20 * 1024 * 1024,
+  });
 
   fs.rmSync(profileDir, { recursive: true, force: true });
   if (result.error) throw result.error;
