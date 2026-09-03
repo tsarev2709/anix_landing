@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.dd65cb32.css",
-    "main.js": "/static/js/main.ec66e592.js",
+    "main.css": "/static/css/main.ef0ade1d.css",
+    "main.js": "/static/js/main.1a86a9dc.js",
     "static/js/727.42892fec.chunk.js": "/static/js/727.42892fec.chunk.js",
     "static/css/833.17bddc9d.chunk.css": "/static/css/833.17bddc9d.chunk.css",
     "static/js/833.2e049445.chunk.js": "/static/js/833.2e049445.chunk.js",
@@ -45,6 +45,7 @@
     "static/js/89.5cc2931e.chunk.js": "/static/js/89.5cc2931e.chunk.js",
     "static/media/3.png": "/static/media/3.95d850bfd9557355a532.png",
     "static/media/andrey-profile-business-school-graduates.webp": "/static/media/andrey-profile-business-school-graduates.1ffb72daecf712800567.webp",
+    "static/media/avineuro.png": "/static/media/avineuro.dcb22b3d0480db14983e.png",
     "static/media/hse-hero.jpg": "/static/media/hse-hero.98902ec35d115bd2829e.jpg",
     "static/media/alexandra-andrey-anix.webp": "/static/media/alexandra-andrey-anix.3aa3b1342754067831aa.webp",
     "static/media/campus-aerial.webp": "/static/media/campus-aerial.be319b9e368097220070.webp",
@@ -74,6 +75,7 @@
     "static/media/andrey-profile-kafka.webp": "/static/media/andrey-profile-kafka.106302fa69c13c8b98da.webp",
     "static/media/hologram-building.webp": "/static/media/hologram-building.8a976cc013ba23a11e04.webp",
     "static/media/robot-team.webp": "/static/media/robot-team.9bdbbfb6ab54e235676e.webp",
+    "static/media/mipt-endowment.svg": "/static/media/mipt-endowment.e9d1a1e8bad6ac9c12d90fbe4d2dae5a.svg",
     "static/media/borodino.webp": "/static/media/borodino.4f8a004a31f7f809eb2c.webp",
     "static/media/talking-head.webp": "/static/media/talking-head.bbe0adae415fb3050533.webp",
     "static/media/logoanix.png": "/static/media/logoanix.69424aa82539287cd2d0.png",
@@ -89,15 +91,21 @@
     "static/media/challenge-technograd.webp": "/static/media/challenge-technograd.ee91a87dd40f3165c64c.webp",
     "static/media/startech.webp": "/static/media/startech.0d7eac7aa813c56d2857.webp",
     "static/media/mfti-endowment.webp": "/static/media/mfti-endowment.d96e5a56cd493f6006de.webp",
+    "static/media/hemotech.png": "/static/media/hemotech.1f221ec131f4f4043758.png",
     "static/media/andrey-profile-theatre-promo.webp": "/static/media/andrey-profile-theatre-promo.85322f8a261de15bbf1c.webp",
     "static/media/bondarchuk.webp": "/static/media/bondarchuk.2f89bc787951be733929.webp",
     "static/media/production-hybrid.webp": "/static/media/production-hybrid.52ed1568f87cc77b443b.webp",
     "static/media/alexandra-portrait.webp": "/static/media/alexandra-portrait.64af9542dd19171abf05.webp",
     "static/media/little-prince.webp": "/static/media/little-prince.89dcb347c89f4309e300.webp",
-    "index.html": "/index.html"
+    "static/media/multon-partners.svg": "/static/media/multon-partners.a3582b91cba41758b49b5889c051f752.svg",
+    "static/media/rchk.svg": "/static/media/rchk.ce03085ee4fa4b244235165cf90ce3e5.svg",
+    "static/media/kolobox.svg": "/static/media/kolobox.46045ea2355ad916938add9ac8487423.svg",
+    "static/media/mosfarma.svg": "/static/media/mosfarma.a9a442a466a4998063ce9c51571b8acd.svg",
+    "index.html": "/index.html",
+    "static/media/startech.svg": "/static/media/startech.4158cf272c8b7f263207bb323af0d17c.svg"
   },
   "entrypoints": [
-    "static/css/main.dd65cb32.css",
-    "static/js/main.ec66e592.js"
+    "static/css/main.ef0ade1d.css",
+    "static/js/main.1a86a9dc.js"
   ]
 }
