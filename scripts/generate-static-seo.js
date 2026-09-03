@@ -144,6 +144,22 @@ function buildSchemas(route) {
       provider: organization,
       areaServed: organization.areaServed,
       inLanguage: 'ru-RU',
+      ...(route.offers?.length
+        ? {
+            hasOfferCatalog: {
+              '@type': 'OfferCatalog',
+              name: `Цены: ${normalizeBrandText(route.serviceType)}`,
+              itemListElement: route.offers.map((offer) => ({
+                '@type': 'Offer',
+                name: normalizeBrandText(offer.name),
+                description: normalizeBrandText(offer.description),
+                price: offer.price,
+                priceCurrency: offer.priceCurrency || 'RUB',
+                url,
+              })),
+            },
+          }
+        : {}),
     });
   } else if (route.kind === 'creativeWork' || route.kind === 'case') {
     schemas.push({

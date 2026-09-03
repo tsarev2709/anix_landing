@@ -1476,6 +1476,83 @@
   }
 }
 
+/* Direct routes into the two flagship products. */
+.d1-hero-solutions {
+  display: grid;
+  gap: 10px;
+  max-width: 760px;
+  margin-top: 22px;
+}
+
+.d1-hero-solutions > span {
+  color: rgba(17, 17, 17, 0.48);
+  font-size: 12px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.d1-hero-solutions > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.d1-hero-solutions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 0 17px;
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.56);
+  font-size: 14px;
+  font-weight: 820;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.d1-hero-solutions a:first-child {
+  background: rgba(157, 124, 255, 0.12);
+}
+
+.d1-hero-solutions a:last-child {
+  background: rgba(19, 203, 178, 0.12);
+}
+
+.d1-hero-solutions a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(17, 17, 17, 0.28);
+  background: var(--d1-white);
+}
+
+.d1-hero-solutions svg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+}
+
+.d1-hero-solutions a svg:last-child {
+  margin-left: 2px;
+}
+
+@media (max-width: 640px) {
+  .d1-hero-solutions > div {
+    display: grid;
+  }
+
+  .d1-hero-solutions a {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .d1-hero-solutions a svg:last-child {
+    margin-left: auto;
+  }
+}
+
 @media (max-width: 480px) {
   .design1-test .d1-header-inner {
     position: relative;

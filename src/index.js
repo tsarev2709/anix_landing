@@ -12,14 +12,20 @@ import CasesHubLinkPortal from './components/CasesHubLinkPortal';
 import RouteBreadcrumbsPortal from './seo/RouteBreadcrumbsPortal';
 import RouteRelatedLinksPortal from './seo/RouteRelatedLinksPortal';
 import SeoHead from './seo/SeoHead';
-import { installRuntimeRecovery, recoverFromRuntimeFailure } from './runtimeCompatibility';
+import {
+  installRuntimeRecovery,
+  recoverFromRuntimeFailure,
+} from './runtimeCompatibility';
 import { initLeadSessionTracking } from './lib/leadSession';
 
 const LEAD_FORM_HASH = '#website-lead-form';
 const LEAD_FORM_ID = 'website-lead-form';
 
 function initLeadFormAnchorStabilizer() {
-  if (typeof window === 'undefined' || window.location.hash !== LEAD_FORM_HASH) {
+  if (
+    typeof window === 'undefined' ||
+    window.location.hash !== LEAD_FORM_HASH
+  ) {
     return;
   }
 
@@ -88,7 +94,8 @@ function initLeadFormAnchorStabilizer() {
     }
 
     if (pageLoaded) restoreHashInAddressBar();
-    else window.addEventListener('load', restoreHashInAddressBar, { once: true });
+    else
+      window.addEventListener('load', restoreHashInAddressBar, { once: true });
   };
 
   function handControlToUser() {
@@ -99,7 +106,8 @@ function initLeadFormAnchorStabilizer() {
     if (userInteracted || !target || !document.contains(target)) return;
 
     const rect = target.getBoundingClientRect();
-    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const viewportHeight =
+      window.innerHeight || document.documentElement.clientHeight;
     const fitsComfortably = rect.height + 32 <= viewportHeight;
     const desiredTop = fitsComfortably
       ? Math.max(16, (viewportHeight - rect.height) / 2)
@@ -200,6 +208,7 @@ const NotFound = lazy(() => import('./components/NotFound'));
 const WhyItWorksPage = lazy(() => import('./components/WhyItWorksPage'));
 const MedicinePage = lazy(() => import('./components/MedicinePage'));
 const HsePage = lazy(() => import('./components/HsePage'));
+const PricingGuidePage = lazy(() => import('./components/PricingGuidePage'));
 const AnimationPage = lazy(() => import('./components/AnimationPage'));
 const AiVideoPage = lazy(() => import('./components/AiVideoPage'));
 const HseMvpPage = lazy(() => import('./features/hseMvp/HseMvpPage'));
@@ -217,17 +226,65 @@ const RchkCasePage = lazy(() => import('./components/RchkCasePage'));
 
 function RuntimeFallback({ failed = false }) {
   return (
-    <main role="status" style={{ minHeight: '100vh', display: 'grid', placeItems: 'center', padding: '32px', boxSizing: 'border-box', background: '#f7f4ef', color: '#21162d', textAlign: 'center', fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif" }}>
-      <div><strong style={{ display: 'block', fontSize: '22px', marginBottom: '10px' }}>ANIX Studio</strong><p style={{ margin: '0 0 18px' }}>{failed ? 'Страница не смогла загрузиться полностью.' : 'Загружаем страницу…'}</p>{failed ? <button type="button" onClick={() => window.location.reload()} style={{ padding: '12px 18px', border: 0, borderRadius: '999px', cursor: 'pointer' }}>Обновить страницу</button> : null}</div>
+    <main
+      role="status"
+      style={{
+        minHeight: '100vh',
+        display: 'grid',
+        placeItems: 'center',
+        padding: '32px',
+        boxSizing: 'border-box',
+        background: '#f7f4ef',
+        color: '#21162d',
+        textAlign: 'center',
+        fontFamily: "system-ui, -apple-system, 'Segoe UI', sans-serif",
+      }}
+    >
+      <div>
+        <strong
+          style={{ display: 'block', fontSize: '22px', marginBottom: '10px' }}
+        >
+          ANIX Studio
+        </strong>
+        <p style={{ margin: '0 0 18px' }}>
+          {failed
+            ? 'Страница не смогла загрузиться полностью.'
+            : 'Загружаем страницу…'}
+        </p>
+        {failed ? (
+          <button
+            type="button"
+            onClick={() => window.location.reload()}
+            style={{
+              padding: '12px 18px',
+              border: 0,
+              borderRadius: '999px',
+              cursor: 'pointer',
+            }}
+          >
+            Обновить страницу
+          </button>
+        ) : null}
+      </div>
     </main>
   );
 }
 
 class RuntimeErrorBoundary extends React.Component {
-  constructor(props) { super(props); this.state = { failed: false }; }
-  static getDerivedStateFromError() { return { failed: true }; }
-  componentDidCatch(error) { recoverFromRuntimeFailure(error); }
-  render() { if (this.state.failed) return <RuntimeFallback failed />; return this.props.children; }
+  constructor(props) {
+    super(props);
+    this.state = { failed: false };
+  }
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidCatch(error) {
+    recoverFromRuntimeFailure(error);
+  }
+  render() {
+    if (this.state.failed) return <RuntimeFallback failed />;
+    return this.props.children;
+  }
 }
 
 const rootElement = document.getElementById('root');
@@ -237,12 +294,31 @@ const relativePath = window.location.pathname.replace(base, '') || '/';
 const normalizedPath = (() => {
   const withoutIndex = relativePath.replace(/index\.html$/, '');
   if (!withoutIndex || withoutIndex === '/') return '/';
-  return withoutIndex.endsWith('/') ? withoutIndex.slice(0, Math.max(1, withoutIndex.length - 1)) : withoutIndex;
+  return withoutIndex.endsWith('/')
+    ? withoutIndex.slice(0, Math.max(1, withoutIndex.length - 1))
+    : withoutIndex;
 })();
 
-const categoryCasePaths = new Set(['/cases/b2b', '/cases/medicine', '/cases/cinema', '/cases/hse', '/cases/events']);
+const categoryCasePaths = new Set([
+  '/cases/b2b',
+  '/cases/medicine',
+  '/cases/cinema',
+  '/cases/hse',
+  '/cases/events',
+]);
 const renderInLayout = (component) => {
-  root.render(<RuntimeErrorBoundary><AppLayout><SeoHead path={normalizedPath} /><Suspense fallback={<RuntimeFallback />}>{component}</Suspense><AboutStudioPortal path={normalizedPath} /><CasesHubLinkPortal path={normalizedPath} /><RouteBreadcrumbsPortal path={normalizedPath} /><RouteRelatedLinksPortal path={normalizedPath} /></AppLayout></RuntimeErrorBoundary>);
+  root.render(
+    <RuntimeErrorBoundary>
+      <AppLayout>
+        <SeoHead path={normalizedPath} />
+        <Suspense fallback={<RuntimeFallback />}>{component}</Suspense>
+        <AboutStudioPortal path={normalizedPath} />
+        <CasesHubLinkPortal path={normalizedPath} />
+        <RouteBreadcrumbsPortal path={normalizedPath} />
+        <RouteRelatedLinksPortal path={normalizedPath} />
+      </AppLayout>
+    </RuntimeErrorBoundary>
+  );
 };
 
 if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
@@ -261,23 +337,64 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
   renderInLayout(<CasePage path={normalizedPath} />);
 } else {
   switch (normalizedPath) {
-    case '/': renderInLayout(<App />); break;
-    case '/why_it_works': renderInLayout(<WhyItWorksPage />); break;
-    case '/medicine': renderInLayout(<MedicinePage />); break;
-    case '/hse': renderInLayout(<HsePage />); break;
-    case '/animation': renderInLayout(<AnimationPage />); break;
-    case '/ai-video': renderInLayout(<AiVideoPage />); break;
+    case '/':
+      renderInLayout(<App />);
+      break;
+    case '/why_it_works':
+      renderInLayout(<WhyItWorksPage />);
+      break;
+    case '/medicine':
+      renderInLayout(<MedicinePage />);
+      break;
+    case '/hse':
+      renderInLayout(<HsePage />);
+      break;
+    case '/stoimost':
+      renderInLayout(<PricingGuidePage path={normalizedPath} />);
+      break;
+    case '/medicine/price':
+      renderInLayout(<PricingGuidePage path={normalizedPath} />);
+      break;
+    case '/hse/price':
+      renderInLayout(<PricingGuidePage path={normalizedPath} />);
+      break;
+    case '/animation':
+      renderInLayout(<AnimationPage />);
+      break;
+    case '/ai-video':
+      renderInLayout(<AiVideoPage />);
+      break;
     case '/rybki':
-    case '/rybki_page': renderInLayout(<RybkiPage />); break;
-    case '/design1test': renderInLayout(<Design1TestPage />); break;
-    case '/design_old': renderInLayout(<DesignOldPage />); break;
-    case '/ceo': renderInLayout(<CeoPage />); break;
-    case '/personal-data': renderInLayout(<LegalPage type="personal-data" />); break;
-    case '/privacy': renderInLayout(<LegalPage type="privacy" />); break;
+    case '/rybki_page':
+      renderInLayout(<RybkiPage />);
+      break;
+    case '/design1test':
+      renderInLayout(<Design1TestPage />);
+      break;
+    case '/design_old':
+      renderInLayout(<DesignOldPage />);
+      break;
+    case '/ceo':
+      renderInLayout(<CeoPage />);
+      break;
+    case '/personal-data':
+      renderInLayout(<LegalPage type="personal-data" />);
+      break;
+    case '/privacy':
+      renderInLayout(<LegalPage type="privacy" />);
+      break;
     default:
-      root.render(<RuntimeErrorBoundary><SeoHead path={normalizedPath} /><Suspense fallback={<RuntimeFallback />}><NotFound /></Suspense></RuntimeErrorBoundary>);
+      root.render(
+        <RuntimeErrorBoundary>
+          <SeoHead path={normalizedPath} />
+          <Suspense fallback={<RuntimeFallback />}>
+            <NotFound />
+          </Suspense>
+        </RuntimeErrorBoundary>
+      );
   }
 }
 
-if ('requestIdleCallback' in window) requestIdleCallback(() => import('./styles/sections.css'));
+if ('requestIdleCallback' in window)
+  requestIdleCallback(() => import('./styles/sections.css'));
 else setTimeout(() => import('./styles/sections.css'), 0);

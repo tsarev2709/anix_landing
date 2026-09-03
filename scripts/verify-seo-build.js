@@ -5,7 +5,7 @@ const seoConfig = require('../src/seo/routes.json');
 const root = path.resolve(__dirname, '..');
 const buildDir = path.join(root, 'build');
 const requiredRoutes = ['/', '/medicine', '/hse', '/rybki', '/privacy', '/personal-data'];
-const requiredCommercialRoutes = ['/cases', '/animation', '/ai-video', '/why_it_works'];
+const requiredCommercialRoutes = ['/cases', '/animation', '/ai-video', '/why_it_works', '/stoimost', '/medicine/price', '/hse/price'];
 const failures = [];
 
 function normalizeBrandText(value = '') {
@@ -78,12 +78,20 @@ function verifyRoute(routePath) {
   assert(!/<meta\s+name="keywords"/i.test(html), `${routePath}: legacy meta keywords found`);
   assert(jsonLdScripts.length > 0, `${routePath}: JSON-LD is missing`);
 
+  const parsedSchemas = [];
   for (const script of jsonLdScripts) {
     try {
-      JSON.parse(script[1]);
+      parsedSchemas.push(JSON.parse(script[1]));
     } catch (error) {
       failures.push(`${routePath}: invalid JSON-LD (${error.message})`);
     }
+  }
+
+  if (route.offers?.length) {
+    assert(
+      parsedSchemas.some((schema) => schema?.hasOfferCatalog?.['@type'] === 'OfferCatalog'),
+      `${routePath}: OfferCatalog is missing from JSON-LD`,
+    );
   }
 
   const localOgPath = ogImage.replace(`${seoConfig.baseUrl}/`, '');

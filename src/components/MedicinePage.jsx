@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ArrowRight,
   BadgeCheck,
   BookOpen,
   Brain,
@@ -29,17 +30,16 @@ const emailUrl = 'mailto:studio@anix-ai.pro';
 
 const navLinks = [
   { label: 'Главная', href: '/' },
-  { label: 'Форматы', href: '#formats' },
-  { label: 'Научный директор', href: '#expert' },
-  { label: 'HSE', href: '/hse' },
-  { label: 'HSE-демо', href: '/hse/mvp' },
-  { label: 'CEO', href: '/ceo' },
+  { label: 'Продукт', href: '#product' },
+  { label: 'Задачи', href: '#tasks' },
+  { label: 'Кейсы', href: '#cases' },
+  { label: 'Цены', href: '/medicine/price' },
 ];
 
 const heroStats = [
-  ['Механизм', 'работа препарата без перегруза'],
-  ['Врачи', 'ролики и визуалы для встреч, клиник, конференций'],
-  ['Наука', 'структурный опыт внутри команды'],
+  ['7 дней', 'обычный срок ролика 1 минута'],
+  ['2 раунда', 'консолидированных правок'],
+  ['Наука', 'проверка до финального производства'],
 ];
 
 const formats = [
@@ -183,6 +183,66 @@ const process = [
   'Запускаем материалы, смотрим метрики и радуемся результату.',
 ];
 
+const productAudience = [
+  'brand manager',
+  'product manager',
+  'medical affairs',
+  'фармацевтический маркетинг',
+];
+
+const productLevels = [
+  {
+    label: 'Пилот',
+    price: 'от 400 тыс. ₽',
+    text: 'Один препарат, одна задача и одна основная аудитория.',
+  },
+  {
+    label: 'Основной материал',
+    price: 'от 700 тыс. ₽',
+    text: 'Мастер-ролик, научная проверка и базовые адаптации.',
+  },
+  {
+    label: 'Кампания или серия',
+    price: 'от 1,5 млн ₽',
+    text: 'Система материалов для нескольких каналов или продуктового портфеля.',
+  },
+];
+
+const pharmaTasks = [
+  {
+    title: 'Механизм действия — MoA',
+    text: 'Молекула, рецептор, клеточный процесс, каскад и клинически значимый результат — в одной причинно-следственной сцене.',
+  },
+  {
+    title: 'Доказательная база',
+    text: 'Дизайн исследования, конечные точки, профиль пациента, данные эффективности и безопасности без декоративных графиков.',
+  },
+  {
+    title: 'Материалы для врачей',
+    text: 'Встречи, e-detailing, рассылки, врачебные сообщества, KOL-выступления и follow-up после контакта.',
+  },
+  {
+    title: 'Конференции и стенды',
+    text: 'Мастер-ролик, петля без звука, сцены для доклада, короткие версии и материалы, которые продолжают работать после события.',
+  },
+  {
+    title: 'Запуск препарата',
+    text: 'Одна визуальная логика для launch: главный ролик, вертикальные версии, карточки, слайды, обложки и digital-адаптации.',
+  },
+  {
+    title: 'OTC и пациентская коммуникация',
+    text: 'Понятная история продукта для конечного потребителя с учётом утверждённых формулировок и ограничений площадки.',
+  },
+  {
+    title: 'Маскот и персонажная система',
+    text: 'Персонаж препарата, набор эмоций, правила использования и сцены для регулярных коммуникаций.',
+  },
+  {
+    title: 'Портфель и серия',
+    text: 'Единый визуальный язык для линейки препаратов, чтобы не собирать каждый материал с нуля.',
+  },
+];
+
 function IconCard({ item }) {
   const Icon = item.icon;
 
@@ -215,7 +275,7 @@ function ExternalRow({ title, meta, href }) {
 export default function MedicinePage() {
   return (
     <main className="medicine-page">
-<header className="medicine-header">
+      <header className="medicine-header">
         <nav className="medicine-header-inner" aria-label="Anix Medicine">
           <a className="medicine-logo" href="/" aria-label="Anix Studio">
             <img src={logo} alt="Anix" />
@@ -243,11 +303,11 @@ export default function MedicinePage() {
           <p className="medicine-eyebrow">
             Anix Medicine / фарма, медтех, медицина
           </p>
-          <h1>Делаем ролики для продаж препаратов</h1>
-                    <p className="medicine-lead">
-            Наглядно показываем работу препарата так, что интересно даже
-            загруженному врачу. Собираем ролики, маскотов и визуальную систему
-            для продаж.
+          <h1>Медицинская анимация и ролики для фармкомпаний</h1>
+          <p className="medicine-lead">
+            Создаём мастер-ролик и систему адаптаций для запуска препарата,
+            объяснения механизма действия, работы с врачами и конференций.
+            Научную проверку встраиваем в производство, а не оставляем на финал.
           </p>
           <div className="medicine-actions">
             <a
@@ -261,10 +321,10 @@ export default function MedicinePage() {
             </a>
             <a
               className="medicine-button medicine-button-secondary"
-              href="#expert"
+              href="/medicine/price"
             >
-              <Microscope aria-hidden="true" />
-              Научная база
+              <BookOpen aria-hidden="true" />
+              Цены и состав сметы
             </a>
           </div>
         </div>
@@ -284,7 +344,7 @@ export default function MedicinePage() {
             <p className="medicine-eyebrow">Где проблема</p>
             <h2>Врачи не понимают работу препаратов</h2>
           </div>
-                    <div className="medicine-rich-text">
+          <div className="medicine-rich-text">
             <p>
               У врача мало времени и много скепсиса. Поэтому визуал должен
               быстро показать, что происходит в организме и почему продукт
@@ -298,13 +358,130 @@ export default function MedicinePage() {
         </div>
       </section>
 
+      <section className="medicine-section medicine-product" id="product">
+        <div className="medicine-container">
+          <div className="medicine-product-head">
+            <div>
+              <p className="medicine-eyebrow">Флагманский продукт</p>
+              <h2>Pharma Launch System</h2>
+            </div>
+            <div>
+              <p>
+                Не отдельная «минута анимации», а рабочий комплект для
+                фармацевтической команды: мастер-ролик, научная логика и версии
+                для точек контакта с аудиторией.
+              </p>
+              <div
+                className="medicine-audience-row"
+                aria-label="Для кого Pharma Launch System"
+              >
+                {productAudience.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="medicine-product-grid">
+            <article className="medicine-product-card medicine-product-card-main">
+              <span>Что получает команда</span>
+              <h3>Один мастер. Несколько рабочих применений.</h3>
+              <ul>
+                <li>
+                  <CheckCircle2 aria-hidden="true" /> сценарий под конкретную
+                  бизнес-задачу
+                </li>
+                <li>
+                  <CheckCircle2 aria-hidden="true" /> медицинская и научная
+                  проверка
+                </li>
+                <li>
+                  <CheckCircle2 aria-hidden="true" /> мастер-ролик в
+                  согласованном формате
+                </li>
+                <li>
+                  <CheckCircle2 aria-hidden="true" /> адаптации для конференции,
+                  digital, презентации или рассылки
+                </li>
+                <li>
+                  <CheckCircle2 aria-hidden="true" /> два раунда
+                  консолидированных правок
+                </li>
+              </ul>
+            </article>
+            <article className="medicine-product-card">
+              <span>Типовой срок</span>
+              <strong>7 дней</strong>
+              <p>
+                Обычный срок для ролика около одной минуты — от старта сценария
+                до готового мастера. Нужны готовые материалы, один валидатор и
+                обратная связь в согласованные окна.
+              </p>
+            </article>
+            <article className="medicine-product-card medicine-product-card-boundary">
+              <span>Не входит автоматически</span>
+              <p>
+                Новая аудитория после утверждения сценария, дополнительные
+                claims, съёмка, перевод, отдельные озвучки, медиа-размещение,
+                срочность и рабочие исходники. Это фиксируем отдельными
+                строками.
+              </p>
+            </article>
+          </div>
+
+          <div className="medicine-level-grid">
+            {productLevels.map((item) => (
+              <article key={item.label}>
+                <span>{item.label}</span>
+                <strong>{item.price}</strong>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+          <div className="medicine-product-actions">
+            <a
+              className="medicine-button medicine-button-primary"
+              href="/medicine/price"
+            >
+              Подробный ценовой гайд <ArrowRight aria-hidden="true" />
+            </a>
+            <a className="medicine-text-link" href="#website-lead-form">
+              Получить смету под препарат <ArrowRight aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="medicine-section medicine-tasks" id="tasks">
+        <div className="medicine-container">
+          <div className="medicine-section-head medicine-section-head-row">
+            <div>
+              <p className="medicine-eyebrow">Таксономия задач</p>
+              <h2>Не только механизм действия</h2>
+            </div>
+            <p>
+              Входим через один препарат и одну задачу. Если материал работает,
+              расширяем его в серию, портфель или кампанию — без пересборки
+              визуального языка с нуля.
+            </p>
+          </div>
+          <div className="medicine-task-grid">
+            {pharmaTasks.map((item, index) => (
+              <article key={item.title}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="medicine-section" id="formats">
         <div className="medicine-container">
           <div className="medicine-section-head">
             <p className="medicine-eyebrow">Форматы</p>
-            <h2>
-              Собираем систему касаний
-            </h2>
+            <h2>Собираем систему касаний</h2>
           </div>
           <div className="medicine-card-grid">
             {formats.map((item) => (
@@ -314,7 +491,7 @@ export default function MedicinePage() {
         </div>
       </section>
 
-      <section className="medicine-section medicine-cases">
+      <section className="medicine-section medicine-cases" id="cases">
         <div className="medicine-container">
           <div className="medicine-section-head medicine-section-head-row">
             <div>
@@ -353,13 +530,15 @@ export default function MedicinePage() {
           </div>
           <div className="medicine-expert-copy">
             <p className="medicine-eyebrow">В команде эксперт</p>
-            <h2>Андрей Царёв помогает объяснять сложную медицинскую механику</h2>
-                        <p>
+            <h2>
+              Андрей Царёв помогает объяснять сложную медицинскую механику
+            </h2>
+            <p>
               У Андрея есть научный опыт: ФБМФ МФТИ, лаборатория структурной
               биологии ионных каналов ИБХ РАН, публикации по молекулярной
-              биофизике, ЯМР-структурам, антимикробным пептидам и Ly6/uPAR-белкам.
-              Поэтому сначала разбираемся, что происходит на уровне молекулы и
-              где это можно показать честно.
+              биофизике, ЯМР-структурам, антимикробным пептидам и
+              Ly6/uPAR-белкам. Поэтому сначала разбираемся, что происходит на
+              уровне молекулы и где это можно показать честно.
             </p>
             <div className="medicine-tag-row">
               {scienceTags.map((tag) => (
@@ -428,9 +607,9 @@ export default function MedicinePage() {
           <div>
             <p className="medicine-eyebrow">Процесс</p>
             <h2>Работаем прозрачно и четко</h2>
-                        <p>
-              Сначала фиксируем смысл, ограничения и проверку. Так меньше
-              тумана в начале и меньше лишних правок в конце.
+            <p>
+              Сначала фиксируем смысл, ограничения и проверку. Так меньше тумана
+              в начале и меньше лишних правок в конце.
             </p>
           </div>
           <ol className="medicine-process-list">
@@ -449,7 +628,7 @@ export default function MedicinePage() {
           <ShieldCheck aria-hidden="true" />
           <div>
             <h2>Наша работа - решить задачу</h2>
-                        <p>
+            <p>
               Формулировки и научную основу даёт клиент. Мы превращаем их в
               понятные материалы для продаж: ролики, карточки, слайды и короткие
               версии для разных каналов.
@@ -476,7 +655,10 @@ export default function MedicinePage() {
         <div className="medicine-container medicine-final-inner">
           <div>
             <p className="medicine-eyebrow">Следующий шаг</p>
-            <h2>Покажите препарат, платформу или технологию. Мы предложим лучшее решение для его продаж.</h2>
+            <h2>
+              Покажите препарат, платформу или технологию. Мы предложим лучшее
+              решение для его продаж.
+            </h2>
           </div>
           <div className="medicine-final-actions">
             <a

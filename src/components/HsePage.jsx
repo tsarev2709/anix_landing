@@ -32,17 +32,16 @@ const emailUrl = 'mailto:studio@anix-ai.pro';
 
 const navLinks = [
   { label: 'Главная', href: '/' },
-  { label: 'Форматы', href: '#formats' },
-  { label: 'Эксперт', href: '#expert' },
+  { label: 'Продукт', href: '#product' },
+  { label: 'Сценарии', href: '#tasks' },
   { label: 'Демо', href: '/hse/mvp' },
-  { label: 'Medicine', href: '/medicine' },
-  { label: 'CEO', href: '/ceo' },
+  { label: 'Цены', href: '/hse/price' },
 ];
 
 const heroStats = [
-  ['5-7', 'коротких роликов для первого пилота'],
-  ['QR', 'доступ к материалам прямо на объекте'],
-  ['Правила', 'карточки, тесты, напоминания, сценарии'],
+  ['5–7', 'коротких модулей в системе'],
+  ['7 дней', 'обычный срок ролика 1 минута'],
+  ['QR / LMS', 'доступ и передача материалов'],
 ];
 
 const painPoints = [
@@ -147,6 +146,59 @@ const process = [
   'Смотрим первые метрики и решаем, что масштабировать: темы, площадки, форматы, маскота, годовую кампанию.',
 ];
 
+const hseProductLevels = [
+  {
+    label: 'Пилот одного сценария',
+    price: 'от 350 тыс. ₽',
+    text: 'Один объект, одна группа людей и один критический риск.',
+  },
+  {
+    label: 'Модуль или серия',
+    price: 'от 900 тыс. ₽',
+    text: '5–7 коротких модулей, вопросы, QR-доступ или пакет для LMS.',
+  },
+  {
+    label: 'Обновление библиотеки',
+    price: 'от 150 тыс. ₽/мес.',
+    text: 'Новые правила, версии под объекты и актуализация при изменении инструкций.',
+  },
+];
+
+const hseTasks = [
+  {
+    title: 'Вводный onboarding',
+    text: 'Критические правила объекта для новых сотрудников до первого выхода в рабочую зону.',
+  },
+  {
+    title: 'Подрядчики и сервисные бригады',
+    text: 'Короткая объектная подготовка для конкретной категории людей, а не общий курс «про безопасность».',
+  },
+  {
+    title: 'Сценарии реального риска',
+    text: 'Высота, транспорт, LOTO, электричество, СИЗ, огневые работы, замкнутые пространства и другие риски площадки.',
+  },
+  {
+    title: 'Жизненно важные правила',
+    text: 'Серия повторяющихся касаний: ролики, карточки, короткие тесты и материалы для внутренних каналов.',
+  },
+  {
+    title: 'Новое оборудование или процесс',
+    text: 'Показываем безопасную последовательность действий до того, как ошибка произойдёт в реальной смене.',
+  },
+  {
+    title: 'Пожарная и аварийная готовность',
+    text: 'Роли, первые действия, маршруты и типовые ошибки в коротких ситуационных эпизодах.',
+  },
+  {
+    title: 'Тестирование и подтверждение',
+    text: 'Проверочные вопросы, логика прохождения и простой отчёт ответственному сотруднику.',
+  },
+  {
+    title: 'QR, LMS и обновления',
+    text: 'Доступ на объекте, передача материалов во внутреннюю систему и обновление при изменении инструкций.',
+  },
+];
+
 function IconCard({ item }) {
   const Icon = item.icon;
 
@@ -162,7 +214,7 @@ function IconCard({ item }) {
 export default function HsePage() {
   return (
     <main className="hse-page">
-<header className="hse-header">
+      <header className="hse-header">
         <nav className="hse-header-inner" aria-label="Anix HSE">
           <a className="hse-logo" href="/" aria-label="Anix Studio">
             <img src={logo} alt="Anix" />
@@ -196,12 +248,12 @@ export default function HsePage() {
           <p className="hse-eyebrow">
             Охрана труда / промышленная безопасность
           </p>
-          <h1>Делаем правила безопасности запоминаемыми</h1>
+          <h1>Видео по охране труда, которое показывает реальный риск</h1>
           <p className="hse-lead">
-            Anix собирает серии материалов для отделов охраны труда: ролики,
-            карточки, страницы по QR-коду, тесты, инфографику, тексты для
-            внутренних каналов и годовые кампании там, где инструкции должны
-            предотвращать инциденты.
+            Собираем не отдельный ролик по охране труда, а 5–7 коротких
+            onboarding-модулей для новых сотрудников и подрядчиков: реальные
+            сценарии риска, проверочные вопросы, QR-доступ и передача материалов
+            в LMS или внутреннюю систему.
           </p>
           <div className="hse-actions">
             <a
@@ -216,6 +268,10 @@ export default function HsePage() {
             <a className="hse-button hse-button-secondary" href="/hse/mvp">
               <ShieldCheck aria-hidden="true" />
               Открыть демополигон
+            </a>
+            <a className="hse-button hse-button-secondary" href="/hse/price">
+              <ClipboardList aria-hidden="true" />
+              Цены и состав сметы
             </a>
           </div>
         </div>
@@ -250,6 +306,121 @@ export default function HsePage() {
               Поэтому мы переводим требования в короткие визуальные эпизоды и
               работаем вместе со службой охраны труда.
             </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="hse-section hse-product" id="product">
+        <div className="hse-container">
+          <div className="hse-product-head">
+            <div>
+              <p className="hse-eyebrow">Флагманский продукт</p>
+              <h2>HSE Onboarding Module</h2>
+            </div>
+            <div>
+              <p>
+                Дополняет обязательный инструктаж. Стандартизирует повторяющееся
+                объяснение, показывает риски конкретного объекта и помогает
+                проверить, что новичок понял правильное действие.
+              </p>
+              <div
+                className="hse-product-tags"
+                aria-label="Состав HSE Onboarding Module"
+              >
+                <span>5–7 микро-модулей</span>
+                <span>реальные риски</span>
+                <span>тестирование</span>
+                <span>QR / LMS</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="hse-product-grid">
+            <article className="hse-product-card hse-product-card-main">
+              <span>Рабочий контур</span>
+              <h3>Один объект. Одна группа. Понятный результат.</h3>
+              <ul>
+                <li>
+                  <CheckCircle2 aria-hidden="true" /> собираем критические
+                  правила и реальные ситуации
+                </li>
+                <li>
+                  <CheckCircle2 aria-hidden="true" /> пишем короткие сценарии
+                  «риск — последствие — действие»
+                </li>
+                <li>
+                  <CheckCircle2 aria-hidden="true" /> производим ролики и
+                  проверочные вопросы
+                </li>
+                <li>
+                  <CheckCircle2 aria-hidden="true" /> даём QR-доступ или пакет
+                  для внутренней системы
+                </li>
+                <li>
+                  <CheckCircle2 aria-hidden="true" /> передаём материалы и план
+                  обновлений
+                </li>
+              </ul>
+            </article>
+            <article className="hse-product-card">
+              <span>Правила правок</span>
+              <strong>2 раунда</strong>
+              <p>
+                Один раунд по сценариям и один по собранным материалам. Служба
+                заказчика передаёт консолидированные комментарии через одного
+                ответственного.
+              </p>
+            </article>
+            <article className="hse-product-card hse-product-card-boundary">
+              <span>Ограничение</span>
+              <p>
+                Модуль не заменяет обязательные процедуры обучения, инструктаж
+                или ответственность за допуск. Глубокую LMS-интеграцию и новые
+                сценарии после утверждения считаем отдельно.
+              </p>
+            </article>
+          </div>
+
+          <div className="hse-level-grid">
+            {hseProductLevels.map((item) => (
+              <article key={item.label}>
+                <span>{item.label}</span>
+                <strong>{item.price}</strong>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+          <div className="hse-product-actions">
+            <a className="hse-button hse-button-primary" href="/hse/price">
+              Подробный ценовой гайд <ArrowRight aria-hidden="true" />
+            </a>
+            <a className="hse-product-link" href="/hse/mvp">
+              Открыть HSE-демо <ArrowRight aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="hse-section hse-tasks" id="tasks">
+        <div className="hse-container">
+          <div className="hse-section-head hse-section-head-row">
+            <div>
+              <p className="hse-eyebrow">Таксономия задач</p>
+              <h2>От вводного инструктажа до обновляемой библиотеки</h2>
+            </div>
+            <p>
+              Входим через ближайший допуск или один повторяющийся риск. После
+              пилота расширяем систему на другие правила, группы и объекты.
+            </p>
+          </div>
+          <div className="hse-task-grid">
+            {hseTasks.map((item, index) => (
+              <article key={item.title}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
