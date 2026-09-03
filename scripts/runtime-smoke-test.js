@@ -14,9 +14,6 @@ const routes = [
   { path: '/medicine/', marker: 'class="medicine-page"' },
   { path: '/hse/', marker: 'class="hse-page"' },
   { path: '/andrey-tsarev/', marker: 'class="andrey-page"', extraMarker: 'Собираю сложные идеи в продукты, истории и работающие системы' },
-  { path: '/stoimost/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит ролик для фармы и охраны труда' },
-  { path: '/medicine/price/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит ролик для фармкомпании' },
-  { path: '/hse/price/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит видео по охране труда' },
   { path: '/animation/', marker: 'class="animation-page"', extraMarker: 'Создание анимационных роликов для сложных продуктов' },
   { path: '/ai-video/', marker: 'class="ai-video-page"', extraMarker: 'AI-видео с режиссурой, продакшном и вкусом' },
   { path: '/why_it_works/', marker: 'class="why-page"', extraMarker: 'Мозг любит истории. Особенно когда всё сложно.' },
@@ -29,6 +26,82 @@ const routes = [
   { path: '/cases/little-prince/', marker: 'class="case-page"', extraMarker: 'Маленький принц' },
   { path: '/cases/borodino/', marker: 'class="case-page"', extraMarker: 'Бородино' },
 ];
+
+const pricingRoutes = [
+  { path: '/stoimost/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит ролик для фармы и охраны труда' },
+  { path: '/medicine/price/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит ролик для фармкомпании' },
+  { path: '/hse/price/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит видео по охране труда' },
+];
+
+const pricingBatchPath = '/runtime-smoke-pricing.html';
+
+function createPricingBatchHtml() {
+  const routeSpecs = JSON.stringify(pricingRoutes);
+  return `<!doctype html>
+<html lang="ru">
+  <head><meta charset="utf-8"><title>Pricing route smoke test</title></head>
+  <body>
+    <ol id="smoke-results"></ol>
+    <script>
+      const routes = ${routeSpecs};
+      const results = document.getElementById('smoke-results');
+
+      function renderResult(route, status, message) {
+        const item = document.createElement('li');
+        item.dataset.route = route.path;
+        item.dataset.status = status;
+        item.textContent = message;
+        results.appendChild(item);
+      }
+
+      function verifyRoute(route) {
+        return new Promise((resolve, reject) => {
+          const frame = document.createElement('iframe');
+          frame.hidden = true;
+          let attempts = 0;
+
+          frame.addEventListener('load', () => {
+            const probe = () => {
+              attempts += 1;
+              const html = frame.contentDocument.documentElement.outerHTML;
+              const rendered = html.includes(route.marker)
+                && html.includes(route.extraMarker)
+                && html.includes('id="website-lead-form"')
+                && !html.includes('data-seo-shell="true"');
+
+              if (rendered) {
+                frame.remove();
+                resolve();
+              } else if (attempts >= 160) {
+                frame.remove();
+                reject(new Error('Required runtime markers did not appear'));
+              } else {
+                setTimeout(probe, 50);
+              }
+            };
+            probe();
+          }, { once: true });
+
+          frame.src = route.path;
+          document.body.appendChild(frame);
+        });
+      }
+
+      (async () => {
+        for (const route of routes) {
+          try {
+            await verifyRoute(route);
+            renderResult(route, 'pass', 'PASS ' + route.path);
+          } catch (error) {
+            renderResult(route, 'fail', 'FAIL ' + route.path + ': ' + error.message);
+          }
+        }
+        document.documentElement.dataset.smokeReady = 'true';
+      })();
+    </script>
+  </body>
+</html>`;
+}
 
 function findChrome() {
   const candidates = [process.env.CHROME_PATH, 'google-chrome-stable', 'google-chrome', 'chromium', 'chromium-browser'].filter(Boolean);
@@ -64,16 +137,12 @@ function runRoute(chromePath, route) {
   const profileDir = fs.mkdtempSync(path.join(os.tmpdir(), 'anix-smoke-chrome-'));
   const url = `${baseUrl}${route.path}`;
   const result = spawnSync(chromePath, [
-    '--headless=new','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--disable-background-networking','--disable-default-apps','--disable-extensions','--disable-sync','--no-first-run','--enable-logging=stderr','--virtual-time-budget=8000',`--user-data-dir=${profileDir}`,'--dump-dom',url,
+    '--headless=new','--no-sandbox','--disable-gpu','--disable-dev-shm-usage','--disable-background-networking','--disable-default-apps','--disable-extensions','--disable-sync','--no-first-run','--enable-logging=stderr',`--virtual-time-budget=${route.virtualTimeBudget || 8000}`,`--user-data-dir=${profileDir}`,'--dump-dom',url,
   ], {
     encoding: 'utf8',
-    timeout: route.path === '/andrey-tsarev/' ? 60000 : 30000,
+    timeout: route.timeoutMs || (route.path === '/andrey-tsarev/' ? 60000 : 30000),
     maxBuffer: 20 * 1024 * 1024,
   });
-
-  if (process.platform === 'linux') {
-    spawnSync('pkill', ['-f', profileDir], { stdio: 'ignore' });
-  }
 
   try {
     fs.rmSync(profileDir, {
@@ -96,24 +165,39 @@ function runRoute(chromePath, route) {
   if (fatalRuntimePattern.test(stderr)) throw new Error(`Runtime error on ${route.path}:\n${stderr}`);
   if (!dom.includes(route.marker)) throw new Error(`React did not render ${route.path}. Expected DOM marker ${route.marker}. The page may have crashed and remained on the static SEO shell.`);
   if (route.extraMarker && !dom.includes(route.extraMarker)) throw new Error(`Route ${route.path} rendered, but required marker ${route.extraMarker} is missing.`);
-  if (route.path !== '/andrey-tsarev/' && !dom.includes('id="website-lead-form"')) throw new Error(`Route ${route.path} is missing the shared website lead form.`);
-  if (dom.includes('data-seo-shell="true"')) throw new Error(`Route ${route.path} still contains the static SEO shell after the runtime render.`);
+  for (const marker of route.extraMarkers || []) {
+    if (!dom.includes(marker)) throw new Error(`Route ${route.path} rendered, but required marker ${marker} is missing.`);
+  }
+  if (!route.skipLeadForm && route.path !== '/andrey-tsarev/' && !dom.includes('id="website-lead-form"')) throw new Error(`Route ${route.path} is missing the shared website lead form.`);
+  if (!route.skipSeoShellCheck && dom.includes('data-seo-shell="true"')) throw new Error(`Route ${route.path} still contains the static SEO shell after the runtime render.`);
   console.log(`[runtime-smoke] PASS ${route.path}`);
 }
 
 async function main() {
   if (!fs.existsSync(path.join(buildDir, 'index.html'))) throw new Error('build/index.html is missing. Run npm run build before the runtime smoke test.');
   const chromePath = findChrome();
+  const pricingBatchFile = path.join(buildDir, pricingBatchPath.slice(1));
+  fs.writeFileSync(pricingBatchFile, createPricingBatchHtml(), 'utf8');
   console.log(`[runtime-smoke] Browser: ${chromePath}`);
   const server = spawn('python3', ['-m', 'http.server', String(port), '--bind', '127.0.0.1', '--directory', buildDir], { stdio: ['ignore', 'pipe', 'pipe'] });
   let serverError = '';
   server.stderr.on('data', (chunk) => { serverError += chunk.toString(); });
   try {
     await waitForServer();
+    runRoute(chromePath, {
+      path: pricingBatchPath,
+      marker: 'data-smoke-ready="true"',
+      extraMarkers: pricingRoutes.map((route) => `data-route="${route.path}" data-status="pass"`),
+      skipLeadForm: true,
+      skipSeoShellCheck: true,
+      virtualTimeBudget: 30000,
+      timeoutMs: 60000,
+    });
     for (const route of routes) runRoute(chromePath, route);
     console.log('[runtime-smoke] All production routes rendered successfully.');
   } finally {
     server.kill('SIGTERM');
+    fs.rmSync(pricingBatchFile, { force: true });
   }
   if (server.exitCode && server.exitCode !== 0) throw new Error(`Static server exited unexpectedly: ${serverError}`);
 }
