@@ -85,6 +85,22 @@ describe('WebsiteLeadForm', () => {
     expect(global.fetch).not.toHaveBeenCalled();
   });
 
+  test.each(['/stoimost/', '/medicine/price/', '/hse/price/'])(
+    'is available on the commercial route %s',
+    async (routePath) => {
+      TestUtils.act(() => root.unmount());
+      window.history.replaceState({}, '', routePath);
+      root = createRoot(container);
+
+      await TestUtils.act(async () => {
+        root.render(<WebsiteLeadForm />);
+        await Promise.resolve();
+      });
+
+      expect(container.querySelector('#website-lead-form')).toBeTruthy();
+    }
+  );
+
   test('submits once, opens the success dialog and leaves a confirmation', async () => {
     const change = (name, value) => {
       const field = container.querySelector(`[name="${name}"]`);
