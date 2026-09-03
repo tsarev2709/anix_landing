@@ -8,6 +8,7 @@ import {
   Pill,
   PlayCircle,
   Sparkles,
+  WalletCards,
   WandSparkles,
 } from 'lucide-react';
 import { toPublicHref } from '../seo/SeoHead';
@@ -27,6 +28,9 @@ const pageLinks = [
   { label: 'Кейсы', href: '/cases' },
   { label: 'Medicine', href: '/medicine' },
   { label: 'HSE', href: '/hse' },
+  { label: 'Стоимость и закупка', href: '/stoimost' },
+  { label: 'Цена ролика для фармы', href: '/medicine/price' },
+  { label: 'Цена видео по охране труда', href: '/hse/price' },
   { label: 'CEO', href: '/ceo' },
   { label: 'Почему это работает', href: '/why_it_works' },
   { label: 'Проект «Рыбки»', href: '/rybki' },
@@ -60,6 +64,11 @@ const directionLinks = [
     label: 'Охрана труда и HSE',
     href: '/hse',
     icon: HardHat,
+  },
+  {
+    label: 'Цены и условия закупки',
+    href: '/stoimost',
+    icon: WalletCards,
   },
   {
     label: 'CEO Anix',
@@ -166,7 +175,10 @@ export default function SiteFooter() {
             <span>ИНН 9714017729</span>
             <span>КПП 772701001</span>
           </div>
-          <nav className="anix-site-footer__legal-links" aria-label="Юридическая информация">
+          <nav
+            className="anix-site-footer__legal-links"
+            aria-label="Юридическая информация"
+          >
             {legalLinks.map((item) => (
               <a href={toPublicHref(item.href)} key={item.href}>
                 {item.label}

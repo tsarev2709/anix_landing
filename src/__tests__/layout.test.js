@@ -46,6 +46,24 @@ describe('current ANIX landing', () => {
     expect(hrefs).toContain('/ceo/');
   });
 
+  test('routes the first screen into both flagship products', () => {
+    TestUtils.act(() => {
+      root.render(<App />);
+    });
+
+    const links = Array.from(
+      container.querySelectorAll('.d1-hero-solutions a')
+    );
+    expect(links.map((link) => link.textContent.trim())).toEqual([
+      'Решения для фармы',
+      'Решения по охране труда',
+    ]);
+    expect(links.map((link) => link.getAttribute('href'))).toEqual([
+      '/medicine',
+      '/hse',
+    ]);
+  });
+
   test('showreel is click-to-load and does not mount the iframe initially', () => {
     TestUtils.act(() => {
       root.render(<App />);

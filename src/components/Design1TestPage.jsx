@@ -129,8 +129,8 @@ const metrics = [
     label: 'к переходам и откликам в кейсе ТПЭС',
   },
   {
-    value: '3–7 дней',
-    label: 'для быстрых форматов',
+    value: '7 дней',
+    label: 'обычный срок для ролика 1 минута',
   },
 ];
 
@@ -634,6 +634,19 @@ function Design1TestPage() {
               Смотреть кейсы
               <ArrowRight aria-hidden="true" />
             </a>
+          </div>
+          <div className="d1-hero-solutions" aria-label="Отраслевые решения">
+            <span>Выберите направление</span>
+            <div>
+              <a href="/medicine">
+                Решения для фармы
+                <ArrowRight aria-hidden="true" />
+              </a>
+              <a href="/hse">
+                Решения по охране труда
+                <ArrowRight aria-hidden="true" />
+              </a>
+            </div>
           </div>
         </div>
 

@@ -19,7 +19,8 @@ const BRAND_KNOWS_ABOUT = [
   'видеоконтент для мероприятий',
 ];
 
-const normalizeBrandText = (value = '') => String(value).replaceAll('ANIX', 'Anix');
+const normalizeBrandText = (value = '') =>
+  String(value).replaceAll('ANIX', 'Anix');
 
 const normalizePath = (value = '/') => {
   const withoutQuery = value.split('?')[0].split('#')[0] || '/';
@@ -62,7 +63,8 @@ export const toPublicHref = (value = '/') => {
   if (!value.startsWith('/') || value.startsWith('//')) return value;
   const [pathname, suffix = ''] = value.split(/(?=[?#])/u, 2);
   const normalized = normalizePath(pathname);
-  const isKnownPage = Boolean(seoConfig.routes[normalized]) || normalized.startsWith('/hse/mvp');
+  const isKnownPage =
+    Boolean(seoConfig.routes[normalized]) || normalized.startsWith('/hse/mvp');
 
   if (!isKnownPage || normalized === '/') return value;
   return `${normalized}/${suffix}`;
@@ -127,6 +129,22 @@ export const buildStructuredData = (route) => {
       provider: organizationSchema,
       areaServed: organizationSchema.areaServed,
       inLanguage: 'ru-RU',
+      ...(route.offers?.length
+        ? {
+            hasOfferCatalog: {
+              '@type': 'OfferCatalog',
+              name: `Цены: ${normalizeBrandText(route.serviceType)}`,
+              itemListElement: route.offers.map((offer) => ({
+                '@type': 'Offer',
+                name: normalizeBrandText(offer.name),
+                description: normalizeBrandText(offer.description),
+                price: offer.price,
+                priceCurrency: offer.priceCurrency || 'RUB',
+                url,
+              })),
+            },
+          }
+        : {}),
     });
   } else if (route.kind === 'creativeWork' || route.kind === 'case') {
     schemas.push({
@@ -208,7 +226,9 @@ export default function SeoHead({ path = window.location.pathname }) {
   const title = normalizeBrandText(route.title);
   const description = normalizeBrandText(route.description);
   const ogTitle = normalizeBrandText(route.ogTitle || route.title);
-  const ogDescription = normalizeBrandText(route.ogDescription || route.description);
+  const ogDescription = normalizeBrandText(
+    route.ogDescription || route.description
+  );
 
   return (
     <Helmet>
@@ -216,9 +236,15 @@ export default function SeoHead({ path = window.location.pathname }) {
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="robots" content={robots} />
-      {verification.google ? <meta name="google-site-verification" content={verification.google} /> : null}
-      {verification.yandex ? <meta name="yandex-verification" content={verification.yandex} /> : null}
-      {route.kind === 'notFound' ? null : <link rel="canonical" href={canonical} />}
+      {verification.google ? (
+        <meta name="google-site-verification" content={verification.google} />
+      ) : null}
+      {verification.yandex ? (
+        <meta name="yandex-verification" content={verification.yandex} />
+      ) : null}
+      {route.kind === 'notFound' ? null : (
+        <link rel="canonical" href={canonical} />
+      )}
       <meta property="og:title" content={ogTitle} />
       <meta property="og:description" content={ogDescription} />
       <meta property="og:url" content={canonical} />

@@ -77,6 +77,19 @@ const PAGE_PROFILES = {
       'Покажите кейсы с результатами',
     ],
   },
+  pricing: {
+    kind: 'pricing',
+    vertical: null,
+    label: 'Цены Anix',
+    intro:
+      'Вы изучаете стоимость и условия работы Anix. Могу объяснить состав сметы, подобрать уровень продукта или подготовить следующий шаг для закупки.',
+    options: [
+      'Какой пилот подойдёт моей задаче?',
+      'Что входит в стоимость?',
+      'Как проходят правки и приёмка?',
+      'Что передать службе закупок?',
+    ],
+  },
   team: {
     kind: 'team',
     vertical: null,
@@ -114,12 +127,21 @@ export function normalizeAiChatPath(value = '/') {
 }
 
 function profileForPath(path) {
-  if (path === '/medicine' || path.startsWith('/cases/medicine')) {
+  if (
+    path === '/medicine' ||
+    path.startsWith('/medicine/') ||
+    path.startsWith('/cases/medicine')
+  ) {
     return PAGE_PROFILES.medicine;
   }
-  if (path === '/hse' || path.startsWith('/cases/hse')) {
+  if (
+    path === '/hse' ||
+    path.startsWith('/hse/') ||
+    path.startsWith('/cases/hse')
+  ) {
     return PAGE_PROFILES.hse;
   }
+  if (path === '/stoimost') return PAGE_PROFILES.pricing;
   if (path === '/animation' || path === '/ai-video') {
     return PAGE_PROFILES.animation;
   }

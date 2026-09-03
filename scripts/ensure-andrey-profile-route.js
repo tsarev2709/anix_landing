@@ -23,12 +23,28 @@ async function main() {
     "const CeoPage = lazy(() => import('./components/CeoPage'));\nconst AndreyProfilePage = lazy(() => import('./components/AndreyProfilePage'));",
     'page import anchor',
   );
-  indexSource = replaceOnce(
-    indexSource,
-    "    case '/ceo': renderInLayout(<CeoPage />); break;",
-    "    case '/ceo': renderInLayout(<CeoPage />); break;\n    case '/andrey-tsarev': renderInLayout(<AndreyProfilePage />); break;",
-    'route anchor',
-  );
+  if (!indexSource.includes("case '/andrey-tsarev':")) {
+    const compactCeoRoute = "    case '/ceo': renderInLayout(<CeoPage />); break;";
+    const formattedCeoRoute = "    case '/ceo':\n      renderInLayout(<CeoPage />);\n      break;";
+    const compactProfileRoute =
+      "    case '/andrey-tsarev': renderInLayout(<AndreyProfilePage />); break;";
+    const formattedProfileRoute =
+      "    case '/andrey-tsarev':\n      renderInLayout(<AndreyProfilePage />);\n      break;";
+
+    if (indexSource.includes(compactCeoRoute)) {
+      indexSource = indexSource.replace(
+        compactCeoRoute,
+        `${compactCeoRoute}\n${compactProfileRoute}`,
+      );
+    } else if (indexSource.includes(formattedCeoRoute)) {
+      indexSource = indexSource.replace(
+        formattedCeoRoute,
+        `${formattedCeoRoute}\n${formattedProfileRoute}`,
+      );
+    } else {
+      throw new Error('[andrey-profile] Cannot find route anchor');
+    }
+  }
   fs.writeFileSync(indexPath, indexSource);
 
   const seo = JSON.parse(fs.readFileSync(routesPath, 'utf8'));
@@ -68,8 +84,8 @@ async function main() {
   let staticRoutes = fs.readFileSync(staticRoutesPath, 'utf8');
   staticRoutes = replaceOnce(
     staticRoutes,
-    "  'medicine','why_it_works','ceo','hse','animation','ai-video','rybki','rybki_page',",
-    "  'medicine','why_it_works','ceo','andrey-tsarev','hse','animation','ai-video','rybki','rybki_page',",
+    "  'medicine','medicine/price','why_it_works','ceo','hse','hse/price','stoimost','animation','ai-video','rybki','rybki_page',",
+    "  'medicine','medicine/price','why_it_works','ceo','andrey-tsarev','hse','hse/price','stoimost','animation','ai-video','rybki','rybki_page',",
     'static route anchor',
   );
   fs.writeFileSync(staticRoutesPath, staticRoutes);

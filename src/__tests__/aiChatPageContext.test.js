@@ -36,4 +36,17 @@ describe('AI chat page context', () => {
     expect(cases.kind).toBe('catalog');
     expect(cases.options.join(' ')).toMatch(/измеримым результатом/);
   });
+
+  test('keeps pricing pages inside their commercial context', () => {
+    const medicinePrice = resolveAiChatPageContext({
+      pathname: '/medicine/price/',
+    });
+    const hsePrice = resolveAiChatPageContext({ pathname: '/hse/price/' });
+    const pricingHub = resolveAiChatPageContext({ pathname: '/stoimost/' });
+
+    expect(medicinePrice.vertical).toBe('medicine');
+    expect(hsePrice.vertical).toBe('hse');
+    expect(pricingHub.kind).toBe('pricing');
+    expect(pricingHub.options.join(' ')).toMatch(/сметы|закупок/);
+  });
 });
