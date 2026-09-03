@@ -928,6 +928,18 @@
   -webkit-text-fill-color: var(--hse-black);
 }
 
+.hse-page .hse-header-cta-secondary,
+.hse-page .hse-header-cta-secondary * {
+  color: var(--hse-black) !important;
+  -webkit-text-fill-color: var(--hse-black);
+}
+
+.hse-page .hse-header-cta-secondary:hover,
+.hse-page .hse-header-cta-secondary:hover * {
+  color: var(--hse-white) !important;
+  -webkit-text-fill-color: var(--hse-white);
+}
+
 /* content-fixes-part-2 */
 .hse-page *,
 .hse-page *::before,
