@@ -32,6 +32,16 @@ import multonCaseImage from '../images/cases/multon-partners.webp';
 import startechCaseImage from '../images/cases/startech.webp';
 import tpesCaseImage from '../images/cases/tpes.webp';
 import yurrobotCaseImage from '../images/cases/yurrobot.webp';
+import avineuroLogo from '../images/client-logos/avineuro.png';
+import hemotechLogo from '../images/client-logos/hemotech.png';
+import koloboxLogo from '../images/client-logos/kolobox.svg';
+import miptEndowmentLogo from '../images/client-logos/mipt-endowment.svg';
+import mosfarmaLogo from '../images/client-logos/mosfarma.svg';
+import multonPartnersLogo from '../images/client-logos/multon-partners.svg';
+import rchkLogo from '../images/client-logos/rchk.svg';
+import startechLogo from '../images/client-logos/startech.svg';
+import tpesLogo from '../images/client-logos/tpes.png';
+import urrobotLogo from '../images/client-logos/urrobot.png';
 import '../Design1TestPage.css';
 
 const telegramUrl = 'https://t.me/anix_helper';
@@ -46,6 +56,64 @@ const heroLinks = {
   videoFolder: videoFolderUrl,
   email: 'mailto:studio@anix-ai.pro',
 };
+
+const clientLogos = [
+  {
+    name: 'HemoTech AI',
+    image: hemotechLogo,
+    href: 'https://hemotech.ai/',
+    className: 'd1-client-logo-hemotech',
+  },
+  { name: 'ТПЭС', image: tpesLogo, href: 'https://tpes-iest.com/' },
+  {
+    name: 'Фонд целевого капитала МФТИ',
+    image: miptEndowmentLogo,
+    href: 'https://fund.mipt.ru/',
+    className: 'd1-client-logo-wide',
+  },
+  {
+    name: 'Мосфарма',
+    image: mosfarmaLogo,
+    href: 'https://mosfarma.ru/',
+    className: 'd1-client-logo-wide',
+  },
+  {
+    name: 'Мултон Партнерс',
+    image: multonPartnersLogo,
+    href: 'https://multonpartners.ru/',
+    className: 'd1-client-logo-wide',
+  },
+  {
+    name: 'KOLOBOX',
+    image: koloboxLogo,
+    href: 'https://kolo-box.ru/',
+    className: 'd1-client-logo-dark d1-client-logo-wide',
+  },
+  {
+    name: 'ЮРРОБОТ',
+    image: urrobotLogo,
+    href: 'https://urrobot.tech/',
+    wordmark: 'ЮРРОБОТ',
+  },
+  {
+    name: 'Startech',
+    image: startechLogo,
+    href: 'https://startech.vc/ru',
+    className: 'd1-client-logo-dark',
+  },
+  {
+    name: 'Авинейро',
+    image: avineuroLogo,
+    href: 'https://www.avineuro.ru/',
+    className: 'd1-client-logo-avineuro',
+  },
+  {
+    name: 'Развитие человеческого капитала',
+    image: rchkLogo,
+    href: 'https://рчк.москва/',
+    wordmark: 'РЧК',
+  },
+];
 
 const metrics = [
   {
@@ -337,6 +405,32 @@ function ServiceCard({ item }) {
   );
 }
 
+function ClientLogo({ item, duplicate = false }) {
+  return (
+    <a
+      className={`d1-client-logo-card ${item.className || ''}`}
+      href={item.href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={duplicate ? undefined : `Официальный сайт ${item.name}`}
+      aria-hidden={duplicate ? 'true' : undefined}
+      tabIndex={duplicate ? -1 : undefined}
+    >
+      <span className="d1-client-logo-media">
+        <img
+          src={item.image}
+          alt={duplicate ? '' : item.name}
+          loading="lazy"
+          decoding="async"
+        />
+        {item.wordmark ? (
+          <span className="d1-client-logo-wordmark">{item.wordmark}</span>
+        ) : null}
+      </span>
+    </a>
+  );
+}
+
 function CaseCard({ item }) {
   return (
     <article className="d1-case-card">
@@ -601,6 +695,30 @@ function Design1TestPage() {
             {services.map((item) => (
               <ServiceCard item={item} key={item.title} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="d1-section d1-clients"
+        aria-labelledby="clients-title"
+      >
+        <div className="d1-container d1-clients-heading">
+          <p className="d1-eyebrow">Клиенты из наших кейсов</p>
+          <h2 id="clients-title">Компании, с которыми мы уже работали</h2>
+        </div>
+        <div className="d1-client-logo-marquee">
+          <div className="d1-client-logo-track">
+            <div className="d1-client-logo-group">
+              {clientLogos.map((item) => (
+                <ClientLogo item={item} key={item.name} />
+              ))}
+            </div>
+            <div className="d1-client-logo-group" aria-hidden="true">
+              {clientLogos.map((item) => (
+                <ClientLogo item={item} duplicate key={`${item.name}-copy`} />
+              ))}
+            </div>
           </div>
         </div>
       </section>

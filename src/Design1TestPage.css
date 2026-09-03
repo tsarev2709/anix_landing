@@ -2373,3 +2373,229 @@
 .d1-showreel-external:hover {
   background: #111;
 }
+
+/* Client logo marquee. Assets keep their intrinsic aspect ratio. */
+.d1-clients {
+  overflow: hidden;
+  padding-block: 72px 88px;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 420px;
+}
+
+.d1-clients-heading {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.35fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 80px);
+  align-items: end;
+  margin-bottom: 42px;
+}
+
+.d1-clients-heading .d1-eyebrow {
+  margin-bottom: 6px;
+}
+
+.d1-clients-heading h2 {
+  max-width: 980px;
+  font-size: clamp(40px, 5vw, 68px);
+}
+
+.d1-client-logo-marquee {
+  width: 100%;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 5%,
+    #000 95%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 5%,
+    #000 95%,
+    transparent
+  );
+}
+
+.d1-client-logo-track {
+  display: flex;
+  width: max-content;
+  animation: d1-client-logo-scroll 42s linear infinite;
+  will-change: transform;
+}
+
+.d1-client-logo-marquee:hover .d1-client-logo-track,
+.d1-client-logo-marquee:focus-within .d1-client-logo-track {
+  animation-play-state: paused;
+}
+
+.d1-client-logo-group {
+  display: flex;
+  gap: 16px;
+  padding-right: 16px;
+}
+
+.d1-client-logo-card {
+  display: flex;
+  flex: 0 0 clamp(210px, 18vw, 280px);
+  align-items: center;
+  justify-content: center;
+  min-height: 112px;
+  padding: 22px 28px;
+  border: 1px solid var(--d1-line);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 12px 34px rgba(17, 17, 17, 0.05);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.d1-client-logo-card:hover,
+.d1-client-logo-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(17, 17, 17, 0.28);
+  box-shadow: 0 18px 40px rgba(17, 17, 17, 0.1);
+  outline: none;
+}
+
+.d1-client-logo-card:focus-visible {
+  box-shadow:
+    0 0 0 3px var(--d1-bg),
+    0 0 0 5px var(--d1-accent-dark),
+    0 18px 40px rgba(17, 17, 17, 0.1);
+}
+
+.d1-client-logo-wide {
+  flex-basis: clamp(250px, 22vw, 340px);
+}
+
+.d1-client-logo-dark {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: #16131d;
+}
+
+.d1-client-logo-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  height: 68px;
+}
+
+.d1-client-logo-media img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 58px;
+  object-fit: contain;
+}
+
+.d1-client-logo-hemotech .d1-client-logo-media img {
+  max-height: 82px;
+}
+
+.d1-client-logo-avineuro .d1-client-logo-media img {
+  max-height: 66px;
+}
+
+.d1-client-logo-wordmark {
+  color: var(--d1-ink);
+  font-size: clamp(21px, 2vw, 28px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+
+@keyframes d1-client-logo-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (max-width: 900px) {
+  .d1-clients-heading {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 30px;
+  }
+
+  .d1-clients-heading h2 {
+    font-size: clamp(32px, 10vw, 42px);
+  }
+}
+
+@media (max-width: 640px) {
+  .design1-test .d1-clients {
+    padding-block: 44px 52px;
+  }
+
+  .d1-client-logo-marquee {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 3%,
+      #000 97%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 3%,
+      #000 97%,
+      transparent
+    );
+  }
+
+  .d1-client-logo-group {
+    gap: 10px;
+    padding-right: 10px;
+  }
+
+  .d1-client-logo-card {
+    flex-basis: 180px;
+    min-height: 88px;
+    padding: 14px 20px;
+    border-radius: 20px;
+  }
+
+  .d1-client-logo-wide {
+    flex-basis: 220px;
+  }
+
+  .d1-client-logo-media {
+    height: 54px;
+  }
+
+  .d1-client-logo-media img {
+    max-height: 44px;
+  }
+
+  .d1-client-logo-hemotech .d1-client-logo-media img {
+    max-height: 62px;
+  }
+
+  .d1-client-logo-avineuro .d1-client-logo-media img {
+    max-height: 50px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .d1-client-logo-marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .d1-client-logo-track {
+    animation: none;
+    transform: none;
+  }
+}
