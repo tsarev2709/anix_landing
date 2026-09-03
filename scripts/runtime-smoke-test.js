@@ -71,6 +71,10 @@ function runRoute(chromePath, route) {
     maxBuffer: 20 * 1024 * 1024,
   });
 
+  if (process.platform === 'linux') {
+    spawnSync('pkill', ['-f', profileDir], { stdio: 'ignore' });
+  }
+
   try {
     fs.rmSync(profileDir, {
       recursive: true,
