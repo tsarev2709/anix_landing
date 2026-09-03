@@ -13,6 +13,7 @@ const routes = [
   { path: '/', marker: 'class="design1-test"', extraMarker: 'd1-showreel-poster' },
   { path: '/medicine/', marker: 'class="medicine-page"' },
   { path: '/hse/', marker: 'class="hse-page"' },
+  { path: '/andrey-tsarev/', marker: 'class="andrey-page"', extraMarker: 'Собираю сложные идеи в продукты, истории и работающие системы' },
   { path: '/stoimost/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит ролик для фармы и охраны труда' },
   { path: '/medicine/price/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит ролик для фармкомпании' },
   { path: '/hse/price/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит видео по охране труда' },
@@ -27,7 +28,6 @@ const routes = [
   { path: '/cases/aviandr/', marker: 'class="aviandr-case-page"', extraMarker: 'Авиандр: доказательная база, которая работает на доверие' },
   { path: '/cases/little-prince/', marker: 'class="case-page"', extraMarker: 'Маленький принц' },
   { path: '/cases/borodino/', marker: 'class="case-page"', extraMarker: 'Бородино' },
-  { path: '/andrey-tsarev/', marker: 'class="andrey-page"', extraMarker: 'Собираю сложные идеи в продукты, истории и работающие системы' },
 ];
 
 function findChrome() {
