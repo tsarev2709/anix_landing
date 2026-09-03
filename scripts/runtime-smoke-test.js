@@ -71,7 +71,18 @@ function runRoute(chromePath, route) {
     maxBuffer: 20 * 1024 * 1024,
   });
 
-  fs.rmSync(profileDir, { recursive: true, force: true });
+  try {
+    fs.rmSync(profileDir, {
+      recursive: true,
+      force: true,
+      maxRetries: 5,
+      retryDelay: 100,
+    });
+  } catch (error) {
+    console.warn(
+      `[runtime-smoke] Could not remove temporary Chrome profile: ${error.message}`
+    );
+  }
   if (result.error) throw result.error;
   if (result.status !== 0) throw new Error(`Chrome failed for ${route.path} with exit code ${result.status}\n${result.stderr}`);
 
