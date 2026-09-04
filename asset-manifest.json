@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.dbbe6744.css",
-    "main.js": "/static/js/main.d7801430.js",
+    "main.js": "/static/js/main.f6dabdaf.js",
     "static/js/727.42892fec.chunk.js": "/static/js/727.42892fec.chunk.js",
     "static/css/833.17bddc9d.chunk.css": "/static/css/833.17bddc9d.chunk.css",
     "static/js/833.2e049445.chunk.js": "/static/js/833.2e049445.chunk.js",
@@ -84,7 +84,6 @@
     "static/media/alexandra-portrait.webp": "/static/media/alexandra-portrait.64af9542dd19171abf05.webp",
     "static/media/little-prince.webp": "/static/media/little-prince.89dcb347c89f4309e300.webp",
     "static/media/multon-partners.svg": "/static/media/multon-partners.a3582b91cba41758b49b5889c051f752.svg",
-    "static/media/rchk.svg": "/static/media/rchk.ce03085ee4fa4b244235165cf90ce3e5.svg",
     "static/media/kolobox.svg": "/static/media/kolobox.46045ea2355ad916938add9ac8487423.svg",
     "static/media/mosfarma.svg": "/static/media/mosfarma.a9a442a466a4998063ce9c51571b8acd.svg",
     "index.html": "/index.html",
@@ -92,6 +91,6 @@
   },
   "entrypoints": [
     "static/css/main.dbbe6744.css",
-    "static/js/main.d7801430.js"
+    "static/js/main.f6dabdaf.js"
   ]
 }
