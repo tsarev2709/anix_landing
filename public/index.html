@@ -166,7 +166,20 @@
       // catch that), so a broken deploy shows a message instead of a blank
       // page with the real cause only in devtools.
       window.__hseMvpErrorShown = false;
+      window.__hseMvpIsIgnorableError = function (error) {
+        var message = String(
+          error && error.message ? error.message : error || ''
+        );
+
+        // Browsers report ResizeObserver delivery limits through the global
+        // error event even though the observer resumes on the next frame.
+        // It is a diagnostic warning, not a failed application render.
+        return /ResizeObserver loop (?:limit exceeded|completed with undelivered notifications)/i.test(
+          message
+        );
+      };
       window.__hseMvpRenderError = function (error) {
+        if (window.__hseMvpIsIgnorableError(error)) return;
         if (window.__hseMvpErrorShown) return;
         window.__hseMvpErrorShown = true;
         var message =
