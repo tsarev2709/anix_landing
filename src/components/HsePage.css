@@ -147,12 +147,12 @@
 
 .hse-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.03fr) minmax(520px, 0.97fr);
-  gap: clamp(48px, 6vw, 120px);
+  grid-template-columns: minmax(0, 1.12fr) minmax(480px, 0.88fr);
+  gap: clamp(40px, 4vw, 80px);
   align-items: center;
-  min-height: calc(88svh - 96px);
-  padding-top: 118px;
-  padding-bottom: 92px;
+  min-height: calc(86svh - 96px);
+  padding-top: 86px;
+  padding-bottom: 72px;
 }
 
 .hse-hero-copy {
@@ -179,16 +179,16 @@
 }
 
 .hse-hero h1 {
-  max-width: 980px;
-  font-size: clamp(54px, 7vw, 112px);
-  line-height: 0.91;
+  max-width: 920px;
+  font-size: clamp(50px, 5.4vw, 92px);
+  line-height: 0.94;
 }
 
 .hse-lead {
   max-width: 820px;
-  margin: 34px 0 0;
+  margin: 26px 0 0;
   color: rgba(16, 16, 16, 0.82);
-  font-size: clamp(20px, 2vw, 27px);
+  font-size: clamp(18px, 1.35vw, 23px);
   line-height: 1.2;
   font-weight: 680;
 }
@@ -198,7 +198,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 34px;
+  margin-top: 28px;
 }
 
 .hse-button {
@@ -455,7 +455,7 @@
 
 .hse-cases .hse-eyebrow,
 .hse-cases .hse-section-head-row p {
-  color: rgba(255, 255, 255, 0.62);
+  color: rgba(255, 255, 255, 0.74);
 }
 
 .hse-cases h2 {
@@ -510,7 +510,7 @@
 
 .hse-case p {
   margin: 18px 0 0;
-  color: rgba(255, 255, 255, 0.68);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 17px;
   line-height: 1.48;
 }
@@ -983,7 +983,7 @@
 .hse-product-card p,
 .hse-product-card li,
 .hse-level-grid p {
-  color: rgba(255, 255, 255, 0.68);
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .hse-product h2,
@@ -1015,9 +1015,9 @@
 
 .hse-product-tags span {
   padding: 9px 13px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 999px;
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 13px;
   font-weight: 760;
 }
@@ -1031,9 +1031,9 @@
 .hse-product-card {
   min-height: 280px;
   padding: clamp(26px, 3vw, 42px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 30px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .hse-product-card-main {
@@ -1043,7 +1043,7 @@
 .hse-product-card > span,
 .hse-level-grid span {
   display: block;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.72);
   font-size: 13px;
   font-weight: 850;
   text-transform: uppercase;
@@ -1102,14 +1102,14 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 22px;
-  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: 1px solid rgba(255, 255, 255, 0.26);
 }
 
 .hse-level-grid article {
   min-height: 245px;
   padding: 30px;
-  border-right: 1px solid rgba(255, 255, 255, 0.18);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  border-right: 1px solid rgba(255, 255, 255, 0.26);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.26);
 }
 
 .hse-level-grid article:last-child {
