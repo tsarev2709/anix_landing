@@ -13,4 +13,3 @@
 | ЮРРОБОТ | `urrobot.png` | https://urrobot.tech/favicon.ico |
 | Startech | `startech.svg` | https://startech.vc/_next/static/css/245a2e2033ec5c99.css (встроенный SVG логотипа из шапки сайта) |
 | Авинейро | `avineuro.png` | https://www.avineuro.ru/src/images/logo_big.png |
-| АНО «Развитие человеческого капитала» | `rchk.svg` | https://рчк.москва/fav.svg |
