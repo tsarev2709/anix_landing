@@ -38,7 +38,6 @@ import koloboxLogo from '../images/client-logos/kolobox.svg';
 import miptEndowmentLogo from '../images/client-logos/mipt-endowment.svg';
 import mosfarmaLogo from '../images/client-logos/mosfarma.svg';
 import multonPartnersLogo from '../images/client-logos/multon-partners.svg';
-import rchkLogo from '../images/client-logos/rchk.svg';
 import startechLogo from '../images/client-logos/startech.svg';
 import tpesLogo from '../images/client-logos/tpes.png';
 import urrobotLogo from '../images/client-logos/urrobot.png';
@@ -106,12 +105,6 @@ const clientLogos = [
     image: avineuroLogo,
     href: 'https://www.avineuro.ru/',
     className: 'd1-client-logo-avineuro',
-  },
-  {
-    name: 'Развитие человеческого капитала',
-    image: rchkLogo,
-    href: 'https://рчк.москва/',
-    wordmark: 'РЧК',
   },
 ];
 
