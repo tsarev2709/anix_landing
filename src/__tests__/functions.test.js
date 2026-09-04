@@ -52,7 +52,7 @@ global.Deno = { env: { get: (k) => process.env[k] } };
 function compile(file) {
   try {
     execSync(
-      `node node_modules/typescript/bin/tsc ${file} --target ES2020 --module commonjs --esModuleInterop --skipLibCheck --noEmitOnError false`
+      `node node_modules/typescript/bin/tsc ${file} --target ES2020 --module commonjs --esModuleInterop --skipLibCheck --noEmit false --noEmitOnError false`
     );
   } catch (e) {
     /* ignore */
@@ -89,6 +89,11 @@ afterAll(() => {
   }
   try {
     fs.unlinkSync('supabase/functions/_shared/cors.js');
+  } catch (e) {
+    /* ignore */
+  }
+  try {
+    fs.unlinkSync('supabase/functions/_shared/amocrm.js');
   } catch (e) {
     /* ignore */
   }
