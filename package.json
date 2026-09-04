@@ -44,7 +44,7 @@
     "postbuild": "node scripts/create-static-routes.js && node scripts/generate-static-seo.js && node scripts/inject-approved-brand-line.js && node scripts/normalize-seo-output.js && node scripts/verify-andrey-profile-hidden.js && node scripts/verify-andrey-profile-photos.js && node scripts/verify-seo-build.js",
     "seo:verify": "node scripts/verify-seo-build.js && node scripts/verify-brand-seo.js",
     "optimize:assets": "node scripts/optimize-assets.js",
-    "test": "node scripts/run-website-lead-consent-once.js && react-scripts test",
+    "test": "node scripts/run-website-lead-consent-once.js && node scripts/compile-edge-functions-for-tests.js && react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",

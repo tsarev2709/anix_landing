@@ -15,11 +15,17 @@ function replaceOnce(content, search, replacement, label) {
   return content.replace(search, replacement);
 }
 
+function replaceOncePattern(content, pattern, replacement, label) {
+  if (content.includes(replacement)) return content;
+  if (!pattern.test(content)) throw new Error(`[andrey-profile] Cannot find ${label}`);
+  return content.replace(pattern, replacement);
+}
+
 async function main() {
   let indexSource = fs.readFileSync(indexPath, 'utf8');
-  indexSource = replaceOnce(
+  indexSource = replaceOncePattern(
     indexSource,
-    "const CeoPage = lazy(() => import('./components/CeoPage'));",
+    /const CeoPage = lazy\(\(\) => import\('\.\/components\/CeoPage'\)\);/,
     "const CeoPage = lazy(() => import('./components/CeoPage'));\nconst AndreyProfilePage = lazy(() => import('./components/AndreyProfilePage'));",
     'page import anchor',
   );
@@ -31,14 +37,17 @@ async function main() {
     const formattedProfileRoute =
       "    case '/andrey-tsarev':\n      renderInLayout(<AndreyProfilePage />);\n      break;";
 
+    const formattedCeoRoutePattern =
+      /    case '\/ceo':\r?\n      renderInLayout\(<CeoPage \/>\);\r?\n      break;/;
+
     if (indexSource.includes(compactCeoRoute)) {
       indexSource = indexSource.replace(
         compactCeoRoute,
         `${compactCeoRoute}\n${compactProfileRoute}`,
       );
-    } else if (indexSource.includes(formattedCeoRoute)) {
+    } else if (formattedCeoRoutePattern.test(indexSource)) {
       indexSource = indexSource.replace(
-        formattedCeoRoute,
+        formattedCeoRoutePattern,
         `${formattedCeoRoute}\n${formattedProfileRoute}`,
       );
     } else {

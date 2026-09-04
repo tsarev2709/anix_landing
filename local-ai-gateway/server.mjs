@@ -1,5 +1,43 @@
 import http from 'node:http';
 import { timingSafeEqual } from 'node:crypto';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+function unquote(value) {
+  const trimmed = String(value || '').trim();
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
+}
+
+function loadEnvFile(filePath) {
+  if (!fs.existsSync(filePath)) return;
+  const text = fs.readFileSync(filePath, 'utf8');
+  for (const line of text.split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const index = trimmed.indexOf('=');
+    if (index === -1) continue;
+    const key = trimmed.slice(0, index).trim();
+    const value = unquote(trimmed.slice(index + 1));
+    if (key && !(key in process.env)) process.env[key] = value;
+  }
+}
+
+for (const envPath of [
+  path.join(__dirname, '.env.local-ai'),
+  path.join(__dirname, '.env'),
+  'C:\\Anix\\local-ai-gateway.env.local-ai',
+]) {
+  loadEnvFile(envPath);
+}
 
 const HOST = process.env.GATEWAY_HOST || '127.0.0.1';
 const PORT = Number(process.env.GATEWAY_PORT || 8788);
@@ -8,7 +46,8 @@ const OLLAMA_BASE_URL = (
 ).replace(/\/+$/, '');
 const CHAT_MODEL = process.env.CHAT_MODEL || 'qwen3:8b';
 const EMBEDDING_MODEL = process.env.EMBEDDING_MODEL || 'embeddinggemma';
-const SHARED_SECRET = process.env.LOCAL_AI_GATEWAY_SECRET || '';
+const SHARED_SECRET =
+  process.env.LOCAL_AI_GATEWAY_SECRET || process.env.GATEWAY_SECRET || '';
 const MAX_BODY_BYTES = Number(process.env.GATEWAY_MAX_BODY_BYTES || 96_000);
 const OLLAMA_CHAT_TIMEOUT_MS = Number(
   process.env.OLLAMA_CHAT_TIMEOUT_MS || 120_000
@@ -16,6 +55,13 @@ const OLLAMA_CHAT_TIMEOUT_MS = Number(
 const OLLAMA_EMBED_TIMEOUT_MS = Number(
   process.env.OLLAMA_EMBED_TIMEOUT_MS || 45_000
 );
+
+function ollamaKeepAlive() {
+  const value = process.env.OLLAMA_KEEP_ALIVE || '15m';
+  if (value === 'forever') return -1;
+  if (/^-?\d+$/.test(value)) return Number(value);
+  return value;
+}
 
 function json(res, status, body) {
   res.writeHead(status, {
@@ -161,7 +207,7 @@ async function chat(req, res) {
     {
       model,
       stream: false,
-      keep_alive: process.env.OLLAMA_KEEP_ALIVE || '15m',
+      keep_alive: ollamaKeepAlive(),
       format: parameters.format || 'json',
       think: parameters.think === true,
       options: {
@@ -216,7 +262,7 @@ async function embed(req, res) {
       model,
       input: inputs,
       truncate: true,
-      keep_alive: process.env.OLLAMA_KEEP_ALIVE || '15m',
+      keep_alive: ollamaKeepAlive(),
     },
     OLLAMA_EMBED_TIMEOUT_MS
   );
@@ -249,12 +295,13 @@ const server = http.createServer(async (req, res) => {
       req.url || '/',
       `http://${req.headers.host || 'localhost'}`
     );
-    if (req.method === 'GET' && url.pathname === '/health') return health(res);
+    if (req.method === 'GET' && url.pathname === '/health')
+      return await health(res);
     if (!authorized(req)) return json(res, 401, { error: 'unauthorized' });
     if (req.method === 'POST' && url.pathname === '/v1/chat')
-      return chat(req, res);
+      return await chat(req, res);
     if (req.method === 'POST' && url.pathname === '/v1/embed')
-      return embed(req, res);
+      return await embed(req, res);
     return json(res, 404, { error: 'not_found' });
   } catch (error) {
     const status = Number(error?.status || 500);

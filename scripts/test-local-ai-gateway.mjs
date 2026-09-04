@@ -3,7 +3,7 @@ import http from 'node:http';
 import { spawn } from 'node:child_process';
 
 const OLLAMA_PORT = 11435;
-const GATEWAY_PORT = 8788;
+const GATEWAY_PORT = Number(process.env.TEST_GATEWAY_PORT || 18788);
 const secret = 'test-secret-that-is-long-enough';
 
 function response(res, body) {

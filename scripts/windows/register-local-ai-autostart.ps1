@@ -3,7 +3,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$taskName = 'Anix Local AI Gateway'
+$taskName = 'AnixLocalAIGateway'
 $scriptPath = Join-Path $ProjectRoot 'scripts\windows\start-local-ai.ps1'
 
 if (-not (Test-Path $scriptPath)) {
