@@ -148,6 +148,19 @@ for (const route of Object.values(seoConfig.routes)) {
 }
 
 const indexableRoutes = Object.entries(seoConfig.routes).filter(([, route]) => route.indexable);
+const unpublishedRoutes = ['/cases/rchk', '/cases/events'];
+
+for (const routePath of unpublishedRoutes) {
+  assert(
+    !seoConfig.routes[routePath],
+    `${routePath}: unpublished route is present in SEO config`
+  );
+  assert(
+    !fs.existsSync(routeFile(routePath)),
+    `${routePath}: unpublished static page was generated`
+  );
+}
+
 const titleOwners = new Map();
 for (const [routePath, route] of indexableRoutes) {
   const normalizedTitle = normalizeBrandText(route.title).trim();

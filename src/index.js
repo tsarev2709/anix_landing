@@ -222,7 +222,6 @@ const CasesCategoryPage = lazy(() => import('./components/CasesCategoryPage'));
 const CasePage = lazy(() => import('./components/CasePage'));
 const VerySweetCasePage = lazy(() => import('./components/VerySweetCasePage'));
 const AviandrCasePage = lazy(() => import('./components/AviandrCasePage'));
-const RchkCasePage = lazy(() => import('./components/RchkCasePage'));
 
 function RuntimeFallback({ failed = false }) {
   return (
@@ -304,7 +303,6 @@ const categoryCasePaths = new Set([
   '/cases/medicine',
   '/cases/cinema',
   '/cases/hse',
-  '/cases/events',
 ]);
 const renderInLayout = (component) => {
   root.render(
@@ -331,8 +329,11 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
   renderInLayout(<VerySweetCasePage />);
 } else if (normalizedPath === '/cases/aviandr') {
   renderInLayout(<AviandrCasePage />);
-} else if (normalizedPath === '/cases/rchk') {
-  renderInLayout(<RchkCasePage />);
+} else if (
+  normalizedPath === '/cases/rchk' ||
+  normalizedPath === '/cases/events'
+) {
+  renderInLayout(<NotFound />);
 } else if (normalizedPath.startsWith('/cases/')) {
   renderInLayout(<CasePage path={normalizedPath} />);
 } else {

@@ -4,7 +4,6 @@ import {
   ArrowRight,
   Camera,
   HardHat,
-  Sparkles,
   Stethoscope,
   Workflow,
 } from 'lucide-react';
@@ -149,22 +148,6 @@ const categoryConfig = {
         image: multonImage,
         note: 'Маскот и визуальная система коммуникации жизненно важных правил.',
         href: '/cases/multon-partners/',
-      },
-    ],
-  },
-  '/cases/events': {
-    eyebrow: 'Events / AI production',
-    title: 'События и выступления',
-    description:
-      'Проекты, где сценарий, сцена и экран работают как одно целое: AI-ролики, режиссура выступлений, презентации и контент для событий.',
-    icon: Sparkles,
-    cases: [
-      {
-        title: 'РЧК: технологическое шоу',
-        image: null,
-        placeholder: 'Р',
-        note: 'Получасовое выступление и 5,5-минутный AI-ролик с девятью реальными героями и восемью сгенерированными мирами.',
-        href: '/cases/rchk/',
       },
     ],
   },

@@ -4,105 +4,17 @@ const path = require('path');
 const routesPath = path.resolve(__dirname, '../src/seo/routes.json');
 const config = JSON.parse(fs.readFileSync(routesPath, 'utf8'));
 
-config.routes['/cases/events'] = {
-  indexable: true,
-  kind: 'webPage',
-  title: 'События и выступления — кейсы Anix Studio',
-  description:
-    'Кейсы Anix Studio для событий и выступлений: ролики с ИИ, режиссура, презентации и экранный контент для большой аудитории.',
-  ogTitle: 'События и выступления — кейсы Anix Studio',
-  ogDescription:
-    'Ролики с ИИ, режиссура, презентации и экранный контент для событий.',
-  ogImage: '/og/home.jpg',
-  h1: 'События и выступления',
-  intro:
-    'Проекты, где сценарий, сцена и экран работают как одно целое: ролики с ИИ, режиссура выступлений, презентации и контент для событий.',
-  sections: [
-    {
-      heading: 'Кейсы направления',
-      body: 'Собираем не набор отдельных материалов, а цельную историю для сцены и экрана.',
-    },
-    {
-      heading: 'Подход Anix',
-      body: 'Начинаем с реакции аудитории, затем проектируем драматургию, визуальный язык и производственный процесс.',
-    },
-  ],
-  links: [
-    { label: 'Все кейсы Anix Studio', href: '/cases' },
-    { label: 'Anix Studio', href: '/' },
-  ],
-  breadcrumbs: [
-    { label: 'Главная', href: '/' },
-    { label: 'Кейсы', href: '/cases' },
-    { label: 'События и выступления', href: '/cases/events' },
-  ],
-};
-
-config.routes['/cases/rchk'] = {
-  indexable: true,
-  kind: 'case',
-  title: 'Кейс РЧК: от выступления до техно шоу — Anix Studio',
-  description:
-    'Как Anix Studio собрала получасовое выступление для РЧК: сценарий, режиссуру, презентации и 5,5-минутный ролик с ИИ и реальными героями.',
-  ogTitle: 'РЧК: от выступления до техно шоу — Anix Studio',
-  ogDescription:
-    'Получасовое выступление и 5,5-минутный ролик с ИИ, девятью героями и восемью цифровыми мирами.',
-  ogImage: '/og/home.jpg',
-  h1: 'Кейс: от выступления до техно шоу',
-  intro:
-    'Полчаса сценического действия, шесть типов материалов и главный герой — 5,5-минутный ролик с ИИ, ради которого Anix собрала полноценное кинопроизводство.',
-  case: {
-    category: 'События / ролики с ИИ',
-    result: 'Вау-эффект подтверждён на тестовых просмотрах',
-    tags: 'событие / ролик с ИИ / режиссура / производство',
-    image: '/og/home.jpg',
-    imageAlt: 'Кейс РЧК — ролик с ИИ и сопровождение выступления Anix Studio',
-    relatedPath: '/cases/events',
-  },
-  sections: [
-    {
-      heading: 'Задача',
-      body: 'Собрать получасовое выступление для большой внутренней аудитории в контуре столичного департамента и превзойти высокую планку прошлогоднего интерактива.',
-    },
-    {
-      heading: 'Главный ролик',
-      body: 'В 5,5-минутном репортаже девять сотрудников РЧК стали героями с суперспособностями, а реальная съёмка соединилась с восемью цифровыми мирами, анимационной графикой и многослойной сборкой кадров.',
-    },
-    {
-      heading: 'Полное сопровождение',
-      body: 'Anix отвечала за сценарий и режиссуру блока, ролик-интервью, презентации спикеров, фоновую анимацию и обновлённую говорящую голову руководителя.',
-    },
-    {
-      heading: 'Производство',
-      body: 'За месяц команда из семи человек создала весь комплекс материалов. Чистое производство главного ролика заняло две недели: четыре съёмочных дня, три версии и ручная доработка сцен на пределе возможностей нейротехнологий.',
-    },
-    {
-      heading: 'Результат',
-      body: 'Главный ролик прошёл тестовые просмотры и получил оценку «очень круто». Выступление ещё впереди; после премьеры кейс дополнится реакцией зала и материалами события.',
-    },
-  ],
-  links: [
-    { label: 'Все кейсы Anix', href: '/cases' },
-    { label: 'События и выступления', href: '/cases/events' },
-    { label: 'Anix Studio', href: '/' },
-  ],
-  breadcrumbs: [
-    { label: 'Главная', href: '/' },
-    { label: 'Кейсы', href: '/cases' },
-    { label: 'РЧК', href: '/cases/rchk' },
-  ],
-};
+// The case remains archived in source, but must not be published or indexed.
+delete config.routes['/cases/rchk'];
+delete config.routes['/cases/events'];
 
 const casesRoute = config.routes['/cases'];
-if (
-  casesRoute?.links &&
-  !casesRoute.links.some((item) => item.href === '/cases/events')
-) {
-  casesRoute.links.splice(-1, 0, {
-    label: 'События и выступления',
-    href: '/cases/events',
-  });
+if (casesRoute?.links) {
+  casesRoute.links = casesRoute.links.filter(
+    (item) =>
+      item.href !== '/cases/rchk' && item.href !== '/cases/events'
+  );
 }
 
 fs.writeFileSync(routesPath, `${JSON.stringify(config, null, 2)}\n`, 'utf8');
-console.log('[rchk-case] ensured /cases/events and /cases/rchk');
+console.log('[rchk-case] kept unpublished and removed from public SEO routes');
