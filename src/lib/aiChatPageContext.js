@@ -8,7 +8,6 @@ const CASE_PAGES = {
   aviandr: { name: 'Авиандр', vertical: 'medicine' },
   'little-prince': { name: 'Маленький принц', vertical: 'cinema' },
   borodino: { name: 'Бородино', vertical: 'cinema' },
-  rchk: { name: 'РЧК', vertical: 'events' },
 };
 
 const PAGE_PROFILES = {
