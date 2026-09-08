@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import TestUtils from 'react-dom/test-utils';
 import WebsiteLeadForm from '../components/WebsiteLeadForm';
 import { loadTurnstile } from '../lib/turnstile';
+import { briefFields, formatBriefMessage } from '../lib/leadBrief';
 
 jest.mock('../config', () => ({
   CONFIG: {
@@ -85,7 +86,7 @@ describe('WebsiteLeadForm', () => {
     expect(global.fetch).not.toHaveBeenCalled();
   });
 
-  test.each(['/stoimost/', '/medicine/price/', '/hse/price/'])(
+  test.each(['/stoimost/', '/medicine/price/', '/hse/price/', '/procurement/'])(
     'is available on the commercial route %s',
     async (routePath) => {
       TestUtils.act(() => root.unmount());
@@ -111,6 +112,7 @@ describe('WebsiteLeadForm', () => {
       change('name', 'Андрей');
       change('email', 'andrey@example.com');
       change('message', 'Нужен объясняющий ролик о сложном продукте.');
+      for (const field of briefFields) change(field.name, field.options[0]);
       const checkbox = container.querySelector('[name="privacyConsent"]');
       TestUtils.Simulate.change(checkbox, {
         target: {
@@ -129,6 +131,14 @@ describe('WebsiteLeadForm', () => {
     });
 
     expect(global.fetch).toHaveBeenCalledTimes(1);
+    const payload = JSON.parse(global.fetch.mock.calls[0][1].body);
+    expect(payload.privacy_consent).toBe(true);
+    expect(payload.turnstile_token).toBe('turnstile-test-token');
+    expect(payload.message).toContain(
+      'Нужен объясняющий ролик о сложном продукте.'
+    );
+    for (const field of briefFields)
+      expect(payload.message).toContain(`${field.label}: ${field.options[0]}`);
     expect(container.querySelector('[role="dialog"]')).toBeTruthy();
     expect(container.textContent).toContain('Заявка успешно отправлена');
     expect(
@@ -143,4 +153,40 @@ describe('WebsiteLeadForm', () => {
     expect(container.querySelector('[role="dialog"]')).toBeNull();
     expect(container.textContent).toContain('Заявка у нас');
   });
+
+  test('keeps the longest brief within the backend message limit without losing answers', () => {
+    const values = { message: 'А'.repeat(3000) };
+    for (const field of briefFields)
+      values[field.name] = [...field.options].sort(
+        (a, b) => b.length - a.length
+      )[0];
+    const message = formatBriefMessage(values);
+    expect(message.length).toBeLessThanOrEqual(4000);
+    expect(message.startsWith('А'.repeat(3000))).toBe(true);
+    for (const field of briefFields)
+      expect(message).toContain(values[field.name]);
+  });
+
+  test.each([
+    ['/medicine/price/', 'Фарма / медицинская анимация'],
+    ['/hse/', 'Охрана труда / HSE'],
+  ])(
+    'prefills the direction on %s and allows it to change',
+    async (path, expected) => {
+      TestUtils.act(() => root.unmount());
+      window.history.replaceState({}, '', path);
+      root = createRoot(container);
+      await TestUtils.act(async () => {
+        root.render(<WebsiteLeadForm />);
+      });
+      const field = container.querySelector('[name="direction"]');
+      expect(field.value).toBe(expected);
+      TestUtils.act(() =>
+        TestUtils.Simulate.change(field, {
+          target: { name: 'direction', value: 'MedTech' },
+        })
+      );
+      expect(field.value).toBe('MedTech');
+    }
+  );
 });

@@ -14,6 +14,11 @@ import {
 import { loadTurnstile } from '../lib/turnstile';
 import { toPublicHref } from '../seo/SeoHead';
 import './WebsiteLeadForm.css';
+import {
+  briefFields,
+  formatBriefMessage,
+  inferBriefDirection,
+} from '../lib/leadBrief';
 
 const METRIKA_COUNTER_ID = 103290769;
 const initialValues = {
@@ -22,6 +27,11 @@ const initialValues = {
   email: '',
   contact: '',
   message: '',
+  direction: '',
+  placement: '',
+  deadline: '',
+  budget: '',
+  resultType: '',
   privacyConsent: false,
 };
 
@@ -34,6 +44,7 @@ const publicFormRoutes = new Set([
   '/hse',
   '/hse/price',
   '/stoimost',
+  '/procurement',
   '/why_it_works',
   '/cases',
   '/ceo',
@@ -176,7 +187,9 @@ function SuccessDialog({ onClose }) {
         </span>
         <h2 id="website-lead-success-title">Заявка успешно отправлена</h2>
         <p id="website-lead-success-description">
-          Наш менеджер свяжется с вами по указанному контакту.
+          Подготовим 3 подходящих формата и предварительную вилку бюджета за 1
+          рабочий день. Если данных не хватает, уточним их по указанному
+          контакту.
         </p>
         <a
           className="website-lead-modal__cta"
@@ -192,7 +205,12 @@ function SuccessDialog({ onClose }) {
 
 export default function WebsiteLeadForm() {
   const visible = useMemo(shouldShowForm, []);
-  const [values, setValues] = useState(initialValues);
+  const [values, setValues] = useState(() => ({
+    ...initialValues,
+    direction: inferBriefDirection(
+      typeof window === 'undefined' ? '' : normalizedCurrentPath()
+    ),
+  }));
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
   const [serverError, setServerError] = useState('');
@@ -313,7 +331,7 @@ export default function WebsiteLeadForm() {
       email: values.email.trim(),
       contact_value: values.contact.trim(),
       ...inferredContact,
-      message: values.message.trim(),
+      message: formatBriefMessage(values),
       ...session,
     };
 
@@ -355,7 +373,7 @@ export default function WebsiteLeadForm() {
         setServerError('Проверка защиты не прошла. Попробуйте ещё раз.');
       } else if (error.code === 'delivery_pending') {
         setServerError(
-          'Заявка сохранена, но пока не дошла до менеджера. Нажмите «Обсудить проект» ещё раз.'
+          'Заявка сохранена, но пока не дошла до менеджера. Нажмите кнопку отправки ещё раз — дубликат не создастся.'
         );
       } else {
         setServerError(
@@ -384,7 +402,10 @@ export default function WebsiteLeadForm() {
           </span>
           <div>
             <h2>Заявка у нас</h2>
-            <p>Свяжемся с вами по указанному контакту.</p>
+            <p>
+              Подготовим 3 формата и вилку бюджета за 1 рабочий день. Если нужны
+              уточнения, напишем вам.
+            </p>
           </div>
           <a href={toPublicHref('/why_it_works')}>
             Почему подход Anix работает <ArrowRight aria-hidden="true" />
@@ -399,11 +420,18 @@ export default function WebsiteLeadForm() {
   return (
     <section className="website-lead" aria-labelledby="website-lead-title">
       <div className="website-lead__intro">
-        <p className="website-lead__eyebrow">Есть задача?</p>
-        <h2 id="website-lead-title">Обсудим ваш проект</h2>
+        <p className="website-lead__eyebrow">Следующий шаг · 1 рабочий день</p>
+        <h2 id="website-lead-title">
+          3 формата и вилка бюджета под вашу задачу
+        </h2>
         <p>
-          Расскажите, что вам нужно объяснить, показать или запустить. Мы изучим
-          задачу и свяжемся с вами.
+          Предложим три варианта решения: что получит аудитория, состав
+          материалов, ориентир бюджета и срок для каждого. Бесплатно, без
+          обязательства заказывать производство.
+        </p>
+        <p className="website-lead__promise">
+          Ответим за 1 рабочий день после заявки. Если вводных недостаточно, в
+          этот срок пришлём вопросы. Точная смета — после согласования объёма.
         </p>
         <div className="website-lead__direct">
           <span>Можно сразу написать:</span>
@@ -486,14 +514,34 @@ export default function WebsiteLeadForm() {
           </label>
         </div>
 
+        <fieldset className="website-lead__brief">
+          <legend>Параметры проекта</legend>
+          <p>Выберите то, что уже известно. Остальное поможем определить.</p>
+          <div className="website-lead__grid">
+            {briefFields.map(({ name, label, options }) => (
+              <label key={name}>
+                <span>{label}</span>
+                <select name={name} value={values[name]} onChange={onChange}>
+                  <option value="">Пока не определились</option>
+                  {options.map((option) => (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
         <label className="website-lead__message">
           <span>Что нужно сделать</span>
           <textarea
             name="message"
             value={values.message}
             onChange={onChange}
-            rows={5}
-            maxLength={4000}
+            rows={4}
+            maxLength={3000}
             aria-invalid={Boolean(errors.message)}
             aria-describedby={fieldError('message')}
             placeholder="Задача, продукт, сроки — в свободной форме"
@@ -549,7 +597,7 @@ export default function WebsiteLeadForm() {
               </>
             ) : (
               <>
-                Обсудить проект <ArrowRight aria-hidden="true" />
+                Получить 3 формата и бюджет <ArrowRight aria-hidden="true" />
               </>
             )}
           </button>

@@ -29,7 +29,9 @@ describe('current ANIX landing', () => {
 
     expect(main).toBeTruthy();
     expect(headings).toHaveLength(1);
-    expect(headings[0].textContent).toBe('Делаем сложное интересным');
+    expect(headings[0].textContent).toBe(
+      'Медицинская анимация и видео по охране труда'
+    );
   });
 
   test('exposes real internal links to public direction pages', () => {
@@ -106,7 +108,7 @@ describe('current ANIX landing', () => {
 
     expect(container.querySelectorAll('.website-lead')).toHaveLength(1);
     expect(container.querySelector('.website-lead h2').textContent).toBe(
-      'Обсудим ваш проект'
+      '3 формата и вилка бюджета под вашу задачу'
     );
     expect(container.querySelector('#website-lead-form')).toBeTruthy();
     expect(container.querySelector('.anix-site-footer')).toBeTruthy();

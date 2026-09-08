@@ -29,6 +29,7 @@ const pageLinks = [
   { label: 'Medicine', href: '/medicine' },
   { label: 'HSE', href: '/hse' },
   { label: 'Стоимость и закупка', href: '/stoimost' },
+  { label: 'Документы для закупки · PDF', href: '/procurement' },
   { label: 'Цена ролика для фармы', href: '/medicine/price' },
   { label: 'Цена видео по охране труда', href: '/hse/price' },
   { label: 'CEO', href: '/ceo' },

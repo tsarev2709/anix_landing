@@ -1,4 +1,5 @@
 import React from 'react';
+import ProjectCta from './ProjectCta';
 import {
   ArrowLeft,
   ArrowRight,
@@ -14,6 +15,7 @@ import {
 } from 'lucide-react';
 import logo from '../images/logoanix.png';
 import SiteFooter from './SiteFooter';
+import ProcurementDownloads from './ProcurementDownloads';
 import './PricingGuidePage.css';
 
 const telegramUrl = 'https://t.me/anix_helper';
@@ -398,6 +400,7 @@ function HubPage() {
             видны до старта.
           </p>
           <div className="pricing-actions">
+            <ProjectCta className="pricing-button pricing-button-primary" />
             <a className="pricing-button pricing-button-primary" href="#guides">
               <WalletCards aria-hidden="true" />
               Сравнить цены
@@ -546,6 +549,7 @@ function HubPage() {
 
       <FaqSection />
       <FinalCta />
+      <ProcurementDownloads />
       <SiteFooter />
     </main>
   );
@@ -609,13 +613,7 @@ function DetailPage({ guide }) {
               <WalletCards aria-hidden="true" />
               Посмотреть уровни
             </a>
-            <a
-              className="pricing-button pricing-button-secondary"
-              href="#website-lead-form"
-            >
-              <MessageCircle aria-hidden="true" />
-              Получить смету
-            </a>
+            <ProjectCta className="pricing-button pricing-button-secondary" />
           </div>
         </div>
         <Facts items={guide.facts} />
@@ -700,6 +698,7 @@ function DetailPage({ guide }) {
       </section>
 
       <FinalCta />
+      <ProcurementDownloads product={guide.accent === 'medicine' ? 'pharma' : 'hse'} />
       <SiteFooter />
     </main>
   );

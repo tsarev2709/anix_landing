@@ -16,7 +16,7 @@ export default function RouteBreadcrumbsPortal({ path }) {
 
     const attach = () => {
       if (document.querySelector('.seo-breadcrumbs')) return true;
-      const main = document.querySelector('main');
+      const main = document.querySelector('main:not([data-runtime-fallback])');
       if (!main) return false;
 
       const anchor = main.querySelector(':scope > header, :scope > nav, header, nav');

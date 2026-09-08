@@ -1,0 +1,25 @@
+a.project-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  max-width: 100%;
+  white-space: normal;
+  text-align: left;
+  font-size: 16px;
+  line-height: 1.35;
+}
+.project-cta > span {
+  min-width: 0;
+}
+.project-cta small {
+  display: block;
+  margin-top: 3px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.project-cta > svg {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+}
