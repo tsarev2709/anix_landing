@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ProjectCta from './ProjectCta';
 import {
   ArrowRight,
   BadgeCheck,
@@ -17,6 +18,8 @@ import {
   Workflow,
 } from 'lucide-react';
 import SiteFooter from './SiteFooter';
+import ProcurementDownloads from './ProcurementDownloads';
+import EvidenceShowcase from './EvidenceShowcase';
 import { getFallbackShowreelProvider, resolveShowreelProvider, SHOWREEL_URLS } from '../utils/showreelProvider';
 import logo from '../images/logoanix.png';
 import agrotechCaseImage from '../images/cases/agrotech.webp';
@@ -109,16 +112,16 @@ const clientLogos = [
 
 const metrics = [
   {
-    value: '15%+',
-    label: 'средний рост конверсии в кейсах',
+    value: '3 формата',
+    label: 'и вилка бюджета за 1 рабочий день; при нехватке вводных — вопросы',
   },
   {
-    value: 'x10',
-    label: 'x10 рост вовлечения у ролика фонда МФТИ',
+    value: '2 раунда',
+    label: 'консолидированных правок в согласованном объёме',
   },
   {
-    value: '+30%',
-    label: 'к переходам и откликам в кейсе ТПЭС',
+    value: '2 продукта',
+    label: 'Pharma Launch System и HSE Onboarding Module',
   },
   {
     value: '7 дней',
@@ -153,7 +156,7 @@ const mainCases = [
   {
     title: 'Clappy',
     category: 'B2B2C explainer',
-    result: 'Отклик вырос в несколько десятков раз',
+    result: 'Одна история для двух аудиторий',
     text: 'До ролика продукт приходилось долго объяснять. Мы собрали короткую историю, где человек быстрее понимает, что происходит, зачем это нужно и почему этим вообще стоит пользоваться.',
     tags: 'explainer / продукт / первые пилоты',
     image: clappyCaseImage,
@@ -171,7 +174,7 @@ const mainCases = [
   {
     title: 'ТПЭС',
     category: 'Промышленный B2B',
-    result: '+30% к отклику',
+    result: 'Техническая презентация стала роликом',
     text: 'Вместо 50-страничной презентации сделали ролик, который быстрее показывает проблему реактивных потерь, решение и миссию энергоэффективности. Иногда рынок надо не убеждать дольше, а объяснять яснее.',
     tags: 'промышленность / продажи / конференция',
     image: tpesCaseImage,
@@ -180,7 +183,7 @@ const mainCases = [
   {
     title: 'Эндаумент-фонд МФТИ',
     category: 'PR и узнаваемость',
-    result: 'Telegram x2, сайт x3, ERV x10',
+    result: 'Анимационная история на основе фотографий МФТИ',
     text: 'Мы взяли реальные фотографии МФТИ и перевели их в теплую анимационную систему. Получился не просто ролик, а инфоповод, который люди захотели пересылать.',
     tags: 'PR / анимационная система / охваты',
     image: mftiCaseImage,
@@ -594,12 +597,10 @@ function Design1TestPage() {
           </div>
           <a
             className="d1-header-cta"
-            href={heroLinks.telegram}
-            target="_blank"
-            rel="noreferrer"
+            href="#website-lead-form"
           >
-            <span className="d1-desktop-only">Обсудить проект</span>
-            <span className="d1-mobile-only">Написать</span>
+            <span className="d1-desktop-only">Форматы и бюджет</span>
+            <span className="d1-mobile-only">Бюджет</span>
           </a>
         </nav>
       </header>
@@ -607,40 +608,28 @@ function Design1TestPage() {
       <section className="d1-hero d1-container" id="top">
         <div className="d1-hero-copy">
           <p className="d1-eyebrow d1-hero-eyebrow">
-            Anix Studio (Студия Аникс) — анимационная студия для сложных
-            продуктов.
+            Делаем сложное интересным
           </p>
           <h1 className="d1-hero-title">
-            <span className="d1-hero-title-line">Делаем </span>
-            <span className="d1-hero-title-line">сложное </span>
-            <span className="d1-hero-title-line">интересным</span>
+            Медицинская анимация и видео по охране труда
           </h1>
           <p className="d1-lead">
             <span className="d1-desktop-copy">
-              Сначала понимание. Потом восхищение. Anix помогает вовлекать в
-              сложные продукты, правила и идеи через 2D-анимацию, историю и
-              ясную драматургию.
+              Объясняем механизм действия, готовим материалы для врачей и
+              показываем производственные риски. От сценария до мастер-ролика,
+              серии и адаптаций.
             </span>
             <span className="d1-mobile-copy">
-              Объясняем сложные продукты через историю, анимацию и сильный
-              визуал.
+              Материалы для врачей и сотрудников: от сценария до ролика,
+              серии и адаптаций.
             </span>
           </p>
           <p className="d1-microcopy">
-            Разбираемся, кто будет смотреть ролик, ищем, где теряется внимание,
-            строим вовлекающую историю, подбираем визуальный формат и связываем
-            материал с бизнес-задачей.
+            Научная и методическая проверка. Два раунда правок.
+            Ролик на минуту обычно за неделю при готовых вводных и согласовании.
           </p>
           <div className="d1-hero-actions">
-            <a
-              className="d1-button d1-button-primary"
-              href={heroLinks.telegram}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <MessageCircle aria-hidden="true" />
-              Обсудить проект
-            </a>
+            <ProjectCta className="d1-button d1-button-primary" />
             <a className="d1-button d1-button-secondary" href={heroLinks.cases}>
               Смотреть кейсы
               <ArrowRight aria-hidden="true" />
@@ -677,12 +666,12 @@ function Design1TestPage() {
         <div className="d1-container">
           <div className="d1-proof-layout">
             <div>
-              <p className="d1-eyebrow">Showreel + цифры</p>
+              <p className="d1-eyebrow">Условия, которые можно проверить</p>
               <h2>
                 <span className="d1-desktop-copy">
                   Сначала понимание — потом восхищение
                 </span>
-                <span className="d1-mobile-copy">Цифры, не обещания</span>
+                <span className="d1-mobile-copy">Понятные условия</span>
               </h2>
             </div>
             <p className="d1-section-lead">
@@ -696,6 +685,7 @@ function Design1TestPage() {
               <MetricCard item={item} key={item.value} />
             ))}
           </div>
+          <p className="d1-evidence-note">Это условия продуктов Anix, не усреднённые показатели эффективности клиентов. Состав, сроки и ограничения — в <a href="/stoimost/">ценовом гайде</a>.</p>
         </div>
       </section>
 
@@ -769,6 +759,7 @@ function Design1TestPage() {
         </div>
       </section>
 
+      <EvidenceShowcase />
       <section className="d1-section d1-video-shelf">
         <div className="d1-container">
           <div className="d1-section-head d1-section-head-row">
@@ -919,6 +910,7 @@ function Design1TestPage() {
         </div>
       </section>
 
+      <ProcurementDownloads />
       <SiteFooter />
 
       <nav className="d1-mobile-dock" aria-label="Быстрая навигация">

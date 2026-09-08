@@ -5,6 +5,7 @@ import { toPublicHref } from '../seo/SeoHead';
 import BrandLogo from './BrandLogo';
 import Breadcrumbs from './Breadcrumbs';
 import SiteFooter from './SiteFooter';
+import CaseEvidence from './CaseEvidence';
 import './CasePage.css';
 import './CasePagePlaceholder.css';
 
@@ -66,6 +67,7 @@ export default function CasePage({ path }) {
         ))}
       </section>
 
+      <CaseEvidence path={path} />
       <section className="case-related">
         <a href={toPublicHref('/cases')} className="case-back-link"><ArrowLeft aria-hidden="true" />Все кейсы Anix</a>
         <div>

@@ -13,6 +13,7 @@ const routes = [
   { path: '/', marker: 'class="design1-test"', extraMarker: 'd1-showreel-poster' },
   { path: '/medicine/', marker: 'class="medicine-page"' },
   { path: '/hse/', marker: 'class="hse-page"' },
+  { path: '/procurement/', marker: 'class="procurement-page"', extraMarker: 'anix-procurement-kit.pdf' },
   { path: '/andrey-tsarev/', marker: 'class="andrey-page"', extraMarker: 'Собираю сложные идеи в продукты, истории и работающие системы' },
   { path: '/animation/', marker: 'class="animation-page"', extraMarker: 'Создание анимационных роликов для сложных продуктов' },
   { path: '/ai-video/', marker: 'class="ai-video-page"', extraMarker: 'AI-видео с режиссурой, продакшном и вкусом' },

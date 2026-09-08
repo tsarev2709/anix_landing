@@ -17,7 +17,7 @@ export default function RouteRelatedLinksPortal({ path }) {
 
     const attach = () => {
       if (document.querySelector('.seo-related-links')) return true;
-      const main = document.querySelector('main');
+      const main = document.querySelector('main:not([data-runtime-fallback])');
       if (!main) return false;
 
       createdHost = document.createElement('div');

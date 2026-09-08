@@ -1,4 +1,5 @@
 import React from 'react';
+import ProjectCta from './ProjectCta';
 import {
   Activity,
   ArrowRight,
@@ -18,6 +19,8 @@ import {
 } from 'lucide-react';
 import './HsePage.css';
 import SiteFooter from './SiteFooter';
+import ProcurementDownloads from './ProcurementDownloads';
+import EvidenceShowcase from './EvidenceShowcase';
 import logo from '../images/logoanix.png';
 import multonImage from '../images/cases/multon-partners.webp';
 import heroImage from '../images/hse/hse-hero.jpg';
@@ -109,14 +112,14 @@ const cases = [
   },
   {
     title: 'Демополигон HSE',
-    label: 'цифровой MVP',
+    label: 'демонстрация, не клиентское внедрение',
     image: onboardingImage,
     text: 'Собрали демонстрационную среду: обучение, сценарии, тесты, роли сотрудника и специалиста. Это можно открыть и потрогать, а не только представить в КП.',
     href: '/hse/mvp',
   },
   {
     title: 'Сцены риска',
-    label: 'визуальные правила',
+    label: 'демонстрационные визуальные сценарии',
     image: ruleLabImage,
     text: 'Показываем не пункт инструкции, а момент, где человек может ошибиться: тара, лаборатория, вентиляция, пожарная безопасность, подготовка места работ.',
   },
@@ -256,15 +259,7 @@ export default function HsePage() {
             в LMS или внутреннюю систему.
           </p>
           <div className="hse-actions">
-            <a
-              className="hse-button hse-button-primary"
-              href={telegramUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <MessageCircle aria-hidden="true" />
-              Обсудить пилот
-            </a>
+            <ProjectCta className="hse-button hse-button-primary" />
             <a className="hse-button hse-button-secondary" href="/hse/mvp">
               <ShieldCheck aria-hidden="true" />
               Открыть демополигон
@@ -505,6 +500,7 @@ export default function HsePage() {
         </div>
       </section>
 
+      <EvidenceShowcase direction="hse" />
       <section className="hse-section hse-cases">
         <div className="hse-container">
           <div className="hse-section-head hse-section-head-row">
@@ -656,6 +652,7 @@ export default function HsePage() {
         </div>
       </section>
 
+      <ProcurementDownloads product="hse" />
       <SiteFooter />
     </main>
   );

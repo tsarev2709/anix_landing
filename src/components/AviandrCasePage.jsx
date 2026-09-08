@@ -4,6 +4,7 @@ import aviandrCoverImage from '../images/cases/aviandr-cover.webp';
 import aviandrKoalaImage from '../images/cases/aviandr-koala.webp';
 import BrandLogo from './BrandLogo';
 import SiteFooter from './SiteFooter';
+import CaseEvidence from './CaseEvidence';
 import './AviandrCasePage.css';
 
 const TELEGRAM_URL = 'https://t.me/anix_helper';
@@ -242,6 +243,7 @@ export default function AviandrCasePage() {
         </div>
       </section>
 
+      <CaseEvidence path="/cases/aviandr" />
       <section className="aviandr-cta">
         <p className="aviandr-eyebrow">Следующий проект</p>
         <h2>Нужно показать сложный медицинский продукт понятно и точно?</h2>

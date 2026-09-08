@@ -1,4 +1,5 @@
 import React from 'react';
+import ProjectCta from './ProjectCta';
 import {
   ArrowRight,
   Clapperboard,
@@ -129,9 +130,7 @@ export default function AiVideoPage() {
           Anix — полноценная анимационная студия, которая профессионально использует AI внутри продакшна. Не заменяем нейросетями режиссуру — соединяем генеративные инструменты со сценарием, арт-дирекшеном, анимацией и постпродакшном.
         </p>
         <div className="ai-video-hero__actions">
-          <a className="ai-video-button ai-video-button--primary" href={telegramUrl} target="_blank" rel="noreferrer">
-            <MessageCircle aria-hidden="true" /> Обсудить задачу
-          </a>
+          <ProjectCta className="ai-video-button ai-video-button--primary" />
           <a className="ai-video-button" href="/animation/">Анимационные ролики <ArrowRight aria-hidden="true" /></a>
         </div>
         <div className="ai-video-hero__statement">

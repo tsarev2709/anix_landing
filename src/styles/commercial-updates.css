@@ -1,0 +1,132 @@
+/* Compact category hero; copy stays inside the full-width site grid. */
+.design1-test .d1-hero .d1-hero-title {
+  max-width: 20ch;
+  font-size: clamp(36px, 4.15vw, 72px);
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+  overflow-wrap: normal;
+  text-wrap: balance;
+}
+.design1-test .d1-hero .d1-lead {
+  font-size: clamp(18px, 1.5vw, 23px);
+  line-height: 1.5;
+}
+.design1-test .d1-hero .d1-microcopy {
+  font-size: 14px;
+  line-height: 1.55;
+  max-width: 65ch;
+}
+.design1-test .d1-hero .d1-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+.design1-test .d1-hero .project-cta {
+  padding: 15px 22px;
+  font-size: 15px;
+}
+.design1-test .d1-hero .d1-hero-solutions {
+  margin-top: 24px;
+}
+.design1-test .d1-evidence-note {
+  max-width: 85ch;
+  color: #47434c;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 24px;
+}
+.design1-test .d1-evidence-note a {
+  color: #075f56;
+  text-decoration: underline;
+}
+.design1-test .d1-metric-card strong {
+  font-size: clamp(28px, 3.5vw, 56px);
+}
+.hse-page .hse-hero-stats strong {
+  font-size: clamp(23px, 2.6vw, 42px);
+  overflow-wrap: normal;
+}
+.website-lead .website-lead__intro h2 {
+  font-size: clamp(34px, 3.5vw, 58px);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+}
+.website-lead .website-lead__intro > p:not(.website-lead__eyebrow) {
+  font-size: 18px;
+  line-height: 1.55;
+  color: #45414b;
+}
+.website-lead .website-lead__intro .website-lead__promise {
+  font-size: 15px;
+  padding: 18px 0;
+  border-top: 1px solid #ccc5d2;
+}
+.website-lead .website-lead__eyebrow {
+  color: #57515e;
+}
+.website-lead__brief {
+  min-width: 0;
+  margin: 26px 0 0;
+  padding: 20px 0 0;
+  border: 0;
+  border-top: 1px solid #d7d0dd;
+}
+.website-lead__brief legend {
+  padding: 0 10px 0 0;
+  color: #111;
+  font-size: 17px;
+  font-weight: 750;
+}
+.website-lead__brief > p {
+  color: #57515e;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 16px;
+}
+.website-lead__form select {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 50px;
+  padding: 12px;
+  border: 1px solid #bcb5c4;
+  border-radius: 12px;
+  background: #fff;
+  color: #292330;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+}
+.website-lead__form select:focus-visible {
+  outline: 3px solid #087d70;
+  outline-offset: 2px;
+}
+.website-lead__form select option {
+  background: #fff;
+  color: #111;
+}
+.website-lead .website-lead__submit-row button {
+  white-space: normal;
+  text-align: left;
+  line-height: 1.35;
+}
+@media (min-width: 1001px) {
+  .design1-test .d1-hero {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.9fr);
+    padding-top: 58px;
+    padding-bottom: 58px;
+  }
+}
+@media (max-width: 760px) {
+  .design1-test .d1-hero .d1-hero-title {
+    max-width: 100%;
+    font-size: clamp(32px, 8.6vw, 48px);
+  }
+  .design1-test .d1-hero .d1-hero-actions .project-cta {
+    width: 100%;
+  }
+  .website-lead__brief .website-lead__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+}

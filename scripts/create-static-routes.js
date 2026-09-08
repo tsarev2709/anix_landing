@@ -32,6 +32,7 @@ const lessonRoutes = [
 
 const routes = [
   'medicine','medicine/price','why_it_works','ceo','hse','hse/price','stoimost','animation','ai-video','rybki','rybki_page',
+  'procurement',
   'cases','cases/b2b','cases/medicine','cases/cinema','cases/hse',
   'cases/clappy','cases/hemotech-ai','cases/tpes','cases/mfti-endowment','cases/mosfarma','cases/multon-partners',
   'cases/aviandr','cases/little-prince','cases/borodino',

@@ -12,6 +12,10 @@ import CasesHubLinkPortal from './components/CasesHubLinkPortal';
 import RouteBreadcrumbsPortal from './seo/RouteBreadcrumbsPortal';
 import RouteRelatedLinksPortal from './seo/RouteRelatedLinksPortal';
 import SeoHead from './seo/SeoHead';
+// These small public service pages must not depend on a second network round trip.
+import AnimationPage from './components/AnimationPage';
+import AiVideoPage from './components/AiVideoPage';
+import './styles/commercial-updates.css';
 import {
   installRuntimeRecovery,
   recoverFromRuntimeFailure,
@@ -209,8 +213,7 @@ const WhyItWorksPage = lazy(() => import('./components/WhyItWorksPage'));
 const MedicinePage = lazy(() => import('./components/MedicinePage'));
 const HsePage = lazy(() => import('./components/HsePage'));
 const PricingGuidePage = lazy(() => import('./components/PricingGuidePage'));
-const AnimationPage = lazy(() => import('./components/AnimationPage'));
-const AiVideoPage = lazy(() => import('./components/AiVideoPage'));
+const ProcurementPage = lazy(() => import('./components/ProcurementPage'));
 const HseMvpPage = lazy(() => import('./features/hseMvp/HseMvpPage'));
 const Design1TestPage = lazy(() => import('./components/Design1TestPage'));
 const DesignOldPage = lazy(() => import('./components/DesignOldPage'));
@@ -226,6 +229,7 @@ const AviandrCasePage = lazy(() => import('./components/AviandrCasePage'));
 function RuntimeFallback({ failed = false }) {
   return (
     <main
+      data-runtime-fallback="true"
       role="status"
       style={{
         minHeight: '100vh',
@@ -352,6 +356,9 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       break;
     case '/stoimost':
       renderInLayout(<PricingGuidePage path={normalizedPath} />);
+      break;
+    case '/procurement':
+      renderInLayout(<ProcurementPage />);
       break;
     case '/medicine/price':
       renderInLayout(<PricingGuidePage path={normalizedPath} />);

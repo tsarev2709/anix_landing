@@ -1,4 +1,5 @@
 import React from 'react';
+import ProjectCta from './ProjectCta';
 import { ArrowRight, Film, Layers3, MessageCircle, Microscope, Sparkles, WandSparkles } from 'lucide-react';
 import BrandLogo from './BrandLogo';
 import SiteFooter from './SiteFooter';
@@ -131,9 +132,7 @@ export default function AnimationPage() {
           Придумываем и производим анимационные ролики для технологий, фармы, B2B, образования и специальных проектов — там, где недостаточно просто красиво показать продукт.
         </p>
         <div className="animation-hero__actions">
-          <a className="animation-button animation-button--primary" href={telegramUrl} target="_blank" rel="noreferrer">
-            <MessageCircle aria-hidden="true" /> Обсудить задачу
-          </a>
+          <ProjectCta className="animation-button animation-button--primary" />
           <a className="animation-button" href="/cases/">Посмотреть кейсы <ArrowRight aria-hidden="true" /></a>
           <a className="animation-button" href="/ai-video/">Как мы используем AI <ArrowRight aria-hidden="true" /></a>
         </div>

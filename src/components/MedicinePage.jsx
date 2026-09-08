@@ -1,4 +1,5 @@
 import React from 'react';
+import ProjectCta from './ProjectCta';
 import {
   ArrowRight,
   BadgeCheck,
@@ -19,6 +20,8 @@ import {
 } from 'lucide-react';
 import './MedicinePage.css';
 import SiteFooter from './SiteFooter';
+import ProcurementDownloads from './ProcurementDownloads';
+import EvidenceShowcase from './EvidenceShowcase';
 import logo from '../images/logoanix.png';
 import hemotechImage from '../images/cases/hemotech-ai.webp';
 import mosfarmaImage from '../images/cases/mosfarma.webp';
@@ -81,8 +84,7 @@ const cases = [
     label: 'медтех / AI-диагностика',
     image: hemotechImage,
     text: 'Нужно было быстро снизить недоверие к инновационному продукту. Мы сделали спокойный минималистичный ролик-визитку. Его стиль потом ушел в презентации и стал частью бренда.',
-    result:
-      'отклик и охваты выросли в несколько десятков раз по оценке фаундера',
+    result: 'ролик и визуальный язык для медицинского продукта',
   },
   {
     title: 'Мосфарма',
@@ -96,7 +98,7 @@ const cases = [
     label: 'сложный B2B2C-продукт',
     image: clappyImage,
     text: 'Это не фарма, но задача очень похожая: продукт непонятен сразу двум аудиториям. Ролик собрал одну ясную историю и помог довести компанию до первых пилотов.',
-    result: 'отклик на письма вырос в несколько десятков раз',
+    result: 'единая история для двух аудиторий продукта',
   },
 ];
 
@@ -310,15 +312,7 @@ export default function MedicinePage() {
             Научную проверку встраиваем в производство, а не оставляем на финал.
           </p>
           <div className="medicine-actions">
-            <a
-              className="medicine-button medicine-button-primary"
-              href={telegramUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <MessageCircle aria-hidden="true" />
-              Разобрать продукт
-            </a>
+            <ProjectCta className="medicine-button medicine-button-primary" />
             <a
               className="medicine-button medicine-button-secondary"
               href="/medicine/price"
@@ -491,6 +485,7 @@ export default function MedicinePage() {
         </div>
       </section>
 
+      <EvidenceShowcase direction="pharma" />
       <section className="medicine-section medicine-cases" id="cases">
         <div className="medicine-container">
           <div className="medicine-section-head medicine-section-head-row">
@@ -681,6 +676,7 @@ export default function MedicinePage() {
         </div>
       </section>
 
+      <ProcurementDownloads product="pharma" />
       <SiteFooter />
     </main>
   );
