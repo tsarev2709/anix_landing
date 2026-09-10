@@ -25,10 +25,13 @@ const routes = [
   { path: '/cases/hse/', marker: 'class="cases-hub-page cases-category-page"', extraMarker: 'Охрана труда' },
   { path: '/cases/aviandr/', marker: 'class="aviandr-case-page"', extraMarker: 'Авиандр: доказательная база, которая работает на доверие' },
   { path: '/cases/little-prince/', marker: 'class="case-page"', extraMarker: 'Маленький принц' },
-  { path: '/cases/borodino/', marker: 'class="case-page"', extraMarker: 'Бородино' },
 ];
 
+// DOM-ready batch avoids waiting for Chrome dump-dom to finish unrelated page resources.
+// All routes retain their content, lead-form and removed-SEO-shell assertions.
 const pricingRoutes = [
+  { path: '/cases/borodino/', marker: 'class="case-page"', extraMarker: 'Бородино' },
+
   ...['ships-and-ports', 'hospitality', 'tourism', 'education'].map((slug) => ({path: `/${slug}/`, marker: 'class="industry-page"', extraMarker: 'name="task_id"'})),
   { path: '/stoimost/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит ролик для фармы и охраны труда' },
   { path: '/medicine/price/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит ролик для фармкомпании' },
