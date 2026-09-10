@@ -213,6 +213,7 @@ const WhyItWorksPage = lazy(() => import('./components/WhyItWorksPage'));
 const MedicinePage = lazy(() => import('./components/MedicinePage'));
 const HsePage = lazy(() => import('./components/HsePage'));
 const PricingGuidePage = lazy(() => import('./components/PricingGuidePage'));
+const IndustryLandingPage = lazy(() => import('./components/IndustryLandingPage'));
 const ProcurementPage = lazy(() => import('./components/ProcurementPage'));
 const HseMvpPage = lazy(() => import('./features/hseMvp/HseMvpPage'));
 const Design1TestPage = lazy(() => import('./components/Design1TestPage'));
@@ -356,6 +357,12 @@ if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
       break;
     case '/stoimost':
       renderInLayout(<PricingGuidePage path={normalizedPath} />);
+      break;
+    case '/ships-and-ports':
+    case '/hospitality':
+    case '/tourism':
+    case '/education':
+      renderInLayout(<IndustryLandingPage path={normalizedPath} />);
       break;
     case '/procurement':
       renderInLayout(<ProcurementPage />);

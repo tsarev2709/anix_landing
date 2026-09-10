@@ -29,6 +29,7 @@ const routes = [
 ];
 
 const pricingRoutes = [
+  ...['ships-and-ports', 'hospitality', 'tourism', 'education'].map((slug) => ({path: `/${slug}/`, marker: 'class="industry-page"', extraMarker: 'name="task_id"'})),
   { path: '/stoimost/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит ролик для фармы и охраны труда' },
   { path: '/medicine/price/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит ролик для фармкомпании' },
   { path: '/hse/price/', marker: 'class="pricing-page"', extraMarker: 'Сколько стоит видео по охране труда' },

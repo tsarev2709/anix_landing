@@ -508,3 +508,82 @@
     animation-duration: 1600ms;
   }
 }
+
+/* Industry forms share submission and accessibility behavior with the main form. */
+.industry-form-fields {
+  display: grid;
+  gap: 20px;
+}
+.industry-form-fields label {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.industry-form-fields input:not([type='radio']),
+.industry-form-fields select,
+.industry-form-fields textarea {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 15px;
+  border: 1px solid #aaa5b2;
+  border-radius: 14px;
+  background: #fff;
+  color: #17131e;
+  font: inherit;
+  font-size: 16px;
+}
+.industry-form-fields :is(input, select, textarea):focus-visible {
+  outline: 3px solid #6b43c6;
+  outline-offset: 2px;
+}
+.industry-form-fields small {
+  color: #9e2020;
+}
+.industry-contact {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+.industry-contact legend {
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.industry-contact__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.industry-contact__options label {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid #b7b1bd;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.industry-contact__options input {
+  accent-color: #6236b8;
+  width: 18px;
+  height: 18px;
+}
+.industry-form-details {
+  border-top: 1px solid #c7c0d0;
+  padding-top: 16px;
+}
+.industry-form-details summary {
+  cursor: pointer;
+  min-height: 44px;
+  color: #4f2a96;
+  font-weight: 700;
+}
+.industry-form-details[open] > .website-lead__grid {
+  margin: 10px 0 20px;
+}
+.industry-form-details p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4b4355;
+}

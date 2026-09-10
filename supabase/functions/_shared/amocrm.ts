@@ -20,6 +20,7 @@ export type AmoLeadInput = {
   existingContactId?: number | null;
   existingLeadId?: number | null;
   retryAttempt?: number;
+  industryFields?: Record<string, string>;
 };
 
 export type AmoSyncResult = {
@@ -28,6 +29,7 @@ export type AmoSyncResult = {
   statusId: number;
   contactId: number;
   leadId: number;
+  briefSynced?: boolean;
 };
 
 type AmoContext = {
@@ -351,6 +353,67 @@ async function ensureNote(
   });
 }
 
+let industryFieldCache: { expiresAt: number; fields: any[] } | null = null;
+
+async function enrichIndustryLead(
+  leadId: number,
+  values: Record<string, string>
+): Promise<boolean> {
+  try {
+    let fields =
+      industryFieldCache?.expiresAt && industryFieldCache.expiresAt > Date.now()
+        ? industryFieldCache.fields
+        : null;
+    if (!fields) {
+      fields = [];
+      for (let page = 1; page <= 20; page += 1) {
+        const result = await request(
+          `/api/v4/leads/custom_fields?limit=250&page=${page}`
+        );
+        const batch = result?._embedded?.custom_fields || [];
+        fields.push(...batch);
+        if (batch.length < 250) break;
+        if (page === 20)
+          throw new AmoIntegrationError('amocrm_fields_page_limit');
+      }
+      const names = [...Object.keys(values), 'ANIX · Квалификация'];
+      const missing = names.filter(
+        (name) => !fields.some((field: any) => field.name === name)
+      );
+      if (missing.length) {
+        const created = await request('/api/v4/leads/custom_fields', {
+          method: 'POST',
+          body: JSON.stringify(missing.map((name) => ({ name, type: 'text' }))),
+        });
+        fields.push(...(created?._embedded?.custom_fields || []));
+      }
+      industryFieldCache = { expiresAt: Date.now() + 3600000, fields };
+    }
+    const customFields = Object.entries(values).map(([name, value]) => {
+      const matches = fields.filter(
+        (field: any) => field.name === name && field.type === 'text'
+      );
+      if (matches.length !== 1)
+        throw new AmoIntegrationError('amocrm_industry_field_ambiguous');
+      return {
+        field_id: matches[0].id,
+        values: [{ value: value || 'Не указано' }],
+      };
+    });
+    await request(`/api/v4/leads/${leadId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ custom_fields_values: customFields }),
+    });
+    return true;
+  } catch {
+    // The full brief is already in the lead note. Track enrichment separately;
+    // never lose a contact because custom-field administration is unavailable.
+    industryFieldCache = null;
+    console.warn('[amocrm] industry field enrichment pending');
+    return false;
+  }
+}
+
 export async function syncAmoLead(input: AmoLeadInput): Promise<AmoSyncResult> {
   if (!input.email && !input.phone && !input.telegram) {
     throw new AmoIntegrationError('amocrm_identifiable_contact_required');
@@ -369,10 +432,14 @@ export async function syncAmoLead(input: AmoLeadInput): Promise<AmoSyncResult> {
 
   const marker = `${input.markerLabel}:\n${input.sourceId}`;
   await ensureNote(leadId, marker, input.note);
+  const briefSynced = input.industryFields
+    ? await enrichIndustryLead(leadId, input.industryFields)
+    : undefined;
 
   return {
     ...context,
     contactId,
     leadId,
+    briefSynced,
   };
 }

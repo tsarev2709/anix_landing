@@ -4,6 +4,16 @@ declare const process: any;
 // @ts-ignore Deno requires the explicit TypeScript extension.
 import { AmoIntegrationError, syncAmoLead } from '../_shared/amocrm.ts';
 
+import {
+  industryForms,
+  INDUSTRY_VERSION,
+  validateIndustry,
+  industrySummary,
+  deadlines,
+  scopes,
+  budgetOptions,
+} from '../_shared/industry-brief.js';
+
 // This public function is deployed by the Supabase Actions workflow.
 
 const DEFAULT_ORIGINS = [
@@ -129,7 +139,19 @@ function sanitizePayload(input: any): any {
     telegram,
     contact_value: contactValue,
     contact_type: contactType,
-    message: text(input?.message, 4000),
+    message: input?.form_variant
+      ? industrySummary(input.form_variant, input.brief)
+      : text(input?.message, 4000),
+    form_variant: text(input?.form_variant, 64) || null,
+    form_version: text(input?.form_version, 64) || null,
+    brief: input?.form_variant ? input.brief : null,
+    cta_id: ['hero', 'task_card', 'annual', 'package', 'form'].includes(
+      input?.cta_id
+    )
+      ? input.cta_id
+      : null,
+    landing_variant: input?.form_variant ? 'default' : null,
+    metrika_client_id: text(input?.metrika_client_id, 128) || null,
     source: text(input?.source, 500) || 'website',
     page_url: text(input?.page_url, 2000),
     page_path: text(input?.page_path, 1000),
@@ -306,6 +328,9 @@ async function updateLead(sb: any, id: string, patch: any): Promise<any> {
   return data;
 }
 
+const choiceLabel = (choices: any[], value: string) =>
+  choices.find(([id]: any[]) => id === value)?.[1] || 'Не указано';
+
 async function syncToAmo(sb: any, row: any): Promise<any> {
   const attempt = Number(row.sync_attempts || 0) + 1;
   row = await updateLead(sb, row.id, {
@@ -325,7 +350,35 @@ async function syncToAmo(sb: any, row: any): Promise<any> {
     phone: row.phone,
     telegram: row.telegram,
     note: buildLeadNote(row),
-    tags: ['website'],
+    tags: [
+      'website',
+      ...(row.form_variant ? [`anix:${row.form_variant}`] : []),
+    ],
+    industryFields: row.form_variant
+      ? {
+          'ANIX · Направление': industryForms[row.form_variant].label,
+          'ANIX · Задача': choiceLabel(
+            industryForms[row.form_variant].tasks,
+            row.brief?.task_id
+          ),
+          'ANIX · Аудитория / объект': choiceLabel(
+            industryForms[row.form_variant].contexts,
+            row.brief?.context_id
+          ),
+          'ANIX · Срок': choiceLabel(deadlines, row.brief?.deadline_id),
+          'ANIX · Бюджет': choiceLabel(
+            budgetOptions(row.form_variant, row.brief),
+            row.brief?.budget_id
+          ),
+          'ANIX · Период бюджета': row.brief?.budget_basis || '',
+          'ANIX · Объём': choiceLabel(scopes, row.brief?.scope_id),
+          'ANIX · Размещение': choiceLabel(
+            industryForms[row.form_variant].placements,
+            row.brief?.placement_id
+          ),
+          'ANIX · Версия формы': row.form_version || '',
+        }
+      : undefined,
     existingContactId: row.amocrm_contact_id,
     existingLeadId: row.amocrm_lead_id,
     retryAttempt: attempt,
@@ -333,6 +386,7 @@ async function syncToAmo(sb: any, row: any): Promise<any> {
 
   return updateLead(sb, row.id, {
     status: 'completed',
+    brief_crm_synced: result.briefSynced ?? null,
     integration_error: null,
     amocrm_account_id: result.accountId,
     amocrm_lead_id: result.leadId,
@@ -445,6 +499,19 @@ async function handler(req: Request): Promise<Response> {
     privacy_policy_version: privacyPolicyVersion,
   };
 
+  if (input?.form_variant) {
+    if (
+      !Object.prototype.hasOwnProperty.call(industryForms, input.form_variant) ||
+      input.form_version !== INDUSTRY_VERSION ||
+      !input.brief ||
+      new TextEncoder().encode(JSON.stringify(input.brief)).length > 8000 ||
+      Object.keys(validateIndustry(input.form_variant, input.brief)).length ||
+      text(input.company, 180).length < 2 ||
+      input.qualification_status
+    ) {
+      return json({ error: 'invalid_industry_brief' }, 400, origin);
+    }
+  }
   const payload = sanitizePayload(input);
   if (!validatePayload(payload))
     return json({ error: 'invalid_payload' }, 400, origin);
