@@ -1,5 +1,6 @@
 import React from 'react';
 import ProjectCta from './ProjectCta';
+import AnnualProgram from './AnnualProgram';
 import {
   ArrowRight,
   BadgeCheck,
@@ -676,6 +677,7 @@ export default function MedicinePage() {
         </div>
       </section>
 
+      <AnnualProgram />
       <ProcurementDownloads product="pharma" />
       <SiteFooter />
     </main>

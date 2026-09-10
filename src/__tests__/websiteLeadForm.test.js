@@ -168,25 +168,30 @@ describe('WebsiteLeadForm', () => {
   });
 
   test.each([
-    ['/medicine/price/', 'Фарма / медицинская анимация'],
-    ['/hse/', 'Охрана труда / HSE'],
-  ])(
-    'prefills the direction on %s and allows it to change',
-    async (path, expected) => {
-      TestUtils.act(() => root.unmount());
-      window.history.replaceState({}, '', path);
-      root = createRoot(container);
-      await TestUtils.act(async () => {
-        root.render(<WebsiteLeadForm />);
-      });
-      const field = container.querySelector('[name="direction"]');
-      expect(field.value).toBe(expected);
-      TestUtils.act(() =>
-        TestUtils.Simulate.change(field, {
-          target: { name: 'direction', value: 'MedTech' },
-        })
-      );
-      expect(field.value).toBe('MedTech');
-    }
-  );
+    '/medicine/price/',
+    '/hse/',
+    '/ships-and-ports/',
+    '/hospitality/',
+    '/tourism/',
+    '/education/',
+  ])('shows a short sector brief on %s', async (path) => {
+    TestUtils.act(() => root.unmount());
+    window.history.replaceState({}, '', path);
+    root = createRoot(container);
+    await TestUtils.act(async () => root.render(<WebsiteLeadForm />));
+    expect(container.querySelector('[name="direction"]')).toBeNull();
+    expect(container.querySelector('[name="task_id"]').required).toBe(true);
+    expect(container.querySelector('[name="context_id"]').required).toBe(true);
+    expect(container.querySelector('[name="company"]').required).toBe(true);
+    expect(container.querySelector('[name="email"]')).not.toBeNull();
+    expect(container.querySelector('[name="contact"]')).toBeNull();
+    TestUtils.act(() =>
+      TestUtils.Simulate.change(container.querySelector('[value="telegram"]'), {
+        target: { name: 'contactMethod', value: 'telegram' },
+      })
+    );
+    expect(container.querySelector('[name="email"]')).toBeNull();
+    expect(container.querySelector('[name="contact"]')).not.toBeNull();
+    expect(container.querySelector('details').open).toBe(false);
+  });
 });

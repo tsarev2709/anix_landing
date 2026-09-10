@@ -14,6 +14,17 @@ import {
 import { loadTurnstile } from '../lib/turnstile';
 import { toPublicHref } from '../seo/SeoHead';
 import './WebsiteLeadForm.css';
+import IndustryFormFields from './IndustryFormFields';
+import {
+  industryForms,
+  resolveIndustry,
+  INDUSTRY_VERSION,
+  emptyIndustryAnswers,
+  validateIndustry,
+  industrySummary,
+  updateIndustryAnswer,
+} from '../lib/industryBrief';
+import { getMetrikaClientId } from '../lib/metrikaClient';
 import {
   briefFields,
   formatBriefMessage,
@@ -27,6 +38,8 @@ const initialValues = {
   email: '',
   contact: '',
   message: '',
+  contactMethod: 'email',
+  brief: emptyIndustryAnswers,
   direction: '',
   placement: '',
   deadline: '',
@@ -45,6 +58,10 @@ const publicFormRoutes = new Set([
   '/hse/price',
   '/stoimost',
   '/procurement',
+  '/ships-and-ports',
+  '/hospitality',
+  '/tourism',
+  '/education',
   '/why_it_works',
   '/cases',
   '/ceo',
@@ -78,7 +95,7 @@ function inferContact(contact) {
     : { contact_type: 'phone', phone: value, telegram: '' };
 }
 
-function validate(values) {
+function validate(values, variant) {
   const errors = {};
   const name = values.name.trim();
   const email = values.email.trim();
@@ -97,14 +114,31 @@ function validate(values) {
   if (contact && contact.length < 5) {
     errors.contact = 'Проверьте телефон или Telegram';
   }
-  if (!message) errors.message = 'Расскажите хотя бы немного о задаче';
-  else if (message.length < 10) {
+  if (!variant && !message)
+    errors.message = 'Расскажите хотя бы немного о задаче';
+  else if (!variant && message.length < 10) {
     errors.message = 'Добавьте пару слов о задаче';
   }
   if (!values.privacyConsent) {
     errors.privacyConsent = 'Подтвердите согласие на обработку данных';
   }
 
+  if (variant) {
+    Object.assign(errors, validateIndustry(variant, values.brief));
+    if (values.company.trim().length < 2)
+      errors.company = 'Укажите компанию или название проекта';
+    if (
+      values.contactMethod === 'phone' &&
+      (!/^\+?[\d\s().-]{7,}$/.test(contact) ||
+        contact.replace(/\D/g, '').length < 7)
+    )
+      errors.contact = 'Проверьте телефон';
+    if (
+      values.contactMethod === 'telegram' &&
+      !/^(?:@|https?:\/\/t\.me\/)?[a-zA-Z][a-zA-Z0-9_]{4,31}$/.test(contact)
+    )
+      errors.contact = 'Укажите Telegram в формате @username';
+  }
   return errors;
 }
 
@@ -205,6 +239,9 @@ function SuccessDialog({ onClose }) {
 
 export default function WebsiteLeadForm() {
   const visible = useMemo(shouldShowForm, []);
+  const variant = useMemo(() => resolveIndustry(normalizedCurrentPath()), []);
+  const ctaRef = useRef('form');
+  const startedRef = useRef(false);
   const [values, setValues] = useState(() => ({
     ...initialValues,
     direction: inferBriefDirection(
@@ -271,6 +308,53 @@ export default function WebsiteLeadForm() {
     };
   }, [succeeded, visible]);
 
+  useEffect(() => {
+    if (!variant) return undefined;
+    const apply = (data) => {
+      setValues((current) => {
+        let brief = current.brief;
+        if (industryForms[variant].tasks.some(([id]) => id === data.task))
+          brief = updateIndustryAnswer(variant, brief, 'task_id', data.task);
+        if (
+          data.scope === 'annual_program' ||
+          data.scope === 'pilot' ||
+          data.scope === 'series' ||
+          data.scope === 'master_adaptations'
+        )
+          brief = updateIndustryAnswer(variant, brief, 'scope_id', data.scope);
+        return { ...current, brief };
+      });
+      ctaRef.current = ['hero', 'task_card', 'annual', 'package'].includes(
+        data.cta
+      )
+        ? data.cta
+        : 'form';
+    };
+    const params = new URLSearchParams(window.location.search);
+    apply({ task: params.get('task'), scope: params.get('scope') });
+    const listener = (event) => apply(event.detail || {});
+    window.addEventListener('anix:brief-prefill', listener);
+    return () => window.removeEventListener('anix:brief-prefill', listener);
+  }, [variant]);
+
+  useEffect(() => {
+    if (!visible || typeof IntersectionObserver === 'undefined')
+      return undefined;
+    const form = document.getElementById('website-lead-form');
+    if (!form) return undefined;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        sendMetrikaGoal('lead_form_view', {
+          form_variant: variant || 'general',
+          page_path: normalizedCurrentPath(),
+        });
+        observer.disconnect();
+      }
+    });
+    observer.observe(form);
+    return () => observer.disconnect();
+  }, [visible, variant]);
+
   if (!visible) return null;
 
   const resetTurnstile = () => {
@@ -286,10 +370,26 @@ export default function WebsiteLeadForm() {
 
   const onChange = (event) => {
     const { name, value, type, checked } = event.target;
-    setValues((current) => ({
-      ...current,
-      [name]: type === 'checkbox' ? checked : value,
-    }));
+    if (!startedRef.current) {
+      startedRef.current = true;
+      sendMetrikaGoal('lead_form_start', {
+        form_variant: variant || 'general',
+        page_path: normalizedCurrentPath(),
+      });
+    }
+    setValues((current) => {
+      if (
+        variant &&
+        Object.prototype.hasOwnProperty.call(emptyIndustryAnswers, name)
+      )
+        return {
+          ...current,
+          brief: updateIndustryAnswer(variant, current.brief, name, value),
+        };
+      if (name === 'contactMethod')
+        return { ...current, contactMethod: value, email: '', contact: '' };
+      return { ...current, [name]: type === 'checkbox' ? checked : value };
+    });
     setErrors((current) => ({ ...current, [name]: undefined }));
     setServerError('');
   };
@@ -298,17 +398,30 @@ export default function WebsiteLeadForm() {
     event.preventDefault();
     if (status === 'sending') return;
 
-    const nextErrors = validate(values);
+    const nextErrors = validate(values, variant);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) {
-      const firstInvalidName = [
-        'name',
-        'email',
-        'contact',
-        'message',
-        'privacyConsent',
-      ].find((name) => nextErrors[name]);
-      event.currentTarget.elements[firstInvalidName]?.focus();
+      sendMetrikaGoal('lead_form_error', {
+        form_variant: variant || 'general',
+        error_type: 'validation',
+      });
+      const firstInvalidName =
+        [
+          'task_id',
+          'context_id',
+          'company',
+          'comment',
+          'budget_id',
+          'name',
+          'email',
+          'contact',
+          'message',
+          'privacyConsent',
+        ].find((name) => nextErrors[name]) || Object.keys(nextErrors)[0];
+      const field = event.currentTarget.elements[firstInvalidName];
+      const details = field?.closest('details');
+      if (details) details.open = true;
+      field?.focus();
       return;
     }
     if (!turnstileToken) {
@@ -320,6 +433,11 @@ export default function WebsiteLeadForm() {
     setServerError('');
     const session = getLeadSessionSnapshot();
     const inferredContact = inferContact(values.contact);
+    const clientId = await getMetrikaClientId();
+    sendMetrikaGoal('lead_form_submit', {
+      form_variant: variant || 'general',
+      task_id: variant ? values.brief.task_id : undefined,
+    });
     const payload = {
       idempotency_key: idempotencyKeyRef.current,
       turnstile_token: turnstileToken,
@@ -331,7 +449,19 @@ export default function WebsiteLeadForm() {
       email: values.email.trim(),
       contact_value: values.contact.trim(),
       ...inferredContact,
-      message: formatBriefMessage(values),
+      message: variant
+        ? industrySummary(variant, values.brief)
+        : formatBriefMessage(values),
+      ...(variant
+        ? {
+            form_variant: variant,
+            form_version: INDUSTRY_VERSION,
+            brief: values.brief,
+            cta_id: ctaRef.current,
+            landing_variant: 'default',
+          }
+        : {}),
+      metrika_client_id: clientId,
       ...session,
     };
 
@@ -354,6 +484,8 @@ export default function WebsiteLeadForm() {
       setStatus('success');
       setShowDialog(true);
       sendMetrikaGoal('lead_form_success', {
+        form_variant: variant || 'general',
+        form_version: variant ? INDUSTRY_VERSION : 'general-v1',
         page_path: session.page_path,
         source: session.source,
         utm_source: session.utm_source,
@@ -422,7 +554,9 @@ export default function WebsiteLeadForm() {
       <div className="website-lead__intro">
         <p className="website-lead__eyebrow">Следующий шаг · 1 рабочий день</p>
         <h2 id="website-lead-title">
-          3 формата и вилка бюджета под вашу задачу
+          {variant
+            ? industryForms[variant].title
+            : '3 формата и вилка бюджета под вашу задачу'}
         </h2>
         <p>
           Предложим три варианта решения: что получит аудитория, состав
@@ -448,108 +582,132 @@ export default function WebsiteLeadForm() {
         onSubmit={onSubmit}
         noValidate
       >
-        <div className="website-lead__grid">
-          <label>
-            <span>Имя</span>
-            <input
-              name="name"
-              value={values.name}
-              onChange={onChange}
-              autoComplete="name"
-              maxLength={120}
-              aria-invalid={Boolean(errors.name)}
-              aria-describedby={fieldError('name')}
-              placeholder="Как к вам обращаться"
-            />
-            {errors.name ? <small id="name-error">{errors.name}</small> : null}
-          </label>
-
-          <label>
-            <span>
-              Компания <em>необязательно</em>
-            </span>
-            <input
-              name="company"
-              value={values.company}
-              onChange={onChange}
-              autoComplete="organization"
-              maxLength={180}
-              placeholder="Где вы работаете"
-            />
-          </label>
-
-          <label>
-            <span>Email</span>
-            <input
-              name="email"
-              type="email"
-              value={values.email}
-              onChange={onChange}
-              autoComplete="email"
-              maxLength={254}
-              aria-invalid={Boolean(errors.email)}
-              aria-describedby={fieldError('email')}
-              placeholder="name@company.ru"
-            />
-            {errors.email ? (
-              <small id="email-error">{errors.email}</small>
-            ) : null}
-          </label>
-
-          <label>
-            <span>Телефон или Telegram</span>
-            <input
-              name="contact"
-              value={values.contact}
-              onChange={onChange}
-              autoComplete="tel"
-              maxLength={120}
-              aria-invalid={Boolean(errors.contact)}
-              aria-describedby={fieldError('contact')}
-              placeholder="+7 999 000-00-00 или @username"
-            />
-            {errors.contact ? (
-              <small id="contact-error">{errors.contact}</small>
-            ) : null}
-          </label>
-        </div>
-
-        <fieldset className="website-lead__brief">
-          <legend>Параметры проекта</legend>
-          <p>Выберите то, что уже известно. Остальное поможем определить.</p>
-          <div className="website-lead__grid">
-            {briefFields.map(({ name, label, options }) => (
-              <label key={name}>
-                <span>{label}</span>
-                <select name={name} value={values[name]} onChange={onChange}>
-                  <option value="">Пока не определились</option>
-                  {options.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            ))}
-          </div>
-        </fieldset>
-
-        <label className="website-lead__message">
-          <span>Что нужно сделать</span>
-          <textarea
-            name="message"
-            value={values.message}
+        {variant ? (
+          <IndustryFormFields
+            variant={variant}
+            values={values}
+            errors={errors}
             onChange={onChange}
-            rows={4}
-            maxLength={3000}
-            aria-invalid={Boolean(errors.message)}
-            aria-describedby={fieldError('message')}
-            placeholder="Задача, продукт, сроки — в свободной форме"
+            onDetailsOpen={() =>
+              sendMetrikaGoal('lead_form_details_open', {
+                form_variant: variant,
+              })
+            }
           />
-          {errors.message ? (
-            <small id="message-error">{errors.message}</small>
-          ) : null}
-        </label>
+        ) : (
+          <>
+            <div className="website-lead__grid">
+              <label>
+                <span>Имя</span>
+                <input
+                  name="name"
+                  value={values.name}
+                  onChange={onChange}
+                  autoComplete="name"
+                  maxLength={120}
+                  aria-invalid={Boolean(errors.name)}
+                  aria-describedby={fieldError('name')}
+                  placeholder="Как к вам обращаться"
+                />
+                {errors.name ? (
+                  <small id="name-error">{errors.name}</small>
+                ) : null}
+              </label>
+
+              <label>
+                <span>
+                  Компания <em>необязательно</em>
+                </span>
+                <input
+                  name="company"
+                  value={values.company}
+                  onChange={onChange}
+                  autoComplete="organization"
+                  maxLength={180}
+                  placeholder="Где вы работаете"
+                />
+              </label>
+
+              <label>
+                <span>Email</span>
+                <input
+                  name="email"
+                  type="email"
+                  value={values.email}
+                  onChange={onChange}
+                  autoComplete="email"
+                  maxLength={254}
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={fieldError('email')}
+                  placeholder="name@company.ru"
+                />
+                {errors.email ? (
+                  <small id="email-error">{errors.email}</small>
+                ) : null}
+              </label>
+
+              <label>
+                <span>Телефон или Telegram</span>
+                <input
+                  name="contact"
+                  value={values.contact}
+                  onChange={onChange}
+                  autoComplete="tel"
+                  maxLength={120}
+                  aria-invalid={Boolean(errors.contact)}
+                  aria-describedby={fieldError('contact')}
+                  placeholder="+7 999 000-00-00 или @username"
+                />
+                {errors.contact ? (
+                  <small id="contact-error">{errors.contact}</small>
+                ) : null}
+              </label>
+            </div>
+
+            <fieldset className="website-lead__brief">
+              <legend>Параметры проекта</legend>
+              <p>
+                Выберите то, что уже известно. Остальное поможем определить.
+              </p>
+              <div className="website-lead__grid">
+                {briefFields.map(({ name, label, options }) => (
+                  <label key={name}>
+                    <span>{label}</span>
+                    <select
+                      name={name}
+                      value={values[name]}
+                      onChange={onChange}
+                    >
+                      <option value="">Пока не определились</option>
+                      {options.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <label className="website-lead__message">
+              <span>Что нужно сделать</span>
+              <textarea
+                name="message"
+                value={values.message}
+                onChange={onChange}
+                rows={4}
+                maxLength={3000}
+                aria-invalid={Boolean(errors.message)}
+                aria-describedby={fieldError('message')}
+                placeholder="Задача, продукт, сроки — в свободной форме"
+              />
+              {errors.message ? (
+                <small id="message-error">{errors.message}</small>
+              ) : null}
+            </label>
+          </>
+        )}
 
         <label className="website-lead__consent">
           <input

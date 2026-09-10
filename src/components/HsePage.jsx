@@ -1,5 +1,6 @@
 import React from 'react';
 import ProjectCta from './ProjectCta';
+import AnnualProgram from './AnnualProgram';
 import {
   Activity,
   ArrowRight,
@@ -652,6 +653,17 @@ export default function HsePage() {
         </div>
       </section>
 
+      <section className="industry-section" id="production-training">
+        <p className="industry-eyebrow">Обучение на производстве</p>
+        <h2>Показать, как устроена работа</h2>
+        <p>
+          Передача смены, наставничество, 5С, новые операции и командная работа.
+          Разбираем действия на примерах из вашей площадки и согласуем
+          содержание с ответственным специалистом.
+        </p>
+        <ProjectCta task="production_training" cta="task_card" />
+      </section>
+      <AnnualProgram />
       <ProcurementDownloads product="hse" />
       <SiteFooter />
     </main>

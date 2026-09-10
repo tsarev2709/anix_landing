@@ -201,6 +201,7 @@ describe('track-event', () => {
 });
 
 describe('submit-website-lead', () => {
+  beforeEach(() => jest.resetModules());
   afterEach(() => {
     jest.resetModules();
     jest.clearAllMocks();
@@ -225,6 +226,119 @@ describe('submit-website-lead', () => {
     page_path: '/',
     pages_viewed: [],
   };
+
+  test.each([
+    'maritime',
+    'hospitality',
+    'tourism',
+    'education',
+    'pharma',
+    'hse',
+  ])('stores and forwards the complete %s brief', async (variant) => {
+    const config = require('../content/industryForms.json')[variant];
+    const brief = {
+      task_id: config.tasks[0][0],
+      context_id: config.contexts[0][0],
+      placement_id: '',
+      deadline_id: '',
+      scope_id: '',
+      budget_id: '',
+      budget_basis: 'project',
+      detail: '',
+      comment: '',
+    };
+    let saved;
+    const chain = {
+      select: () => chain,
+      eq: () => chain,
+      maybeSingle: async () => ({ data: null, error: null }),
+      insert: (value) => {
+        saved = { ...value, id: 'industry-test' };
+        return chain;
+      },
+      update: (value) => {
+        saved = { ...saved, ...value };
+        return chain;
+      },
+      single: async () => ({ data: saved, error: null }),
+    };
+    jest.doMock(
+      'https://esm.sh/@supabase/supabase-js@2',
+      () => ({ createClient: () => ({ from: () => chain }) }),
+      { virtual: true }
+    );
+    const sync = jest.fn(async () => ({
+      leadId: 123,
+      contactId: 456,
+      briefSynced: true,
+    }));
+    jest.doMock('../../supabase/functions/_shared/amocrm.ts', () => ({
+      syncAmoLead: sync,
+      AmoIntegrationError: class extends Error {},
+    }));
+    process.env.TURNSTILE_SECRET_KEY = 'test';
+    process.env.SUPABASE_URL = 'https://example.supabase.co';
+    process.env.SUPABASE_SERVICE_ROLE_KEY = 'test';
+    global.fetch = jest.fn(async () => ({
+      ok: true,
+      json: async () => ({
+        success: true,
+        action: 'website_lead',
+        hostname: 'studio.anix-ai.pro',
+      }),
+    }));
+    const handler =
+      require('../../supabase/functions/submit-website-lead/index.js').default;
+    const response = await handler(
+      new Request('https://example.com', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          origin: 'https://studio.anix-ai.pro',
+        },
+        body: JSON.stringify({
+          ...validBody,
+          company: 'Test company',
+          message: '',
+          form_variant: variant,
+          form_version: 'industry-v1',
+          brief,
+          metrika_client_id: '12345',
+        }),
+      })
+    );
+    expect(response.status).toBe(200);
+    expect(saved.brief).toEqual(brief);
+    expect(saved.metrika_client_id).toBe('12345');
+    expect(saved.brief_crm_synced).toBe(true);
+    expect(sync.mock.calls[0][0].industryFields['ANIX · Задача']).toBe(
+      config.tasks[0][1]
+    );
+    expect(sync.mock.calls[0][0].note).toContain(config.contexts[0][1]);
+  });
+
+  test('rejects a forged industry variant before contacting external services', async () => {
+    global.fetch = jest.fn();
+    const handler =
+      require('../../supabase/functions/submit-website-lead/index.js').default;
+    const response = await handler(
+      new Request('https://example.com', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          origin: 'https://studio.anix-ai.pro',
+        },
+        body: JSON.stringify({
+          ...validBody,
+          form_variant: '__proto__',
+          form_version: 'industry-v1',
+          brief: {},
+        }),
+      })
+    );
+    expect(response.status).toBe(400);
+    expect(global.fetch).not.toHaveBeenCalled();
+  });
 
   test('rejects a lead without privacy consent', async () => {
     const submitWebsiteLead =

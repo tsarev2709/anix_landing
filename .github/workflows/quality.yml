@@ -28,6 +28,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Verify shared industry brief schema
+        run: node scripts/sync-industry-brief.js --check
+
       - name: Typecheck AI Edge Functions
         run: npm run typecheck:edge
 
