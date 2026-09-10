@@ -565,6 +565,9 @@
   cursor: pointer;
 }
 .industry-contact__options input {
+  min-height: 18px;
+  padding: 0;
+  flex-shrink: 0;
   accent-color: #6236b8;
   width: 18px;
   height: 18px;
