@@ -1,0 +1,806 @@
+{
+  "version": "2026-09-11-v1",
+  "method": "Buyer-language hypotheses; not Wordstat frequencies. Search discovery and LLM answers must be measured separately.",
+  "prompts": [
+    {
+      "id": "pharma-01",
+      "cluster": "pharma",
+      "target": "/medicine",
+      "query": "Какие студии делают медицинскую анимацию на русском языке?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "pharma-02",
+      "cluster": "pharma",
+      "target": "/medicine",
+      "query": "Где заказать анимационный ролик для фармацевтической компании?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "pharma-03",
+      "cluster": "pharma",
+      "target": "/medicine",
+      "query": "Кто может визуализировать механизм действия препарата для врачей?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "pharma-04",
+      "cluster": "pharma",
+      "target": "/medicine",
+      "query": "Как выбрать подрядчика для научно корректной медицинской анимации?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "pharma-05",
+      "cluster": "pharma",
+      "target": "/medicine",
+      "query": "Какие материалы нужны для создания ролика о препарате?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "pharma-06",
+      "cluster": "pharma",
+      "target": "/medicine",
+      "query": "Сколько стоит медицинская анимация для фармкомпании?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "pharma-07",
+      "cluster": "pharma",
+      "target": "/medicine",
+      "query": "Как согласовать фармацевтический ролик с medical и legal?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "pharma-08",
+      "cluster": "pharma",
+      "target": "/medicine",
+      "query": "Как сделать ролик для врачебной конференции без звука?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "pharma-09",
+      "cluster": "pharma",
+      "target": "/medicine",
+      "query": "Что лучше для механизма действия препарата: 2D или 3D?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "pharma-10",
+      "cluster": "pharma",
+      "target": "/medicine",
+      "query": "Какие кейсы медицинской анимации есть у российских студий?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "hse-01",
+      "cluster": "hse",
+      "target": "/hse",
+      "query": "Где заказать анимационный видеоинструктаж по охране труда?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "hse-02",
+      "cluster": "hse",
+      "target": "/hse",
+      "query": "Какие студии делают обучающие ролики по безопасности для предприятий?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "hse-03",
+      "cluster": "hse",
+      "target": "/hse",
+      "query": "Как сделать правила безопасности понятными сотрудникам?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "hse-04",
+      "cluster": "hse",
+      "target": "/hse",
+      "query": "Сколько стоит ролик по охране труда на заказ?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "hse-05",
+      "cluster": "hse",
+      "target": "/hse",
+      "query": "Как поставить ТЗ на анимацию по промышленной безопасности?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "hse-06",
+      "cluster": "hse",
+      "target": "/hse",
+      "query": "Можно ли использовать один видеоинструктаж для нескольких филиалов?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "hse-07",
+      "cluster": "hse",
+      "target": "/hse",
+      "query": "Как обновлять HSE-ролики при изменении правил?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "hse-08",
+      "cluster": "hse",
+      "target": "/hse",
+      "query": "Как проверить понимание после видео по охране труда?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "hse-09",
+      "cluster": "hse",
+      "target": "/hse",
+      "query": "Как выбрать подрядчика для серии видео Life Saving Rules?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "hse-10",
+      "cluster": "hse",
+      "target": "/hse",
+      "query": "Какие есть кейсы анимации по охране труда с маскотом?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "energy-01",
+      "cluster": "energy",
+      "target": "/knowledge/hse-energy",
+      "query": "Кто делает видео по охране труда для энергетических компаний?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "energy-02",
+      "cluster": "energy",
+      "target": "/knowledge/hse-energy",
+      "query": "Как подготовить визуальный инструктаж для подрядчиков электростанции?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "energy-03",
+      "cluster": "energy",
+      "target": "/knowledge/hse-energy",
+      "query": "Как объяснять локальные риски объекта новым подрядчикам?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "energy-04",
+      "cluster": "energy",
+      "target": "/knowledge/hse-energy",
+      "query": "Какие материалы нужны студии для ролика по электробезопасности?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "energy-05",
+      "cluster": "energy",
+      "target": "/knowledge/hse-energy",
+      "query": "Как показать опасную ситуацию без съёмки на производстве?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "energy-06",
+      "cluster": "energy",
+      "target": "/knowledge/hse-energy",
+      "query": "Как адаптировать видеоинструктаж под разные станции?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "energy-07",
+      "cluster": "energy",
+      "target": "/knowledge/hse-energy",
+      "query": "Как организовать просмотр HSE-модуля до приезда подрядчика?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "energy-08",
+      "cluster": "energy",
+      "target": "/knowledge/hse-energy",
+      "query": "Какие вопросы задать студии для видео по безопасности на энергообъекте?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "energy-09",
+      "cluster": "energy",
+      "target": "/knowledge/hse-energy",
+      "query": "Как сделать библиотеку обучающих роликов для ремонтной кампании?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "energy-10",
+      "cluster": "energy",
+      "target": "/knowledge/hse-energy",
+      "query": "Как проверить корректность СИЗ и действий в HSE-анимации?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "onboarding-01",
+      "cluster": "onboarding",
+      "target": "/knowledge/contractor-onboarding",
+      "query": "Как стандартизировать onboarding подрядчиков на предприятии?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "onboarding-02",
+      "cluster": "onboarding",
+      "target": "/knowledge/contractor-onboarding",
+      "query": "Что входит в визуальный onboarding-модуль по безопасности?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "onboarding-03",
+      "cluster": "onboarding",
+      "target": "/knowledge/contractor-onboarding",
+      "query": "Как сократить повторное объяснение правил новым сотрудникам?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "onboarding-04",
+      "cluster": "onboarding",
+      "target": "/knowledge/contractor-onboarding",
+      "query": "Можно ли встроить обучающий ролик и тест в LMS?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "onboarding-05",
+      "cluster": "onboarding",
+      "target": "/knowledge/contractor-onboarding",
+      "query": "Как организовать QR-доступ к видео по правилам объекта?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "onboarding-06",
+      "cluster": "onboarding",
+      "target": "/knowledge/contractor-onboarding",
+      "query": "Чем просмотр ролика отличается от допуска к работе?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "onboarding-07",
+      "cluster": "onboarding",
+      "target": "/knowledge/contractor-onboarding",
+      "query": "Как измерять результат пилота видеообучения подрядчиков?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "onboarding-08",
+      "cluster": "onboarding",
+      "target": "/knowledge/contractor-onboarding",
+      "query": "Как хранить версии инструкций и обучающих роликов?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "onboarding-09",
+      "cluster": "onboarding",
+      "target": "/knowledge/contractor-onboarding",
+      "query": "Как сделать разные языковые версии вводного видео?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "onboarding-10",
+      "cluster": "onboarding",
+      "target": "/knowledge/contractor-onboarding",
+      "query": "Как заказать пилот видеообучения для одного объекта?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "mascots-01",
+      "cluster": "mascots",
+      "target": "/mascots",
+      "query": "Где заказать корпоративного маскота для промышленной компании?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "mascots-02",
+      "cluster": "mascots",
+      "target": "/mascots",
+      "query": "Зачем компании нужен маскот по охране труда?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "mascots-03",
+      "cluster": "mascots",
+      "target": "/mascots",
+      "query": "Кто делает маскотов для фармацевтических брендов?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "mascots-04",
+      "cluster": "mascots",
+      "target": "/mascots",
+      "query": "Как использовать персонажа в обучении сотрудников?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "mascots-05",
+      "cluster": "mascots",
+      "target": "/mascots",
+      "query": "Что входит в разработку маскота и гайд по его использованию?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "mascots-06",
+      "cluster": "mascots",
+      "target": "/mascots",
+      "query": "Сколько стоит разработка маскота и анимации с ним?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "mascots-07",
+      "cluster": "mascots",
+      "target": "/mascots",
+      "query": "Как выбрать между маскотом и обычной инфографикой?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "mascots-08",
+      "cluster": "mascots",
+      "target": "/mascots",
+      "query": "Как превратить маскота в серию карточек и роликов?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "mascots-09",
+      "cluster": "mascots",
+      "target": "/mascots",
+      "query": "Какие промышленные компании используют маскотов в безопасности?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "mascots-10",
+      "cluster": "mascots",
+      "target": "/mascots",
+      "query": "Как измерить эффект корпоративного персонажа?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "procurement-01",
+      "cluster": "procurement",
+      "target": "/procurement",
+      "query": "Как сравнить коммерческие предложения анимационных студий?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "procurement-02",
+      "cluster": "procurement",
+      "target": "/procurement",
+      "query": "Какие права на ролик и исходники передаёт студия?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "procurement-03",
+      "cluster": "procurement",
+      "target": "/procurement",
+      "query": "Что включить в ТЗ на медицинский анимационный ролик?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "procurement-04",
+      "cluster": "procurement",
+      "target": "/procurement",
+      "query": "Как согласовать правки к ролику между несколькими отделами?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "procurement-05",
+      "cluster": "procurement",
+      "target": "/procurement",
+      "query": "От чего зависит срок создания анимационного ролика?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "procurement-06",
+      "cluster": "procurement",
+      "target": "/procurement",
+      "query": "Как заказать анимацию по NDA?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "procurement-07",
+      "cluster": "procurement",
+      "target": "/procurement",
+      "query": "Что считать изменением задания при производстве ролика?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "procurement-08",
+      "cluster": "procurement",
+      "target": "/procurement",
+      "query": "Как оформить критерии приёмки обучающего видео?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "procurement-09",
+      "cluster": "procurement",
+      "target": "/procurement",
+      "query": "Что дешевле: один ролик или серия адаптаций?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "procurement-10",
+      "cluster": "procurement",
+      "target": "/procurement",
+      "query": "Как защитить бюджет анимационного проекта перед руководством?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "b2b-01",
+      "cluster": "b2b",
+      "target": "/animation",
+      "query": "Кто делает объясняющую анимацию для сложных B2B-продуктов?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "b2b-02",
+      "cluster": "b2b",
+      "target": "/animation",
+      "query": "Как объяснить MedTech-продукт врачам в коротком видео?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "b2b-03",
+      "cluster": "b2b",
+      "target": "/animation",
+      "query": "Где заказать анимационный ролик для технологической компании?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "b2b-04",
+      "cluster": "b2b",
+      "target": "/animation",
+      "query": "Как выбрать между съёмкой, анимацией и AI-видео?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "b2b-05",
+      "cluster": "b2b",
+      "target": "/animation",
+      "query": "Какие ограничения у AI-видео для фармы и промышленности?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "b2b-06",
+      "cluster": "b2b",
+      "target": "/animation",
+      "query": "Как превратить научную презентацию в понятный ролик?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "b2b-07",
+      "cluster": "b2b",
+      "target": "/animation",
+      "query": "Как сделать ролик для конференционного стенда?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "b2b-08",
+      "cluster": "b2b",
+      "target": "/animation",
+      "query": "Как оценивать результат объясняющего B2B-видео?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "b2b-09",
+      "cluster": "b2b",
+      "target": "/animation",
+      "query": "Какая студия умеет работать с научной фактурой?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "b2b-10",
+      "cluster": "b2b",
+      "target": "/animation",
+      "query": "Как подготовить серию видео для продуктового портфеля?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "brand-01",
+      "cluster": "brand",
+      "target": "/facts",
+      "query": "Что делает Anix Studio?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "brand-02",
+      "cluster": "brand",
+      "target": "/facts",
+      "query": "Какие кейсы есть у студии Аникс?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "brand-03",
+      "cluster": "brand",
+      "target": "/facts",
+      "query": "Anix Studio медицинская анимация",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P0",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "brand-04",
+      "cluster": "brand",
+      "target": "/facts",
+      "query": "Anix Studio охрана труда маскоты",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "brand-05",
+      "cluster": "brand",
+      "target": "/facts",
+      "query": "Кто основал Anix Studio?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "brand-06",
+      "cluster": "brand",
+      "target": "/facts",
+      "query": "Александра Севостьянова Anix",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "brand-07",
+      "cluster": "brand",
+      "target": "/facts",
+      "query": "Андрей Царёв Anix научная экспертиза",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "brand-08",
+      "cluster": "brand",
+      "target": "/facts",
+      "query": "Anix Studio Мултон Партнерс кейс",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "brand-09",
+      "cluster": "brand",
+      "target": "/facts",
+      "query": "Anix Studio Авиандр кейс",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    },
+    {
+      "id": "brand-10",
+      "cluster": "brand",
+      "target": "/facts",
+      "query": "Как связаться с Anix Studio для заказа ролика?",
+      "language": "ru",
+      "market": "RU",
+      "priority": "P1",
+      "llm_status": "not_measured"
+    }
+  ]
+}

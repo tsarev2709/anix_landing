@@ -8,6 +8,7 @@ function json(body: any, status = 200) {
 }
 
 const allowedEvents = [
+  'ai_referral_visit',
   'form_view',
   'form_start',
   'form_submit',
