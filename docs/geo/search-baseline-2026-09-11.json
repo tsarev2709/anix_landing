@@ -1,0 +1,2742 @@
+{
+  "disclaimer": "Search source discovery only. NOT LLM share of voice. No model recommendations were simulated.",
+  "results": [
+    {
+      "id": "pharma-01",
+      "checkedAt": "2026-09-11T09:19:33.180Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Не проморгай возможности! Закажи анимацию в ...",
+          "url": "https://www.instagram.com/reel/DKuLYxyoyEi/"
+        },
+        {
+          "title": "Voronezh Animation Studio",
+          "url": "https://en.wikipedia.org/wiki/Voronezh_Animation_Studio"
+        },
+        {
+          "title": "List of animation studios",
+          "url": "https://en.wikipedia.org/wiki/List_of_animation_studios"
+        },
+        {
+          "title": "Deep Animation Video Interpolation in the Wild",
+          "url": "https://arxiv.org/abs/2104.02495"
+        },
+        {
+          "title": "Soyuzmultfilm",
+          "url": "https://en.wikipedia.org/wiki/Soyuzmultfilm"
+        },
+        {
+          "title": "Science Saru",
+          "url": "https://ru.wikipedia.org/wiki/Science_Saru"
+        },
+        {
+          "title": "AnimeSR: Learning Real-World Super-Resolution Models for Animation Videos",
+          "url": "https://arxiv.org/abs/2206.07038"
+        },
+        {
+          "title": "Animation Magic",
+          "url": "https://ru.wikipedia.org/wiki/Animation_Magic"
+        },
+        {
+          "title": "Wizart Animation",
+          "url": "https://es.wikipedia.org/wiki/Wizart_Animation"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "pharma-02",
+      "checkedAt": "2026-09-11T09:19:31.251Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Анимационные ролики - champ video",
+          "url": "https://champvideo.pro/"
+        },
+        {
+          "title": "Заказать создание анимационных роликов в Москве",
+          "url": "https://avastudio.ru/"
+        },
+        {
+          "title": "Топ анимационных роликов для фарм компаний",
+          "url": "https://chinup.by/"
+        },
+        {
+          "title": "Анимационный Ролик: Заказать Создание 2D и 3D анимации",
+          "url": "https://video-vision.net/"
+        },
+        {
+          "title": "Видеореклама для фармацевтической компании. Реклама ...",
+          "url": "https://lineinspace.studio/"
+        },
+        {
+          "title": "Заказать создание рекламных анимационных роликов ...",
+          "url": "https://infomult.ru/"
+        },
+        {
+          "title": "10 лучших компаний по созданию медицинских ...",
+          "url": "https://voka.io/"
+        },
+        {
+          "title": "Создание анимационных роликов",
+          "url": "https://edpit.org/"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "pharma-03",
+      "checkedAt": "2026-09-11T09:19:30.264Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Diaformer: Automatic Diagnosis via Symptoms Sequence Generation",
+          "url": "https://arxiv.org/abs/2112.10433"
+        },
+        {
+          "title": "Флурпиридаз (18F)",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A4%D0%BB%D1%83%D1%80%D0%BF%D0%B8%D1%80%D0%B8%D0%B4%D0%B0%D0%B7_%2818F%29"
+        },
+        {
+          "title": "Эпирубицин",
+          "url": "https://ru.wikipedia.org/wiki/%D0%AD%D0%BF%D0%B8%D1%80%D1%83%D0%B1%D0%B8%D1%86%D0%B8%D0%BD"
+        },
+        {
+          "title": "Лекарственный антагонизм",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9B%D0%B5%D0%BA%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9_%D0%B0%D0%BD%D1%82%D0%B0%D0%B3%D0%BE%D0%BD%D0%B8%D0%B7%D0%BC"
+        },
+        {
+          "title": "Фавипиравир",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D0%B2%D0%B8%D0%BF%D0%B8%D1%80%D0%B0%D0%B2%D0%B8%D1%80"
+        },
+        {
+          "title": "Препараты для лечения нарушений эрекции",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%B5%D0%BF%D0%B0%D1%80%D0%B0%D1%82%D1%8B_%D0%B4%D0%BB%D1%8F_%D0%BB%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D1%8F_%D0%BD%D0%B0%D1%80%D1%83%D1%88%D0%B5%D0%BD%D0%B8%D0%B9_%D1%8D%D1%80%D0%B5%D0%BA%D1%86%D0%B8%D0%B8"
+        },
+        {
+          "title": "Фарицимаб",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D1%80%D0%B8%D1%86%D0%B8%D0%BC%D0%B0%D0%B1"
+        },
+        {
+          "title": "New method for the study of psychotropic drug effects under simulated clinical conditions",
+          "url": "https://arxiv.org/abs/0707.3671"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "pharma-04",
+      "checkedAt": "2026-09-11T09:19:32.514Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Which animation technique to choose? 2D, 3D, or stop motion.",
+          "url": "https://www.youtube.com/watch?v=fmGFA3nSTic"
+        },
+        {
+          "title": "Rendezvous: Attention Mechanisms for the Recognition of Surgical Action Triplets in Endoscopic Videos",
+          "url": "https://arxiv.org/abs/2109.03223"
+        },
+        {
+          "title": "PMC-VQA: Visual Instruction Tuning for Medical Visual Question Answering",
+          "url": "https://arxiv.org/abs/2305.10415"
+        },
+        {
+          "title": "Animation Techniques in Human-Robot Interaction User Studies: a Systematic Literature Review",
+          "url": "https://arxiv.org/abs/1812.06784"
+        },
+        {
+          "title": "Child Education Through Animation: An Experimental Study",
+          "url": "https://arxiv.org/abs/1411.1897"
+        },
+        {
+          "title": "Раскадровка",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D1%81%D0%BA%D0%B0%D0%B4%D1%80%D0%BE%D0%B2%D0%BA%D0%B0"
+        },
+        {
+          "title": "Медицинская анимация",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9C%D0%B5%D0%B4%D0%B8%D1%86%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F_%D0%B0%D0%BD%D0%B8%D0%BC%D0%B0%D1%86%D0%B8%D1%8F"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "pharma-05",
+      "checkedAt": "2026-09-11T09:19:32.786Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Как сделать Рекламный Ролик товара в VEO3 + Kling AI ...",
+          "url": "https://www.youtube.com/watch?v=80srl9PlOsg"
+        },
+        {
+          "title": "Видеореклама",
+          "url": "https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%B4%D0%B5%D0%BE%D1%80%D0%B5%D0%BA%D0%BB%D0%B0%D0%BC%D0%B0"
+        },
+        {
+          "title": "Сизл",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D0%B7%D0%BB"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "pharma-06",
+      "checkedAt": "2026-09-11T09:19:34.728Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "10 лучших компаний по созданию медицинских ...",
+          "url": "https://voka.io/"
+        },
+        {
+          "title": "Медицинская анимация: закажите уникальные решения",
+          "url": "https://cgmed.ru/"
+        },
+        {
+          "title": "3D Анимация",
+          "url": "https://www.polist.ru/"
+        },
+        {
+          "title": "Студия медицинской 3D-анимации — TRUETECH",
+          "url": "https://truetech.dev/"
+        },
+        {
+          "title": "Стоимость 2D и 3D анимации, цены 3d и флэш анимацию.",
+          "url": "https://seliverstoff.ru/"
+        },
+        {
+          "title": "Медицинская 3D графика",
+          "url": "https://sfvp.ru/"
+        },
+        {
+          "title": "Стоимость создания видеороликов с анимацией и CGI ...",
+          "url": "https://sxema3d.com/"
+        },
+        {
+          "title": "New drugs and stock market: how to predict pharma market reaction to clinical trial announcements",
+          "url": "https://arxiv.org/abs/2208.07248"
+        },
+        {
+          "title": "An Artificial Intelligence-Driven Agent for Real-Time Head-and-Neck IMRT Plan Generation using Conditional Generative Adversarial Network (cGAN)",
+          "url": "https://arxiv.org/abs/2009.12898"
+        },
+        {
+          "title": "Медицинская анимация",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9C%D0%B5%D0%B4%D0%B8%D1%86%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F_%D0%B0%D0%BD%D0%B8%D0%BC%D0%B0%D1%86%D0%B8%D1%8F"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "pharma-07",
+      "checkedAt": "2026-09-11T09:19:34.628Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Harmonizing Safety and Speed: A Human-Algorithm Approach to Enhance the FDA's Medical Device Clearance Policy",
+          "url": "https://arxiv.org/abs/2407.11823"
+        },
+        {
+          "title": "RULE: Reliable Multimodal RAG for Factuality in Medical Vision Language Models",
+          "url": "https://arxiv.org/abs/2407.05131"
+        },
+        {
+          "title": "Responsible and Regulatory Conform Machine Learning for Medicine: A Survey of Challenges and Solutions",
+          "url": "https://arxiv.org/abs/2107.09546"
+        },
+        {
+          "title": "The Russian Drug Reaction Corpus and Neural Models for Drug Reactions and Effectiveness Detection in User Reviews",
+          "url": "https://arxiv.org/abs/2004.03659"
+        },
+        {
+          "title": "Дженерик",
+          "url": "https://ru.wikipedia.org/wiki/%D0%94%D0%B6%D0%B5%D0%BD%D0%B5%D1%80%D0%B8%D0%BA"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "pharma-08",
+      "checkedAt": "2026-09-11T09:19:35.909Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "в очередной раз открывая видео, которое записалось без ...",
+          "url": "https://www.instagram.com/reel/DWYR6u1jMQq/"
+        },
+        {
+          "title": "How to mute participants in a Zoom meeting.",
+          "url": "https://www.youtube.com/watch?v=u5YwR9lwESw"
+        },
+        {
+          "title": "КАК СДЕЛАТЬ СТУДИЙНЫЙ ЗВУК БЕЗ МИКРОФОНА? # ...",
+          "url": "https://www.instagram.com/reel/DYjZEoKxnLY/"
+        },
+        {
+          "title": "Deity Pocket Wireless – Как записать звук на мероприятии с ...",
+          "url": "https://www.youtube.com/watch?v=OxfeGz5g1lI"
+        },
+        {
+          "title": "Приложения в Google Play – Видео без звука",
+          "url": "https://play.google.com/store/apps/details?hl=ru&id=net.katapu.UsefulVideoMute"
+        },
+        {
+          "title": "One-Shot Free-View Neural Talking-Head Synthesis for Video Conferencing",
+          "url": "https://arxiv.org/abs/2011.15126"
+        },
+        {
+          "title": "VideoReTalking: Audio-based Lip Synchronization for Talking Head Video Editing In the Wild",
+          "url": "https://arxiv.org/abs/2211.14758"
+        },
+        {
+          "title": "Vocoder-Based Speech Synthesis from Silent Videos",
+          "url": "https://arxiv.org/abs/2004.02541"
+        },
+        {
+          "title": "Sparkling Silence: Practices and Challenges of Livestreaming Among Deaf or Hard of Hearing Streamers",
+          "url": "https://arxiv.org/abs/2302.14682"
+        },
+        {
+          "title": "VideoCAP",
+          "url": "https://ru.wikipedia.org/wiki/VideoCAP"
+        },
+        {
+          "title": "Шоурил",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A8%D0%BE%D1%83%D1%80%D0%B8%D0%BB"
+        },
+        {
+          "title": "Видеореклама",
+          "url": "https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%B4%D0%B5%D0%BE%D1%80%D0%B5%D0%BA%D0%BB%D0%B0%D0%BC%D0%B0"
+        },
+        {
+          "title": "Синхронная съёмка",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%BD%D0%B0%D1%8F_%D1%81%D1%8A%D1%91%D0%BC%D0%BA%D0%B0"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "pharma-09",
+      "checkedAt": "2026-09-11T09:19:35.878Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Механизм действия",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9C%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D0%B7%D0%BC_%D0%B4%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%B8%D1%8F"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "pharma-10",
+      "checkedAt": "2026-09-11T09:19:37.622Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "10 лучших компаний по созданию медицинских ...",
+          "url": "https://voka.io/"
+        },
+        {
+          "title": "Студия медицинской 3D-анимации — TRUETECH",
+          "url": "https://truetech.dev/"
+        },
+        {
+          "title": "Анимация в медицине: инновационные решения и их ...",
+          "url": "https://animation-school.pro/"
+        },
+        {
+          "title": "Почему 3D Анимация в России и СНГ такое лютое «гуано»?",
+          "url": "https://cerebrohq.com/"
+        },
+        {
+          "title": "3D-платформа для анимации: воронежский кейс на ПМЭФ ...",
+          "url": "https://chr.plus.rbc.ru/"
+        },
+        {
+          "title": "First Russia's studio of medical imaging Nanobotmodels.com ...",
+          "url": "https://market-access-solutions.ru/"
+        },
+        {
+          "title": "Анимация | Примеры работ Студии Артемия Лебедева",
+          "url": "https://www.artlebedev.ru/"
+        },
+        {
+          "title": "Российская анимационная студия SMF Animation Studio ...",
+          "url": "https://www.animationmagazine.net/"
+        },
+        {
+          "title": "Voronezh Animation Studio",
+          "url": "https://en.wikipedia.org/wiki/Voronezh_Animation_Studio"
+        },
+        {
+          "title": "Animation Magic",
+          "url": "https://ru.wikipedia.org/wiki/Animation_Magic"
+        },
+        {
+          "title": "Wizart Animation",
+          "url": "https://es.wikipedia.org/wiki/Wizart_Animation"
+        },
+        {
+          "title": "Modern Information Technologies in Scientific Research and Educational Activities",
+          "url": "https://arxiv.org/abs/2407.10296"
+        },
+        {
+          "title": "AKN_Regie: bridging digital and performing arts",
+          "url": "https://arxiv.org/abs/2401.03761"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "hse-01",
+      "checkedAt": "2026-09-11T09:19:37.413Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Time-Contrastive Networks: Self-Supervised Learning from Video",
+          "url": "https://arxiv.org/abs/1704.06888"
+        },
+        {
+          "title": "Learning Procedure-aware Video Representation from Instructional Videos and Their Narrations",
+          "url": "https://arxiv.org/abs/2303.17839"
+        },
+        {
+          "title": "Shuffle and Learn: Unsupervised Learning using Temporal Order Verification",
+          "url": "https://arxiv.org/abs/1603.08561"
+        },
+        {
+          "title": "Weakly Supervised Action Labeling in Videos Under Ordering Constraints",
+          "url": "https://arxiv.org/abs/1407.1208"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "hse-02",
+      "checkedAt": "2026-09-11T09:19:38.474Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Methods, Forms and Safety of Learning in Corporate Social Networks",
+          "url": "https://arxiv.org/abs/1807.06035"
+        },
+        {
+          "title": "Positive Technologies",
+          "url": "https://ru.wikipedia.org/wiki/Positive_Technologies"
+        },
+        {
+          "title": "An Interdisciplinary Guideline for the Production of Videos and Vision Videos by Software Professionals",
+          "url": "https://arxiv.org/abs/2001.06675"
+        },
+        {
+          "title": "Интернет-маркетинг",
+          "url": "https://ru.wikipedia.org/wiki/%D0%98%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B5%D1%82-%D0%BC%D0%B0%D1%80%D0%BA%D0%B5%D1%82%D0%B8%D0%BD%D0%B3"
+        },
+        {
+          "title": "Using game simulator Software Inc in the Software Engineering education",
+          "url": "https://arxiv.org/abs/2012.01127"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "hse-03",
+      "checkedAt": "2026-09-11T09:19:38.988Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "10 ежедневных правил охраны труда на производстве",
+          "url": "https://www.avangard-sp.ru/"
+        },
+        {
+          "title": "Как вовлечь сотрудников в соблюдение правил охраны ...",
+          "url": "https://waveservice.ru/"
+        },
+        {
+          "title": "Как повлиять на небезопасное поведение работников",
+          "url": "https://srg-eco.ru/"
+        },
+        {
+          "title": "Регламент информационной безопасности для ...",
+          "url": "https://www.nic.ru/"
+        },
+        {
+          "title": "Стратегия безопасности на производстве: основные ...",
+          "url": "https://www.tn.ru/"
+        },
+        {
+          "title": "Как учить безопасности — новый подход",
+          "url": "https://www.ecopsy.ru/"
+        },
+        {
+          "title": "Правила техники безопасности прописаны. Но их не ...",
+          "url": "https://e.hr-director.ru/"
+        },
+        {
+          "title": "Как разговаривать с сотрудниками, которые нарушили ...",
+          "url": "https://modumlab.com/"
+        },
+        {
+          "title": "Инструктаж по технике безопасности на рабочем месте",
+          "url": "https://allo.tochka.com/"
+        },
+        {
+          "title": "Don't do it: Safer Reinforcement Learning With Rule-based Guidance",
+          "url": "https://arxiv.org/abs/2212.13819"
+        },
+        {
+          "title": "Less Manual Work for Safety Engineers: Towards an Automated Safety Reasoning with Safety Patterns",
+          "url": "https://arxiv.org/abs/2009.10251"
+        },
+        {
+          "title": "Methods, Forms and Safety of Learning in Corporate Social Networks",
+          "url": "https://arxiv.org/abs/1807.06035"
+        },
+        {
+          "title": "Охрана труда",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9E%D1%85%D1%80%D0%B0%D0%BD%D0%B0_%D1%82%D1%80%D1%83%D0%B4%D0%B0"
+        },
+        {
+          "title": "Getting Users Smart Quick about Security: Results from 90 Minutes of Using a Persuasive Toolkit for Facilitating Information Security Problem Solving by Non-Professionals",
+          "url": "https://arxiv.org/abs/2209.02420"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "hse-04",
+      "checkedAt": "2026-09-11T09:19:41.598Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Заказать видео по охране труда и технике безопасности в ...",
+          "url": "https://avastudio.ru/"
+        },
+        {
+          "title": "Разработка видеороликов по безопасности труда",
+          "url": "https://partner-ot.ru/"
+        },
+        {
+          "title": "Создание видео по технике безопасности - champ video",
+          "url": "https://champvideo.pro/"
+        },
+        {
+          "title": "Заказать видео по охране труда и технике безопасности",
+          "url": "https://replay-video.ru/"
+        },
+        {
+          "title": "Видеофильмы по охране труда и технике безопасности",
+          "url": "https://otmagazin.ru/"
+        },
+        {
+          "title": "Ролики по Охране Труда|Обучающие видео для ...",
+          "url": "https://collby.ru/"
+        },
+        {
+          "title": "Заказать видео по охране труда и технике безопасности",
+          "url": "https://videohunter.pro/"
+        },
+        {
+          "title": "Заказать создание видео инструкций в Москве от 80 ...",
+          "url": "https://infomult.ru/"
+        },
+        {
+          "title": "Видеоролики по охране труда и технике безопасности",
+          "url": "https://fanes.pro/"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "hse-05",
+      "checkedAt": "2026-09-11T09:19:40.802Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Как составить ТЗ на разработку программы Техническое ...",
+          "url": "https://www.mindluster.com/lesson/417378-video"
+        },
+        {
+          "title": "Towards Using Behavior Trees in Industrial Automation Controllers",
+          "url": "https://arxiv.org/abs/2404.14030"
+        },
+        {
+          "title": "Safety Control with Preview Automaton",
+          "url": "https://arxiv.org/abs/1907.04935"
+        },
+        {
+          "title": "Опасный производственный объект",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9E%D0%BF%D0%B0%D1%81%D0%BD%D1%8B%D0%B9_%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D0%B9_%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82"
+        },
+        {
+          "title": "Оценка производственных рисков",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9E%D1%86%D0%B5%D0%BD%D0%BA%D0%B0_%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D1%80%D0%B8%D1%81%D0%BA%D0%BE%D0%B2"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "hse-06",
+      "checkedAt": "2026-09-11T09:19:40.946Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "hse-07",
+      "checkedAt": "2026-09-11T09:19:41.245Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Detailed walkthrough of the HSE Lyceum Russian demo exam",
+          "url": "https://www.youtube.com/watch?v=lvCozZoDicE"
+        },
+        {
+          "title": "Okay, HSE #53. How does admission and studying at ...",
+          "url": "https://www.youtube.com/watch?v=b_ZphuFx4_c"
+        },
+        {
+          "title": "Приложения в Google Play – Official HSE Health & Safety",
+          "url": "https://play.google.com/store/apps/details?hl=ru&id=uk.gov.hse.smemobileapp"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "hse-08",
+      "checkedAt": "2026-09-11T09:19:43.313Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "О специалистах по охране труда до сих пор существует ...",
+          "url": "https://www.instagram.com/reel/DbdNkodNDVt/"
+        },
+        {
+          "title": "Long Activity Video Understanding using Functional Object-Oriented Network",
+          "url": "https://arxiv.org/abs/1807.00983"
+        },
+        {
+          "title": "Watch and Learn: Semi-Supervised Learning of Object Detectors from Videos",
+          "url": "https://arxiv.org/abs/1505.05769"
+        },
+        {
+          "title": "Watching You: Global-guided Reciprocal Learning for Video-based Person Re-identification",
+          "url": "https://arxiv.org/abs/2103.04337"
+        },
+        {
+          "title": "Seeing What You're Told: Sentence-Guided Activity Recognition In Video",
+          "url": "https://arxiv.org/abs/1308.4189"
+        },
+        {
+          "title": "Охрана труда",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9E%D1%85%D1%80%D0%B0%D0%BD%D0%B0_%D1%82%D1%80%D1%83%D0%B4%D0%B0"
+        },
+        {
+          "title": "Способы проверки изолирующих свойств респираторов",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%BF%D0%BE%D1%81%D0%BE%D0%B1%D1%8B_%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B8_%D0%B8%D0%B7%D0%BE%D0%BB%D0%B8%D1%80%D1%83%D1%8E%D1%89%D0%B8%D1%85_%D1%81%D0%B2%D0%BE%D0%B9%D1%81%D1%82%D0%B2_%D1%80%D0%B5%D1%81%D0%BF%D0%B8%D1%80%D0%B0%D1%82%D0%BE%D1%80%D0%BE%D0%B2"
+        },
+        {
+          "title": "Оценка производственных рисков",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9E%D1%86%D0%B5%D0%BD%D0%BA%D0%B0_%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D1%80%D0%B8%D1%81%D0%BA%D0%BE%D0%B2"
+        },
+        {
+          "title": "Группы по электробезопасности",
+          "url": "https://ru.wikipedia.org/wiki/%D0%93%D1%80%D1%83%D0%BF%D0%BF%D1%8B_%D0%BF%D0%BE_%D1%8D%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D0%B8"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "hse-09",
+      "checkedAt": "2026-09-11T09:19:43.135Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "10 Life Saving Rules – SPIE Global Services Energy",
+          "url": "https://www.youtube.com/watch?v=S5wQq81sfxo"
+        },
+        {
+          "title": "Top 10 Life Saving Rules Every Site Must Follow!",
+          "url": "https://www.facebook.com/61556388462641/videos/top-10-life-saving-rules-every-site-must-followworking-in-construction-oil-gas-o/969806648854630/"
+        },
+        {
+          "title": "Life Saving Rules (English version)",
+          "url": "https://www.youtube.com/watch?v=DTjQ6k03LC0"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "hse-10",
+      "checkedAt": "2026-09-11T09:19:43.476Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Кейс мультфильм по охране труда",
+          "url": "https://www.youtube.com/watch?v=G6bS81p3Rv4"
+        },
+        {
+          "title": "Mask DINO: Towards A Unified Transformer-based Framework for Object Detection and Segmentation",
+          "url": "https://arxiv.org/abs/2206.02777"
+        },
+        {
+          "title": "MVT: Mask Vision Transformer for Facial Expression Recognition in the wild",
+          "url": "https://arxiv.org/abs/2106.04520"
+        },
+        {
+          "title": "Unmasked Teacher: Towards Training-Efficient Video Foundation Models",
+          "url": "https://arxiv.org/abs/2303.16058"
+        },
+        {
+          "title": "MFR 2021: Masked Face Recognition Competition",
+          "url": "https://arxiv.org/abs/2106.15288"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "energy-01",
+      "checkedAt": "2026-09-11T09:19:44.006Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "человек. - Охрана труда — это наша ответственность и ...",
+          "url": "https://www.instagram.com/reel/DQLzXS8igCx/"
+        },
+        {
+          "title": "SIAVC: Semi-Supervised Framework for Industrial Accident Video Classification",
+          "url": "https://arxiv.org/abs/2405.14506"
+        },
+        {
+          "title": "Making the black-box brighter: interpreting machine learning algorithm for forecasting drilling accidents",
+          "url": "https://arxiv.org/abs/2209.02256"
+        },
+        {
+          "title": "Using Computer Vision to enhance Safety of Workforce in Manufacturing in a Post COVID World",
+          "url": "https://arxiv.org/abs/2005.05287"
+        },
+        {
+          "title": "An Interdisciplinary Guideline for the Production of Videos and Vision Videos by Software Professionals",
+          "url": "https://arxiv.org/abs/2001.06675"
+        },
+        {
+          "title": "Управление по охране труда (Министерство труда США)",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A3%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%BF%D0%BE_%D0%BE%D1%85%D1%80%D0%B0%D0%BD%D0%B5_%D1%82%D1%80%D1%83%D0%B4%D0%B0_%28%D0%9C%D0%B8%D0%BD%D0%B8%D1%81%D1%82%D0%B5%D1%80%D1%81%D1%82%D0%B2%D0%BE_%D1%82%D1%80%D1%83%D0%B4%D0%B0_%D0%A1%D0%A8%D0%90%29"
+        },
+        {
+          "title": "Охрана труда",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9E%D1%85%D1%80%D0%B0%D0%BD%D0%B0_%D1%82%D1%80%D1%83%D0%B4%D0%B0"
+        },
+        {
+          "title": "ДТЭК",
+          "url": "https://ru.wikipedia.org/wiki/%D0%94%D0%A2%D0%AD%D0%9A"
+        },
+        {
+          "title": "Центрэнергомонтаж",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A6%D0%B5%D0%BD%D1%82%D1%80%D1%8D%D0%BD%D0%B5%D1%80%D0%B3%D0%BE%D0%BC%D0%BE%D0%BD%D1%82%D0%B0%D0%B6"
+        },
+        {
+          "title": "Шахтёр",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A8%D0%B0%D1%85%D1%82%D1%91%D1%80"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "energy-02",
+      "checkedAt": "2026-09-11T09:19:45.475Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Optimal scheduling of island integrated energy systems considering multi-uncertainties and hydrothermal simultaneous transmission: A deep reinforcement learning approach",
+          "url": "https://arxiv.org/abs/2212.13472"
+        },
+        {
+          "title": "Building HVAC Scheduling Using Reinforcement Learning via Neural Network Based Model Approximation",
+          "url": "https://arxiv.org/abs/1910.05313"
+        },
+        {
+          "title": "The Problems of Personnel Training for STEM Education in the Modern Innovative Learning and Research Environment",
+          "url": "https://arxiv.org/abs/1807.08562"
+        },
+        {
+          "title": "Construction Site Safety Monitoring and Excavator Activity Analysis System",
+          "url": "https://arxiv.org/abs/2110.03083"
+        },
+        {
+          "title": "Визуальный и измерительный контроль",
+          "url": "https://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%B7%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%B8_%D0%B8%D0%B7%D0%BC%D0%B5%D1%80%D0%B8%D1%82%D0%B5%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D1%8C"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "energy-03",
+      "checkedAt": "2026-09-11T09:19:45.906Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Complexity in the Context of Systems Approach to Project Management",
+          "url": "https://arxiv.org/abs/1412.1027"
+        },
+        {
+          "title": "Underestimating Costs in Public Works Projects: Error or Lie?",
+          "url": "https://arxiv.org/abs/1303.6604"
+        },
+        {
+          "title": "Why Your IT Project Might Be Riskier Than You Think",
+          "url": "https://arxiv.org/abs/1304.0265"
+        },
+        {
+          "title": "Complex Network Construction of Internet Financial risk",
+          "url": "https://arxiv.org/abs/1904.06640"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "energy-04",
+      "checkedAt": "2026-09-11T09:19:45.614Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Electrical Safety Rules for Occupational Health and ...",
+          "url": "https://www.youtube.com/watch?v=39I07c01r04"
+        },
+        {
+          "title": "Methods, Forms and Safety of Learning in Corporate Social Networks",
+          "url": "https://arxiv.org/abs/1807.06035"
+        },
+        {
+          "title": "An Interdisciplinary Guideline for the Production of Videos and Vision Videos by Software Professionals",
+          "url": "https://arxiv.org/abs/2001.06675"
+        },
+        {
+          "title": "Analysis of Rolling Shutter Effect on ENF based Video Forensics",
+          "url": "https://arxiv.org/abs/1903.09889"
+        },
+        {
+          "title": "Using Virtual Reality in Electrostatics Instruction: The Impact of Training",
+          "url": "https://arxiv.org/abs/2001.08257"
+        },
+        {
+          "title": "Автоматизированная видеостудия",
+          "url": "https://ru.wikipedia.org/wiki/%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%B0%D1%8F_%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE%D1%81%D1%82%D1%83%D0%B4%D0%B8%D1%8F"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "energy-05",
+      "checkedAt": "2026-09-11T09:19:47.474Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Как сделать ролик по технике безопасности нескучным",
+          "url": "https://www.likeni.ru/"
+        },
+        {
+          "title": "Как снимать репортаж - PhotoCASA - LiveJournal",
+          "url": "https://photocasa.livejournal.com/"
+        },
+        {
+          "title": "Особенности промышленной съёмки предприятий",
+          "url": "https://blog.pressfoto.ru/"
+        },
+        {
+          "title": "Техника безопасности профессионального фотографа",
+          "url": "https://photolime.ru/"
+        },
+        {
+          "title": "Промышленная фотосъёмка — что это такое, советы",
+          "url": "https://geliomedia.ru/"
+        },
+        {
+          "title": "6 практических советов, которые помогут освоить жанр ...",
+          "url": "https://blog.depositphotos.com/"
+        },
+        {
+          "title": "Forecasting the abnormal events at well drilling with machine learning",
+          "url": "https://arxiv.org/abs/2203.05378"
+        },
+        {
+          "title": "An algorithm for determining the state of a non-stationary dynamic system for assessing fire safety control in an enterprise by the method of integrated indicators",
+          "url": "https://arxiv.org/abs/2501.10380"
+        },
+        {
+          "title": "Insights from the Field: A Comprehensive Analysis of Industrial Accidents in Plants and Strategies for Enhanced Workplace Safety",
+          "url": "https://arxiv.org/abs/2403.05539"
+        },
+        {
+          "title": "Toward a safe supply chain: Incorporating accident, physical, psychosocial, and mental overload risks into supply chain network",
+          "url": "https://arxiv.org/abs/1907.13206"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "energy-06",
+      "checkedAt": "2026-09-11T09:19:47.976Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "[Видео-инструкция] Как настроить поезда с двусторонним ...",
+          "url": "https://www.reddit.com/r/SatisfactoryGame/comments/c641v1/video_tutorial_how_to_set_up_bidirectional_trains/?tl=ru"
+        },
+        {
+          "title": "Адаптация сотрудников в ИТ-компании. Как произвести ...",
+          "url": "https://www.youtube.com/watch?v=paRDPJ40v1M"
+        },
+        {
+          "title": "Yandex Station MIDI | How to connect and set up",
+          "url": "https://www.youtube.com/watch?v=axDJ22934xM"
+        },
+        {
+          "title": "Трансляция на разные платформы - Cправка - YouTube",
+          "url": "https://support.google.com/youtube/answer/16404722?hl=ru"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "energy-07",
+      "checkedAt": "2026-09-11T09:19:48.392Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "ОТиПБ и контроль подрядчиков - Digital Purchasing",
+          "url": "https://digitalpurchasing.ru/"
+        },
+        {
+          "title": "Базовая инструкция для пользователей суперкомпьютера ...",
+          "url": "https://hpc.hse.ru/"
+        },
+        {
+          "title": "Цифровая платформа HSE - Simpl Group",
+          "url": "https://simpl-group.ru/"
+        },
+        {
+          "title": "Гайд по платформе: как создать аккаунт и загрузить проект",
+          "url": "https://hse.space/"
+        },
+        {
+          "title": "Как передать проект в инхаус и не потерять контроль",
+          "url": "https://www.internet-design.ru/"
+        },
+        {
+          "title": "Забота о подрядчике - HSE DAYS",
+          "url": "https://hsedays.com/"
+        },
+        {
+          "title": "Афиша Вышки",
+          "url": "https://t.me/"
+        },
+        {
+          "title": "Design of mechanisms for ensuring the execution of tasks in project planning",
+          "url": "https://arxiv.org/abs/2501.01255"
+        },
+        {
+          "title": "Seemo: A new tool for early design window view satisfaction evaluation in residential buildings",
+          "url": "https://arxiv.org/abs/2204.01164"
+        },
+        {
+          "title": "Construction Site Safety Monitoring and Excavator Activity Analysis System",
+          "url": "https://arxiv.org/abs/2110.03083"
+        },
+        {
+          "title": "Modernization of Professional Training of Electromechanics Bachelors: ICT-based Competence Approach",
+          "url": "https://arxiv.org/abs/1807.00803"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "energy-08",
+      "checkedAt": "2026-09-11T09:19:48.608Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Видеоаналитика для повышения уровня <b>безопасности</b ...",
+          "url": "https://www.youtube.com/watch?v=xXcykDonnbk"
+        },
+        {
+          "title": "ONLY A GOD-TIER ELECTRICIAN CAN PASS THIS TEST. ...",
+          "url": "https://www.youtube.com/watch?v=fcSVEQeMM_w"
+        },
+        {
+          "title": "С 13 по 19 апреля в Госэнергогазнадзоре проходит Неделя ...",
+          "url": "https://www.instagram.com/reel/DXJr49LCDvK/"
+        },
+        {
+          "title": "Собеседование",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D0%B1%D0%B5%D1%81%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "energy-09",
+      "checkedAt": "2026-09-11T09:19:50.431Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Как создать свой обучающий видео-контент без помощи ...",
+          "url": "https://www.youtube.com/watch?v=UGDqOrnE-FU"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "energy-10",
+      "checkedAt": "2026-09-11T09:19:53.998Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Анимация, CGI и визуальные эффекты",
+          "url": "https://design.hse.ru/"
+        },
+        {
+          "title": "Модуль 1. Базовые принципы анимации on HSE Design",
+          "url": "https://pro.hsedesign.com/"
+        },
+        {
+          "title": "Как включить анимацию в вашу дизайн-систему",
+          "url": "https://awdee.ru/"
+        },
+        {
+          "title": "Проверка и изменение эффектов анимации CSS",
+          "url": "https://learn.microsoft.com/"
+        },
+        {
+          "title": "Правила проверки СИЗ (средств индивидуальной ...",
+          "url": "https://niibgd.ru/"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "onboarding-01",
+      "checkedAt": "2026-09-11T09:19:56.391Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "A Control-Driven Framework for Secure SaaS Onboarding in Regulated Enterprises",
+          "url": "https://arxiv.org/abs/2607.16543"
+        },
+        {
+          "title": "Charting a Path to Efficient Onboarding: The Role of Software Visualization",
+          "url": "https://arxiv.org/abs/2401.09605"
+        },
+        {
+          "title": "A Case Study of Onboarding in Software Teams: Tasks and Strategies",
+          "url": "https://arxiv.org/abs/2103.05055"
+        },
+        {
+          "title": "Software Solutions for Newcomers' Onboarding in Software Projects: A Systematic Literature Review",
+          "url": "https://arxiv.org/abs/2408.15989"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "onboarding-02",
+      "checkedAt": "2026-09-11T09:19:52.120Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Onboarding",
+          "url": "https://safe.security/third-party-risk-management/onboarding/"
+        },
+        {
+          "title": "Customer Onboarding",
+          "url": "https://www.deepwatch.com/customer-onboarding/"
+        },
+        {
+          "title": "Secureframe Onboarding Overview: Roles, Milestones ...",
+          "url": "https://support.secureframe.com/en/articles/15111050-secureframe-onboarding-overview-roles-milestones-and-best-practices"
+        },
+        {
+          "title": "ArmorCode Rapid Onboarding: Visibility to Insights Without ...",
+          "url": "https://www.armorcode.com/blog/rapid-onboarding"
+        },
+        {
+          "title": "Biometric Verification Solutions For Onboarding",
+          "url": "https://www.iproov.com/use-cases/onboarding"
+        },
+        {
+          "title": "Onboarding",
+          "url": "https://m2.material.io/design/communication/onboarding.html"
+        },
+        {
+          "title": "Your Path to Successful Onboarding",
+          "url": "https://www.getguardian.tech/onboarding"
+        },
+        {
+          "title": "Quick Settings | Onboarding mode",
+          "url": "https://www.youtube.com/watch?v=ZC_a3ouStYI"
+        },
+        {
+          "title": "Six vital modules for every digital onboarding concept",
+          "url": "https://www.scheer-imc.com/blog/article/e-learning-punk-six-vital-modules-for-every-digital-onboarding-concept/"
+        },
+        {
+          "title": "A Control-Driven Framework for Secure SaaS Onboarding in Regulated Enterprises",
+          "url": "https://arxiv.org/abs/2607.16543"
+        },
+        {
+          "title": "DLWIoT: Deep Learning-based Watermarking for Authorized IoT Onboarding",
+          "url": "https://arxiv.org/abs/2010.10334"
+        },
+        {
+          "title": "ASOP: A Sovereign and Secure Device Onboarding Protocol for Cloud-based IoT Services",
+          "url": "https://arxiv.org/abs/2403.13020"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "onboarding-03",
+      "checkedAt": "2026-09-11T09:19:54.713Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Как правильно сократить штат: детальный алгоритм ...",
+          "url": "https://pravorf.ru/"
+        },
+        {
+          "title": "Сокращение штата в 2026 году: пошаговая инструкция ...",
+          "url": "https://www.ubrr.ru/"
+        },
+        {
+          "title": "Сокращение штата работников: как избежать нарушений",
+          "url": "https://www.spok.by/"
+        },
+        {
+          "title": "Как правильно вернуть должность, которую ранее ...",
+          "url": "https://e.kdelo.ru/"
+        },
+        {
+          "title": "Как адаптировать новых сотрудников в компании и ...",
+          "url": "https://netology.ru/"
+        },
+        {
+          "title": "Нужно ли повторно проводить процедуру сокращения ...",
+          "url": "https://www.law.ru/"
+        },
+        {
+          "title": "Ошибки при сокращении персонала | Журнал",
+          "url": "https://glavkniga.ru/"
+        },
+        {
+          "title": "Effective Human-AI Teams via Learned Natural Language Rules and Onboarding",
+          "url": "https://arxiv.org/abs/2311.01007"
+        },
+        {
+          "title": "Ask Your Humans: Using Human Instructions to Improve Generalization in Reinforcement Learning",
+          "url": "https://arxiv.org/abs/2011.00517"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "onboarding-04",
+      "checkedAt": "2026-09-11T09:19:55.758Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Как создать тест в Moodle: пошаговая инструкция",
+          "url": "https://www.ispring.ru/"
+        },
+        {
+          "title": "Как создать курс в Moodle: инструкция с двумя способами",
+          "url": "https://lmslist.ru/"
+        },
+        {
+          "title": "Видеообучение в LMS: как снимать курсы без студии",
+          "url": "https://bilim-lms.uz/"
+        },
+        {
+          "title": "Подготовка тестов LMS – Сервисы - Санкт-Петербург",
+          "url": "https://guap.ru/"
+        },
+        {
+          "title": "Как создать тест в Moodle™ за 5 шагов? - LMS-Service",
+          "url": "https://lms-service.ru/"
+        },
+        {
+          "title": "Moodle",
+          "url": "https://en.wikipedia.org/wiki/Moodle"
+        },
+        {
+          "title": "OpenOLAT",
+          "url": "https://en.wikipedia.org/wiki/OpenOLAT"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "onboarding-05",
+      "checkedAt": "2026-09-11T09:19:56.321Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Как сделать видео по qr коду",
+          "url": "https://www.youtube.com/watch?v=rxe2eP4GJU8"
+        },
+        {
+          "title": "Flow-Guided Feature Aggregation for Video Object Detection",
+          "url": "https://arxiv.org/abs/1703.10025"
+        },
+        {
+          "title": "QR-CLIP: Introducing Explicit Open-World Knowledge for Location and Time Reasoning",
+          "url": "https://arxiv.org/abs/2302.00952"
+        },
+        {
+          "title": "The possibility of use of QR-codes in teaching physics",
+          "url": "https://arxiv.org/abs/1808.04211"
+        },
+        {
+          "title": "CornerNet: Detecting Objects as Paired Keypoints",
+          "url": "https://arxiv.org/abs/1808.01244"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "onboarding-06",
+      "checkedAt": "2026-09-11T09:19:57.666Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "О рекламе на YouTube и показателях просмотров",
+          "url": "https://support.google.com/google-ads/answer/2375431?hl=ru"
+        },
+        {
+          "title": "Чем отличается документальная съемка от постановочной?",
+          "url": "https://oblako.video/"
+        },
+        {
+          "title": "допуск и припуск в чем разница",
+          "url": "https://rutube.ru/"
+        },
+        {
+          "title": "Как суды оценивают видеозаписи: советы и практика",
+          "url": "https://pravo.ru/"
+        },
+        {
+          "title": "Что такое досмотры (VTR — View Through Rate)",
+          "url": "https://blog.click.ru/"
+        },
+        {
+          "title": "коэффициент досмотра видео (VTR)",
+          "url": "https://roistat.com/"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "onboarding-07",
+      "checkedAt": "2026-09-11T09:19:58.570Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Мини-курс \"Как правильно проводить пилотные проекты с ...",
+          "url": "https://qed.consulting/"
+        },
+        {
+          "title": "Пилотный проект: стартовая точка для успешного ...",
+          "url": "https://rb.ru/"
+        },
+        {
+          "title": "Пилотирование опроса: зачем тестировать анкету до ...",
+          "url": "https://webask.io/"
+        },
+        {
+          "title": "6 секретов эффективного пилота любого ИТ решения",
+          "url": "https://imredi.biz/"
+        },
+        {
+          "title": "Как измерить эффект от внедрения системы онлайн- ...",
+          "url": "https://www.cfo-russia.ru/"
+        },
+        {
+          "title": "Почему пилоты с искусственным интеллектом дают ...",
+          "url": "https://vc.ru/"
+        },
+        {
+          "title": "Как оценить эффективность видеообучения в бизнесе",
+          "url": "https://companies.rbc.ru/"
+        },
+        {
+          "title": "A No-reference Quality Assessment Metric for Point Cloud Based on Captured Video Sequences",
+          "url": "https://arxiv.org/abs/2206.05054"
+        },
+        {
+          "title": "What and How Well You Performed? A Multitask Learning Approach to Action Quality Assessment",
+          "url": "https://arxiv.org/abs/1904.04346"
+        },
+        {
+          "title": "Learning from Successful and Failed Demonstrations via Optimization",
+          "url": "https://arxiv.org/abs/2107.11918"
+        },
+        {
+          "title": "Deep 360 Pilot: Learning a Deep Agent for Piloting through 360° Sports Video",
+          "url": "https://arxiv.org/abs/1705.01759"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "onboarding-08",
+      "checkedAt": "2026-09-11T09:19:58.999Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Можно ли сохранить различные версии видео в ...",
+          "url": "https://support.microsoft.com/"
+        },
+        {
+          "title": "Как записать видео инструкцию: 5 способов в 2025",
+          "url": "https://icecreamapps.com/"
+        },
+        {
+          "title": "Как записать обучающее видео: инструкция для ...",
+          "url": "https://edexpert.ru/"
+        },
+        {
+          "title": "Как снять обучающий видеоролик: 10 секретов ...",
+          "url": "https://habr.com/"
+        },
+        {
+          "title": "ТОП-21 программ для записи видеоуроков и курсов",
+          "url": "https://www.ispring.ru/"
+        },
+        {
+          "title": "10 идей обучающих видео для работы — примеры и ...",
+          "url": "https://clipchamp.com/"
+        },
+        {
+          "title": "Лучшие программы для создания обучающих видео",
+          "url": "https://mts-link.ru/"
+        },
+        {
+          "title": "Learning Procedure-aware Video Representation from Instructional Videos and Their Narrations",
+          "url": "https://arxiv.org/abs/2303.17839"
+        },
+        {
+          "title": "Unsupervised Learning from Narrated Instruction Videos",
+          "url": "https://arxiv.org/abs/1506.09215"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "onboarding-09",
+      "checkedAt": "2026-09-11T09:20:04.633Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Как добавлять в видео звуковые дорожки и значки на разных языках - Cправка - YouTube",
+          "url": "https://support.google.com/youtube/answer/13338784?hl=ru"
+        },
+        {
+          "title": "Как изменить язык загруженного видео - Cправка - YouTube",
+          "url": "https://support.google.com/youtube/answer/6304325?hl=ru"
+        },
+        {
+          "title": "Multilingual Voiceover for Tutorial Videos | CapCut Tips",
+          "url": "https://www.capcut.com/create/multilingual-voiceover-tutorial-videos"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "onboarding-10",
+      "checkedAt": "2026-09-11T09:20:00.316Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "ControlVideo: Training-free Controllable Text-to-Video Generation",
+          "url": "https://arxiv.org/abs/2305.13077"
+        },
+        {
+          "title": "One Thing One Click: A Self-Training Approach for Weakly Supervised 3D Semantic Segmentation",
+          "url": "https://arxiv.org/abs/2104.02246"
+        },
+        {
+          "title": "You Only Need One Thing One Click: Self-Training for Weakly Supervised 3D Scene Understanding",
+          "url": "https://arxiv.org/abs/2303.14727"
+        },
+        {
+          "title": "Procedure Planning in Instructional Videos via Contextual Modeling and Model-based Policy Learning",
+          "url": "https://arxiv.org/abs/2110.01770"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "mascots-01",
+      "checkedAt": "2026-09-11T09:20:00.610Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "MASCOT: Towards Multi-Agent Socio-Collaborative Companion Systems",
+          "url": "https://arxiv.org/abs/2601.14230"
+        },
+        {
+          "title": "YuruGAN: Yuru-Chara Mascot Generator Using Generative Adversarial Networks With Clustering Small Dataset",
+          "url": "https://arxiv.org/abs/2004.08066"
+        },
+        {
+          "title": "Intent expression using eye robot for mascot robot system",
+          "url": "https://arxiv.org/abs/0904.1631"
+        },
+        {
+          "title": "Dominating Attributes Of Professed Firm Culture Of Holding Companies - Members Of The Bulgarian Industrial Capital Association",
+          "url": "https://arxiv.org/abs/1810.02617"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "mascots-02",
+      "checkedAt": "2026-09-11T09:20:04.155Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Маскот: что это такое, зачем нужен персонаж бренда ...",
+          "url": "https://www.calltouch.ru/"
+        },
+        {
+          "title": "Что такое маскот бренда и зачем он нужен",
+          "url": "https://www.rbc.ru/"
+        },
+        {
+          "title": "Что такое маскот бренда и зачем он нужен",
+          "url": "https://dviga.marketing/"
+        },
+        {
+          "title": "Что такое маскот и для чего он нужен бренду",
+          "url": "https://www.unisender.com/"
+        },
+        {
+          "title": "Маскоты в маркетинге: кто такие, зачем нужны и где ...",
+          "url": "https://news.pressfeed.ru/"
+        },
+        {
+          "title": "Маскот бренда: что это, зачем нужен, как создать и ...",
+          "url": "https://kurs.alfabank.ru/"
+        },
+        {
+          "title": "Талисман для бизнеса: нужен ли бренду маскот",
+          "url": "https://shopandmall.ru/"
+        },
+        {
+          "title": "Что такое маскот простыми словами и зачем он нужен",
+          "url": "https://veonix.ru/"
+        },
+        {
+          "title": "Mask DINO: Towards A Unified Transformer-based Framework for Object Detection and Segmentation",
+          "url": "https://arxiv.org/abs/2206.02777"
+        },
+        {
+          "title": "Should You Mask 15% in Masked Language Modeling?",
+          "url": "https://arxiv.org/abs/2202.08005"
+        },
+        {
+          "title": "To mask or not to mask: Modeling the potential for face mask use by the general public to curtail the COVID-19 pandemic",
+          "url": "https://arxiv.org/abs/2004.03251"
+        },
+        {
+          "title": "Face mask perception during the COVID-19 pandemic: an observational study of Russian online social network VKontakte",
+          "url": "https://arxiv.org/abs/2105.07397"
+        },
+        {
+          "title": "Охрана труда",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9E%D1%85%D1%80%D0%B0%D0%BD%D0%B0_%D1%82%D1%80%D1%83%D0%B4%D0%B0"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "mascots-03",
+      "checkedAt": "2026-09-11T09:20:02.908Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "SCUT-FBP5500: A Diverse Benchmark Dataset for Multi-Paradigm Facial Beauty Prediction",
+          "url": "https://arxiv.org/abs/1801.06345"
+        },
+        {
+          "title": "MaskedFace-Net -- A Dataset of Correctly/Incorrectly Masked Face Images in the Context of COVID-19",
+          "url": "https://arxiv.org/abs/2008.08016"
+        },
+        {
+          "title": "MFR 2021: Masked Face Recognition Competition",
+          "url": "https://arxiv.org/abs/2106.15288"
+        },
+        {
+          "title": "MaskGAN: Better Text Generation via Filling in the______",
+          "url": "https://arxiv.org/abs/1801.07736"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "mascots-04",
+      "checkedAt": "2026-09-11T09:20:02.697Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Video Object Segmentation using Teacher-Student Adaptation in a Human Robot Interaction (HRI) Setting",
+          "url": "https://arxiv.org/abs/1810.07733"
+        },
+        {
+          "title": "Learning Effective Representations for Person-Job Fit by Feature Fusion",
+          "url": "https://arxiv.org/abs/2006.07017"
+        },
+        {
+          "title": "A Pre-training Based Personalized Dialogue Generation Model with Persona-sparse Data",
+          "url": "https://arxiv.org/abs/1911.04700"
+        },
+        {
+          "title": "The Problems of Personnel Training for STEM Education in the Modern Innovative Learning and Research Environment",
+          "url": "https://arxiv.org/abs/1807.08562"
+        },
+        {
+          "title": "Игровой персонаж",
+          "url": "https://ru.wikipedia.org/wiki/%D0%98%D0%B3%D1%80%D0%BE%D0%B2%D0%BE%D0%B9_%D0%BF%D0%B5%D1%80%D1%81%D0%BE%D0%BD%D0%B0%D0%B6"
+        },
+        {
+          "title": "Оценка персонала",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9E%D1%86%D0%B5%D0%BD%D0%BA%D0%B0_%D0%BF%D0%B5%D1%80%D1%81%D0%BE%D0%BD%D0%B0%D0%BB%D0%B0"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "mascots-05",
+      "checkedAt": "2026-09-11T09:20:05.655Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "HOW TO CREATE A MASCOT | my character's origin story",
+          "url": "https://www.youtube.com/watch?v=-uomMLXBFgY"
+        },
+        {
+          "title": "Как создать маскота? Идеи для создания маскотика! ...",
+          "url": "https://www.youtube.com/watch?v=W4UswvdhdMc"
+        },
+        {
+          "title": "MASCOT-Android: A Curated Dataset and Automated Collection Pipeline for Android Malware Source Code Specimens",
+          "url": "https://arxiv.org/abs/2606.16072"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "mascots-06",
+      "checkedAt": "2026-09-11T09:20:08.612Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Сколько мне следует взять за разработку индивидуального ...",
+          "url": "https://www.reddit.com/r/freelance/comments/628dkg/how_much_should_i_charge_to_design_a_custom_mascot/?tl=ru"
+        },
+        {
+          "title": "Разработка маскота для бренда на заказ — цена от 50 000 ₽",
+          "url": "https://lineinspace.studio/services/creating_a_brand_mascot/"
+        },
+        {
+          "title": "Создание фирменного бренд-персонажа, маскота | GreenMars",
+          "url": "https://greenmars.ru/uslugi/sozdanie-brend-personazha/"
+        },
+        {
+          "title": "Цены на разработку персонажа маскота для бренда",
+          "url": "https://www.style-you.ru/prices/tseny-na-razrabotku-personazha-maskota-dlya-brenda.html"
+        },
+        {
+          "title": "Разработка маскота в Москве, заказать создание фирменного ...",
+          "url": "https://veonix.ru/zakazat-dizajn-personazha/"
+        },
+        {
+          "title": "Заказать создание иллюстраций, разработку маскота бренда в ...",
+          "url": "https://copy.spb.ru/nahi_uslugi/dizajn_i_verstka/illustratsii/"
+        },
+        {
+          "title": "Разработка маскота - фирменного персонажа",
+          "url": "https://otvetdesign.ru/uslugi/razrabotka-maskota-brenda"
+        },
+        {
+          "title": "Заказать разработку маскота для бренда: как создать ...",
+          "url": "https://animation.su/news/zakazat-razrabotku-maskota-dlya-brenda-kak-sozdat-zapominayushhegosya-geroya"
+        },
+        {
+          "title": "Создание персонажа, аватара, маскота – логотип, фирменный ...",
+          "url": "https://t4ka.ru/sozdanie-personazha"
+        },
+        {
+          "title": "Разработка дизайна маскота бренда - Litera Studio",
+          "url": "https://litera.studio/razrabotka-dizajna-maskota-brenda"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "mascots-07",
+      "checkedAt": "2026-09-11T09:20:07.798Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Что такое маскоты и как их используют в брендинге",
+          "url": "https://skillbox.ru/"
+        },
+        {
+          "title": "Маскот — что это такое простыми словами, талисман ...",
+          "url": "https://logomachine-school.ru/"
+        },
+        {
+          "title": "Маскот бренда: что, зачем и как создать. Как мы ...",
+          "url": "https://dsgners.ru/"
+        },
+        {
+          "title": "Маскот: что это простыми словами, как создать и зачем ...",
+          "url": "https://markway.ru/"
+        },
+        {
+          "title": "Как придумать и разработать маскот бренда",
+          "url": "https://otvetdesign.ru/"
+        },
+        {
+          "title": "Ассоциации с брендом: как использовать маскотов",
+          "url": "https://emailmatrix.ru/"
+        },
+        {
+          "title": "Should You Mask 15% in Masked Language Modeling?",
+          "url": "https://arxiv.org/abs/2202.08005"
+        },
+        {
+          "title": "To mask or not to mask: Modeling the potential for face mask use by the general public to curtail the COVID-19 pandemic",
+          "url": "https://arxiv.org/abs/2004.03251"
+        },
+        {
+          "title": "Mathematics and Climate Infographics: A Mechanism for Interdisciplinary Collaboration in the Classroom",
+          "url": "https://arxiv.org/abs/1405.6435"
+        },
+        {
+          "title": "InfoGraph: Unsupervised and Semi-supervised Graph-Level Representation Learning via Mutual Information Maximization",
+          "url": "https://arxiv.org/abs/1908.01000"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "mascots-08",
+      "checkedAt": "2026-09-11T09:20:07.248Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Маскот для бренда: от идеи до готовой анимации",
+          "url": "https://jayflow.ai/"
+        },
+        {
+          "title": "Генерация серии карточек товара в едином стиле с ...",
+          "url": "https://invoka.ru/"
+        },
+        {
+          "title": "3 способа создать маскота для бренда и сайта",
+          "url": "https://www.sostav.ru/"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "mascots-09",
+      "checkedAt": "2026-09-11T09:20:07.929Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Кто такой маскот? И почему он нужен компании",
+          "url": "https://www.youtube.com/watch?v=sNWuKhK-G9o"
+        },
+        {
+          "title": "Face mask perception during the COVID-19 pandemic: an observational study of Russian online social network VKontakte",
+          "url": "https://arxiv.org/abs/2105.07397"
+        },
+        {
+          "title": "Mask Detection and Classification in Thermal Face Images",
+          "url": "https://arxiv.org/abs/2304.02931"
+        },
+        {
+          "title": "Real-world adversarial attack on MTCNN face detection system",
+          "url": "https://arxiv.org/abs/1910.06261"
+        },
+        {
+          "title": "Electrocharged facepiece respirator fabrics using common materials",
+          "url": "https://arxiv.org/abs/2011.13642"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "mascots-10",
+      "checkedAt": "2026-09-11T09:20:09.490Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "InCharacter: Evaluating Personality Fidelity in Role-Playing Agents through Psychological Interviews",
+          "url": "https://arxiv.org/abs/2310.17976"
+        },
+        {
+          "title": "CariGAN: Caricature Generation through Weakly Paired Adversarial Learning",
+          "url": "https://arxiv.org/abs/1811.00445"
+        },
+        {
+          "title": "Controllable Person Image Synthesis with Attribute-Decomposed GAN",
+          "url": "https://arxiv.org/abs/2003.12267"
+        },
+        {
+          "title": "Animation Fidelity in Self-Avatars: Impact on User Performance and Sense of Agency",
+          "url": "https://arxiv.org/abs/2304.05334"
+        },
+        {
+          "title": "Эффективность рекламы",
+          "url": "https://ru.wikipedia.org/wiki/%D0%AD%D1%84%D1%84%D0%B5%D0%BA%D1%82%D0%B8%D0%B2%D0%BD%D0%BE%D1%81%D1%82%D1%8C_%D1%80%D0%B5%D0%BA%D0%BB%D0%B0%D0%BC%D1%8B"
+        },
+        {
+          "title": "Социальный эффект",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D1%8D%D1%84%D1%84%D0%B5%D0%BA%D1%82"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "procurement-01",
+      "checkedAt": "2026-09-11T09:20:09.782Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Amblimation",
+          "url": "https://ru.wikipedia.org/wiki/Amblimation"
+        },
+        {
+          "title": "A Comparative Evaluation of Animation and Small Multiples for Trend Visualization on Mobile Phones",
+          "url": "https://arxiv.org/abs/1907.03919"
+        },
+        {
+          "title": "AKN_Regie: bridging digital and performing arts",
+          "url": "https://arxiv.org/abs/2401.03761"
+        },
+        {
+          "title": "Dynamic Storyboard Generation in an Engine-based Virtual Environment for Video Production",
+          "url": "https://arxiv.org/abs/2301.12688"
+        },
+        {
+          "title": "Modeling Concordances of Company's Investment Directions With Its Market Attraction",
+          "url": "https://arxiv.org/abs/1509.05024"
+        },
+        {
+          "title": "Paramount Animation",
+          "url": "https://ru.wikipedia.org/wiki/Paramount_Animation"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "procurement-02",
+      "checkedAt": "2026-09-11T09:20:10.900Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Comments",
+          "url": "https://www.youtube.com/watch?v=Ho_Cb51Ojc4"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "procurement-03",
+      "checkedAt": "2026-09-11T09:20:11.284Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "TAVA: Template-free Animatable Volumetric Actors",
+          "url": "https://arxiv.org/abs/2206.08929"
+        },
+        {
+          "title": "TEACH: Temporal Action Composition for 3D Humans",
+          "url": "https://arxiv.org/abs/2209.04066"
+        },
+        {
+          "title": "Make It Move: Controllable Image-to-Video Generation with Text Descriptions",
+          "url": "https://arxiv.org/abs/2112.02815"
+        },
+        {
+          "title": "Animation Techniques in Human-Robot Interaction User Studies: a Systematic Literature Review",
+          "url": "https://arxiv.org/abs/1812.06784"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "procurement-04",
+      "checkedAt": "2026-09-11T09:20:11.676Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Edit3K: Universal Representation Learning for Video Editing Components",
+          "url": "https://arxiv.org/abs/2403.16048"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "procurement-05",
+      "checkedAt": "2026-09-11T09:20:12.269Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Deep Animation Video Interpolation in the Wild",
+          "url": "https://arxiv.org/abs/2104.02495"
+        },
+        {
+          "title": "Unsupervised Learning of Long-Term Motion Dynamics for Videos",
+          "url": "https://arxiv.org/abs/1701.01821"
+        },
+        {
+          "title": "VideoComposer: Compositional Video Synthesis with Motion Controllability",
+          "url": "https://arxiv.org/abs/2306.02018"
+        },
+        {
+          "title": "Procedural Generation of Videos to Train Deep Action Recognition Networks",
+          "url": "https://arxiv.org/abs/1612.00881"
+        },
+        {
+          "title": "Машинима",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9C%D0%B0%D1%88%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0"
+        },
+        {
+          "title": "Бионикл: Маска света",
+          "url": "https://ru.wikipedia.org/wiki/%D0%91%D0%B8%D0%BE%D0%BD%D0%B8%D0%BA%D0%BB%3A_%D0%9C%D0%B0%D1%81%D0%BA%D0%B0_%D1%81%D0%B2%D0%B5%D1%82%D0%B0"
+        },
+        {
+          "title": "История игрушек",
+          "url": "https://ru.wikipedia.org/wiki/%D0%98%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F_%D0%B8%D0%B3%D1%80%D1%83%D1%88%D0%B5%D0%BA"
+        },
+        {
+          "title": "Смешарики",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%BC%D0%B5%D1%88%D0%B0%D1%80%D0%B8%D0%BA%D0%B8"
+        },
+        {
+          "title": "Анимационный дизайн",
+          "url": "https://ru.wikipedia.org/wiki/%D0%90%D0%BD%D0%B8%D0%BC%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B9_%D0%B4%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "procurement-06",
+      "checkedAt": "2026-09-11T09:20:13.489Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Почему каждый художник должен знать об NDA? В этом ...",
+          "url": "https://www.instagram.com/reel/DJWBS6MoNBS/?hl=en"
+        },
+        {
+          "title": "DragNUWA: Fine-grained Control in Video Generation by Integrating Text, Image, and Trajectory",
+          "url": "https://arxiv.org/abs/2308.08089"
+        },
+        {
+          "title": "AnimateDiff: Animate Your Personalized Text-to-Image Diffusion Models without Specific Tuning",
+          "url": "https://arxiv.org/abs/2307.04725"
+        },
+        {
+          "title": "Procedure Planning in Instructional Videos",
+          "url": "https://arxiv.org/abs/1907.01172"
+        },
+        {
+          "title": "Synthesis of Compositional Animations from Textual Descriptions",
+          "url": "https://arxiv.org/abs/2103.14675"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "procurement-07",
+      "checkedAt": "2026-09-11T09:20:14.186Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "All Stages of Video Editing | My Step-by-Step Workflow",
+          "url": "https://www.youtube.com/watch?v=BVx4yLNCloA"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "procurement-08",
+      "checkedAt": "2026-09-11T09:20:14.035Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "5.2. Use cases, критерии приемки | Системный аналитик",
+          "url": "https://www.youtube.com/watch?v=_wz65b7VNj4"
+        },
+        {
+          "title": "Large-Scale Study of Perceptual Video Quality",
+          "url": "https://arxiv.org/abs/1803.01761"
+        },
+        {
+          "title": "Learning a No-Reference Quality Assessment Model of Enhanced Images With Big Data",
+          "url": "https://arxiv.org/abs/1904.08632"
+        },
+        {
+          "title": "Learning Procedure-aware Video Representation from Instructional Videos and Their Narrations",
+          "url": "https://arxiv.org/abs/2303.17839"
+        },
+        {
+          "title": "Video Object Segmentation using Teacher-Student Adaptation in a Human Robot Interaction (HRI) Setting",
+          "url": "https://arxiv.org/abs/1810.07733"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "procurement-09",
+      "checkedAt": "2026-09-11T09:20:14.712Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "procurement-10",
+      "checkedAt": "2026-09-11T09:20:16.779Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Как защитить HR-бюджет перед руководством?",
+          "url": "https://thehrd.ru/"
+        },
+        {
+          "title": "Как защитить бюджет расходов на персонал",
+          "url": "https://inter-regional.ru/"
+        },
+        {
+          "title": "Как спасти HR-бюджет: считаем и защищаем расходы",
+          "url": "https://huntflow.media/"
+        },
+        {
+          "title": "Рекомендации по формированию бюджета проекта",
+          "url": "https://xn--80ahaefyxhn.xn--80afcdbalict6afooklqi5o.xn--p1ai/"
+        },
+        {
+          "title": "Какие инструменты помогут CFO успешно справиться с ...",
+          "url": "https://odysseyconsgroup.com/"
+        },
+        {
+          "title": "Бюджет и финансирование анимации: Как воплотить идеи ...",
+          "url": "https://mult.studio/"
+        },
+        {
+          "title": "Как защитить бюджет на HR-проект",
+          "url": "https://lights-on.pro/"
+        },
+        {
+          "title": "Design of mechanisms for ensuring the execution of tasks in project planning",
+          "url": "https://arxiv.org/abs/2501.01255"
+        },
+        {
+          "title": "Say As You Wish: Fine-grained Control of Image Caption Generation with Abstract Scene Graphs",
+          "url": "https://arxiv.org/abs/2003.00387"
+        },
+        {
+          "title": "Initiative Defense against Facial Manipulation",
+          "url": "https://arxiv.org/abs/2112.10098"
+        },
+        {
+          "title": "Investigation on Principles for Cost Assignment in Motion Vector-based Video Steganography",
+          "url": "https://arxiv.org/abs/2209.01744"
+        },
+        {
+          "title": "Бионикл: Маска света",
+          "url": "https://ru.wikipedia.org/wiki/%D0%91%D0%B8%D0%BE%D0%BD%D0%B8%D0%BA%D0%BB%3A_%D0%9C%D0%B0%D1%81%D0%BA%D0%B0_%D1%81%D0%B2%D0%B5%D1%82%D0%B0"
+        },
+        {
+          "title": "Смешарики",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%BC%D0%B5%D1%88%D0%B0%D1%80%D0%B8%D0%BA%D0%B8"
+        },
+        {
+          "title": "Дети против волшебников (мультфильм)",
+          "url": "https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D1%82%D0%B8_%D0%BF%D1%80%D0%BE%D1%82%D0%B8%D0%B2_%D0%B2%D0%BE%D0%BB%D1%88%D0%B5%D0%B1%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2_%28%D0%BC%D1%83%D0%BB%D1%8C%D1%82%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%29"
+        },
+        {
+          "title": "Бюджетирование фильма",
+          "url": "https://ru.wikipedia.org/wiki/%D0%91%D1%8E%D0%B4%D0%B6%D0%B5%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%84%D0%B8%D0%BB%D1%8C%D0%BC%D0%B0"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "b2b-01",
+      "checkedAt": "2026-09-11T09:20:19.073Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "AI в работе B2B-маркетолога",
+          "url": "https://www.youtube.com/watch?v=ErDBCSJL8Bs"
+        },
+        {
+          "title": "ToonCrafter: Generative Cartoon Interpolation",
+          "url": "https://arxiv.org/abs/2405.17933"
+        },
+        {
+          "title": "Text-Guided Synthesis of Eulerian Cinemagraphs",
+          "url": "https://arxiv.org/abs/2307.03190"
+        },
+        {
+          "title": "Deep Sketch-guided Cartoon Video Inbetweening",
+          "url": "https://arxiv.org/abs/2008.04149"
+        },
+        {
+          "title": "Keyframer: Empowering Animation Design using Large Language Models",
+          "url": "https://arxiv.org/abs/2402.06071"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "b2b-02",
+      "checkedAt": "2026-09-11T09:20:17.526Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "MedScope: Incentivizing \"Think with Videos\" for Clinical Reasoning via Coarse-to-Fine Tool Calling",
+          "url": "https://arxiv.org/abs/2602.13332"
+        },
+        {
+          "title": "MedCLIP: Contrastive Learning from Unpaired Medical Images and Text",
+          "url": "https://arxiv.org/abs/2210.10163"
+        },
+        {
+          "title": "A Dataset for Medical Instructional Video Classification and Question Answering",
+          "url": "https://arxiv.org/abs/2201.12888"
+        },
+        {
+          "title": "YouTube for Patient Education: A Deep Learning Approach for Understanding Medical Knowledge from User-Generated Videos",
+          "url": "https://arxiv.org/abs/1807.03179"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "b2b-03",
+      "checkedAt": "2026-09-11T09:20:16.919Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Топ 5 сайтов для создания анимации: стоит ли делать ...",
+          "url": "https://www.youtube.com/watch?v=gXdLJtBKklQ"
+        },
+        {
+          "title": "Animation Techniques in Human-Robot Interaction User Studies: a Systematic Literature Review",
+          "url": "https://arxiv.org/abs/1812.06784"
+        },
+        {
+          "title": "Movika",
+          "url": "https://ru.wikipedia.org/wiki/Movika"
+        },
+        {
+          "title": "VideoComposer: Compositional Video Synthesis with Motion Controllability",
+          "url": "https://arxiv.org/abs/2306.02018"
+        },
+        {
+          "title": "iButter: Neural Interactive Bullet Time Generator for Human Free-viewpoint Rendering",
+          "url": "https://arxiv.org/abs/2108.05577"
+        },
+        {
+          "title": "Text-Guided Synthesis of Eulerian Cinemagraphs",
+          "url": "https://arxiv.org/abs/2307.03190"
+        },
+        {
+          "title": "Шоурил",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A8%D0%BE%D1%83%D1%80%D0%B8%D0%BB"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "b2b-04",
+      "checkedAt": "2026-09-11T09:20:19.190Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Imagen Video: High Definition Video Generation with Diffusion Models",
+          "url": "https://arxiv.org/abs/2210.02303"
+        },
+        {
+          "title": "Захват движения",
+          "url": "https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D1%85%D0%B2%D0%B0%D1%82_%D0%B4%D0%B2%D0%B8%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F"
+        },
+        {
+          "title": "Покадровая анимация",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BA%D0%B0%D0%B4%D1%80%D0%BE%D0%B2%D0%B0%D1%8F_%D0%B0%D0%BD%D0%B8%D0%BC%D0%B0%D1%86%D0%B8%D1%8F"
+        },
+        {
+          "title": "Image and Video Compression with Neural Networks: A Review",
+          "url": "https://arxiv.org/abs/1904.03567"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "b2b-05",
+      "checkedAt": "2026-09-11T09:20:20.002Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "How to remove ethical restrictions on AI #shorts",
+          "url": "https://www.youtube.com/shorts/-kMSSk7eqSc"
+        },
+        {
+          "title": "Artificial Intelligence in the Creative Industries: A Review",
+          "url": "https://arxiv.org/abs/2007.12391"
+        },
+        {
+          "title": "Regulating ChatGPT and other Large Generative AI Models",
+          "url": "https://arxiv.org/abs/2302.02337"
+        },
+        {
+          "title": "AI in the media and creative industries",
+          "url": "https://arxiv.org/abs/1905.04175"
+        },
+        {
+          "title": "Sora",
+          "url": "https://ru.wikipedia.org/wiki/Sora"
+        },
+        {
+          "title": "Artificial Intelligence: the global landscape of ethics guidelines",
+          "url": "https://arxiv.org/abs/1906.11668"
+        },
+        {
+          "title": "Фальшивая порнография",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A4%D0%B0%D0%BB%D1%8C%D1%88%D0%B8%D0%B2%D0%B0%D1%8F_%D0%BF%D0%BE%D1%80%D0%BD%D0%BE%D0%B3%D1%80%D0%B0%D1%84%D0%B8%D1%8F"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "b2b-06",
+      "checkedAt": "2026-09-11T09:20:20.246Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Как быстро сделать красивую презентацию в PowerPoint в ...",
+          "url": "https://www.youtube.com/watch?v=Phu7k50FI5A"
+        },
+        {
+          "title": "How to Create a PowerPoint Presentation in Simple Terms ...",
+          "url": "https://www.youtube.com/watch?v=LKCKmwwBRsI"
+        },
+        {
+          "title": "Show and Tell: A Neural Image Caption Generator",
+          "url": "https://arxiv.org/abs/1411.4555"
+        },
+        {
+          "title": "Events-to-Video: Bringing Modern Computer Vision to Event Cameras",
+          "url": "https://arxiv.org/abs/1904.08298"
+        },
+        {
+          "title": "Move Forward and Tell: A Progressive Generator of Video Descriptions",
+          "url": "https://arxiv.org/abs/1807.10018"
+        },
+        {
+          "title": "Make-A-Video: Text-to-Video Generation without Text-Video Data",
+          "url": "https://arxiv.org/abs/2209.14792"
+        },
+        {
+          "title": "Эксплейнер",
+          "url": "https://ru.wikipedia.org/wiki/%D0%AD%D0%BA%D1%81%D0%BF%D0%BB%D0%B5%D0%B9%D0%BD%D0%B5%D1%80"
+        },
+        {
+          "title": "Сизл",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D0%B7%D0%BB"
+        },
+        {
+          "title": "Трейлер (кинематограф)",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A2%D1%80%D0%B5%D0%B9%D0%BB%D0%B5%D1%80_%28%D0%BA%D0%B8%D0%BD%D0%B5%D0%BC%D0%B0%D1%82%D0%BE%D0%B3%D1%80%D0%B0%D1%84%29"
+        },
+        {
+          "title": "Презентация (способ представления информации)",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9F%D1%80%D0%B5%D0%B7%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D0%B8%D1%8F_%28%D1%81%D0%BF%D0%BE%D1%81%D0%BE%D0%B1_%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D0%B8%29"
+        },
+        {
+          "title": "Автоматизированная видеостудия",
+          "url": "https://ru.wikipedia.org/wiki/%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%B0%D1%8F_%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE%D1%81%D1%82%D1%83%D0%B4%D0%B8%D1%8F"
+        },
+        {
+          "title": "Шоурил",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A8%D0%BE%D1%83%D1%80%D0%B8%D0%BB"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "b2b-07",
+      "checkedAt": "2026-09-11T09:20:22.086Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Как сделать видеоролик для выставки? Видеоролик ... - YouTube",
+          "url": "https://www.youtube.com/watch?v=mSINj4YAVRE"
+        },
+        {
+          "title": "Видео для Выставки – Инструкция по Применению - ВидеоЗаяц",
+          "url": "https://videozayac.ru/blog/kak-sdelat-video-dlya-vystavki/"
+        },
+        {
+          "title": "YouTube",
+          "url": "https://www.youtube.com/watch?v=jblUf6cLx9c"
+        },
+        {
+          "title": "Оснащение конференц-залов: что важно учесть - Атанор».",
+          "url": "https://atanorgroup.ru/model-decisions/osnashhenie-konferenc-zalov/"
+        },
+        {
+          "title": "Видео для выставки и стенда: как сделать презентующий ...",
+          "url": "https://companies.rbc.ru/news/aERas2Hgf2/video-dlya-vyistavki-i-stenda-kak-sdelat-prezentuyuschij-kompaniyu-b2b-rolik/"
+        },
+        {
+          "title": "Ролик для выставки: как привлечь внимание посетителей без звука",
+          "url": "https://www.sostav.ru/blogs/290917/92710"
+        },
+        {
+          "title": "Как сделать обучающие видео: 7 шагов от сценария до съемки",
+          "url": "https://www.ispring.ru/elearning-insights/kak-sdelat-videourok-v-ofise"
+        },
+        {
+          "title": "Создание видеороликов для выставок и музеев - champ video",
+          "url": "https://champvideo.pro/sozdanie-videorolikov-dlya-vystavok-i-muzeev"
+        },
+        {
+          "title": "Как сделать видеопрезентацию за 5 простых шагов - Dropbox",
+          "url": "https://www.dropbox.com/ru/resources/video-presentation-guide"
+        },
+        {
+          "title": "Как начать вести видео трансляцию - практические советы и ...",
+          "url": "https://ymusic.kz/poleznye-stati/live-srteam/"
+        },
+        {
+          "title": "YoTube: Searching Action Proposal via Recurrent and Static Regression Networks",
+          "url": "https://arxiv.org/abs/1706.08218"
+        },
+        {
+          "title": "Events-to-Video: Bringing Modern Computer Vision to Event Cameras",
+          "url": "https://arxiv.org/abs/1904.08298"
+        },
+        {
+          "title": "One-Shot Free-View Neural Talking-Head Synthesis for Video Conferencing",
+          "url": "https://arxiv.org/abs/2011.15126"
+        },
+        {
+          "title": "ST-Adapter: Parameter-Efficient Image-to-Video Transfer Learning",
+          "url": "https://arxiv.org/abs/2206.13559"
+        },
+        {
+          "title": "Шоурил",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A8%D0%BE%D1%83%D1%80%D0%B8%D0%BB"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "b2b-08",
+      "checkedAt": "2026-09-11T09:20:21.779Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "B2B Advertising: Joint Dynamic Scoring of Account and Users",
+          "url": "https://arxiv.org/abs/2209.14250"
+        },
+        {
+          "title": "User-generated Video Quality Assessment: A Subjective and Objective Study",
+          "url": "https://arxiv.org/abs/2005.08527"
+        },
+        {
+          "title": "Video Description: A Survey of Methods, Datasets and Evaluation Metrics",
+          "url": "https://arxiv.org/abs/1806.00186"
+        },
+        {
+          "title": "A Generalized Flow for B2B Sales Predictive Modeling: An Azure Machine Learning Approach",
+          "url": "https://arxiv.org/abs/2002.01441"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "b2b-09",
+      "checkedAt": "2026-09-11T09:20:22.183Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "How to Write a Research Paper Twice as Fast Using AI",
+          "url": "https://www.youtube.com/watch?v=ZoImubKLC1o"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "b2b-10",
+      "checkedAt": "2026-09-11T09:20:22.824Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Как агентству стать продуктовым» с Ильёй Красинским",
+          "url": "https://www.youtube.com/watch?v=ZkirZeWUP7k"
+        },
+        {
+          "title": "YoTube: Searching Action Proposal via Recurrent and Static Regression Networks",
+          "url": "https://arxiv.org/abs/1706.08218"
+        },
+        {
+          "title": "Structure and Content-Guided Video Synthesis with Diffusion Models",
+          "url": "https://arxiv.org/abs/2302.03011"
+        },
+        {
+          "title": "PReMVOS: Proposal-generation, Refinement and Merging for Video Object Segmentation",
+          "url": "https://arxiv.org/abs/1807.09190"
+        },
+        {
+          "title": "Few-shot Video-to-Video Synthesis",
+          "url": "https://arxiv.org/abs/1910.12713"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "brand-01",
+      "checkedAt": "2026-09-11T09:20:24.830Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "The Anix - The Making of \"Chrome\" (Behind The Scenes)",
+          "url": "https://www.youtube.com/watch?v=Sl-qMnVjTSA"
+        },
+        {
+          "title": "The Anix",
+          "url": "https://en.wikipedia.org/wiki/The_Anix"
+        },
+        {
+          "title": "Animate Any Character in Any World",
+          "url": "https://arxiv.org/abs/2512.17796"
+        },
+        {
+          "title": "The Anix",
+          "url": "https://ru.wikipedia.org/wiki/The_Anix"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "brand-02",
+      "checkedAt": "2026-09-11T09:20:24.768Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "OPENED ALL CASES ADDED TO CS2! WHICH CASE IS THE ...",
+          "url": "https://www.youtube.com/watch?v=biOfjX0D564"
+        },
+        {
+          "title": "КАКИЕ КЕЙСЫ БРАТЬ ПРЯМО СЕЙЧАС?",
+          "url": "https://www.youtube.com/watch?v=Re__3VvfIaA"
+        },
+        {
+          "title": "I compared all the cases released in CS2 and identified ...",
+          "url": "https://www.youtube.com/watch?v=_lcMTWdaanE"
+        },
+        {
+          "title": "Animate Any Character in Any World",
+          "url": "https://arxiv.org/abs/2512.17796"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "brand-03",
+      "checkedAt": "2026-09-11T09:20:24.694Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "The Anix",
+          "url": "https://en.wikipedia.org/wiki/The_Anix"
+        },
+        {
+          "title": "AnimaX: Animating the Inanimate in 3D with Joint Video-Pose Diffusion Models",
+          "url": "https://arxiv.org/abs/2506.19851"
+        },
+        {
+          "title": "Медицинская анимация",
+          "url": "https://ru.wikipedia.org/wiki/%D0%9C%D0%B5%D0%B4%D0%B8%D1%86%D0%B8%D0%BD%D1%81%D0%BA%D0%B0%D1%8F_%D0%B0%D0%BD%D0%B8%D0%BC%D0%B0%D1%86%D0%B8%D1%8F"
+        },
+        {
+          "title": "Animate Any Character in Any World",
+          "url": "https://arxiv.org/abs/2512.17796"
+        },
+        {
+          "title": "The Anix",
+          "url": "https://ru.wikipedia.org/wiki/The_Anix"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "brand-04",
+      "checkedAt": "2026-09-11T09:20:25.181Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Discover 24 anix and relaxing anime to watch ideas",
+          "url": "https://in.pinterest.com/mohanty02smruti/anix/"
+        },
+        {
+          "title": "ДЕЛАЕМ АНИМЕ МАСКОТОВ ДЛЯ РОССИЙСКИХ ...",
+          "url": "https://www.youtube.com/watch?v=mD4y_LzWeVw"
+        },
+        {
+          "title": "от первых этапов до готового персонажа. Каждый маскот — ...",
+          "url": "https://www.instagram.com/reel/DXwT0NPKODc/"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "brand-05",
+      "checkedAt": "2026-09-11T09:20:27.204Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "The Anix - The Making of \"Chrome\" (Behind The Scenes)",
+          "url": "https://www.youtube.com/watch?v=Sl-qMnVjTSA"
+        },
+        {
+          "title": "The Anix",
+          "url": "https://en.wikipedia.org/wiki/The_Anix"
+        },
+        {
+          "title": "Animate Any Character in Any World",
+          "url": "https://arxiv.org/abs/2512.17796"
+        },
+        {
+          "title": "The Anix",
+          "url": "https://ru.wikipedia.org/wiki/The_Anix"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "brand-06",
+      "checkedAt": "2026-09-11T09:20:27.035Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "Александра Севостьянова, Москва, 26 лет - TenChat",
+          "url": "https://tenchat.ru/lexxa_sevostyanova"
+        },
+        {
+          "title": "Александра Севастьянова (@alex_sav1nova) - Instagram",
+          "url": "https://www.instagram.com/alex_sav1nova/"
+        },
+        {
+          "title": "Александра-Севостьянова Profiles | Facebook",
+          "url": "https://www.facebook.com/public/%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D0%B0-%D0%A1%D0%B5%D0%B2%D0%BE%D1%81%D1%82%D1%8C%D1%8F%D0%BD%D0%BE%D0%B2%D0%B0"
+        },
+        {
+          "title": "ООО \"АНИКС\" - Москва - ИНН 9714017729 - Чекко",
+          "url": "https://checko.ru/company/aniks-1237700560371"
+        },
+        {
+          "title": "Александра Севостьянова (@aleksandra_svs) - Instagram",
+          "url": "https://www.instagram.com/aleksandra_svs/"
+        },
+        {
+          "title": "Александра Севостьянова - HeadHunter - Сетка",
+          "url": "https://setka.ru/users/f52c1a14-ad7c-4f14-bd03-8c36b3aa2f28"
+        },
+        {
+          "title": "Александра Севостьянова (shurasevostyanova0191) — профиль",
+          "url": "https://ru.pinterest.com/shurasevostyanova0191/"
+        },
+        {
+          "title": "ООО «АНИКС - РБК Компании",
+          "url": "https://companies.rbc.ru/id/1237700560371-ooo-ooo-aniks/"
+        },
+        {
+          "title": "The Anix",
+          "url": "https://en.wikipedia.org/wiki/The_Anix"
+        },
+        {
+          "title": "Absence of solitons with sufficient algebraic localization for the Novikov-Veselov equation at nonzero energy",
+          "url": "https://arxiv.org/abs/1201.2758"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "brand-07",
+      "checkedAt": "2026-09-11T09:20:26.780Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "You should know this before going into IT.",
+          "url": "https://www.youtube.com/watch?v=35YkC0g4fpU"
+        },
+        {
+          "title": "Information security control as a task of control a dynamic system",
+          "url": "https://arxiv.org/abs/2501.16732"
+        },
+        {
+          "title": "The role of explainability in creating trustworthy artificial intelligence for health care: a comprehensive survey of the terminology, design choices, and evaluation strategies",
+          "url": "https://arxiv.org/abs/2007.15911"
+        },
+        {
+          "title": "Performance of ANAIS-112 experiment after the first year of data taking",
+          "url": "https://arxiv.org/abs/1812.01472"
+        },
+        {
+          "title": "On dependence consistency of CoVaR and some other systemic risk measures",
+          "url": "https://arxiv.org/abs/1207.3464"
+        },
+        {
+          "title": "Царёв, Андрей",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A6%D0%B0%D1%80%D1%91%D0%B2%2C_%D0%90%D0%BD%D0%B4%D1%80%D0%B5%D0%B9"
+        },
+        {
+          "title": "Царёв, Андрей Анатольевич",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A6%D0%B0%D1%80%D1%91%D0%B2%2C_%D0%90%D0%BD%D0%B4%D1%80%D0%B5%D0%B9_%D0%90%D0%BD%D0%B0%D1%82%D0%BE%D0%BB%D1%8C%D0%B5%D0%B2%D0%B8%D1%87"
+        },
+        {
+          "title": "Царёв, Борис Михайлович",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A6%D0%B0%D1%80%D1%91%D0%B2%2C_%D0%91%D0%BE%D1%80%D0%B8%D1%81_%D0%9C%D0%B8%D1%85%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2%D0%B8%D1%87"
+        },
+        {
+          "title": "Царёв, Андрей Александрович",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A6%D0%B0%D1%80%D1%91%D0%B2%2C_%D0%90%D0%BD%D0%B4%D1%80%D0%B5%D0%B9_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D0%BE%D0%B2%D0%B8%D1%87"
+        },
+        {
+          "title": "Харьковский научно-исследовательский институт судебных экспертиз",
+          "url": "https://ru.wikipedia.org/wiki/%D0%A5%D0%B0%D1%80%D1%8C%D0%BA%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BD%D0%B0%D1%83%D1%87%D0%BD%D0%BE-%D0%B8%D1%81%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%B8%D0%B9_%D0%B8%D0%BD%D1%81%D1%82%D0%B8%D1%82%D1%83%D1%82_%D1%81%D1%83%D0%B4%D0%B5%D0%B1%D0%BD%D1%8B%D1%85_%D1%8D%D0%BA%D1%81%D0%BF%D0%B5%D1%80%D1%82%D0%B8%D0%B7"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "brand-08",
+      "checkedAt": "2026-09-11T09:20:27.974Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "business process automation and AI agents for B2B",
+          "url": "https://anix.agency/"
+        },
+        {
+          "title": "About Us - Anix Global — Hire the people who build futures",
+          "url": "https://anixglobal.ae/"
+        },
+        {
+          "title": "Meet Our Partners - Annex Pro",
+          "url": "https://annexpro.com/"
+        },
+        {
+          "title": "Anix - 2026 Company Profile & Competitors",
+          "url": "https://tracxn.com/"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "brand-09",
+      "checkedAt": "2026-09-11T09:20:29.169Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    },
+    {
+      "id": "brand-10",
+      "checkedAt": "2026-09-11T09:20:29.060Z",
+      "layer": "web_search_discovery_not_llm_recommendation",
+      "sources": [
+        {
+          "title": "The Anix",
+          "url": "https://en.wikipedia.org/wiki/The_Anix"
+        },
+        {
+          "title": "Animate Any Character in Any World",
+          "url": "https://arxiv.org/abs/2512.17796"
+        }
+      ],
+      "anix_source_returned": false,
+      "llm_status": "not_measured",
+      "quality_note": "Returned search results may be irrelevant; result order is not a Google/Yandex rank. Absence is not proof of deindexing."
+    }
+  ]
+}
