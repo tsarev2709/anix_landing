@@ -16,7 +16,7 @@ function replaceOnce(content, search, replacement, label) {
 }
 
 function replaceOncePattern(content, pattern, replacement, label) {
-  if (content.includes(replacement)) return content;
+  if (content.replace(/\r\n/g, '\n').includes(replacement)) return content;
   if (!pattern.test(content)) throw new Error(`[andrey-profile] Cannot find ${label}`);
   return content.replace(pattern, replacement);
 }
