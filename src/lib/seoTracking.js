@@ -1,6 +1,6 @@
 import { track, eventContext } from './analytics';
 import { setupTelegramAttribution } from './telegramAttribution';
-import { recordAttributionCta } from './leadSession';
+import { recordAttributionCta, initLeadSessionTracking } from './leadSession';
 import { classifyAiReferral } from './aiReferral';
 
 const METRIKA_COUNTER_ID = 103290769;
@@ -38,10 +38,12 @@ export function setupAiReferralTracking() {
     utmSource: new URLSearchParams(window.location.search).get('utm_source') || '',
     referrer: document.referrer || '',
   });
-  if (aiReferral.provider) sendGoal('ai_referral_visit', {
-    ...aiReferral,
-    path: window.location.pathname,
-  });
+  if (aiReferral.provider) {
+    const path = window.location.pathname;
+    Promise.resolve(initLeadSessionTracking()).then(() => sendGoal('ai_referral_visit', {
+      ...aiReferral, path,
+    })).catch(() => {});
+  }
 }
 
 export function setupSeoTracking() {
