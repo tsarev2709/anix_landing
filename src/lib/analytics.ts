@@ -35,10 +35,13 @@ export function eventContext(payload: Record<string, any> = {}) {
       'rating',
       'from',
       'to',
+      'provider',
+      'evidence',
     ]) {
       if (typeof payload[key] === 'string')
         safe[key] = marketingValue(payload[key]);
     }
+    if (typeof payload.conflict === 'boolean') safe.conflict = payload.conflict;
     return {
       ...safe,
       path: safePage(

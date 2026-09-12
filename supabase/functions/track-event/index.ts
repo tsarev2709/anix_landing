@@ -58,9 +58,10 @@ async function handler(req: Request): Promise<Response> {
 
     const snapshot = sanitizeAttribution(meta?.attribution_snapshot);
     const cleanMeta: any = { path: safePage(meta?.path || meta?.page_path), timestamp: new Date().toISOString() };
-    for (const key of ['form_variant', 'form_version', 'cta_id', 'formId', 'error_type', 'task_id', 'section', 'reason', 'rating', 'from', 'to']) {
+    for (const key of ['form_variant', 'form_version', 'cta_id', 'formId', 'error_type', 'task_id', 'section', 'reason', 'rating', 'from', 'to', 'provider', 'evidence']) {
       if (typeof meta?.[key] === 'string') cleanMeta[key] = marketingValue(meta[key]);
     }
+    if (typeof meta?.conflict === 'boolean') cleanMeta.conflict = meta.conflict;
     if (snapshot) cleanMeta.attribution_snapshot = snapshot;
     const { error } = await sb.from('lead_events').insert({
       event_id: typeof event_id === 'string' && /^[a-zA-Z0-9_-]{12,128}$/.test(event_id) ? event_id : null,
