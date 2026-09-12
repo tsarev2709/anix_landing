@@ -244,7 +244,7 @@ function stripSeoHead(html) {
 function buildHead(route) {
   const canonical = absolutePageUrl(route.path);
   const ogImage = absoluteAssetUrl(route.ogImage);
-  const robots = route.indexable ? 'index, follow' : 'noindex, follow';
+  const robots = route.robots || (route.indexable ? 'index, follow' : 'noindex, follow');
   const title = normalizeBrandText(route.title);
   const description = normalizeBrandText(route.description);
   const ogTitle = normalizeBrandText(route.ogTitle || route.title);

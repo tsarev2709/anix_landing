@@ -1,0 +1,224 @@
+// Shared, DOM-free contract. scripts/sync-attribution.js mirrors it for Edge.
+export const ATTRIBUTION_WINDOW_MS = 90 * 24 * 60 * 60 * 1000;
+export const MARKETING_KEYS = [
+  'utm_source',
+  'utm_medium',
+  'utm_campaign',
+  'utm_content',
+  'utm_term',
+  'gclid',
+  'yclid',
+  'anix_segment',
+  'anix_offer',
+  'anix_audience',
+  'anix_asset',
+  'anix_owner',
+];
+const aliases = {
+  telegram: ['telegram', 'tg', 't.me', 'telegram.org'],
+  tenchat: ['tenchat', 'tenchat.ru'],
+  vk: ['vk', 'vkontakte', 'vk.com', 'vk.ru'],
+  yandex: ['yandex', 'ya', 'yandex.ru', 'ya.ru'],
+  google: ['google', 'google.com', 'google.ru'],
+  chatgpt: ['chatgpt', 'chatgpt.com', 'chat.openai.com'],
+  email: ['email', 'e-mail', 'mail'],
+  direct: ['direct'],
+  referral: ['referral'],
+  conference: ['conference'],
+  qr: ['qr'],
+  partner: ['partner'],
+  other: ['other'],
+};
+export function marketingValue(value) {
+  if (typeof value !== 'string') return '';
+  const result = Array.from(value)
+    .filter((char) => char.charCodeAt(0) >= 32)
+    .join('')
+    .trim()
+    .slice(0, 200);
+  // Accidental contacts are discarded, including in raw marketing values.
+  if (
+    /@|(?:https?:\/\/)?t\.me\//i.test(result) ||
+    /^\+?[\d ().-]{7,}$/.test(result)
+  )
+    return '';
+  return result;
+}
+export function normalizeSource(value) {
+  const raw = marketingValue(value);
+  return (
+    Object.keys(aliases).find((key) =>
+      aliases[key].includes(raw.toLowerCase())
+    ) || raw
+  );
+}
+export function safePage(value) {
+  try {
+    const url = new URL(String(value || '/'), 'https://studio.anix-ai.pro');
+    if (!['http:', 'https:'].includes(url.protocol)) return '';
+    return url.pathname.slice(0, 1000);
+  } catch {
+    return '';
+  }
+}
+export function safeReferrer(value) {
+  if (!value) return '';
+  try {
+    const url = new URL(value);
+    return ['http:', 'https:'].includes(url.protocol) ? url.origin : '';
+  } catch {
+    return '';
+  }
+}
+const iso = (value) =>
+  Number.isFinite(Date.parse(value)) ? new Date(value).toISOString() : '';
+const count = (value, max = 1000000) =>
+  Math.min(max, Math.max(0, Math.round(Number(value) || 0)));
+export function sanitizeTouch(raw) {
+  if (!raw || typeof raw !== 'object') return null;
+  const touch = {};
+  for (const key of MARKETING_KEYS) touch[key] = marketingValue(raw[key]);
+  touch.utm_source_raw = marketingValue(raw.utm_source_raw || raw.utm_source);
+  touch.utm_source = normalizeSource(touch.utm_source);
+  touch.source = normalizeSource(raw.source) || touch.utm_source || 'direct';
+  touch.touch_at = iso(raw.touch_at);
+  touch.landing_page = safePage(raw.landing_page);
+  touch.referrer = safeReferrer(raw.referrer);
+  return touch;
+}
+export function touchFromLocation(href, referrer, timestamp = Date.now()) {
+  const url = new URL(href);
+  const raw = Object.fromEntries(
+    MARKETING_KEYS.map((key) => [key, url.searchParams.get(key) || ''])
+  );
+  const ref = safeReferrer(referrer);
+  const host = ref ? new URL(ref).hostname : '';
+  const external = Boolean(
+    host && host !== url.hostname && host !== 'studio.anix-ai.pro'
+  );
+  const referrerSource = Object.keys(aliases).find((key) =>
+    aliases[key].includes(host.replace(/^www\./, ''))
+  );
+  const inferred = external ? referrerSource || 'referral' : 'direct';
+  return sanitizeTouch({
+    ...raw,
+    source:
+      raw.utm_source ||
+      (raw.yclid ? 'yandex' : raw.gclid ? 'google' : inferred),
+    touch_at: new Date(timestamp).toISOString(),
+    landing_page: url.pathname,
+    referrer: external ? ref : '',
+  });
+}
+export function isMeaningful(touch) {
+  return Boolean(
+    touch &&
+    (MARKETING_KEYS.some((key) => touch[key]) ||
+      touch.referrer ||
+      touch.source !== 'direct')
+  );
+}
+export function touchSignature(touch) {
+  return JSON.stringify([
+    ...MARKETING_KEYS.map((key) => touch?.[key] || ''),
+    touch?.referrer || '',
+  ]);
+}
+export function sanitizeAttribution(raw, conversionType = '') {
+  try {
+    if (!raw || typeof raw !== 'object') return null;
+    const id = (v) =>
+      typeof v === 'string' && /^[a-zA-Z0-9_-]{12,128}$/.test(v) ? v : '';
+    if (!id(raw.visitor_id) || !id(raw.session_id)) return null;
+    return {
+      version: 2,
+      visitor_id: id(raw.visitor_id),
+      session_id: id(raw.session_id),
+      captured_at: iso(raw.captured_at),
+      first_touch: sanitizeTouch(raw.first_touch),
+      last_touch: sanitizeTouch(raw.last_touch),
+      current_session: sanitizeTouch(raw.current_session),
+      session_started_at: iso(raw.session_started_at),
+      sessions_count: count(raw.sessions_count),
+      previous_visit_at: iso(raw.previous_visit_at),
+      returning_visitor: raw.returning_visitor === true,
+      conversion_type: marketingValue(conversionType || raw.conversion_type),
+      conversion_page: safePage(raw.conversion_page || raw.page_path),
+      cta_id: marketingValue(raw.cta_id),
+      time_on_site_seconds: count(raw.time_on_site_seconds, 31536000),
+      pages_viewed_count: count(
+        raw.pages_viewed_count || raw.pages_viewed?.length
+      ),
+      pages_viewed: (Array.isArray(raw.pages_viewed) ? raw.pages_viewed : [])
+        .slice(-80)
+        .map((p) => ({
+          path: safePage(p?.path),
+          entered_at: iso(p?.entered_at),
+          duration_seconds: count(p?.duration_seconds, 86400),
+        })),
+    };
+  } catch {
+    return null;
+  }
+}
+export const AMO_ATTRIBUTION_FIELDS = {
+  visitor_id: 'Visitor ID',
+  first_source: 'First source',
+  first_medium: 'First medium',
+  first_campaign: 'First campaign',
+  first_content: 'First content',
+  last_source: 'Last source',
+  last_medium: 'Last medium',
+  last_campaign: 'Last campaign',
+  last_content: 'Last content',
+  landing_page: 'Landing page',
+  conversion_page: 'Conversion page',
+  conversion_type: 'Conversion type',
+  anix_segment: 'Anix Segment',
+  anix_offer: 'Anix Offer',
+  anix_audience: 'Anix Audience',
+  anix_asset: 'Anix Asset',
+  anix_owner: 'Anix Owner',
+};
+export function attributionFieldValues(raw) {
+  const s = sanitizeAttribution(raw);
+  if (!s) return {};
+  const first = s.first_touch || {},
+    last = s.last_touch || {},
+    current = s.current_session || {};
+  const result = {
+    visitor_id: s.visitor_id,
+    first_source: first.source || 'direct',
+    first_medium: first.utm_medium,
+    first_campaign: first.utm_campaign,
+    first_content: first.utm_content,
+    last_source: last.source || 'direct',
+    last_medium: last.utm_medium,
+    last_campaign: last.utm_campaign,
+    last_content: last.utm_content,
+    landing_page: first.landing_page || current.landing_page,
+    conversion_page: s.conversion_page,
+    conversion_type: s.conversion_type,
+  };
+  // An offer belongs to its touch. Never mix an old offer into a new campaign.
+  const meaningful = s.last_touch || s.first_touch || current;
+  for (const key of MARKETING_KEYS.filter((k) => k.startsWith('anix_')))
+    result[key] = meaningful[key] || '';
+  return Object.fromEntries(Object.entries(result).filter(([, v]) => v));
+}
+export function attributionNote(raw) {
+  const s = sanitizeAttribution(raw);
+  if (!s) return '';
+  return [
+    'Атрибуция (снимок конверсии):',
+    ...Object.entries(attributionFieldValues(s)).map(
+      ([k, v]) => `${AMO_ATTRIBUTION_FIELDS[k]}: ${v}`
+    ),
+    `Текущий визит: ${s.current_session?.source || 'direct'}`,
+    `Визитов: ${s.sessions_count}`,
+    `Session ID: ${s.session_id}`,
+    `CTA: ${s.cta_id || '—'}`,
+    `Первое касание: ${s.first_touch?.touch_at || '—'}`,
+    `Последнее касание: ${s.last_touch?.touch_at || '—'}`,
+  ].join('\n');
+}

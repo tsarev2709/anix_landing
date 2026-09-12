@@ -213,6 +213,12 @@ describe('submit-website-lead', () => {
   });
 
   const validBody = {
+    attribution_snapshot: {
+      version: 2, visitor_id: 'visitor-test-123', session_id: 'session-test-123',
+      first_touch: { source: 'telegram', utm_source: 'telegram', utm_campaign: 'hse_test' },
+      last_touch: { source: 'tenchat', utm_source: 'tenchat', utm_campaign: 'pharma_test', anix_offer: 'pharma_launch' },
+      current_session: { source: 'direct' }, conversion_type: 'form', conversion_page: '/',
+    },
     idempotency_key: '12345678-1234-4234-9234-123456789abc',
     turnstile_token: 'test-token',
     privacy_consent: true,
@@ -311,6 +317,10 @@ describe('submit-website-lead', () => {
     expect(saved.brief).toEqual(brief);
     expect(saved.metrika_client_id).toBe('12345');
     expect(saved.brief_crm_synced).toBe(true);
+    expect(saved.attribution_snapshot.first_touch.source).toBe('telegram');
+    expect(saved.attribution_snapshot.last_touch.source).toBe('tenchat');
+    expect(sync.mock.calls[0][0].attribution).toEqual(saved.attribution_snapshot);
+    expect(saved.visitor_id).toBe('visitor-test-123');
     expect(sync.mock.calls[0][0].industryFields['ANIX · Задача']).toBe(
       config.tasks[0][1]
     );

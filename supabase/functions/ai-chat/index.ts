@@ -3,6 +3,8 @@ declare const process: any;
 
 // @ts-ignore Deno requires the explicit TypeScript extension.
 import { AmoIntegrationError, syncAmoLead } from '../_shared/amocrm.ts';
+// @ts-ignore Deno explicit extension
+import { sanitizeAttribution, attributionNote, safePage, safeReferrer } from '../_shared/attribution.ts';
 // @ts-ignore Deno loads this shared ES module directly.
 import {
   GROUNDING_POLICY_PROMPT,
@@ -293,14 +295,17 @@ async function gatewayRequest(
 
 function contextFromInput(input: any): any {
   const raw = safeObject(input?.context);
+  const snapshot = sanitizeAttribution(raw.attribution_snapshot);
   return {
+    visitor_id: snapshot?.visitor_id || null,
     lead_session_id: text(raw.session_id, 128),
     page_path: text(raw.page_path, 1000),
-    page_url: text(raw.page_url, 2000),
-    landing_page: text(raw.landing_page, 2000),
-    referrer: text(raw.initial_referrer || raw.referrer, 2000),
+    page_url: raw.page_url ? safeReferrer(raw.page_url) + safePage(raw.page_url) : '',
+    landing_page: raw.landing_page ? safePage(raw.landing_page) : '',
+    referrer: safeReferrer(raw.initial_referrer || raw.referrer),
     pages_viewed: safePages(raw.pages_viewed),
     attribution: {
+      ...(snapshot ? { snapshot } : {}),
       source: text(raw.source, 500),
       utm_source: text(raw.utm_source, 500),
       utm_medium: text(raw.utm_medium, 500),
@@ -371,6 +376,8 @@ async function refreshSessionContext(
   const pageHints = pageHintsFromInput(input);
   const update: Record<string, any> = {
     updated_at: new Date().toISOString(),
+    visitor_id: incoming.visitor_id || session.visitor_id,
+    lead_session_id: incoming.lead_session_id || session.lead_session_id,
     page_path: pagePath,
     page_url: incoming.page_url || session.page_url,
     pages_viewed: incoming.pages_viewed.length
@@ -903,13 +910,20 @@ async function syncChatLead(
 ): Promise<string> {
   if (!contact.email && !contact.phone && !contact.telegram)
     return 'not_requested';
-  await sb
+  const snapshot = session.attribution_snapshot || sanitizeAttribution({
+    ...session.attribution?.snapshot, captured_at: new Date().toISOString(),
+    conversion_page: session.page_path,
+  }, 'llm');
+  const savedSnapshot = await sb
     .from('ai_chat_sessions')
-    .update({ crm_sync_status: 'pending', crm_sync_error: null })
-    .eq('id', session.id);
+    .update({ crm_sync_status: 'pending', crm_sync_error: null, attribution_snapshot: snapshot })
+    .eq('id', session.id).select('attribution_snapshot').single();
+  // The database trigger preserves the first conversion during concurrent retries.
+  const conversionSnapshot = savedSnapshot.data?.attribution_snapshot || snapshot;
 
   const note = [
     'Квалифицированный диалог AI-консультанта Anix',
+    attributionNote(conversionSnapshot),
     '',
     `Имя: ${qualification.name || '—'}`,
     `Компания: ${qualification.company || '—'}`,
@@ -951,6 +965,7 @@ async function syncChatLead(
       phone: contact.phone,
       telegram: contact.telegram,
       note,
+      attribution: conversionSnapshot,
       tags: ['website', 'website-ai-chat'],
       existingContactId: session.amocrm_contact_id,
       existingLeadId: session.amocrm_lead_id,
@@ -961,6 +976,7 @@ async function syncChatLead(
       .update({
         status: 'handed_off',
         crm_sync_status: 'completed',
+        attribution_crm_synced: result.attributionSynced ?? null,
         crm_sync_error: null,
         amocrm_account_id: result.accountId,
         amocrm_lead_id: result.leadId,

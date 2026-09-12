@@ -31,7 +31,8 @@ const lessonRoutes = [
 ];
 
 const routes = [
-  'medicine','medicine/price','why_it_works','ceo','hse','hse/price','stoimost','animation','ai-video','rybki','rybki_page',
+  'internal/utm-builder',
+  'medicine','medicine/price','why_it_works','ceo','andrey-tsarev','hse','hse/price','stoimost','animation','ai-video','rybki','rybki_page',
   'procurement',
   'ships-and-ports','hospitality','tourism','education',
   'cases','cases/b2b','cases/medicine','cases/cinema','cases/hse',

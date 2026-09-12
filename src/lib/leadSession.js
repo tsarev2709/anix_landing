@@ -1,200 +1,311 @@
-const STORAGE_KEY = 'anix_website_lead_session_v1';
-const MAX_PAGE_VIEWS = 80;
-
-let initialized = false;
-let activeStartedAt = null;
-let activePageIndex = -1;
-let lastKnownLocation = '';
-
+import {
+  ATTRIBUTION_WINDOW_MS,
+  MARKETING_KEYS,
+  isMeaningful,
+  safePage,
+  safeReferrer,
+  sanitizeAttribution,
+  sanitizeTouch,
+  touchFromLocation,
+  touchSignature,
+} from './attribution';
+const VISITOR_KEY = 'anix_visitor_v2';
+const SESSION_KEY = 'anix_website_lead_session_v1';
+const SESSION_TIMEOUT = 30 * 60 * 1000;
+let visitor = null,
+  session = null,
+  ready = null;
+let activeStartedAt = null,
+  lastLocation = '',
+  hooksInstalled = false;
+let eventSink = () => {};
 const nowIso = () => new Date().toISOString();
-
-function makeId() {
-  if (
-    typeof crypto !== 'undefined' &&
-    typeof crypto.randomUUID === 'function'
-  ) {
-    return crypto.randomUUID();
-  }
-  const random = Math.random().toString(36).slice(2);
-  return `${Date.now().toString(36)}-${random}`;
-}
-
-function readSession() {
-  if (typeof window === 'undefined') return null;
+const quietly = (fn, fallback = null) => {
   try {
-    const parsed = JSON.parse(
-      window.sessionStorage.getItem(STORAGE_KEY) || 'null'
-    );
-    if (!parsed || typeof parsed !== 'object' || !Array.isArray(parsed.pages)) {
-      return null;
+    return fn();
+  } catch {
+    return fallback;
+  }
+};
+const read = (kind, key) =>
+  quietly(() => JSON.parse(window[kind].getItem(key) || 'null'));
+const write = (kind, key, value) =>
+  quietly(() => window[kind].setItem(key, JSON.stringify(value)));
+export function createLeadIdempotencyKey() {
+  return (
+    quietly(() => crypto.randomUUID()) ||
+    `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}-${Math.random().toString(36).slice(2)}`
+  );
+}
+function withVisitorLock(fn) {
+  // Serialize shared first touch and visit counts across same-origin tabs.
+  try {
+    if (navigator.locks?.request) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 1500);
+      return navigator.locks
+        .request('anix-attribution-v2', { signal: controller.signal }, fn)
+        .catch(() => quietly(fn))
+        .finally(() => clearTimeout(timer));
     }
-    return parsed;
   } catch {
-    return null;
+    /* Browser policy must not affect the product. */
   }
+  return Promise.resolve(quietly(fn));
 }
-
-function writeSession(session) {
-  if (typeof window === 'undefined' || !session) return;
-  try {
-    window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(session));
-  } catch {
-    // Tracking must never interfere with the site or the form.
+function updateVisitor(touch, newSession) {
+  const stored = read('localStorage', VISITOR_KEY);
+  if (
+    /^[a-zA-Z0-9_-]{12,128}$/.test(stored?.id || '') &&
+    Number.isFinite(stored.sessions_count)
+  )
+    visitor = stored;
+  if (!visitor) visitor = { id: createLeadIdempotencyKey(), sessions_count: 0 };
+  for (const key of ['first_touch', 'last_touch']) {
+    if (
+      !Number.isFinite(Date.parse(visitor[key]?.touch_at)) ||
+      Date.now() - Date.parse(visitor[key].touch_at) >= ATTRIBUTION_WINDOW_MS
+    )
+      visitor[key] = null;
   }
+  if (isMeaningful(touch)) {
+    if (!visitor.first_touch) {
+      visitor.first_touch = touch;
+      visitor.window_started_at = touch.touch_at;
+    }
+    visitor.last_touch = touch;
+  }
+  if (newSession) {
+    session.previous_visit_at = visitor.last_visit_at || '';
+    visitor.sessions_count += 1;
+    visitor.last_visit_at = session.started_at;
+  }
+  write('localStorage', VISITOR_KEY, visitor);
 }
-
-function firstTouchParams() {
-  const params = new URLSearchParams(window.location.search);
-  const value = (name) => (params.get(name) || '').slice(0, 500);
-  return {
-    utm_source: value('utm_source'),
-    utm_medium: value('utm_medium'),
-    utm_campaign: value('utm_campaign'),
-    utm_content: value('utm_content'),
-    utm_term: value('utm_term'),
-    yclid: value('yclid'),
-    gclid: value('gclid'),
-  };
+function persistSession() {
+  if (!session) return;
+  session.last_active_at = nowIso();
+  write('sessionStorage', SESSION_KEY, session);
 }
-
-function createSession() {
-  return {
-    id: makeId(),
+function pausePage() {
+  if (!session || activeStartedAt === null) return;
+  const page = session.pages[session.pages.length - 1];
+  if (page)
+    page.duration_seconds =
+      Math.round(
+        (page.duration_seconds +
+          Math.max(0, (Date.now() - activeStartedAt) / 1000)) *
+          10
+      ) / 10;
+  activeStartedAt = null;
+  persistSession();
+}
+function startSession(touch) {
+  session = {
+    id: createLeadIdempotencyKey(),
     started_at: nowIso(),
-    landing_page: `${window.location.pathname}${window.location.search}`.slice(
-      0,
-      2000
-    ),
-    initial_referrer: (document.referrer || '').slice(0, 2000),
-    first_touch: firstTouchParams(),
+    last_active_at: nowIso(),
+    landing_page: touch.landing_page,
+    initial_referrer: touch.referrer,
+    first_touch: touch,
+    current_attribution: touch,
     pages: [],
   };
+  updateVisitor(touch, true);
+  session.visitor_id = visitor.id;
 }
-
-function currentLocationKey() {
-  return `${window.location.pathname}${window.location.search}`;
-}
-
-function pauseActivePage() {
-  if (activeStartedAt === null || activePageIndex < 0) return;
-  const session = readSession();
-  const page = session?.pages?.[activePageIndex];
-  if (!page) return;
-
-  const elapsed = Math.max(0, (Date.now() - activeStartedAt) / 1000);
-  page.duration_seconds =
-    Math.round((Number(page.duration_seconds) + elapsed) * 10) / 10;
-  writeSession(session);
-  activeStartedAt = null;
-}
-
-function resumeActivePage() {
-  if (activePageIndex >= 0 && activeStartedAt === null) {
-    activeStartedAt = Date.now();
-  }
-}
-
-function beginPageView() {
-  if (typeof window === 'undefined') return;
-  pauseActivePage();
-
-  const locationKey = currentLocationKey();
-  let session = readSession();
-  if (!session) session = createSession();
-
+function pageView() {
+  if (!session) return;
+  pausePage();
+  const location = window.location.pathname + window.location.search;
+  if (lastLocation === location && session.pages.length) return;
+  lastLocation = location;
   session.pages.push({
-    path: window.location.pathname.slice(0, 1000),
+    path: safePage(location),
     title: (document.title || 'Anix').slice(0, 500),
     entered_at: nowIso(),
     duration_seconds: 0,
   });
-  if (session.pages.length > MAX_PAGE_VIEWS) {
-    session.pages = session.pages.slice(-MAX_PAGE_VIEWS);
-  }
-
-  activePageIndex = session.pages.length - 1;
+  session.pages = session.pages.slice(-80);
   activeStartedAt = document.visibilityState === 'hidden' ? null : Date.now();
-  lastKnownLocation = locationKey;
-  writeSession(session);
+  persistSession();
+  quietly(() => eventSink('page_view', { path: safePage(location) }));
+  if (/\/(price|stoimost)\/?$/.test(window.location.pathname))
+    quietly(() => eventSink('pricing_view', {}));
 }
-
-function checkForRouteChange() {
-  if (currentLocationKey() !== lastKnownLocation) beginPageView();
-}
-
-export function initLeadSessionTracking() {
-  if (initialized || typeof window === 'undefined') return;
-  initialized = true;
-  beginPageView();
-
-  const originalPushState = window.history.pushState.bind(window.history);
-  const originalReplaceState = window.history.replaceState.bind(window.history);
-
-  window.history.pushState = (...args) => {
-    originalPushState(...args);
-    checkForRouteChange();
-  };
-  window.history.replaceState = (...args) => {
-    originalReplaceState(...args);
-    checkForRouteChange();
-  };
-
-  window.addEventListener('popstate', checkForRouteChange);
-  window.addEventListener('hashchange', checkForRouteChange);
-  window.addEventListener('pagehide', pauseActivePage);
-  window.addEventListener('beforeunload', pauseActivePage);
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') pauseActivePage();
-    else resumeActivePage();
-  });
-}
-
-function deriveSource(session) {
-  if (session.first_touch?.utm_source) return session.first_touch.utm_source;
-  if (!session.initial_referrer) return 'direct';
-  try {
-    const referrerHost = new URL(session.initial_referrer).hostname;
-    if (referrerHost && referrerHost !== window.location.hostname)
-      return referrerHost;
-  } catch {
-    return 'referral';
+async function routeChanged() {
+  if (
+    !session ||
+    lastLocation === window.location.pathname + window.location.search
+  )
+    return;
+  const touch = touchFromLocation(window.location.href, '', Date.now());
+  // Document referrer is consumed only at entry, never on SPA pageviews.
+  if (
+    isMeaningful(touch) &&
+    touchSignature(touch) !== touchSignature(session.current_attribution)
+  ) {
+    await withVisitorLock(() => {
+      session.current_attribution = touch;
+      updateVisitor(touch, false);
+    });
   }
-  return 'internal';
+  pageView();
 }
-
-export function getLeadSessionSnapshot() {
-  if (typeof window === 'undefined') return {};
-  pauseActivePage();
-  const session = readSession() || createSession();
-  resumeActivePage();
-
-  const startedAt = Date.parse(session.started_at);
-  const timeOnSite = Number.isFinite(startedAt)
-    ? Math.max(0, Math.round((Date.now() - startedAt) / 1000))
-    : 0;
-
-  return {
-    session_id: session.id,
-    session_started_at: session.started_at,
-    landing_page: session.landing_page,
-    initial_referrer: session.initial_referrer,
-    source: deriveSource(session),
-    ...session.first_touch,
-    time_on_site_seconds: timeOnSite,
-    pages_viewed_count: session.pages.length,
-    pages_viewed: session.pages,
-    page_url: window.location.href.slice(0, 2000),
-    page_path: window.location.pathname.slice(0, 1000),
-    page_title: (document.title || 'Anix').slice(0, 500),
-    referrer: (document.referrer || '').slice(0, 2000),
-    user_agent: (navigator.userAgent || '').slice(0, 1000),
-    screen_width: window.screen?.width || null,
-    screen_height: window.screen?.height || null,
-    language: (navigator.language || '').slice(0, 32),
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
-  };
+function installHooks() {
+  if (hooksInstalled) return;
+  hooksInstalled = true;
+  for (const name of ['pushState', 'replaceState']) {
+    const original = window.history[name].bind(window.history);
+    window.history[name] = (...args) => {
+      const result = original(...args);
+      quietly(() => routeChanged().catch(() => {}));
+      return result;
+    };
+  }
+  window.addEventListener('popstate', () =>
+    quietly(() => routeChanged().catch(() => {}))
+  );
+  window.addEventListener('pagehide', () => quietly(pausePage));
+  window.addEventListener('storage', (event) => {
+    if (event.key === VISITOR_KEY)
+      quietly(() => {
+        const v = read('localStorage', VISITOR_KEY);
+        if (v?.id) visitor = v;
+      });
+  });
+  document.addEventListener('visibilitychange', () =>
+    quietly(() => {
+      if (document.visibilityState === 'hidden') pausePage();
+      else if (
+        session &&
+        Date.now() - Date.parse(session.last_active_at) >= SESSION_TIMEOUT
+      ) {
+        withVisitorLock(() =>
+          startSession(touchFromLocation(window.location.href, '', Date.now()))
+        )
+          .then(() => {
+            lastLocation = '';
+            pageView();
+          })
+          .catch(() => {});
+      } else activeStartedAt = Date.now();
+    })
+  );
 }
-
-export function createLeadIdempotencyKey() {
-  return makeId();
+export function setAttributionEventSink(sink) {
+  eventSink = sink;
+}
+export function recordAttributionCta(ctaId) {
+  quietly(() => { if (session) { session.last_cta_id = ctaId; persistSession(); } });
+}
+export function initLeadSessionTracking() {
+  if (ready || typeof window === 'undefined') return ready || Promise.resolve();
+  ready = withVisitorLock(() => {
+    const previous = read('sessionStorage', SESSION_KEY);
+    const touch = touchFromLocation(window.location.href, document.referrer, Date.now());
+    if (
+      previous?.id &&
+      Array.isArray(previous.pages) &&
+      Date.now() - Date.parse(previous.last_active_at || previous.started_at) <
+        SESSION_TIMEOUT
+    ) {
+      session = previous;
+      session.current_attribution =
+        session.current_attribution ||
+        sanitizeTouch({
+          ...session.first_touch,
+          source: session.first_touch?.utm_source || touch.source,
+          landing_page: session.landing_page,
+          referrer: session.initial_referrer,
+          touch_at: session.started_at,
+        });
+      const campaignChanged =
+        MARKETING_KEYS.some((key) => touch[key]) &&
+        MARKETING_KEYS.some(
+          (key) => touch[key] !== session.current_attribution[key]
+        );
+      const externalArrival =
+        touch.referrer &&
+        touch.referrer !== session.current_attribution.referrer;
+      const changed = Boolean(campaignChanged || externalArrival);
+      if (changed) session.current_attribution = touch;
+      updateVisitor(
+        changed
+          ? touch
+          : !session.visitor_id
+            ? session.current_attribution
+            : null,
+        !session.visitor_id
+      );
+      session.visitor_id = visitor.id;
+    } else startSession(touch);
+    pageView();
+    installHooks();
+  });
+  return ready;
+}
+export function getLeadSessionSnapshot(conversionType = '', ctaId = '') {
+  return quietly(() => {
+    if (!session || !visitor) return {};
+    pausePage();
+    if (document.visibilityState !== 'hidden') activeStartedAt = Date.now();
+    const stored = read('localStorage', VISITOR_KEY);
+    if (stored?.id === visitor.id) visitor = stored;
+    if (
+      ['first_touch', 'last_touch'].some(
+        (key) =>
+          visitor[key] &&
+          Date.now() - Date.parse(visitor[key].touch_at) >=
+            ATTRIBUTION_WINDOW_MS
+      )
+    )
+      updateVisitor(null, false);
+    const current = session.current_attribution;
+    const snapshot = sanitizeAttribution({
+      version: 2,
+      visitor_id: visitor.id,
+      session_id: session.id,
+      captured_at: nowIso(),
+      first_touch: visitor.first_touch,
+      last_touch: visitor.last_touch,
+      current_session: current,
+      sessions_count: visitor.sessions_count,
+      previous_visit_at: session.previous_visit_at,
+      returning_visitor: visitor.sessions_count > 1,
+      session_started_at: session.started_at,
+      conversion_page: window.location.pathname,
+      conversion_type: conversionType,
+      cta_id: ctaId === 'form' ? session.last_cta_id || ctaId : ctaId,
+      time_on_site_seconds: Math.max(
+        0,
+        Math.round((Date.now() - Date.parse(session.started_at)) / 1000)
+      ),
+      pages_viewed: session.pages,
+    });
+    return {
+      ...snapshot,
+      attribution_snapshot: snapshot,
+      ...Object.fromEntries(
+        MARKETING_KEYS.map((key) => [key, current?.[key] || ''])
+      ),
+      source: current?.source || 'direct',
+      landing_page: session.landing_page,
+      initial_referrer: session.initial_referrer,
+      pages_viewed_count: session.pages.length,
+      pages_viewed: JSON.parse(JSON.stringify(session.pages)),
+      page_url: window.location.origin + safePage(window.location.pathname),
+      page_path: safePage(window.location.pathname),
+      page_title: (document.title || 'Anix').slice(0, 500),
+      referrer: safeReferrer(document.referrer),
+      user_agent: navigator.userAgent.slice(0, 1000),
+      screen_width: window.screen?.width || null,
+      screen_height: window.screen?.height || null,
+      language: navigator.language || '',
+      timezone: quietly(
+        () => Intl.DateTimeFormat().resolvedOptions().timeZone,
+        ''
+      ),
+    };
+  }, {});
 }

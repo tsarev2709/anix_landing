@@ -35,7 +35,8 @@ const pages = {
   },
   'personal-data': {
     title: 'Политика обработки персональных данных',
-    description: 'Правила обработки персональных данных посетителей сайта Anix Studio.',
+    description:
+      'Правила обработки персональных данных посетителей сайта Anix Studio.',
     items: [
       {
         title: '1. Цель обработки',
@@ -65,22 +66,29 @@ const pages = {
   },
 };
 
+pages.privacy.items.push({
+  title: '7. Источники обращений и повторные визиты',
+  text: 'Для связи повторных визитов используем случайный идентификатор посетителя в localStorage этого сайта и отдельный идентификатор сессии. Маркетинговые источники и метки сохраняются на устройстве на 90 дней с соответствующего перехода. При обращении через форму или AI-чат снимок источников и просмотренных страниц сохраняется вместе с заявкой в Supabase и amoCRM. При подключённой интеграции Telegram используется случайный токен без контактов в ссылке; срок его действия — 7 дней. Fingerprinting не используется. Очистка данных сайта в браузере удаляет сохранённые на устройстве идентификаторы и метки. Сведения о визите используются для оценки эффективности публикаций и кампаний.',
+});
+
 export default function LegalPage({ type = 'privacy' }) {
   const page = pages[type] || pages.privacy;
 
   return (
     <main className="legal-page">
-<nav className="legal-nav" aria-label="Anix Studio">
+      <nav className="legal-nav" aria-label="Anix Studio">
         <a className="legal-logo" href="/" aria-label="Anix Studio">
           <img src={logo} alt="Anix" />
         </a>
-        <a className="legal-back" href="/">На главную</a>
+        <a className="legal-back" href="/">
+          На главную
+        </a>
       </nav>
 
       <section className="legal-hero">
         <p>Документы Anix Studio</p>
         <h1>{page.title}</h1>
-        <span>Дата обновления: 6 июля 2026</span>
+        <span>Дата обновления: 11 сентября 2026</span>
       </section>
 
       <section className="legal-content">

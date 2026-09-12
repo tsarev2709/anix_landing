@@ -10,6 +10,8 @@ const port = Number(process.env.SMOKE_TEST_PORT || 4173);
 const baseUrl = `http://127.0.0.1:${port}`;
 
 const routes = [
+  { path: '/?utm_source=telegram&utm_medium=organic&utm_campaign=qa_test', marker: 'class="design1-test"', extraMarker: 'd1-showreel-poster' },
+  { path: '/internal/utm-builder/', marker: 'class="utm-builder"', extraMarker: 'Скопировать ссылку', skipLeadForm: true },
   { path: '/', marker: 'class="design1-test"', extraMarker: 'd1-showreel-poster' },
   { path: '/medicine/', marker: 'class="medicine-page"' },
   { path: '/hse/', marker: 'class="hse-page"' },
@@ -109,9 +111,9 @@ function createPricingBatchHtml() {
 }
 
 function findChrome() {
-  const candidates = [process.env.CHROME_PATH, 'google-chrome-stable', 'google-chrome', 'chromium', 'chromium-browser'].filter(Boolean);
+  const candidates = [process.env.CHROME_PATH, process.platform === 'win32' ? 'C:/Program Files/Google/Chrome/Application/chrome.exe' : '', 'google-chrome-stable', 'google-chrome', 'chromium', 'chromium-browser'].filter(Boolean);
   for (const candidate of candidates) {
-    if (candidate.includes(path.sep) && fs.existsSync(candidate)) return candidate;
+    if (path.isAbsolute(candidate) && fs.existsSync(candidate)) return candidate;
     const resolved = spawnSync('which', [candidate], { encoding: 'utf8' });
     if (resolved.status === 0 && resolved.stdout.trim()) return resolved.stdout.trim();
   }
@@ -150,6 +152,8 @@ function runRoute(chromePath, route) {
   });
 
   try {
+    const resolvedProfile = path.resolve(profileDir);
+    if (path.dirname(resolvedProfile) !== path.resolve(os.tmpdir()) || !path.basename(resolvedProfile).startsWith('anix-smoke-chrome-')) throw new Error('Unexpected temporary profile path');
     fs.rmSync(profileDir, {
       recursive: true,
       force: true,
@@ -184,7 +188,7 @@ async function main() {
   const pricingBatchFile = path.join(buildDir, pricingBatchPath.slice(1));
   fs.writeFileSync(pricingBatchFile, createPricingBatchHtml(), 'utf8');
   console.log(`[runtime-smoke] Browser: ${chromePath}`);
-  const server = spawn('python3', ['-m', 'http.server', String(port), '--bind', '127.0.0.1', '--directory', buildDir], { stdio: ['ignore', 'pipe', 'pipe'] });
+  const server = spawn(process.execPath, [path.join(root, 'scripts/serve-build.js'), String(port)], { stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true });
   let serverError = '';
   server.stderr.on('data', (chunk) => { serverError += chunk.toString(); });
   try {
