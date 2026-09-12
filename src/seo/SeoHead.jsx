@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import seoConfig from './routes.json';
 import verification from './verification.json';
+import { buildGeoSchemas } from '../content/geoSchema';
 
 const PUBLIC_EMAIL = 'studio@anix-ai.pro';
 const BRAND_NAME = 'Anix Studio';
@@ -83,6 +84,7 @@ const ogTypeForRoute = (route) => {
 
 const organizationSchema = {
   '@type': 'Organization',
+  '@id': `${seoConfig.baseUrl}/#organization`,
   name: BRAND_NAME,
   alternateName: BRAND_ALTERNATE_NAMES,
   url: `${seoConfig.baseUrl}/`,
@@ -169,8 +171,9 @@ export const buildStructuredData = (route) => {
       inLanguage: 'ru-RU',
       mainEntity: {
         '@type': 'Person',
-        name: 'Александра Севостьянова',
-        jobTitle: 'CEO Anix Studio',
+        name: route.person?.name || 'Александра Севостьянова',
+        jobTitle: route.person?.jobTitle || 'CEO Anix Studio',
+        ...(route.person?.sameAs ? { sameAs: route.person.sameAs } : {}),
         worksFor: organizationSchema,
       },
     });
@@ -214,7 +217,7 @@ export const buildStructuredData = (route) => {
     });
   }
 
-  return schemas;
+  return [...schemas, ...buildGeoSchemas(route, seoConfig.baseUrl)];
 };
 
 export default function SeoHead({ path = window.location.pathname }) {

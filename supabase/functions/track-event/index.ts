@@ -14,6 +14,7 @@ const allowedEvents = [
   'llm_open', 'llm_message', 'llm_lead', 'lead_form_view', 'lead_form_details_open',
   'cta_telegram', 'cta_email', 'navigate_medicine', 'navigate_hse', 'open_case', 'view_cases',
   'ai_chat_feedback', 'ai_chat_handoff_open', 'ai_chat_handoff_submit',
+  'ai_referral_visit',
   'form_view',
   'form_start',
   'form_submit',

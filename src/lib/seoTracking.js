@@ -1,9 +1,11 @@
 import { track, eventContext } from './analytics';
 import { setupTelegramAttribution } from './telegramAttribution';
 import { recordAttributionCta } from './leadSession';
+import { classifyAiReferral } from './aiReferral';
 
 const METRIKA_COUNTER_ID = 103290769;
 let initialized = false;
+let aiInitialized = false;
 
 const sendGoal = (goal, meta = {}) => {
   track(goal, meta).catch(() => {});
@@ -29,10 +31,24 @@ const goalForLink = (anchor) => {
   return null;
 };
 
+export function setupAiReferralTracking() {
+  if (aiInitialized || typeof document === 'undefined') return;
+  aiInitialized = true;
+  const aiReferral = classifyAiReferral({
+    utmSource: new URLSearchParams(window.location.search).get('utm_source') || '',
+    referrer: document.referrer || '',
+  });
+  if (aiReferral.provider) sendGoal('ai_referral_visit', {
+    ...aiReferral,
+    path: window.location.pathname,
+  });
+}
+
 export function setupSeoTracking() {
   if (initialized || typeof document === 'undefined') return;
   initialized = true;
   setupTelegramAttribution();
+  setupAiReferralTracking();
 
   document.addEventListener('click', (event) => {
     const target = event.target instanceof Element ? event.target : null;

@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+require('./ensure-geo-source');
 
 const root = path.resolve(__dirname, '..');
 const files = [

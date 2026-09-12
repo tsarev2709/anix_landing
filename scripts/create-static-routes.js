@@ -32,6 +32,7 @@ const lessonRoutes = [
 
 const routes = [
   'internal/utm-builder',
+  ...Object.entries(require('../src/seo/routes.json').routes).filter(([,route]) => route.geoPage).map(([url]) => url.slice(1)),
   'medicine','medicine/price','why_it_works','ceo','andrey-tsarev','hse','hse/price','stoimost','animation','ai-video','rybki','rybki_page',
   'procurement',
   'ships-and-ports','hospitality','tourism','education',

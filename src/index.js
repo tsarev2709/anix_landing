@@ -12,6 +12,9 @@ import CasesHubLinkPortal from './components/CasesHubLinkPortal';
 import RouteBreadcrumbsPortal from './seo/RouteBreadcrumbsPortal';
 import RouteRelatedLinksPortal from './seo/RouteRelatedLinksPortal';
 import SeoHead from './seo/SeoHead';
+import { resolveSeoRoute } from './seo/SeoHead';
+import GeoGuidePage from './components/GeoGuidePage';
+import GeoContextPortal from './components/GeoContextPortal';
 // These small public service pages must not depend on a second network round trip.
 import AnimationPage from './components/AnimationPage';
 import AiVideoPage from './components/AiVideoPage';
@@ -22,6 +25,7 @@ import {
 } from './runtimeCompatibility';
 import { initLeadSessionTracking } from './lib/leadSession';
 const UtmBuilder = lazy(() => import('./components/UtmBuilder'));
+import { setupAiReferralTracking } from './lib/seoTracking';
 
 const LEAD_FORM_HASH = '#website-lead-form';
 const LEAD_FORM_ID = 'website-lead-form';
@@ -208,6 +212,7 @@ console.info('[CFG] SUBMIT:', CONFIG.SUBMIT_LEAD_URL);
 console.info('[CFG] TRACK :', CONFIG.TRACK_EVENT_URL);
 installRuntimeRecovery();
 initLeadSessionTracking();
+setupAiReferralTracking();
 
 const NotFound = lazy(() => import('./components/NotFound'));
 const WhyItWorksPage = lazy(() => import('./components/WhyItWorksPage'));
@@ -323,12 +328,15 @@ const renderInLayout = (component) => {
         <CasesHubLinkPortal path={normalizedPath} />
         <RouteBreadcrumbsPortal path={normalizedPath} />
         <RouteRelatedLinksPortal path={normalizedPath} />
+        <GeoContextPortal path={normalizedPath} />
       </AppLayout>
     </RuntimeErrorBoundary>
   );
 };
 
-if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
+if (resolveSeoRoute(normalizedPath).geoPage) {
+  renderInLayout(<GeoGuidePage path={normalizedPath} />);
+} else if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
   renderInLayout(<HseMvpPage path={normalizedPath} />);
 } else if (normalizedPath === '/cases') {
   renderInLayout(<CasesHubPage />);

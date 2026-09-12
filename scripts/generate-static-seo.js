@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const seoConfig = require('../src/seo/routes.json');
 const verification = require('../src/seo/verification.json');
+const { buildGeoSchemas } = require('../src/content/geoSchema');
 
 const root = path.resolve(__dirname, '..');
 const buildDir = path.join(root, 'build');
@@ -35,6 +36,7 @@ function normalizePath(value = '/') {
 }
 
 function publicPath(value = '/') {
+  if (/^https?:\/\//.test(value)) return value;
   const normalized = normalizePath(value);
   if (normalized === '/') return '/';
   return `${normalized}/`;
@@ -96,6 +98,7 @@ function safeJson(value) {
 function organizationSchema() {
   return {
     '@type': 'Organization',
+    '@id': `${baseUrl}/#organization`,
     name: brandName,
     alternateName: brandAlternateNames,
     url: `${baseUrl}/`,
@@ -184,8 +187,9 @@ function buildSchemas(route) {
       inLanguage: 'ru-RU',
       mainEntity: {
         '@type': 'Person',
-        name: 'Александра Севостьянова',
-        jobTitle: 'CEO Anix Studio',
+        name: route.person?.name || 'Александра Севостьянова',
+        jobTitle: route.person?.jobTitle || 'CEO Anix Studio',
+        ...(route.person?.sameAs ? { sameAs: route.person.sameAs } : {}),
         worksFor: organization,
       },
     });
@@ -229,7 +233,7 @@ function buildSchemas(route) {
     });
   }
 
-  return schemas;
+  return [...schemas, ...buildGeoSchemas(route, baseUrl)];
 }
 
 function stripSeoHead(html) {
@@ -297,7 +301,7 @@ function buildBreadcrumbs(route) {
 }
 
 function buildShell(route) {
-  const sections = (route.sections || [])
+  const sections = [...(route.sections || []), ...(route.geoSections || []), ...[...(route.faq || []), ...(route.geoFaq || [])].map(item => ({heading:item.question,body:item.answer}))]
     .map(
       (section) =>
         `<section><h2>${escapeHtml(normalizeBrandText(section.heading))}</h2><p>${escapeHtml(normalizeBrandText(section.body))}</p></section>`,
@@ -334,12 +338,12 @@ function collectHtmlFiles(directory) {
 }
 
 function writeSitemap() {
-  const lastmod = new Date().toISOString().slice(0, 10);
   const urls = Object.entries(seoConfig.routes)
     .filter(([, route]) => route.indexable)
-    .map(([routePath]) => {
+    .map(([routePath, route]) => {
       const loc = absolutePageUrl(routePath);
-      return `  <url><loc>${escapeHtml(loc)}</loc><lastmod>${lastmod}</lastmod></url>`;
+      const lastmod = route.reviewedAt ? `<lastmod>${escapeHtml(route.reviewedAt)}</lastmod>` : '';
+      return `  <url><loc>${escapeHtml(loc)}</loc>${lastmod}</url>`;
     })
     .join('\n');
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;

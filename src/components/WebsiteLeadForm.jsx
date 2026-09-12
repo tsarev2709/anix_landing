@@ -52,6 +52,9 @@ const initialValues = {
 const publicFormRoutes = new Set([
   '/',
   '/animation',
+  '/mascots',
+  '/facts',
+  '/knowledge',
   '/ai-video',
   '/medicine',
   '/medicine/price',
@@ -80,7 +83,7 @@ function normalizedCurrentPath() {
 function shouldShowForm() {
   if (typeof window === 'undefined') return false;
   const path = normalizedCurrentPath();
-  return publicFormRoutes.has(path) || path.startsWith('/cases/');
+  return publicFormRoutes.has(path) || path.startsWith('/cases/') || path.startsWith('/knowledge/');
 }
 
 function inferContact(contact) {
