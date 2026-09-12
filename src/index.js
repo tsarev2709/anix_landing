@@ -24,6 +24,7 @@ import {
   recoverFromRuntimeFailure,
 } from './runtimeCompatibility';
 import { initLeadSessionTracking } from './lib/leadSession';
+const UtmBuilder = lazy(() => import('./components/UtmBuilder'));
 import { setupAiReferralTracking } from './lib/seoTracking';
 
 const LEAD_FORM_HASH = '#website-lead-form';
@@ -218,7 +219,9 @@ const WhyItWorksPage = lazy(() => import('./components/WhyItWorksPage'));
 const MedicinePage = lazy(() => import('./components/MedicinePage'));
 const HsePage = lazy(() => import('./components/HsePage'));
 const PricingGuidePage = lazy(() => import('./components/PricingGuidePage'));
-const IndustryLandingPage = lazy(() => import('./components/IndustryLandingPage'));
+const IndustryLandingPage = lazy(
+  () => import('./components/IndustryLandingPage')
+);
 const ProcurementPage = lazy(() => import('./components/ProcurementPage'));
 const HseMvpPage = lazy(() => import('./features/hseMvp/HseMvpPage'));
 const Design1TestPage = lazy(() => import('./components/Design1TestPage'));
@@ -409,6 +412,15 @@ if (resolveSeoRoute(normalizedPath).geoPage) {
       break;
     case '/privacy':
       renderInLayout(<LegalPage type="privacy" />);
+      break;
+    case '/internal/utm-builder':
+      root.render(
+        <RuntimeErrorBoundary>
+          <Suspense fallback={<RuntimeFallback />}>
+            <UtmBuilder />
+          </Suspense>
+        </RuntimeErrorBoundary>
+      );
       break;
     default:
       root.render(

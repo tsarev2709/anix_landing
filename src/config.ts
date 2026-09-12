@@ -6,6 +6,7 @@ const FALLBACK_TRACK = `https://${PROJECT_REF}.functions.supabase.co/track-event
 const FALLBACK_AI_CHAT = `https://${PROJECT_REF}.functions.supabase.co/ai-chat`;
 
 export const CONFIG = {
+  ATTRIBUTION_URL: `https://${PROJECT_REF}.functions.supabase.co/website-attribution`,
   SUBMIT_LEAD_URL: process.env.REACT_APP_SUBMIT_LEAD_URL || FALLBACK_SUBMIT,
   WEBSITE_LEAD_URL:
     process.env.REACT_APP_WEBSITE_LEAD_URL || FALLBACK_WEBSITE_LEAD,

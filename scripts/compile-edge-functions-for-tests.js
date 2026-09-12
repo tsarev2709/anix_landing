@@ -5,6 +5,8 @@ const path = require('path');
 const root = path.resolve(__dirname, '..');
 const tsc = path.join(root, 'node_modules', 'typescript', 'bin', 'tsc');
 const functions = [
+  'supabase/functions/website-attribution/index.ts',
+  'supabase/functions/attribution-admin/index.ts',
   'supabase/functions/submit-lead/index.ts',
   'supabase/functions/email-open/index.ts',
   'supabase/functions/track-event/index.ts',

@@ -15,6 +15,7 @@ import { CONFIG } from '../config';
 import { getLeadSessionSnapshot } from '../lib/leadSession';
 import { loadTurnstile } from '../lib/turnstile';
 import { track } from '../lib/analytics';
+import { reportChatLeadOnce } from '../lib/chatLeadEvent';
 import {
   currentAiChatPageContext,
   normalizeAiChatPath,
@@ -591,7 +592,7 @@ export default function AiChatWidget() {
         session_token: session?.token,
         turnstile_token: session ? undefined : turnstileToken,
         privacy_consent: session ? undefined : privacyConsent,
-        privacy_policy_version: '2026-08-07',
+        privacy_policy_version: '2026-09-11',
         context: pageRequestContext(pageContext),
       });
       let activeSession = session;
@@ -620,7 +621,7 @@ export default function AiChatWidget() {
         crm_sync: result.crm_sync,
       });
       if (result.crm_sync === 'completed') {
-        track('ai_chat_lead', { page_path: normalizedPath() });
+        reportChatLeadOnce(activeSession?.id, () => track('ai_chat_lead', { page_path: normalizedPath() }));
       }
     } catch (requestError) {
       setMessages((current) => [
@@ -731,7 +732,7 @@ export default function AiChatWidget() {
         crm_sync: result.crm_sync,
       });
       if (result.crm_sync === 'completed') {
-        track('ai_chat_lead', { page_path: pageContext.path });
+        reportChatLeadOnce(session.id, () => track('ai_chat_lead', { page_path: pageContext.path }));
       }
     } catch (requestError) {
       setBriefStatus('error');

@@ -1503,6 +1503,19 @@
         }
       ],
       "ogImage": "/og/home.jpg"
+    },
+    "/internal/utm-builder": {
+      "indexable": false,
+      "kind": "technical",
+      "title": "UTM builder — Anix Studio",
+      "description": "Внутренний генератор маркетинговых ссылок Anix.",
+      "ogTitle": "UTM builder — Anix Studio",
+      "ogDescription": "Генератор маркетинговых ссылок.",
+      "ogImage": "/og/home.jpg",
+      "h1": "Ссылка с понятным источником",
+      "intro": "Внутренний генератор UTM. Не добавляйте персональные данные.",
+      "sections": [],
+      "links": []
     }
   },
   "technicalDefaults": {

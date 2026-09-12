@@ -1,4 +1,6 @@
-import { track } from './analytics';
+import { track, eventContext } from './analytics';
+import { setupTelegramAttribution } from './telegramAttribution';
+import { recordAttributionCta, initLeadSessionTracking } from './leadSession';
 import { classifyAiReferral } from './aiReferral';
 
 const METRIKA_COUNTER_ID = 103290769;
@@ -10,7 +12,7 @@ const sendGoal = (goal, meta = {}) => {
 
   if (typeof window !== 'undefined' && typeof window.ym === 'function') {
     try {
-      window.ym(METRIKA_COUNTER_ID, 'reachGoal', goal, meta);
+      window.ym(METRIKA_COUNTER_ID, 'reachGoal', goal, eventContext(meta));
     } catch {
       // Analytics must never break navigation or interaction.
     }
@@ -36,15 +38,18 @@ export function setupAiReferralTracking() {
     utmSource: new URLSearchParams(window.location.search).get('utm_source') || '',
     referrer: document.referrer || '',
   });
-  if (aiReferral.provider) sendGoal('ai_referral_visit', {
-    ...aiReferral,
-    path: window.location.pathname,
-  });
+  if (aiReferral.provider) {
+    const path = window.location.pathname;
+    Promise.resolve(initLeadSessionTracking()).then(() => sendGoal('ai_referral_visit', {
+      ...aiReferral, path,
+    })).catch(() => {});
+  }
 }
 
 export function setupSeoTracking() {
   if (initialized || typeof document === 'undefined') return;
   initialized = true;
+  setupTelegramAttribution();
   setupAiReferralTracking();
 
   document.addEventListener('click', (event) => {
@@ -59,9 +64,16 @@ export function setupSeoTracking() {
 
     const anchor = target.closest('a[href]');
     if (!anchor) return;
+    if ((anchor.getAttribute('href') || '').includes('#website-lead-form')) {
+      recordAttributionCta(anchor.dataset.cta || anchor.id || `${anchor.closest('section')?.id || 'page'}:${(anchor.textContent || '').trim().slice(0, 100)}`);
+    }
 
     const goal = goalForLink(anchor);
-    if (!goal) return;
+    if (!goal) {
+      if ((anchor.getAttribute('href') || '').includes('#website-lead-form'))
+        sendGoal('cta_click', { cta_id: anchor.dataset.cta || 'form_link' });
+      return;
+    }
 
     sendGoal(goal, {
       path: window.location.pathname,
@@ -73,13 +85,15 @@ export function setupSeoTracking() {
   document.addEventListener(
     'submit',
     (event) => {
-      const form = event.target instanceof HTMLFormElement ? event.target : null;
+      const form =
+        event.target instanceof HTMLFormElement ? event.target : null;
       if (!form) return;
+      if (form.id === 'website-lead-form') return;
       sendGoal('form_submit', {
         path: window.location.pathname,
         formId: form.id || '',
       });
     },
-    true,
+    true
   );
 }

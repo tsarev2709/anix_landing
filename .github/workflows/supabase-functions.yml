@@ -13,6 +13,9 @@ on:
 jobs:
   deploy-functions:
     runs-on: ubuntu-latest
+    concurrency:
+      group: supabase-production
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: denoland/setup-deno@v1
@@ -38,4 +41,10 @@ jobs:
           supabase functions deploy submit-lead
           supabase functions deploy submit-website-lead --no-verify-jwt
           supabase functions deploy ai-chat --no-verify-jwt
+          supabase functions deploy website-attribution --no-verify-jwt
+          supabase functions deploy attribution-admin --no-verify-jwt
           supabase functions deploy email-open
+      - name: Inspect and provision attribution fields without duplicates
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: node scripts/provision-attribution.mjs

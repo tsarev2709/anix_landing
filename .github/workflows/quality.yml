@@ -30,6 +30,8 @@ jobs:
 
       - name: Verify shared industry brief schema
         run: node scripts/sync-industry-brief.js --check
+      - name: Verify shared attribution schema
+        run: node scripts/sync-attribution.js --check
 
       - name: Typecheck AI Edge Functions
         run: npm run typecheck:edge
@@ -68,6 +70,17 @@ jobs:
 
       - name: Runtime smoke test
         run: node scripts/runtime-smoke-test.js
+
+      - name: Attribution desktop and mobile browser QA
+        run: node scripts/attribution-browser-qa.js
+
+      - name: Upload attribution browser QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: attribution-browser-qa
+          path: artifacts/attribution-qa/
+          if-no-files-found: warn
 
       - name: Collect production asset metrics
         run: node scripts/report-build-metrics.js

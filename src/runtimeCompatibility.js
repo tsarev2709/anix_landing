@@ -1,4 +1,5 @@
 const RECOVERY_KEY = 'anix-runtime-recovery-v1';
+let recoveryAttempted = false;
 
 function isChunkLoadFailure(reason) {
   const message = String((reason && reason.message) || reason || '');
@@ -33,9 +34,15 @@ export async function clearLegacyRuntimeCaches() {
 
 export async function recoverFromRuntimeFailure(reason) {
   if (!isChunkLoadFailure(reason)) return false;
-  if (window.sessionStorage.getItem(RECOVERY_KEY) === '1') return false;
-
-  window.sessionStorage.setItem(RECOVERY_KEY, '1');
+  if (recoveryAttempted || new URL(window.location.href).searchParams.has('__anix_recovery')) return false;
+  try {
+    if (window.sessionStorage.getItem(RECOVERY_KEY) === '1') return false;
+    window.sessionStorage.setItem(RECOVERY_KEY, '1');
+  } catch {
+    // Without persistent storage a reload guard cannot survive navigation.
+    return false;
+  }
+  recoveryAttempted = true;
   await clearLegacyRuntimeCaches();
   window.location.replace(buildFreshUrl());
   return true;
@@ -44,18 +51,19 @@ export async function recoverFromRuntimeFailure(reason) {
 export function installRuntimeRecovery() {
   const url = new URL(window.location.href);
   if (url.searchParams.has('__anix_recovery')) {
+    recoveryAttempted = true;
     url.searchParams.delete('__anix_recovery');
     window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
   } else {
-    window.sessionStorage.removeItem(RECOVERY_KEY);
+    try { window.sessionStorage.removeItem(RECOVERY_KEY); } catch { /* Storage may be denied. */ }
   }
 
   window.addEventListener('unhandledrejection', (event) => {
-    recoverFromRuntimeFailure(event.reason);
+    recoverFromRuntimeFailure(event.reason).catch(() => {});
   });
 
   window.addEventListener('error', (event) => {
-    recoverFromRuntimeFailure(event.error || event.message);
+    recoverFromRuntimeFailure(event.error || event.message).catch(() => {});
   });
 
   clearLegacyRuntimeCaches();

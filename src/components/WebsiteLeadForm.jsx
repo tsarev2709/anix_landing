@@ -25,6 +25,7 @@ import {
   updateIndustryAnswer,
 } from '../lib/industryBrief';
 import { getMetrikaClientId } from '../lib/metrikaClient';
+import { track, eventContext } from '../lib/analytics';
 import {
   briefFields,
   formatBriefMessage,
@@ -146,9 +147,17 @@ function validate(values, variant) {
 }
 
 function sendMetrikaGoal(goal, params) {
+  try {
+    track(goal, params).catch(() => {});
+  } catch {
+    /* optional */
+  }
   if (typeof window !== 'undefined' && typeof window.ym === 'function') {
     try {
-      window.ym(METRIKA_COUNTER_ID, 'reachGoal', goal, params);
+      window.ym(METRIKA_COUNTER_ID, 'reachGoal', goal, {
+        ...params,
+        ...eventContext(params),
+      });
     } catch {
       // Analytics is optional and must not affect the lead route.
     }
@@ -434,9 +443,14 @@ export default function WebsiteLeadForm() {
 
     setStatus('sending');
     setServerError('');
-    const session = getLeadSessionSnapshot();
+    let session = {};
+    try {
+      session = getLeadSessionSnapshot('form', ctaRef.current) || {};
+    } catch {
+      /* Analytics must never block submission. */
+    }
     const inferredContact = inferContact(values.contact);
-    const clientId = await getMetrikaClientId();
+    const clientId = await getMetrikaClientId().catch(() => null);
     sendMetrikaGoal('lead_form_submit', {
       form_variant: variant || 'general',
       task_id: variant ? values.brief.task_id : undefined,
@@ -446,7 +460,7 @@ export default function WebsiteLeadForm() {
       turnstile_token: turnstileToken,
       privacy_consent: values.privacyConsent,
       privacy_consent_at: new Date().toISOString(),
-      privacy_policy_version: '2026-08-07',
+      privacy_policy_version: '2026-09-11',
       name: values.name.trim(),
       company: values.company.trim(),
       email: values.email.trim(),

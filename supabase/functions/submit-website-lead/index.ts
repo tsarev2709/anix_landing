@@ -3,6 +3,8 @@ declare const process: any;
 
 // @ts-ignore Deno requires the explicit TypeScript extension.
 import { AmoIntegrationError, syncAmoLead } from '../_shared/amocrm.ts';
+// @ts-ignore Deno explicit extension
+import { sanitizeAttribution, attributionNote, safePage, safeReferrer, marketingValue } from '../_shared/attribution.ts';
 
 import {
   industryForms,
@@ -129,9 +131,12 @@ function sanitizePayload(input: any): any {
       ? 'multiple'
       : inferred.contact_type || (email ? 'email' : '');
   const pages = sanitizePages(input?.pages_viewed);
+  const attribution = sanitizeAttribution(input?.attribution_snapshot, 'form');
 
   return {
     idempotency_key: text(input?.idempotency_key, 128),
+    visitor_id: attribution?.visitor_id || null,
+    attribution_snapshot: attribution,
     name: text(input?.name, 120),
     company: text(input?.company, 180),
     email,
@@ -153,17 +158,17 @@ function sanitizePayload(input: any): any {
     landing_variant: input?.form_variant ? 'default' : null,
     metrika_client_id: text(input?.metrika_client_id, 128) || null,
     source: text(input?.source, 500) || 'website',
-    page_url: text(input?.page_url, 2000),
-    page_path: text(input?.page_path, 1000),
+    page_url: input?.page_url ? safeReferrer(input.page_url) + safePage(input.page_url) : '',
+    page_path: input?.page_path ? safePage(input.page_path) : '',
     page_title: text(input?.page_title, 500),
-    referrer: text(input?.referrer, 2000),
-    initial_referrer: text(input?.initial_referrer, 2000),
-    landing_page: text(input?.landing_page, 2000),
-    utm_source: text(input?.utm_source, 500),
-    utm_medium: text(input?.utm_medium, 500),
-    utm_campaign: text(input?.utm_campaign, 500),
-    utm_content: text(input?.utm_content, 500),
-    utm_term: text(input?.utm_term, 500),
+    referrer: safeReferrer(input?.referrer),
+    initial_referrer: safeReferrer(input?.initial_referrer),
+    landing_page: input?.landing_page ? safePage(input.landing_page) : '',
+    utm_source: marketingValue(input?.utm_source),
+    utm_medium: marketingValue(input?.utm_medium),
+    utm_campaign: marketingValue(input?.utm_campaign),
+    utm_content: marketingValue(input?.utm_content),
+    utm_term: marketingValue(input?.utm_term),
     yclid: text(input?.yclid, 500),
     gclid: text(input?.gclid, 500),
     session_id: text(input?.session_id, 128),
@@ -285,6 +290,7 @@ function buildLeadNote(row: any): string {
       .join(', ') || '—';
   const note = [
     'Новая заявка с сайта Anix',
+    attributionNote(row.attribution_snapshot),
     '',
     `Имя: ${row.name}`,
     `Компания: ${row.company || '—'}`,
@@ -350,6 +356,7 @@ async function syncToAmo(sb: any, row: any): Promise<any> {
     phone: row.phone,
     telegram: row.telegram,
     note: buildLeadNote(row),
+    attribution: row.attribution_snapshot,
     tags: [
       'website',
       ...(row.form_variant ? [`anix:${row.form_variant}`] : []),
@@ -387,6 +394,7 @@ async function syncToAmo(sb: any, row: any): Promise<any> {
   return updateLead(sb, row.id, {
     status: 'completed',
     brief_crm_synced: result.briefSynced ?? null,
+    attribution_crm_synced: result.attributionSynced ?? null,
     integration_error: null,
     amocrm_account_id: result.accountId,
     amocrm_lead_id: result.leadId,

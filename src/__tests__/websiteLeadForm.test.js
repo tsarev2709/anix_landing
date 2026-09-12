@@ -4,6 +4,7 @@ import TestUtils from 'react-dom/test-utils';
 import WebsiteLeadForm from '../components/WebsiteLeadForm';
 import { loadTurnstile } from '../lib/turnstile';
 import { briefFields, formatBriefMessage } from '../lib/leadBrief';
+import { getLeadSessionSnapshot } from '../lib/leadSession';
 
 jest.mock('../config', () => ({
   CONFIG: {
@@ -15,16 +16,17 @@ jest.mock('../config', () => ({
 jest.mock('../lib/turnstile', () => ({
   loadTurnstile: jest.fn(),
 }));
+jest.mock('../lib/analytics', () => ({ track: jest.fn(async () => {}), eventContext: () => ({}) }));
 
 jest.mock('../lib/leadSession', () => ({
   createLeadIdempotencyKey: () => '12345678-1234-4234-9234-123456789abc',
-  getLeadSessionSnapshot: () => ({
+  getLeadSessionSnapshot: jest.fn(() => ({
     session_id: 'session-test',
     page_path: '/',
     page_url: 'https://studio.anix-ai.pro/',
     source: 'direct',
     pages_viewed: [{ path: '/', title: 'Anix', duration_seconds: 4 }],
-  }),
+  })),
 }));
 
 describe('WebsiteLeadForm', () => {
@@ -102,7 +104,8 @@ describe('WebsiteLeadForm', () => {
     }
   );
 
-  test('submits once, opens the success dialog and leaves a confirmation', async () => {
+  test.each([false, true])('submits and confirms even if attribution throws: %s', async (brokenTracking) => {
+    if (brokenTracking) getLeadSessionSnapshot.mockImplementationOnce(() => { throw new Error('storage denied'); });
     const change = (name, value) => {
       const field = container.querySelector(`[name="${name}"]`);
       TestUtils.Simulate.change(field, { target: { name, value } });

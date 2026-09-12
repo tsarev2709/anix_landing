@@ -355,7 +355,7 @@ grant execute on function public.search_ai_public_cases(text, text, integer)
 
 if (process.argv.includes('--check')) {
   const current = await fs.readFile(migrationPath, 'utf8').catch(() => '');
-  if (current !== output) {
+  if (current.replace(/\r\n/g, '\n') !== output.replace(/\r\n/g, '\n')) {
     console.error('Structured case migration is out of date. Run npm run ai:catalog:generate.');
     process.exit(1);
   }

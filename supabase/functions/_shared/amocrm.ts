@@ -1,5 +1,7 @@
 declare const Deno: any;
 declare const process: any;
+// @ts-ignore Deno explicit extension
+import { AMO_ATTRIBUTION_FIELDS, attributionFieldValues } from './attribution.ts';
 
 const DEFAULT_PIPELINE_NAME = 'Входящие заявки';
 
@@ -21,6 +23,7 @@ export type AmoLeadInput = {
   existingLeadId?: number | null;
   retryAttempt?: number;
   industryFields?: Record<string, string>;
+  attribution?: any;
 };
 
 export type AmoSyncResult = {
@@ -30,6 +33,7 @@ export type AmoSyncResult = {
   contactId: number;
   leadId: number;
   briefSynced?: boolean;
+  attributionSynced?: boolean;
 };
 
 type AmoContext = {
@@ -435,11 +439,82 @@ export async function syncAmoLead(input: AmoLeadInput): Promise<AmoSyncResult> {
   const briefSynced = input.industryFields
     ? await enrichIndustryLead(leadId, input.industryFields)
     : undefined;
+  const attributionSynced = input.attribution
+    ? await enrichAttributionLead(leadId, input.attribution)
+    : undefined;
 
   return {
     ...context,
     contactId,
     leadId,
     briefSynced,
+    attributionSynced,
   };
+}
+
+let attributionFieldsCache: { expires: number; fields: any[] } | null = null;
+export async function listAttributionFields(): Promise<any[]> {
+  const fields: any[] = [];
+  for (let page = 1; page <= 20; page++) {
+    const result = await request(`/api/v4/leads/custom_fields?limit=250&page=${page}`);
+    const batch = result?._embedded?.custom_fields || [];
+    fields.push(...batch);
+    if (batch.length < 250) return fields;
+  }
+  throw new AmoIntegrationError('amocrm_fields_page_limit');
+}
+export function resolveAttributionFields(fields: any[]): Record<string, number> {
+  const mapping: Record<string, number> = {};
+  for (const [key, name] of Object.entries(AMO_ATTRIBUTION_FIELDS)) {
+    const matches = fields.filter((field: any) =>
+      String(field.code || '').toUpperCase() === `ANIX_${key.toUpperCase()}` ||
+      String(field.name || '').trim().toLowerCase() === String(name).toLowerCase());
+    if (matches.length > 1 || matches.some((field: any) => !['text', 'textarea', 'url'].includes(field.type))) {
+      throw new AmoIntegrationError(`amocrm_attribution_field_ambiguous:${key}`);
+    }
+    if (matches[0]) mapping[key] = Number(matches[0].id);
+  }
+  return mapping;
+}
+// Called by a service-role-only deployment procedure holding a database lease.
+// No field administration takes place during a public form/chat request.
+export async function provisionAttributionFields(): Promise<Record<string, number>> {
+  const fields = await listAttributionFields();
+  const existing = resolveAttributionFields(fields);
+  const missing = Object.entries(AMO_ATTRIBUTION_FIELDS).filter(([key]) => !existing[key]);
+  if (missing.length) {
+    await request('/api/v4/leads/custom_fields', { method: 'POST', body: JSON.stringify(
+      missing.map(([key, name]) => ({ name, code: `ANIX_${key.toUpperCase()}`, type: 'text' }))
+    ) });
+  }
+  // Re-read after creation, including after a previous uncertain/partial run.
+  const confirmed = await listAttributionFields();
+  const mapping = resolveAttributionFields(confirmed);
+  if (Object.keys(mapping).length !== Object.keys(AMO_ATTRIBUTION_FIELDS).length) throw new AmoIntegrationError('amocrm_attribution_fields_incomplete');
+  attributionFieldsCache = { fields: confirmed, expires: Date.now() + 600000 };
+  return mapping;
+}
+export async function enrichAttributionLead(leadId: number, snapshot: any): Promise<boolean> {
+  try {
+    const values = attributionFieldValues(snapshot);
+    if (!Object.keys(values).length) return true;
+    const fields = attributionFieldsCache && attributionFieldsCache.expires > Date.now()
+      ? attributionFieldsCache.fields : await listAttributionFields();
+    const mapping = resolveAttributionFields(fields);
+    attributionFieldsCache = { fields, expires: Date.now() + 600000 };
+    if (Object.keys(values).some((key) => !mapping[key])) throw new AmoIntegrationError('amocrm_attribution_fields_missing');
+    const lead = await request(`/api/v4/leads/${leadId}`);
+    const populated = new Set((lead?.custom_fields_values || []).filter((field: any) =>
+      (field.values || []).some((v: any) => v.value !== '' && v.value !== null && v.value !== undefined)
+    ).map((field: any) => Number(field.field_id)));
+    const customFields = Object.entries(values).filter(([key]) => !populated.has(mapping[key])).map(([key, value]) => ({
+      field_id: mapping[key], values: [{ value }],
+    }));
+    if (customFields.length) await request(`/api/v4/leads/${leadId}`, { method: 'PATCH', body: JSON.stringify({ custom_fields_values: customFields }) });
+    return true;
+  } catch {
+    attributionFieldsCache = null;
+    console.warn('[amocrm] attribution enrichment pending');
+    return false;
+  }
 }
