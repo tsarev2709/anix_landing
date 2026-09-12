@@ -122,6 +122,19 @@ async function main() {
         console.log('PASS ' + device + ' ' + route);
       }
     }
+    // The entire production entry point must boot even when browser policy denies storage.
+    errors.length = 0;
+    await cdp.send('Page.addScriptToEvaluateOnNewDocument', { source:
+      'for (const key of ["localStorage","sessionStorage"]) Object.defineProperty(window,key,{get(){throw new DOMException("Denied","SecurityError")}});'
+    });
+    await cdp.send('Page.navigate', { url: base + '/?utm_source=test&utm_medium=test&utm_campaign=test' });
+    await until(() => evaluate('!!document.querySelector(".design1-test #website-lead-form") || (!!document.querySelector(".design1-test") && !!document.querySelector("#website-lead-form"))'), 'Page and form with storage denied');
+    await evaluate('window.dispatchEvent(new ErrorEvent("error",{message:"ResizeObserver loop completed with undelivered notifications."}))');
+    await sleep(300);
+    if (!await evaluate('!!document.querySelector(".design1-test") && !!document.querySelector("#website-lead-form")')) throw new Error('ResizeObserver notification broke UTM page');
+    if (errors.filter(e => !JSON.stringify(e).includes('ResizeObserver loop')).length) throw new Error('Storage-denied browser errors: ' + JSON.stringify(errors));
+    results.push({ scenario: 'storage_denied_and_resize_observer', pass: true });
+    console.log('PASS storage denied and ResizeObserver notification');
   } finally {
     fs.writeFileSync(path.join(output, 'report.json'), JSON.stringify({ base, sha: process.env.QA_EXPECTED_SHA || 'local', results, errors }, null, 2));
     if (cdp) { try { await cdp.send('Browser.close'); } catch { /* already closed */ } cdp.socket.terminate(); }
