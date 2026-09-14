@@ -32,6 +32,10 @@ const routes = [
 // DOM-ready batch avoids waiting for Chrome dump-dom to finish unrelated page resources.
 // All routes retain their content, lead-form and removed-SEO-shell assertions.
 const pricingRoutes = [
+  { path: '/hse/energy/', marker: 'class="geo-guide"', extraMarker: 'Видео по охране труда для энергетических компаний' },
+  { path: '/mascots/', marker: 'class="geo-guide"', extraMarker: 'Цифровые маскоты для компаний, охраны труда и обучения' },
+  { path: '/knowledge/mechanism-of-action/', marker: 'class="geo-guide"', extraMarker: 'Как визуализировать механизм действия препарата' },
+  { path: '/knowledge/order-hse-video/', marker: 'class="geo-guide"', extraMarker: 'Как заказать видео по охране труда' },
   { path: '/cases/borodino/', marker: 'class="case-page"', extraMarker: 'Бородино' },
 
   ...['ships-and-ports', 'hospitality', 'tourism', 'education'].map((slug) => ({path: `/${slug}/`, marker: 'class="industry-page"', extraMarker: 'name="task_id"'})),

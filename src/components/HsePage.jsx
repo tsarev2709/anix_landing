@@ -1,5 +1,6 @@
 import React from 'react';
 import ProjectCta from './ProjectCta';
+import geoContent from '../content/geoContent.json';
 import AnnualProgram from './AnnualProgram';
 import {
   Activity,
@@ -37,6 +38,7 @@ const emailUrl = 'mailto:studio@anix-ai.pro';
 const navLinks = [
   { label: 'Главная', href: '/' },
   { label: 'Продукт', href: '#product' },
+  { label: 'Энергетика', href: '/hse/energy/' },
   { label: 'Сценарии', href: '#tasks' },
   { label: 'Демо', href: '/hse/mvp' },
   { label: 'Цены', href: '/hse/price' },
@@ -252,13 +254,8 @@ export default function HsePage() {
           <p className="hse-eyebrow">
             Охрана труда / промышленная безопасность
           </p>
-          <h1>Видео по охране труда, которое показывает реальный риск</h1>
-          <p className="hse-lead">
-            Собираем не отдельный ролик по охране труда, а 5–7 коротких
-            onboarding-модулей для новых сотрудников и подрядчиков: реальные
-            сценарии риска, проверочные вопросы, QR-доступ и передача материалов
-            в LMS или внутреннюю систему.
-          </p>
+          <h1>{geoContent.enhancements['/hse'].hero.h1}</h1>
+          <p className="hse-lead">{geoContent.enhancements['/hse'].hero.intro}</p>
           <div className="hse-actions">
             <ProjectCta className="hse-button hse-button-primary" />
             <a className="hse-button hse-button-secondary" href="/hse/mvp">
