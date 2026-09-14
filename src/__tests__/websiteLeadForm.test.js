@@ -88,7 +88,7 @@ describe('WebsiteLeadForm', () => {
     expect(global.fetch).not.toHaveBeenCalled();
   });
 
-  test.each(['/stoimost/', '/medicine/price/', '/hse/price/', '/procurement/'])(
+  test.each(['/stoimost/', '/medicine/price/', '/hse/price/', '/hse/energy/', '/mascots/', '/procurement/'])(
     'is available on the commercial route %s',
     async (routePath) => {
       TestUtils.act(() => root.unmount());

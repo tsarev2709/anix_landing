@@ -16,7 +16,7 @@ function summarize(input) {
       if (row.prompt!==prompts.get(row.promptId).prompt) throw new Error('Changed prompt');
       if (!row.reviewed || !row.answer?.trim() || !row.capturedAt || Number.isNaN(Date.parse(row.capturedAt)) || !Array.isArray(row.citations)) throw new Error('Missing source answer');
       for (const k of ['mentionsAnix','recommendsAnix','identityCorrect']) if (typeof row[k]!=='boolean') throw new Error('Missing adjudication');
-      if (row.recommendsAnix&&!row.mentionsAnix) throw new Error('Recommendation requires mention');
+      if (row.recommendsAnix&&(!row.mentionsAnix||!row.identityCorrect)) throw new Error('Recommendation requires the correct Anix entity');
       if (row.recommendedPosition!==null && (!row.recommendsAnix || !Number.isInteger(row.recommendedPosition) || row.recommendedPosition<1)) throw new Error('Invalid position');
       for (const url of row.citations) if (!['http:','https:'].includes(new URL(url).protocol)) throw new Error('Invalid citation');
     }

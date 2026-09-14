@@ -60,6 +60,7 @@ const publicFormRoutes = new Set([
   '/medicine/price',
   '/hse',
   '/hse/price',
+  '/hse/energy',
   '/stoimost',
   '/procurement',
   '/ships-and-ports',
