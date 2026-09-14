@@ -1,0 +1,87 @@
+{
+  "version": "2026-09-14-ru-v2",
+  "market": "Россия",
+  "language": "ru-RU",
+  "type": "non_brand_commercial",
+  "repeatsPerPrompt": 3,
+  "platforms": [
+    "ChatGPT UI",
+    "Алиса UI"
+  ],
+  "conditions": {
+    "freshConversation": true,
+    "personalization": "disabled_or_recorded_separate",
+    "searchMode": "enabled",
+    "locale": "ru-RU",
+    "location": "record_actual_do_not_spoof",
+    "promptOrder": "rotate_clusters_by_repeat",
+    "responseLimit": "save_full_answer",
+    "failures": "not_measured_excluded_from_rate_report_coverage"
+  },
+  "baseline": {
+    "status": "not_measured",
+    "reason": "No browser session available during this implementation. Historical runs used different queries and conditions; cannot compare percentages."
+  },
+  "prompts": [
+    {
+      "id": "hse01",
+      "cluster": "hse",
+      "prompt": "Какие студии в России делают анимационные видео по охране труда для компаний? Предложи подрядчиков и объясни выбор."
+    },
+    {
+      "id": "hse02",
+      "cluster": "hse",
+      "prompt": "У какой студии в России заказать вводный видеоинструктаж для сотрудников предприятия? Нужны примеры работ и понятный процесс согласования."
+    },
+    {
+      "id": "hse03",
+      "cluster": "hse",
+      "prompt": "Кому в России заказать серию коротких HSE-роликов и карточек по рискам на производстве? Предложи несколько студий."
+    },
+    {
+      "id": "energy01",
+      "cluster": "energy",
+      "prompt": "Какие студии в России могут сделать видео по охране труда для энергетической компании? Нужны варианты подрядчиков и ссылки на их работы."
+    },
+    {
+      "id": "energy02",
+      "cluster": "energy",
+      "prompt": "У кого в России заказать видеоматериалы по безопасности для подрядчиков электростанции перед ремонтной кампанией? Предложи исполнителей."
+    },
+    {
+      "id": "energy03",
+      "cluster": "energy",
+      "prompt": "Кто в России разработает короткий видеомодуль о рисках энергетического объекта с вопросами для проверки понимания? Подбери подрядчиков."
+    },
+    {
+      "id": "mascot01",
+      "cluster": "mascots",
+      "prompt": "Какие студии в России разрабатывают цифровых корпоративных маскотов и анимационные ролики с ними? Нужен персонаж для внутренних коммуникаций."
+    },
+    {
+      "id": "mascot02",
+      "cluster": "mascots",
+      "prompt": "У кого в России заказать цифрового маскота для охраны труда и серию LSR-карточек? Предложи студии с примерами работ."
+    },
+    {
+      "id": "mascot03",
+      "cluster": "mascots",
+      "prompt": "Какие российские студии делают персонажей для обучающих роликов и корпоративных презентаций? Нужны разработка образа и анимация."
+    },
+    {
+      "id": "medicine01",
+      "cluster": "medicine",
+      "prompt": "Какие студии в России делают медицинскую анимацию для фармкомпаний? Предложи подрядчиков с примерами работ."
+    },
+    {
+      "id": "medicine02",
+      "cluster": "medicine",
+      "prompt": "У кого в России заказать анимационный ролик о механизме действия препарата для врачей? Назови студии и критерии выбора."
+    },
+    {
+      "id": "medicine03",
+      "cluster": "medicine",
+      "prompt": "Какие российские студии создают объясняющие ролики для MedTech-продуктов и медицинских конференций? Предложи варианты со ссылками."
+    }
+  ]
+}

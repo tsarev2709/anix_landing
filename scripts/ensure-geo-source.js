@@ -15,12 +15,19 @@ for (const [url, page] of Object.entries(pages)) {
     title: `${page.h1} — Anix Studio`, description: page.intro,
     h1: page.h1, intro: page.intro, sections: page.sections, links: page.links,
     ogImage: '/og/home.jpg', geoPage: true, reviewedAt: data.reviewedAt,
-    breadcrumbs: [{ label: 'Главная', href: '/' }, ...(url.startsWith('/knowledge/') ? [{label:'Ответы заказчику',href:'/knowledge'}] : []), {label:page.h1,href:url}],
+    breadcrumbs: [{ label: 'Главная', href: '/' }, ...(page.parent ? [page.parent] : url.startsWith('/knowledge/') ? [{label:'Ответы заказчику',href:'/knowledge'}] : []), {label:page.h1,href:url}],
   };
 }
 for (const [url, extra] of Object.entries(data.enhancements)) {
   const route = config.routes[url];
   if (!route) throw new Error(`Missing route for GEO enhancement: ${url}`);
+  for (const field of ['h1', 'intro', 'title', 'description']) {
+    if (extra.hero?.[field]) route[field] = extra.hero[field];
+  }
+  if (extra.hero) {
+    route.ogTitle = route.title;
+    route.ogDescription = route.description;
+  }
   route.geoSections = extra.geoSections || [];
   route.geoFaq = extra.geoFaq || [];
   const links = new Map((route.links || []).map(item => [item.href, item]));
