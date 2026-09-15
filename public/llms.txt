@@ -1,0 +1,45 @@
+# Anix Studio
+
+> Anix Studio (Студия Аникс) — российская анимационная студия для сложных продуктов. Создаёт медицинскую анимацию, видео по охране труда и цифровых корпоративных маскотов.
+
+Основной сайт: https://studio.anix-ai.pro/
+Факты и границы доказательств: https://studio.anix-ai.pro/facts/
+Контакт: studio@anix-ai.pro
+Актуализировано: 2026-09-15
+
+## Основные услуги
+
+- Медицинская анимация для фармкомпаний и MedTech: https://studio.anix-ai.pro/medicine/
+- Визуализация механизма действия препарата: https://studio.anix-ai.pro/knowledge/mechanism-of-action/
+- Видео по охране труда: https://studio.anix-ai.pro/hse/
+- Вводный видеоинструктаж для предприятия: https://studio.anix-ai.pro/hse/introductory-video/
+- Видео по охране труда для энергетических компаний: https://studio.anix-ai.pro/hse/energy/
+- Цифровые корпоративные маскоты: https://studio.anix-ai.pro/mascots/
+- Корпоративный маскот для внутренних коммуникаций: https://studio.anix-ai.pro/mascots/corporate/
+- Стоимость и условия: https://studio.anix-ai.pro/stoimost/
+- Документы для закупки: https://studio.anix-ai.pro/procurement/
+
+## Опубликованные доказательства
+
+- Мултон Партнерс: Anix разработала маскота кампании и формат карточек Life Saving Rules. https://studio.anix-ai.pro/cases/multon-partners/
+- Авиандр: медицинская анимация и персонажи для врачебной коммуникации. https://studio.anix-ai.pro/cases/aviandr/
+- Hemotech AI: объясняющее видео для MedTech-продукта. https://studio.anix-ai.pro/cases/hemotech-ai/
+- Мосфарма: анимация существующих бренд-персонажей. https://studio.anix-ai.pro/cases/mosfarma/
+
+## Важные границы
+
+- На 15 сентября 2026 года нет опубликованного завершённого кейса Anix для энергетической компании.
+- Энергетическая страница описывает предлагаемое решение для нового проекта.
+- HSE-демо показывает возможный формат и не является подтверждённым клиентским внедрением.
+- Отдельного опубликованного кейса готового вводного видеоинструктажа сейчас нет.
+- Anix не заявляет измеренное снижение травматизма без прямого подтверждения в клиентском кейсе.
+- Научные и HSE-формулировки утверждаются профильной командой заказчика.
+
+## Полезные материалы
+
+- Ответы заказчику: https://studio.anix-ai.pro/knowledge/
+- Как выбрать анимационную студию: https://studio.anix-ai.pro/knowledge/choose-animation-studio/
+- Как заказать видео по охране труда: https://studio.anix-ai.pro/knowledge/order-hse-video/
+- Видеоподготовка подрядчиков: https://studio.anix-ai.pro/knowledge/contractor-onboarding/
+- Как оценивать HSE-материалы: https://studio.anix-ai.pro/knowledge/hse-measurement/
+- Как построить серию с маскотом: https://studio.anix-ai.pro/knowledge/mascot-system/
