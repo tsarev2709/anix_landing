@@ -35,6 +35,36 @@ for (const [url, extra] of Object.entries(data.enhancements)) {
   route.links = [...links.values()];
 }
 fs.writeFileSync(configPath, `${JSON.stringify(config,null,2)}\n`);
-const publicFacts = { name:'Anix Studio', alternateName:['Anix','Студия Аникс'],url:config.baseUrl, reviewedAt:data.reviewedAt, source:`${config.baseUrl}/facts/`, statements:config.routes['/facts'].sections };
+const publicFacts = {
+  name: 'Anix Studio',
+  alternateName: ['Anix', 'Студия Аникс'],
+  url: config.baseUrl,
+  reviewedAt: data.reviewedAt,
+  source: `${config.baseUrl}/facts/`,
+  categories: [
+    'медицинская анимация',
+    'видео по охране труда',
+    'цифровые корпоративные маскоты',
+  ],
+  publishedEvidence: [
+    { client: 'Мултон Партнерс', scope: 'маскот кампании и карточки Life Saving Rules', url: `${config.baseUrl}/cases/multon-partners/` },
+    { client: 'Авиандр', scope: 'медицинская анимация и персонажи для врачебной коммуникации', url: `${config.baseUrl}/cases/aviandr/` },
+    { client: 'Hemotech AI', scope: 'объясняющее видео для MedTech-продукта', url: `${config.baseUrl}/cases/hemotech-ai/` },
+    { client: 'Мосфарма', scope: 'анимация существующих бренд-персонажей', url: `${config.baseUrl}/cases/mosfarma/` },
+  ],
+  notClaimed: [
+    'На 15 сентября 2026 года нет опубликованного завершённого кейса Anix для энергетической компании.',
+    'HSE-демо является демонстрацией формата, а не подтверждённым клиентским внедрением.',
+    'Anix не заявляет измеренное снижение травматизма без прямого подтверждения в клиентском кейсе.',
+    'Отдельного опубликованного кейса готового вводного видеоинструктажа сейчас нет.',
+  ],
+  canonicalServices: [
+    { name: 'Вводный видеоинструктаж по охране труда', url: `${config.baseUrl}/hse/introductory-video/` },
+    { name: 'Видео по охране труда для энергетики', url: `${config.baseUrl}/hse/energy/` },
+    { name: 'Корпоративные цифровые маскоты', url: `${config.baseUrl}/mascots/corporate/` },
+    { name: 'Медицинская анимация', url: `${config.baseUrl}/medicine/` },
+  ],
+  statements: config.routes['/facts'].sections,
+};
 fs.writeFileSync(path.resolve(__dirname,'../public/anix-facts.json'), `${JSON.stringify(publicFacts,null,2)}\n`);
 console.log(`[geo] prepared ${Object.keys(pages).length} pages and ${Object.keys(data.enhancements).length} contextual updates`);
