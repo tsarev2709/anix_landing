@@ -126,13 +126,17 @@ Cloudflare Tunnel установить как Windows Service из PowerShell с
 cloudflared service install
 ```
 
-Gateway и Ollama зарегистрировать в Task Scheduler:
+Ollama, gateway и watchdog зарегистрировать в Task Scheduler из PowerShell с
+правами администратора:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\windows\register-local-ai-autostart.ps1
+powershell -ExecutionPolicy Bypass -File scripts\windows\register-anix-ai-tasks.ps1 -RuntimeRoot "C:\Anix"
 ```
 
-Скрипт создаёт задачу `Anix Local AI Gateway` при входе пользователя и перезапускает её после сбоев. `start-local-ai.ps1` сам поднимает `ollama serve`, если Ollama ещё не отвечает.
+Скрипт создаёт скрытые задачи `AnixOllamaServer`, `AnixLocalAIGateway` и
+`AnixAIWatchdog`. Watchdog запускается каждые пять минут, проверяет `/health`,
+защищённый `/v1/embed` и короткую реальную генерацию через `/v1/chat` локально и
+через `llm.anix-ai.pro`. Логи пишутся с ротацией в `C:\Anix\logs`.
 
 ## 8. Загрузить знания
 
