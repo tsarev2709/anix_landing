@@ -136,7 +136,10 @@ powershell -ExecutionPolicy Bypass -File scripts\windows\register-anix-ai-tasks.
 Скрипт создаёт скрытые задачи `AnixOllamaServer`, `AnixLocalAIGateway` и
 `AnixAIWatchdog`. Watchdog запускается каждые пять минут, проверяет `/health`,
 защищённый `/v1/embed` и короткую реальную генерацию через `/v1/chat` локально и
-через `llm.anix-ai.pro`. Логи пишутся с ротацией в `C:\Anix\logs`.
+через `llm.anix-ai.pro`. Периодическая проверка запускается синхронно через
+скрытую VBS-обёртку, поэтому консоль не появляется, а Task Scheduler продолжает
+видеть код завершения и не допускает параллельных запусков. Логи пишутся с
+ротацией в `C:\Anix\logs`.
 
 ## 8. Загрузить знания
 
