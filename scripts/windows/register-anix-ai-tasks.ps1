@@ -7,9 +7,11 @@ $ErrorActionPreference = 'Stop'
 
 $userId = "$env:USERDOMAIN\$env:USERNAME"
 $powershell = 'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe'
+$wscript = 'C:\Windows\System32\wscript.exe'
 $ollamaScript = Join-Path $ProjectRoot 'scripts\windows\start-ollama-server.ps1'
 $gatewayScript = Join-Path $ProjectRoot 'scripts\windows\start-local-ai.ps1'
 $watchdogScript = Join-Path $ProjectRoot 'scripts\windows\anix-ai-watchdog.ps1'
+$watchdogWrapper = Join-Path $ProjectRoot 'scripts\windows\start-watchdog-hidden.vbs'
 $gatewayProjectRoot = if (Test-Path -LiteralPath (Join-Path $RuntimeRoot 'local-ai-gateway')) {
     $RuntimeRoot
 } else {
@@ -38,6 +40,7 @@ $definitions = @(
     @{
         Name = 'AnixOllamaServer'
         Script = $ollamaScript
+        Execute = $powershell
         Arguments = "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$ollamaScript`" -RuntimeRoot `"$RuntimeRoot`""
         Description = 'Hidden Ollama server startup for Anix local AI'
         Triggers = @(New-ScheduledTaskTrigger -AtLogOn -User $userId)
@@ -46,6 +49,7 @@ $definitions = @(
     @{
         Name = 'AnixLocalAIGateway'
         Script = $gatewayScript
+        Execute = $powershell
         Arguments = "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$gatewayScript`" -ProjectRoot `"$gatewayProjectRoot`""
         Description = 'Hidden authenticated local AI gateway startup for Anix'
         Triggers = @(New-ScheduledTaskTrigger -AtLogOn -User $userId)
@@ -54,7 +58,8 @@ $definitions = @(
     @{
         Name = 'AnixAIWatchdog'
         Script = $watchdogScript
-        Arguments = "-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$watchdogScript`" -ProjectRoot `"$ProjectRoot`" -RuntimeRoot `"$RuntimeRoot`""
+        Execute = $wscript
+        Arguments = "`"$watchdogWrapper`" `"$watchdogScript`" `"$ProjectRoot`" `"$RuntimeRoot`""
         Description = 'Five-minute end-to-end health and generation check for Anix AI'
         Triggers = @(
             (New-ScheduledTaskTrigger -AtLogOn -User $userId),
@@ -64,12 +69,16 @@ $definitions = @(
     }
 )
 
+if (-not (Test-Path -LiteralPath $watchdogWrapper)) {
+    throw "Missing script: $watchdogWrapper"
+}
+
 foreach ($definition in $definitions) {
     if (-not (Test-Path -LiteralPath $definition.Script)) {
         throw "Missing script: $($definition.Script)"
     }
     $action = New-ScheduledTaskAction `
-        -Execute $powershell `
+        -Execute $definition.Execute `
         -Argument $definition.Arguments `
         -WorkingDirectory $RuntimeRoot
     $task = New-ScheduledTask `
