@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.c90228b0.css",
-    "main.js": "/static/js/main.62581ba1.js",
+    "main.js": "/static/js/main.e7e775e2.js",
     "static/css/231.0286eff3.chunk.css": "/static/css/231.0286eff3.chunk.css",
     "static/js/231.cee5618f.chunk.js": "/static/js/231.cee5618f.chunk.js",
     "static/js/727.a85f38f6.chunk.js": "/static/js/727.a85f38f6.chunk.js",
@@ -9,8 +9,8 @@
     "static/js/833.7e1172cc.chunk.js": "/static/js/833.7e1172cc.chunk.js",
     "static/css/552.22e83285.chunk.css": "/static/css/552.22e83285.chunk.css",
     "static/js/552.ebc4aa35.chunk.js": "/static/js/552.ebc4aa35.chunk.js",
-    "static/css/517.accf2243.chunk.css": "/static/css/517.accf2243.chunk.css",
-    "static/js/517.afb73401.chunk.js": "/static/js/517.afb73401.chunk.js",
+    "static/css/950.e8051c39.chunk.css": "/static/css/950.e8051c39.chunk.css",
+    "static/js/950.3fc33e8c.chunk.js": "/static/js/950.3fc33e8c.chunk.js",
     "static/css/755.999cd986.chunk.css": "/static/css/755.999cd986.chunk.css",
     "static/js/755.be30f6b1.chunk.js": "/static/js/755.be30f6b1.chunk.js",
     "static/css/793.af5461b7.chunk.css": "/static/css/793.af5461b7.chunk.css",
@@ -46,8 +46,21 @@
     "static/js/388.4e957520.chunk.js": "/static/js/388.4e957520.chunk.js",
     "static/media/3.png": "/static/media/3.95d850bfd9557355a532.png",
     "static/media/andrey-profile-business-school-graduates.webp": "/static/media/andrey-profile-business-school-graduates.1ffb72daecf712800567.webp",
+    "static/media/mascotNew.webp": "/static/media/mascotNew.ac6d3de67a1fe97f6e59.webp",
+    "static/media/young.webp": "/static/media/young.5908602d445ddaf97600.webp",
+    "static/media/metals.webp": "/static/media/metals.68dbcadef7ab93b99f95.webp",
     "static/media/graphic-novel.webp": "/static/media/graphic-novel.05b8d53bd4d103f6f1d2.webp",
+    "static/media/benefitSystem.webp": "/static/media/benefitSystem.d39c3011b49355605ef3.webp",
+    "static/media/benefitNewcomers.webp": "/static/media/benefitNewcomers.437290f7bb4ef58268bc.webp",
+    "static/media/energyFox.webp": "/static/media/energyFox.85a14be5c2589174e8f4.webp",
+    "static/media/hero.webp": "/static/media/hero.05ef920e12d17093e2a4.webp",
+    "static/media/mascotExisting.webp": "/static/media/mascotExisting.afa47a502367d4163d8c.webp",
+    "static/media/energyBeaver.webp": "/static/media/energyBeaver.b8c472ab36b5cd5ba874.webp",
+    "static/media/energyDog.webp": "/static/media/energyDog.c4691299532021fe73fc.webp",
     "static/media/avineuro.png": "/static/media/avineuro.dcb22b3d0480db14983e.png",
+    "static/media/energyOwl.webp": "/static/media/energyOwl.6a4a2c2ea99da60f514b.webp",
+    "static/media/logistics.webp": "/static/media/logistics.56f1ed7ad258907bfc0c.webp",
+    "static/media/benefitRecognition.webp": "/static/media/benefitRecognition.6da056affd28745ac57d.webp",
     "static/media/alexandra-andrey-anix.webp": "/static/media/alexandra-andrey-anix.3aa3b1342754067831aa.webp",
     "static/media/semi-realism.webp": "/static/media/semi-realism.758ddcbf739eebbfb5e3.webp",
     "static/media/andrey-tsarev-scientist.webp": "/static/media/andrey-tsarev-scientist.fb1c32d63e5da8193242.webp",
@@ -62,6 +75,7 @@
     "static/media/low-poly.webp": "/static/media/low-poly.1ededd39e5805780e3e1.webp",
     "static/media/aviandr-cover.webp": "/static/media/aviandr-cover.c978b408c88df0a63c1a.webp",
     "static/media/andrey-profile-academy-pitch.webp": "/static/media/andrey-profile-academy-pitch.5cab46671b43a9c86b4e.webp",
+    "static/media/multonDrawing.webp": "/static/media/multonDrawing.55737c4c7bf9cd9feb85.webp",
     "static/media/agrotech.webp": "/static/media/agrotech.d8306801ca1e9debfbc4.webp",
     "static/media/andrey-profile-business-school-speaking.webp": "/static/media/andrey-profile-business-school-speaking.67d5b1a55a119d556f71.webp",
     "static/media/alexey-lychko-hse.webp": "/static/media/alexey-lychko-hse.8e7df99aff5e376762c9.webp",
@@ -94,6 +108,6 @@
   },
   "entrypoints": [
     "static/css/main.c90228b0.css",
-    "static/js/main.62581ba1.js"
+    "static/js/main.e7e775e2.js"
   ]
 }
