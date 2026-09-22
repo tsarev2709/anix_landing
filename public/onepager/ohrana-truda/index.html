@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Охрана труда: визуальные решения для предприятий | Anix</title>
+    <meta name="description" content="Микроуроки, наставничество, бережливое производство и визуальные инструкции по охране труда от Anix." />
+    <link rel="canonical" href="https://studio.anix-ai.pro/onepager/ohrana-truda/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Охрана труда: визуальные решения для предприятий" />
+    <meta property="og:description" content="Короткие визуальные форматы для инструктажей, обучения и производственных коммуникаций." />
+    <meta property="og:url" content="https://studio.anix-ai.pro/onepager/ohrana-truda/" />
+    <meta property="og:image" content="https://studio.anix-ai.pro/onepager/ohrana-truda/worker.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#11071c" />
+    <style>
+      :root {
+        --ink: #fbf8ff;
+        --muted: #cfc7dd;
+        --panel: rgba(31, 17, 48, 0.84);
+        --line: rgba(124, 230, 245, 0.56);
+        --violet: #a855f7;
+        --cyan: #55edf0;
+        --green: #43e0a3;
+        --orange: #ffb44c;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { background: #09040e; scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        color: var(--ink);
+        font-family: Inter, Montserrat, Arial, sans-serif;
+        background:
+          radial-gradient(circle at 16% 2%, rgba(150, 44, 228, 0.22), transparent 28rem),
+          #09040e;
+      }
+
+      .actions {
+        position: sticky;
+        z-index: 20;
+        top: 0;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: rgba(9, 4, 14, 0.82);
+        border-bottom: 1px solid rgba(255,255,255,.08);
+        backdrop-filter: blur(16px);
+      }
+
+      .action {
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid rgba(255,255,255,.17);
+        border-radius: 999px;
+        color: #fff;
+        background: rgba(255,255,255,.08);
+        font: 700 14px/1 Inter, Arial, sans-serif;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: transform .18s ease, background .18s ease;
+      }
+
+      .action:hover { transform: translateY(-1px); background: rgba(255,255,255,.14); }
+      .action.primary { color: #13091e; border: 0; background: linear-gradient(110deg, var(--cyan), #bd55fa); }
+
+      .page {
+        position: relative;
+        width: min(100%, 860px);
+        margin: 0 auto;
+        padding: clamp(28px, 6vw, 64px) clamp(18px, 7vw, 72px) 34px;
+        overflow: hidden;
+        background:
+          linear-gradient(rgba(10, 4, 16, .43), rgba(10, 4, 16, .43)),
+          url('./background.jpg') center top / cover fixed;
+        box-shadow: 0 0 80px rgba(0,0,0,.55);
+      }
+
+      .page::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(180deg, rgba(132,36,196,.14), transparent 28%, transparent 76%, rgba(84,18,134,.12));
+      }
+
+      .page > * { position: relative; z-index: 1; }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: #c9b8df;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+      }
+
+      .hero { position: relative; min-height: 260px; padding-right: 31%; }
+      .hero h1 { margin: 0; font-size: clamp(42px, 10vw, 82px); line-height: .92; letter-spacing: -.055em; text-transform: uppercase; }
+      .hero .lead { margin: 17px 0 0; color: #d7a4ff; font-size: clamp(17px, 3vw, 25px); font-weight: 800; }
+      .hero .sublead { margin: 14px 0 0; color: #eee7f5; font-size: clamp(13px, 2vw, 16px); line-height: 1.45; font-weight: 650; }
+
+      .worker {
+        position: absolute;
+        top: -26px;
+        right: -10px;
+        width: 29%;
+        aspect-ratio: 1;
+        object-fit: cover;
+        object-position: 50% 22%;
+        border-radius: 25px;
+        border: 2px solid rgba(151,88,255,.65);
+        box-shadow: 0 20px 55px rgba(0,0,0,.5);
+      }
+
+      .mascot { position: absolute; right: 1%; top: 205px; color: #d3c8dd; font-size: 11px; font-weight: 900; letter-spacing: .09em; text-align: center; text-transform: uppercase; }
+
+      .section-title { margin: 38px 0 16px; font-size: 15px; letter-spacing: .13em; text-transform: uppercase; }
+
+      .directions { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+      .direction {
+        position: relative;
+        min-height: 112px;
+        padding: 20px 18px 18px 66px;
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        background: var(--panel);
+        box-shadow: inset 0 0 26px rgba(94,37,155,.12);
+      }
+
+      .direction .number {
+        position: absolute;
+        left: 17px;
+        top: 17px;
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 50%;
+        color: #13091e;
+        background: var(--accent);
+        font-size: 11px;
+        font-weight: 900;
+      }
+
+      .direction h3 { margin: 0; font-size: 16px; line-height: 1.18; }
+      .direction p { margin: 9px 0 0; color: var(--muted); font-size: 12px; line-height: 1.35; }
+
+      .topics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+      .topic {
+        min-height: 78px;
+        padding: 15px 14px;
+        border: 1px solid rgba(165,119,226,.43);
+        border-radius: 11px;
+        background: rgba(32,19,47,.78);
+      }
+
+      .topic strong { display: block; font-size: 13px; line-height: 1.18; }
+      .topic span { display: block; margin-top: 7px; color: #bdb2cb; font-size: 10px; line-height: 1.3; }
+
+      .benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+      .benefit { min-height: 118px; padding: 20px 17px; border: 1px solid rgba(175,100,255,.5); border-radius: 12px; background: rgba(24,13,38,.84); }
+      .benefit b { display: block; color: var(--accent); font-size: clamp(26px, 5vw, 40px); line-height: 1; }
+      .benefit span { display: block; margin-top: 11px; color: #ded7e6; font-size: 11px; line-height: 1.4; }
+
+      footer { margin-top: 32px; padding-top: 19px; border-top: 1px solid rgba(255,255,255,.14); display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+      footer img { width: 68px; height: 68px; object-fit: contain; }
+      .contacts { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px 16px; color: #eee8f5; font-size: 12px; font-weight: 750; }
+      .contacts a { color: inherit; text-decoration: none; }
+      .contacts a:hover { color: var(--cyan); }
+
+      .toast { position: fixed; z-index: 30; left: 50%; bottom: 22px; transform: translate(-50%, 20px); padding: 12px 18px; border-radius: 999px; color: #140b1d; background: #fff; font-weight: 800; font-size: 13px; opacity: 0; pointer-events: none; transition: .2s ease; }
+      .toast.visible { opacity: 1; transform: translate(-50%, 0); }
+
+      @media (max-width: 620px) {
+        .actions { justify-content: stretch; }
+        .action { flex: 1; padding-inline: 12px; }
+        .page { padding-top: 36px; }
+        .hero { min-height: 290px; padding-right: 0; }
+        .hero h1 { max-width: 72%; }
+        .hero .lead { max-width: 68%; }
+        .hero .sublead { max-width: 68%; }
+        .worker { top: 0; right: -28px; width: 39%; border-radius: 18px; }
+        .mascot { top: 195px; right: 0; max-width: 31%; }
+        .directions { grid-template-columns: 1fr; }
+        .topics { grid-template-columns: 1fr 1fr; }
+        .benefits { grid-template-columns: 1fr; }
+        .benefit { min-height: 0; }
+        footer { align-items: flex-end; }
+        .contacts { flex-direction: column; align-items: flex-end; }
+      }
+
+      @media print {
+        .actions, .toast { display: none; }
+        body, html { background: #09040e; }
+        .page { width: 100%; margin: 0; box-shadow: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="actions" aria-label="Действия со страницей">
+      <button class="action primary" id="shareButton" type="button">↗ Поделиться</button>
+      <a class="action" href="https://t.me/InformBroker">Написать нам</a>
+    </nav>
+
+    <main class="page">
+      <header class="hero">
+        <p class="eyebrow">ЯРТПП × ANIX</p>
+        <h1>Охрана труда</h1>
+        <p class="lead">Производительность и эффективность</p>
+        <p class="sublead">Визуальные решения для предприятий</p>
+        <img class="worker" src="./worker.jpg" alt="Маскот-инструктор по охране труда" width="720" height="964" />
+        <div class="mascot">Маскот-<br />инструктор</div>
+      </header>
+
+      <p class="sublead">Станем вашим поставщиком визуального контента для производства.</p>
+
+      <section aria-labelledby="directions-title">
+        <h2 class="section-title" id="directions-title">4 направления</h2>
+        <div class="directions">
+          <article class="direction" style="--accent: var(--orange)"><span class="number">01</span><h3>Микроуроки «Инструкция за 60 секунд»</h3><p>Рабочие специальности.</p></article>
+          <article class="direction" style="--accent: var(--cyan)"><span class="number">02</span><h3>Наставничество 2.0</h3><p>Молодые специалисты и наставники.</p></article>
+          <article class="direction" style="--accent: var(--green)"><span class="number">03</span><h3>Бережливое производство</h3><p>5С, картирование потока, система подачи предложений. Для всех категорий персонала.</p></article>
+          <article class="direction" style="--accent: #b875ff"><span class="number">04</span><h3>Эффективность: «Работай головой»</h3><p>Тайм-менеджмент, командная работа, личная эффективность. Для ИТР и руководителей.</p></article>
+        </div>
+      </section>
+
+      <section aria-labelledby="topics-title">
+        <h2 class="section-title" id="topics-title">Что можно визуализировать</h2>
+        <div class="topics">
+          <div class="topic"><strong>Работа на высоте</strong><span>страховка и допуск</span></div>
+          <div class="topic"><strong>Электробезопасность</strong><span>правила и знаки</span></div>
+          <div class="topic"><strong>СИЗ</strong><span>правильное применение</span></div>
+          <div class="topic"><strong>Первая помощь</strong><span>базовый алгоритм</span></div>
+          <div class="topic"><strong>Передача смены</strong><span>что проверить</span></div>
+          <div class="topic"><strong>5С</strong><span>порядок на рабочем месте</span></div>
+          <div class="topic"><strong>Газоопасные работы</strong><span>анализ воздушной среды</span></div>
+          <div class="topic"><strong>Замкнутые пространства</strong><span>допуск и страховка</span></div>
+          <div class="topic"><strong>Пожарная безопасность</strong><span>эвакуация и тушение</span></div>
+          <div class="topic"><strong>Грузы и строповка</strong><span>правила и знаки</span></div>
+          <div class="topic"><strong>СИЗ по рискам</strong><span>подбор по профессии</span></div>
+          <div class="topic"><strong>Действия при аварии</strong><span>алгоритм и связь</span></div>
+        </div>
+      </section>
+
+      <section aria-labelledby="benefits-title">
+        <h2 class="section-title" id="benefits-title">Наши преимущества</h2>
+        <div class="benefits">
+          <div class="benefit" style="--accent: var(--orange)"><b>40–65%</b><span>рост запоминаемости по сравнению с текстом</span></div>
+          <div class="benefit" style="--accent: var(--cyan)"><b>+15%</b><span>к досматриваемости инструктажей и роликов</span></div>
+          <div class="benefit" style="--accent: #b875ff"><b>3–5 лет</b><span>работает один ролик на всех платформах</span></div>
+        </div>
+      </section>
+
+      <footer>
+        <img src="./anix-logo.png" alt="Anix" width="178" height="178" />
+        <div class="contacts">
+          <a href="mailto:studio@anix-ai.pro">studio@anix-ai.pro</a>
+          <a href="https://t.me/InformBroker">@InformBroker</a>
+          <a href="tel:+79770890309">+7 (977) 089-03-09</a>
+        </div>
+      </footer>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">Ссылка скопирована</div>
+    <script>
+      const shareButton = document.getElementById('shareButton');
+      const toast = document.getElementById('toast');
+      const shareData = {
+        title: 'Охрана труда: визуальные решения для предприятий',
+        text: 'Короткие визуальные форматы для инструктажей и производственных коммуникаций от Anix.',
+        url: window.location.href.split('#')[0],
+      };
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add('visible');
+        window.setTimeout(() => toast.classList.remove('visible'), 1900);
+      }
+
+      shareButton.addEventListener('click', async () => {
+        try {
+          if (navigator.share) {
+            await navigator.share(shareData);
+            return;
+          }
+          await navigator.clipboard.writeText(shareData.url);
+          showToast('Ссылка скопирована');
+        } catch (error) {
+          if (error && error.name === 'AbortError') return;
+          const input = document.createElement('textarea');
+          input.value = shareData.url;
+          document.body.appendChild(input);
+          input.select();
+          document.execCommand('copy');
+          input.remove();
+          showToast('Ссылка скопирована');
+        }
+      });
+    </script>
+  </body>
+</html>
