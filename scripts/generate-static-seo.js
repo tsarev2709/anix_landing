@@ -354,7 +354,10 @@ function writeSitemap() {
 function main() {
   if (!fs.existsSync(baseIndexPath)) throw new Error('build/index.html not found');
   const baseHtml = fs.readFileSync(baseIndexPath, 'utf8');
-  const files = collectHtmlFiles(buildDir).filter((filePath) => {\n    const relativePath = path.relative(buildDir, filePath).replace(/\\\\/g, '/');\n    return path.basename(filePath) !== '404.html' && relativePath !== 'onepager/ohrana-truda/index.html';\n  });
+  const files = collectHtmlFiles(buildDir).filter((filePath) => {
+    const relativePath = path.relative(buildDir, filePath).split(path.sep).join('/');
+    return path.basename(filePath) !== '404.html' && relativePath !== 'onepager/ohrana-truda/index.html';
+  });
 
   for (const filePath of files) {
     const routePath = routeFromFile(filePath);
