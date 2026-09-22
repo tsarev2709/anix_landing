@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.c90228b0.css",
-    "main.js": "/static/js/main.c12d69ca.js",
+    "main.js": "/static/js/main.62581ba1.js",
     "static/css/231.0286eff3.chunk.css": "/static/css/231.0286eff3.chunk.css",
     "static/js/231.cee5618f.chunk.js": "/static/js/231.cee5618f.chunk.js",
     "static/js/727.a85f38f6.chunk.js": "/static/js/727.a85f38f6.chunk.js",
@@ -9,8 +9,8 @@
     "static/js/833.7e1172cc.chunk.js": "/static/js/833.7e1172cc.chunk.js",
     "static/css/552.22e83285.chunk.css": "/static/css/552.22e83285.chunk.css",
     "static/js/552.ebc4aa35.chunk.js": "/static/js/552.ebc4aa35.chunk.js",
-    "static/css/736.b7af44c6.chunk.css": "/static/css/736.b7af44c6.chunk.css",
-    "static/js/736.96c9c75a.chunk.js": "/static/js/736.96c9c75a.chunk.js",
+    "static/css/517.accf2243.chunk.css": "/static/css/517.accf2243.chunk.css",
+    "static/js/517.afb73401.chunk.js": "/static/js/517.afb73401.chunk.js",
     "static/css/755.999cd986.chunk.css": "/static/css/755.999cd986.chunk.css",
     "static/js/755.be30f6b1.chunk.js": "/static/js/755.be30f6b1.chunk.js",
     "static/css/793.af5461b7.chunk.css": "/static/css/793.af5461b7.chunk.css",
@@ -46,18 +46,20 @@
     "static/js/388.4e957520.chunk.js": "/static/js/388.4e957520.chunk.js",
     "static/media/3.png": "/static/media/3.95d850bfd9557355a532.png",
     "static/media/andrey-profile-business-school-graduates.webp": "/static/media/andrey-profile-business-school-graduates.1ffb72daecf712800567.webp",
+    "static/media/graphic-novel.webp": "/static/media/graphic-novel.05b8d53bd4d103f6f1d2.webp",
     "static/media/avineuro.png": "/static/media/avineuro.dcb22b3d0480db14983e.png",
-    "static/media/hse-hero.jpg": "/static/media/hse-hero.98902ec35d115bd2829e.jpg",
     "static/media/alexandra-andrey-anix.webp": "/static/media/alexandra-andrey-anix.3aa3b1342754067831aa.webp",
-    "static/media/hse-rule-lab.jpg": "/static/media/hse-rule-lab.5dc8529e78fe92967742.jpg",
-    "static/media/hse-ventilation.jpg": "/static/media/hse-ventilation.a81d00c00a11208a1893.jpg",
+    "static/media/semi-realism.webp": "/static/media/semi-realism.758ddcbf739eebbfb5e3.webp",
     "static/media/andrey-tsarev-scientist.webp": "/static/media/andrey-tsarev-scientist.fb1c32d63e5da8193242.webp",
+    "static/media/flat-2d.webp": "/static/media/flat-2d.5c4f6fb6e6e05866b2ef.webp",
+    "static/media/realism.webp": "/static/media/realism.184a5aef6f01c22c2392.webp",
     "static/media/andrey-profile-novator-moscow.webp": "/static/media/andrey-profile-novator-moscow.b4c5a8a2443e7edd7cb1.webp",
     "static/media/andrey-profile-tochka-theatre.webp": "/static/media/andrey-profile-tochka-theatre.9f4ce02d08279cfc2fda.webp",
     "static/media/alexandra-award.webp": "/static/media/alexandra-award.60439191f130602cdbc8.webp",
     "static/media/hse-onboarding.jpg": "/static/media/hse-onboarding.c0cdd65961e777929f07.jpg",
-    "static/media/hse-rule-tara.jpg": "/static/media/hse-rule-tara.9952ba783b5ff9a589b4.jpg",
+    "static/media/stylized-3d.webp": "/static/media/stylized-3d.07102f8602672f202429.webp",
     "static/media/aviandr-koala.webp": "/static/media/aviandr-koala.3a73f81abaf1c0c1fefa.webp",
+    "static/media/low-poly.webp": "/static/media/low-poly.1ededd39e5805780e3e1.webp",
     "static/media/aviandr-cover.webp": "/static/media/aviandr-cover.c978b408c88df0a63c1a.webp",
     "static/media/andrey-profile-academy-pitch.webp": "/static/media/andrey-profile-academy-pitch.5cab46671b43a9c86b4e.webp",
     "static/media/agrotech.webp": "/static/media/agrotech.d8306801ca1e9debfbc4.webp",
@@ -92,6 +94,6 @@
   },
   "entrypoints": [
     "static/css/main.c90228b0.css",
-    "static/js/main.c12d69ca.js"
+    "static/js/main.62581ba1.js"
   ]
 }
