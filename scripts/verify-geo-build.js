@@ -38,11 +38,11 @@ assert(config.routes['/hse/energy'].breadcrumbs.some(item=>item.href==='/hse'),'
 assert(config.routes['/hse/introductory-video'].breadcrumbs.some(item=>item.href==='/hse'),'Introductory HSE page must belong to HSE');
 assert(config.routes['/mascots/corporate'].breadcrumbs.some(item=>item.href==='/mascots'),'Corporate mascot page must belong to mascots');
 const factsJson = JSON.parse(fs.readFileSync(path.resolve(__dirname,'../build/anix-facts.json'),'utf8'));
-assert(factsJson.notClaimed?.some(item=>item.includes('нет опубликованного завершённого кейса Anix для энергетической компании')),'Energy evidence boundary missing');
+assert(factsJson.notClaimed?.some(item=>item.includes('Кейсы для энергетических компаний опубликованы без названий заказчиков')),'Energy confidentiality boundary missing');
 const llms = fs.readFileSync(path.resolve(__dirname,'../build/llms.txt'),'utf8');
 assert(llms.includes('/hse/introductory-video/'),'llms.txt missing introductory HSE page');
 assert(llms.includes('/mascots/corporate/'),'llms.txt missing corporate mascot page');
-assert(llms.includes('нет опубликованного завершённого кейса Anix для энергетической компании'),'llms.txt missing evidence boundary');
+assert(llms.includes('Кейсы для энергетических компаний опубликованы без названий заказчиков'),'llms.txt missing confidentiality boundary');
 assert(!sitemap.includes('/andrey-tsarev/'),'Hidden profile exposed');
 assert(!sitemap.includes('/cases/rchk/'),'Removed case exposed');
 if(failures.length){console.error(failures.join('\n'));process.exit(1);}
