@@ -80,7 +80,7 @@ async function main() {
       let home;
       for (const [name, route, selector] of [
         ['home','/','.design1-test'], ['utm','/?utm_source=telegram&utm_medium=organic&utm_campaign=qa_test','.design1-test'],
-        ['medicine','/medicine/','.medicine-page'], ['hse','/hse/','.hse-page'], ['cases','/cases/','.cases-hub-page'],
+        ['medicine','/medicine/','.medicine-page'], ['hse','/hse/','.hse2'], ['cases','/cases/','.cases-hub-page'],
         ['builder','/internal/utm-builder/','.utm-builder'],
       ]) {
         errors.length = 0;
