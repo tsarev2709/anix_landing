@@ -354,7 +354,7 @@ function writeSitemap() {
 function main() {
   if (!fs.existsSync(baseIndexPath)) throw new Error('build/index.html not found');
   const baseHtml = fs.readFileSync(baseIndexPath, 'utf8');
-  const files = collectHtmlFiles(buildDir).filter((filePath) => path.basename(filePath) !== '404.html');
+  const files = collectHtmlFiles(buildDir).filter((filePath) => {\n    const relativePath = path.relative(buildDir, filePath).replace(/\\\\/g, '/');\n    return path.basename(filePath) !== '404.html' && relativePath !== 'onepager/ohrana-truda/index.html';\n  });
 
   for (const filePath of files) {
     const routePath = routeFromFile(filePath);
