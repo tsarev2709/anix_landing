@@ -8,7 +8,6 @@ import {
   ChevronLeft,
   ChevronRight,
   ClipboardCheck,
-  Download,
   ExternalLink,
   Eye,
   FileText,
@@ -18,6 +17,7 @@ import {
   Users,
 } from 'lucide-react';
 import ProjectCta from './ProjectCta';
+import ProcurementDownloads from './ProcurementDownloads';
 import SiteFooter from './SiteFooter';
 import { track } from '../lib/analytics';
 import { hseBenefits, hseScenarios, hseStyles } from '../content/hseLanding';
@@ -86,8 +86,8 @@ export default function HsePage() {
           <img src={logo} alt="Anix" />
         </a>
         <nav className="hse2-nav" aria-label="Разделы об охране труда">
-          <a href="#styles">Стили</a>
-          <a href="#mascot">Зачем маскот</a>
+          <a href="#system">Система</a>
+          <a href="#mascot">Маскот</a>
           <a href="#examples">Кейсы</a>
           <a href="#budget">Бюджет</a>
         </nav>
@@ -96,7 +96,7 @@ export default function HsePage() {
           href="/hse/mvp/"
           onClick={() => report('hse_header', 'demo')}
         >
-          Пример модуля <ExternalLink size={15} aria-hidden="true" />
+          Демо модуля <ExternalLink size={15} aria-hidden="true" />
         </a>
         <a className="hse2-header-cta" href="#website-lead-form">
           Обсудить задачу <ArrowRight size={16} aria-hidden="true" />
@@ -112,19 +112,21 @@ export default function HsePage() {
             Маскот и единая визуальная система <em>для безопасности</em>
           </h1>
           <p>
-            Создаём маскота или адаптируем вашего. Объединяем ролики, карточки и
-            обучение сотрудников и подрядчиков в узнаваемую систему, которая
-            помогает вовлекать людей и запоминать правила.
+            Превращаем утвержденные правила безопасности в ролики, карточки,
+            маскоты и обучающие модули для сотрудников и подрядчиков. Работаем
+            по материалам заказчика и согласовываем сценарии с вашими
+            специалистами по ОТ и ПБ.
           </p>
           <div className="hse2-hero-actions">
-            <a href="#styles" className="hse2-button hse2-button--bright">
-              Посмотреть стили <ArrowDownRight size={19} aria-hidden="true" />
-            </a>
             <ProjectCta
-              className="hse2-button hse2-button--outline"
+              className="hse2-button hse2-button--bright"
               task="help_choose"
               cta="hse_hero"
             />
+            <a href="#examples" className="hse2-button hse2-button--outline">
+              Посмотреть HSE-кейс{' '}
+              <ArrowDownRight size={19} aria-hidden="true" />
+            </a>
           </div>
           <div className="hse2-hero-note">
             <ShieldCheck size={20} aria-hidden="true" /> Начать можно с одного
@@ -142,62 +144,119 @@ export default function HsePage() {
         </div>
       </section>
 
-      <section
-        className="hse2-styles hse2-section"
-        id="styles"
-        aria-labelledby="hse2-styles-title"
-      >
-        <div className="hse2-wrap">
-          <div className="hse2-section-head hse2-styles-head">
-            <span className="hse2-kicker">01 / Визуальные возможности</span>
-            <h2 id="hse2-styles-title">Примеры стилей</h2>
-            <p>
-              От реализма до рисованного персонажа. Выберем подходящий стиль для
-              вашей задачи.
-            </p>
-          </div>
-          <div className="hse2-style-grid" aria-live="polite">
-            {hseStyles
-              .slice(stylePage * 3, stylePage * 3 + 3)
-              .map((item, index) => (
-                <article key={item.id} className="hse2-style">
-                  <span className="hse2-style-image">
-                    <img
-                      src={item.image}
-                      alt={`${item.name}: тот же персонаж показывает границу зоны у электрооборудования`}
-                      width="1280"
-                      height="720"
-                      loading="lazy"
-                    />
-                    <span className="hse2-style-index">
-                      0{stylePage * 3 + index + 1}
-                    </span>
-                  </span>
-                  <span className="hse2-style-caption">
-                    <strong>{item.name}</strong>
-                    <small>{item.type}</small>
-                  </span>
+      <section className="hse2-system-showcase" id="system">
+        <div className="hse2-system hse2-section">
+          <div className="hse2-wrap">
+            <SectionHead
+              eyebrow="Система, а не разовый ролик"
+              title="Все важные форматы в одной системе"
+              intro="Согласованный персонаж и стиль используем повторно — от первого правила до библиотеки материалов."
+              light
+            />
+            <div className="hse2-system-grid">
+              <div className="hse2-system-core">
+                <span>Основа</span>
+                <h3>Персонаж + стиль + сцены</h3>
+                <p>Основа для следующих тем и площадок.</p>
+              </div>
+              <div className="hse2-system-items">
+                <article>
+                  <Play />
+                  <h3>Ролики</h3>
+                  <p>Сцены риска и правильного действия</p>
                 </article>
-              ))}
+                <article>
+                  <Layers3 />
+                  <h3>Карточки жизненно важных правил</h3>
+                  <p>Действия в конкретных ситуациях</p>
+                </article>
+                <article>
+                  <FileText />
+                  <h3>Инструкции</h3>
+                  <p>Порядок работ без лишнего текста</p>
+                </article>
+                <article>
+                  <ClipboardCheck />
+                  <h3>Обучение</h3>
+                  <p>Уроки, вопросы и файлы для учебной системы</p>
+                </article>
+                <article>
+                  <Eye />
+                  <h3>Экраны</h3>
+                  <p>Контент для объекта и внутренних каналов</p>
+                </article>
+                <article>
+                  <Users />
+                  <h3>Вводный курс</h3>
+                  <p>Первые правила для сотрудников и подрядчиков</p>
+                </article>
+                <article>
+                  <ShieldCheck />
+                  <h3>Плакаты и памятки</h3>
+                  <p>Напоминания на рабочих местах</p>
+                </article>
+              </div>
+            </div>
           </div>
-          <div className="hse2-style-controls">
-            <button
-              type="button"
-              aria-label="Предыдущие стили"
-              disabled={stylePage === 0}
-              onClick={() => setStylePage(0)}
-            >
-              <ChevronLeft />
-            </button>
-            <span>{stylePage + 1} / 2</span>
-            <button
-              type="button"
-              aria-label="Следующие стили"
-              disabled={stylePage === 1}
-              onClick={() => setStylePage(1)}
-            >
-              <ChevronRight />
-            </button>
+        </div>
+
+        <div
+          className="hse2-styles hse2-section"
+          id="styles"
+          aria-labelledby="hse2-styles-title"
+        >
+          <div className="hse2-wrap">
+            <div className="hse2-section-head hse2-styles-head">
+              <span className="hse2-kicker">01 / Визуальные возможности</span>
+              <h2 id="hse2-styles-title">Примеры стилей</h2>
+              <p>
+                От реализма до рисованного персонажа. Выберем подходящий стиль
+                для вашей задачи.
+              </p>
+            </div>
+            <div className="hse2-style-grid" aria-live="polite">
+              {hseStyles
+                .slice(stylePage * 3, stylePage * 3 + 3)
+                .map((item, index) => (
+                  <article key={item.id} className="hse2-style">
+                    <span className="hse2-style-image">
+                      <img
+                        src={item.image}
+                        alt={`${item.name}: тот же персонаж показывает границу зоны у электрооборудования`}
+                        width="1280"
+                        height="720"
+                        loading="lazy"
+                      />
+                      <span className="hse2-style-index">
+                        0{stylePage * 3 + index + 1}
+                      </span>
+                    </span>
+                    <span className="hse2-style-caption">
+                      <strong>{item.name}</strong>
+                      <small>{item.type}</small>
+                    </span>
+                  </article>
+                ))}
+            </div>
+            <div className="hse2-style-controls">
+              <button
+                type="button"
+                aria-label="Предыдущие стили"
+                disabled={stylePage === 0}
+                onClick={() => setStylePage(0)}
+              >
+                <ChevronLeft />
+              </button>
+              <span>{stylePage + 1} / 2</span>
+              <button
+                type="button"
+                aria-label="Следующие стили"
+                disabled={stylePage === 1}
+                onClick={() => setStylePage(1)}
+              >
+                <ChevronRight />
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -205,14 +264,81 @@ export default function HsePage() {
       <section
         className="hse2-benefits hse2-section"
         id="mascot"
-        aria-labelledby="hse2-benefits-title"
+        aria-label="Маскот: способы создания и задачи"
       >
         <div className="hse2-wrap">
           <SectionHead
-            eyebrow="02 / Зачем предприятию персонаж"
-            title="Маскот — начало общей визуальной системы"
+            eyebrow="Маскот / Два способа начать"
+            title="Используем вашего персонажа или создадим нового"
+            intro="Сначала определяем основу героя, затем используем его в единой системе материалов, для узнаваемости безопасности и быстрой адаптации новичков."
             light
           />
+          <div className="hse2-mascot-source">
+            <div className="hse2-mascot-source-head">
+              <span className="hse2-kicker">01 / Выберите основу</span>
+              <div
+                className="hse2-mode"
+                role="group"
+                aria-label="Выберите подход к маскоту"
+              >
+                <button
+                  type="button"
+                  className={mascotMode === 'new' ? 'is-active' : ''}
+                  aria-pressed={mascotMode === 'new'}
+                  onClick={() => {
+                    setMascotMode('new');
+                    report('hse_mascot_mode', 'new');
+                  }}
+                >
+                  Создать с нуля
+                </button>
+                <button
+                  type="button"
+                  className={mascotMode === 'existing' ? 'is-active' : ''}
+                  aria-pressed={mascotMode === 'existing'}
+                  onClick={() => {
+                    setMascotMode('existing');
+                    report('hse_mascot_mode', 'existing');
+                  }}
+                >
+                  Адаптировать вашего
+                </button>
+              </div>
+            </div>
+            <div className="hse2-path-detail">
+              <div className="hse2-path-portrait">
+                <img
+                  src={
+                    mascotMode === 'new' ? newMascotImage : existingMascotImage
+                  }
+                  alt={
+                    mascotMode === 'new'
+                      ? 'Ёжик: разные ракурсы, эмоции и элементы облика нового персонажа'
+                      : 'Один персонаж в разных комплектах формы и средств защиты'
+                  }
+                  loading="lazy"
+                />
+              </div>
+              <div>
+                <span className="hse2-kicker">
+                  {mascotMode === 'new' ? 'Создание' : 'Адаптация'}
+                </span>
+                <h3>
+                  {mascotMode === 'new'
+                    ? 'Разработаем героя под вашу культуру безопасности'
+                    : 'Сохраним узнаваемость вашего героя в новых ситуациях'}
+                </h3>
+                <p>
+                  {mascotMode === 'new'
+                    ? 'Придумаем характер, выберем стиль, нарисуем образ, эмоции и сцены. Герой может быть человеком или зверьком.'
+                    : 'Сохраним вашего героя узнаваемым и покажем его в нужных ролях, форме и СИЗ. При необходимости переведём в другой стиль.'}
+                </p>
+              </div>
+            </div>
+          </div>
+          <span className="hse2-kicker hse2-benefit-step">
+            02 / Какие задачи решает персонаж
+          </span>
           <div
             className="hse2-benefit-tabs"
             role="tablist"
@@ -302,134 +428,6 @@ export default function HsePage() {
             >
               <ChevronRight />
             </button>
-          </div>
-        </div>
-      </section>
-
-      <section className="hse2-paths hse2-section" id="paths">
-        <div className="hse2-wrap">
-          <SectionHead
-            eyebrow="03 / Два способа начать"
-            title="Новый персонаж или ваш существующий"
-          />
-          <div
-            className="hse2-mode"
-            role="group"
-            aria-label="Выберите подход к маскоту"
-          >
-            <button
-              type="button"
-              className={mascotMode === 'new' ? 'is-active' : ''}
-              aria-pressed={mascotMode === 'new'}
-              onClick={() => {
-                setMascotMode('new');
-                report('hse_mascot_mode', 'new');
-              }}
-            >
-              Создать с нуля
-            </button>
-            <button
-              type="button"
-              className={mascotMode === 'existing' ? 'is-active' : ''}
-              aria-pressed={mascotMode === 'existing'}
-              onClick={() => {
-                setMascotMode('existing');
-                report('hse_mascot_mode', 'existing');
-              }}
-            >
-              Адаптировать вашего
-            </button>
-          </div>
-          <div className="hse2-path-detail">
-            <div className="hse2-path-portrait">
-              <img
-                src={
-                  mascotMode === 'new' ? newMascotImage : existingMascotImage
-                }
-                alt={
-                  mascotMode === 'new'
-                    ? 'Ёжик: разные ракурсы, эмоции и элементы облика нового персонажа'
-                    : 'Один персонаж в разных комплектах формы и средств защиты'
-                }
-                loading="lazy"
-              />
-            </div>
-            <div>
-              <span className="hse2-kicker">
-                {mascotMode === 'new' ? 'Создание' : 'Адаптация'}
-              </span>
-              <h3>
-                {mascotMode === 'new'
-                  ? 'Разработаем героя под вашу культуру безопасности'
-                  : 'Сохраним узнаваемость вашего героя в новых ситуациях'}
-              </h3>
-              <p>
-                {mascotMode === 'new'
-                  ? 'Придумаем характер, выберем стиль, нарисуем образ, эмоции и позы. Герой может быть человеком или зверьком.'
-                  : 'Сохраним вашего героя узнаваемым и покажем его в нужных ролях, форме и СИЗ. При необходимости переведём в другой стиль.'}
-              </p>
-              <a
-                href="#website-lead-form"
-                onClick={() => report('hse_mascot_mode', mascotMode)}
-              >
-                Обсудить персонажа <ArrowRight size={18} />
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="hse2-system hse2-section" id="system">
-        <div className="hse2-wrap">
-          <SectionHead
-            eyebrow="04 / Система, а не разовый ролик"
-            title="Один герой. Все важные форматы."
-            intro="Согласованный персонаж и стиль используем повторно — от первого правила до библиотеки материалов."
-            light
-          />
-          <div className="hse2-system-grid">
-            <div className="hse2-system-core">
-              <span>Основа</span>
-              <h3>Персонаж + стиль + позы</h3>
-              <p>Основа для следующих тем и площадок.</p>
-            </div>
-            <div className="hse2-system-items">
-              <article>
-                <Play />
-                <h3>Ролики</h3>
-                <p>Сцены риска и правильного действия</p>
-              </article>
-              <article>
-                <Layers3 />
-                <h3>Карточки жизненно важных правил</h3>
-                <p>Действия в конкретных ситуациях</p>
-              </article>
-              <article>
-                <FileText />
-                <h3>Инструкции</h3>
-                <p>Порядок работ без лишнего текста</p>
-              </article>
-              <article>
-                <ClipboardCheck />
-                <h3>Обучение</h3>
-                <p>Уроки, вопросы и файлы для учебной системы</p>
-              </article>
-              <article>
-                <Eye />
-                <h3>Экраны</h3>
-                <p>Контент для объекта и внутренних каналов</p>
-              </article>
-              <article>
-                <Users />
-                <h3>Вводный курс</h3>
-                <p>Первые правила для сотрудников и подрядчиков</p>
-              </article>
-              <article>
-                <ShieldCheck />
-                <h3>Плакаты и памятки</h3>
-                <p>Напоминания на рабочих местах</p>
-              </article>
-            </div>
           </div>
         </div>
       </section>
@@ -569,32 +567,65 @@ export default function HsePage() {
         </div>
       </section>
 
-      <section className="hse2-demo hse2-section" id="demo">
-        <div className="hse2-wrap hse2-demo-layout">
-          <div className="hse2-demo-image">
+      <section className="hse2-process hse2-section" id="process">
+        <div className="hse2-wrap">
+          <SectionHead
+            eyebrow="07 / Как работаем"
+            title="Сцена должна быть точной для вашего объекта"
+            intro="При разработке HSE-решений Anix привлекает профильную экспертизу по охране труда и промышленной безопасности. Сценарий, оборудование, СИЗ и безопасную последовательность действий согласуем с вашими ответственными специалистами."
+          />
+          <ol className="hse2-process-grid">
+            <li>
+              <span>01</span>
+              <h3>Определяем задачу</h3>
+              <p>Одна аудитория, риск, правила и место показа.</p>
+            </li>
+            <li>
+              <span>02</span>
+              <h3>Выбираем героя и стиль</h3>
+              <p>Новый маскот или ваш образ в нужных ролях.</p>
+            </li>
+            <li>
+              <span>03</span>
+              <h3>Проверяем сценарий</h3>
+              <p>
+                Ваши эксперты утверждают безопасность действий до производства.
+              </p>
+            </li>
+            <li>
+              <span>04</span>
+              <h3>Производим и передаём</h3>
+              <p>
+                Ролик, карточки, версии и правила использования по договору.
+              </p>
+            </li>
+          </ol>
+          <div className="hse2-expert">
             <img
-              src={onboardingImage}
-              alt="Демонстрационный учебный модуль HSE Anix"
+              src={alexeyPhoto}
+              alt="Алексей Лычко, эксперт Anix по охране труда"
               loading="lazy"
             />
-          </div>
-          <div>
-            <span className="hse2-kicker">
-              Бонус / Можно открыть прямо сейчас
-            </span>
-            <h2>Попробуйте учебный модуль по охране труда</h2>
-            <p>
-              Пример показывает путь сотрудника через короткие материалы и
-              вопросы, а также рабочее место специалиста. Откройте и посмотрите,
-              как персонаж и сцены могут жить внутри системы обучения.
-            </p>
-            <a
-              className="hse2-button hse2-button--bright"
-              href="/hse/mvp/"
-              onClick={() => report('hse_demo', 'open')}
-            >
-              Открыть пример модуля <ArrowRight size={19} />
-            </a>
+            <div>
+              <span className="hse2-kicker">Экспертиза ОТ</span>
+              <h3>Алексей Лычко — более 20 лет опыта в ОТ и ПБ</h3>
+              <p>
+                Более 20 лет в охране труда и промышленной безопасности.
+                Генеральный директор ООО «Безопасные Условия Труда», основатель
+                и сооснователь проекта «Б в Кубе», автор игровых форматов по
+                охране труда, пожарной и электробезопасности. Помогает проверять
+                сценарии на связь с реальными рисками; особенности объекта
+                утверждает специалист заказчика.
+              </p>
+              <a
+                href="https://b-cubed.ru/about-us/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Подробнее о «Б в Кубе» <ExternalLink size={14} />
+              </a>
+            </div>
+            <BadgeCheck aria-hidden="true" />
           </div>
         </div>
       </section>
@@ -646,104 +677,56 @@ export default function HsePage() {
         </div>
       </section>
 
-      <section className="hse2-process hse2-section" id="process">
-        <div className="hse2-wrap">
-          <SectionHead
-            eyebrow="07 / Как работаем"
-            title="Сцена должна быть точной для вашего объекта"
-            intro="Мы отвечаем за сценарий и визуальный язык. Ваш ответственный специалист подтверждает оборудование, СИЗ и безопасную последовательность действий."
-          />
-          <ol className="hse2-process-grid">
-            <li>
-              <span>01</span>
-              <h3>Определяем задачу</h3>
-              <p>Одна аудитория, риск, правила и место показа.</p>
-            </li>
-            <li>
-              <span>02</span>
-              <h3>Выбираем героя и стиль</h3>
-              <p>Новый маскот или ваш образ в нужных ролях.</p>
-            </li>
-            <li>
-              <span>03</span>
-              <h3>Проверяем сценарий</h3>
-              <p>
-                Ваши эксперты утверждают безопасность действий до производства.
-              </p>
-            </li>
-            <li>
-              <span>04</span>
-              <h3>Производим и передаём</h3>
-              <p>
-                Ролик, карточки, версии и правила использования по договору.
-              </p>
-            </li>
-          </ol>
-          <div className="hse2-expert">
-            <img
-              src={alexeyPhoto}
-              alt="Алексей Лычко, эксперт Anix по охране труда"
-              loading="lazy"
-            />
-            <div>
-              <span className="hse2-kicker">Экспертиза ОТ</span>
-              <h3>
-                Алексей Лычко — эксперт по безопасности и игровому обучению
-              </h3>
-              <p>
-                Более 20 лет в охране труда и промышленной безопасности.
-                Генеральный директор ООО «Безопасные Условия Труда», основатель
-                и сооснователь проекта «Б в Кубе», автор игровых форматов по
-                охране труда, пожарной и электробезопасности. Помогает проверять
-                сценарии на связь с реальными рисками; особенности объекта
-                утверждает специалист заказчика.
-              </p>
-              <a
-                href="https://b-cubed.ru/about-us/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Подробнее о «Б в Кубе» <ExternalLink size={14} />
-              </a>
-            </div>
-            <BadgeCheck aria-hidden="true" />
-          </div>
-        </div>
-      </section>
-
-      <section className="hse2-leader hse2-section" id="for-leader">
-        <div className="hse2-wrap hse2-leader-layout">
+      <section className="hse2-leader" id="for-leader">
+        <div className="hse2-wrap hse2-leader-share">
           <div>
             <span className="hse2-kicker">
               Для руководителя и закупки · без регистрации
             </span>
-            <h2>Отправьте руководителю готовую основу для решения</h2>
+            <h2>Перешлите страницу руководителю или скачайте документы</h2>
             <p>
-              На этой странице — выполненные проекты, состав первого этапа и
-              документы для обсуждения с командой. Скопируйте ссылку или
-              скачайте материалы для закупки.
+              Ниже — готовые PDF с составом работ и пакетом для закупки. Их
+              можно скачать без регистрации и использовать во внутреннем
+              согласовании.
             </p>
-            <button
-              type="button"
-              onClick={copyPage}
-              className="hse2-button hse2-button--bright"
-            >
-              {copied
-                ? 'Ссылка скопирована'
-                : 'Скопировать ссылку руководителю'}{' '}
-              {copied ? <Check size={19} /> : <ArrowRight size={19} />}
-            </button>
           </div>
-          <div className="hse2-leader-card">
-            <span>Документы для обсуждения</span>
-            <a href="/procurement/anix-hse-onboarding-module.pdf" download>
-              Предложение по охране труда <Download size={17} />
-            </a>
-            <a href="/procurement/anix-procurement-kit.pdf" download>
-              Пакет для закупки <Download size={17} />
-            </a>
-            <a href="/procurement/">
-              Состав документов и реквизиты <ArrowRight size={17} />
+          <button
+            type="button"
+            onClick={copyPage}
+            className="hse2-button hse2-button--bright"
+          >
+            {copied ? 'Ссылка скопирована' : 'Скопировать ссылку руководителю'}{' '}
+            {copied ? <Check size={19} /> : <ArrowRight size={19} />}
+          </button>
+        </div>
+        <ProcurementDownloads product="hse" />
+      </section>
+
+      <section className="hse2-demo hse2-section" id="demo">
+        <div className="hse2-wrap hse2-demo-layout">
+          <div className="hse2-demo-image">
+            <img
+              src={onboardingImage}
+              alt="Демонстрационный учебный модуль HSE Anix"
+              loading="lazy"
+            />
+          </div>
+          <div>
+            <span className="hse2-kicker">
+              Бонус / Можно открыть прямо сейчас
+            </span>
+            <h2>Попробуйте учебный модуль по охране труда</h2>
+            <p>
+              Пример показывает путь сотрудника через короткие материалы и
+              вопросы, а также рабочее место специалиста. Откройте и посмотрите,
+              как персонаж и сцены могут жить внутри системы обучения.
+            </p>
+            <a
+              className="hse2-button hse2-button--bright"
+              href="/hse/mvp/"
+              onClick={() => report('hse_demo', 'open')}
+            >
+              Открыть демо модуля <ArrowRight size={19} />
             </a>
           </div>
         </div>

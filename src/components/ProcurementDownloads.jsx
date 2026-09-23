@@ -17,12 +17,12 @@ export default function ProcurementDownloads({ product, standalone = false }) {
           Для руководителя и закупки · без регистрации
         </p>
         <h2 id="procurement-downloads-title">
-          Документы, которые можно переслать коллегам
+          Документы для руководителя и закупки
         </h2>
         <p>
-          Состав продуктов, границы работ и пример закупочного пакета. Версия{' '}
-          {procurement.version}. Это стартовая рамка, не оферта и не подписанный
-          договор.
+          Короткие PDF с составом работ, этапами согласования и примером
+          закупочного пакета. Можно скачать и переслать коллегам. Версия{' '}
+          {procurement.version}.
         </p>
       </div>
       <div className="procurement-download-grid">
@@ -35,11 +35,10 @@ export default function ProcurementDownloads({ product, standalone = false }) {
           >
             <FileText aria-hidden="true" />
             <span className="procurement-file-type">PDF · 1 страница</span>
-            <h3>{item.name}</h3>
-            <p>
-              {item.subtitle}. Результат, цены, сроки, что входит и что не
-              входит.
-            </p>
+            <h3>
+              {item.id === 'hse' ? 'Материалы по охране труда' : item.name}
+            </h3>
+            <p>{item.subtitle}. Результат, сроки, состав и границы работ.</p>
             <span className="procurement-file-action">
               Скачать одностраничник <Download aria-hidden="true" />
             </span>
@@ -55,7 +54,7 @@ export default function ProcurementDownloads({ product, standalone = false }) {
           <h3>Пакет для закупки</h3>
           <p>
             Пример ТЗ, материалы от клиента, календарный план, этапы приёмки и
-            procurement checklist.
+            контрольный список для закупки.
           </p>
           <span className="procurement-file-action">
             Скачать комплект <Download aria-hidden="true" />

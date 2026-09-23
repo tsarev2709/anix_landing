@@ -1944,10 +1944,311 @@
   }
 }
 
-
 /* content-fixes-part-2 */
-.hse-page *, .hse-page *::before, .hse-page *::after { box-sizing: border-box; }
-.hse-page img { max-width: 100%; }
-.hse-container, .hse-two-col, .hse-hero, .hse-card-grid, .hse-case-grid, .hse-process-layout { min-width: 0; }
-.hse-card, .hse-case-card, .hse-rich-text, .hse-hero-copy, .hse-hero-media { min-width: 0; overflow-wrap: anywhere; }
-@media (max-width: 760px) { .hse-two-col, .hse-process-layout { grid-template-columns: minmax(0, 1fr); } }
+.hse-page *,
+.hse-page *::before,
+.hse-page *::after {
+  box-sizing: border-box;
+}
+.hse-page img {
+  max-width: 100%;
+}
+.hse-container,
+.hse-two-col,
+.hse-hero,
+.hse-card-grid,
+.hse-case-grid,
+.hse-process-layout {
+  min-width: 0;
+}
+.hse-card,
+.hse-case-card,
+.hse-rich-text,
+.hse-hero-copy,
+.hse-hero-media {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 760px) {
+  .hse-two-col,
+  .hse-process-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* HSE structure and layout review · 23.09.2026 */
+.hse2-header {
+  position: sticky;
+  top: 0;
+  min-height: 68px;
+  padding-block: 10px;
+  background: rgba(10, 24, 36, 0.97);
+  backdrop-filter: blur(12px);
+}
+.hse2-brand {
+  width: 76px;
+  flex-basis: 76px;
+}
+.hse2-nav {
+  margin-inline: auto;
+}
+.hse2-hero {
+  padding-top: 0;
+  grid-template-columns: minmax(0, 1.08fr) minmax(420px, 0.92fr);
+  align-items: center;
+}
+.hse2-hero-copy {
+  padding-top: 52px;
+  padding-bottom: 52px;
+}
+.hse2-hero-visual {
+  width: calc(100% - clamp(24px, 4vw, 68px));
+  height: clamp(290px, 27vw, 370px);
+  min-height: 0;
+  margin: 28px clamp(24px, 4vw, 68px) 28px 0;
+  border-radius: 4px;
+}
+.hse2-hero-visual img {
+  object-position: center 20%;
+}
+.hse2-system-showcase {
+  background: #e7ebe4;
+}
+.hse2-system-showcase .hse2-system {
+  padding-bottom: clamp(38px, 4vw, 62px);
+}
+.hse2-system-showcase .hse2-styles {
+  padding-top: clamp(38px, 4vw, 62px);
+}
+.hse2-benefits {
+  padding-bottom: clamp(48px, 5vw, 76px);
+}
+.hse2-mascot-source {
+  margin-bottom: 34px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid #52626d;
+}
+.hse2-mascot-source-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 12px;
+}
+.hse2-mascot-source-head > .hse2-kicker,
+.hse2-benefit-step {
+  color: var(--hse2-accent);
+}
+.hse2-mascot-source .hse2-mode {
+  margin: 0;
+  background: #263b49;
+}
+.hse2-mascot-source .hse2-mode button {
+  color: #d8e1e2;
+}
+.hse2-mascot-source .hse2-mode button.is-active {
+  color: #17211b;
+  background: var(--hse2-accent);
+}
+.hse2-mascot-source .hse2-path-detail {
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(24px, 4vw, 54px);
+  align-items: center;
+  background: #f3f5ef;
+  color: var(--hse2-ink);
+}
+.hse2-path-portrait {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  background: #fff;
+}
+.hse2-path-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+.hse2-mascot-source .hse2-path-detail > div:last-child {
+  padding: 25px 34px 25px 0;
+}
+.hse2-benefit-step {
+  display: flex;
+  margin-bottom: 12px;
+}
+.hse2-benefit-panel {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+  align-items: center;
+}
+.hse2-benefit-visual {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 1;
+  align-self: center;
+  background: #142633;
+}
+.hse2-benefit-person {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  border: 0;
+  transform: none;
+  box-shadow: none;
+  background: #fff;
+}
+.hse2-benefit-person img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+.hse2-benefit-mark {
+  z-index: 2;
+  font-size: 82px;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+.hse2-process .hse2-section-head {
+  max-width: 1080px;
+}
+.hse2-expert {
+  margin-top: 30px;
+}
+.hse2-leader {
+  color: #fff;
+  background: #21162d;
+}
+.hse2-leader-share {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 40px;
+  padding-top: clamp(48px, 5vw, 72px);
+}
+.hse2-leader-share .hse2-kicker {
+  color: #d4bfff;
+}
+.hse2-leader-share h2 {
+  max-width: 900px;
+  margin-bottom: 12px;
+}
+.hse2-leader-share p {
+  max-width: 760px;
+  margin: 0;
+  color: #ddd5e7;
+  font-size: 16px;
+}
+.hse2-leader > .procurement-downloads {
+  padding-top: 34px;
+}
+.hse2-leader .procurement-download-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.hse2-demo {
+  background: #f5f6f0;
+}
+
+@media (max-width: 1180px) {
+  .hse2-nav {
+    display: none;
+  }
+  .hse2-brand {
+    margin-right: auto;
+  }
+  .hse2-hero {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.78fr);
+  }
+}
+
+@media (max-width: 950px) {
+  .hse2-hero {
+    grid-template-columns: 1fr;
+  }
+  .hse2-hero-visual {
+    width: min(calc(100% - 48px), 750px);
+    height: min(52vw, 360px);
+    margin: 0 auto 34px;
+  }
+  .hse2-mascot-source .hse2-path-detail,
+  .hse2-benefit-panel {
+    grid-template-columns: 1fr;
+  }
+  .hse2-path-portrait,
+  .hse2-benefit-visual {
+    width: min(100%, 520px);
+    margin-inline: auto;
+  }
+  .hse2-mascot-source .hse2-path-detail > div:last-child {
+    padding: 24px 28px 30px;
+  }
+  .hse2-leader-share {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 22px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hse2-header {
+    min-height: 60px;
+    padding: 8px 16px;
+  }
+  .hse2-header-demo {
+    margin-left: auto;
+  }
+  .hse2-hero-copy {
+    padding-top: 38px;
+  }
+  .hse2-hero-visual {
+    width: calc(100% - 36px);
+    height: 245px;
+    min-height: 0;
+    margin-bottom: 24px;
+  }
+  .hse2-system-showcase .hse2-system {
+    padding-bottom: 34px;
+  }
+  .hse2-system-showcase .hse2-styles {
+    padding-top: 34px;
+  }
+  .hse2-mascot-source-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .hse2-mascot-source .hse2-mode {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .hse2-path-portrait,
+  .hse2-benefit-visual {
+    width: 100%;
+    min-height: 0;
+    aspect-ratio: 1;
+  }
+  .hse2-benefit-tabs button {
+    min-height: 62px;
+  }
+  .hse2-benefit-copy {
+    padding: 25px 20px;
+  }
+  .hse2-benefit-shift {
+    margin-top: 18px;
+  }
+  .hse2-leader-share {
+    padding-top: 42px;
+  }
+  .hse2-leader-share h2 {
+    font-size: 38px;
+  }
+  .hse2-leader-share .hse2-button {
+    width: 100%;
+  }
+  .hse2-leader .procurement-download-grid {
+    grid-template-columns: 1fr;
+  }
+  .hse2-leader > .procurement-downloads {
+    padding-top: 28px;
+  }
+}
