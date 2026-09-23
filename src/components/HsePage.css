@@ -2293,7 +2293,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  object-position: center top;
 }
 .hse2-hero-visual::after {
   background:
@@ -2331,7 +2331,7 @@
     margin: 0;
   }
   .hse2-hero-visual img {
-    object-position: 62% center;
+    object-position: 62% top;
   }
   .hse2-hero-visual::after {
     background:
@@ -2369,7 +2369,7 @@
     margin: 0;
   }
   .hse2-hero-visual img {
-    object-position: 69% center;
+    object-position: 69% top;
   }
   .hse2-hero-visual::after {
     background:
