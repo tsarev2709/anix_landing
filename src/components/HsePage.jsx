@@ -137,8 +137,8 @@ export default function HsePage() {
           <img
             src={heroImage}
             alt="Сотрудник в защитной каске у электрооборудования"
-            width="1300"
-            height="1300"
+            width="1672"
+            height="941"
             fetchPriority="high"
           />
         </div>
@@ -678,18 +678,8 @@ export default function HsePage() {
       </section>
 
       <section className="hse2-leader" id="for-leader">
-        <div className="hse2-wrap hse2-leader-share">
-          <div>
-            <span className="hse2-kicker">
-              Для руководителя и закупки · без регистрации
-            </span>
-            <h2>Перешлите страницу руководителю или скачайте документы</h2>
-            <p>
-              Ниже — готовые PDF с составом работ и пакетом для закупки. Их
-              можно скачать без регистрации и использовать во внутреннем
-              согласовании.
-            </p>
-          </div>
+        <ProcurementDownloads product="hse" />
+        <div className="hse2-wrap hse2-leader-action">
           <button
             type="button"
             onClick={copyPage}
@@ -699,7 +689,6 @@ export default function HsePage() {
             {copied ? <Check size={19} /> : <ArrowRight size={19} />}
           </button>
         </div>
-        <ProcurementDownloads product="hse" />
       </section>
 
       <section className="hse2-demo hse2-section" id="demo">
