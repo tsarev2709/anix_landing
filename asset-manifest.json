@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.c90228b0.css",
-    "main.js": "/static/js/main.94933ed6.js",
+    "main.js": "/static/js/main.4a733e09.js",
     "static/css/231.0286eff3.chunk.css": "/static/css/231.0286eff3.chunk.css",
     "static/js/231.cee5618f.chunk.js": "/static/js/231.cee5618f.chunk.js",
     "static/js/727.a85f38f6.chunk.js": "/static/js/727.a85f38f6.chunk.js",
@@ -9,8 +9,8 @@
     "static/js/833.7e1172cc.chunk.js": "/static/js/833.7e1172cc.chunk.js",
     "static/css/552.22e83285.chunk.css": "/static/css/552.22e83285.chunk.css",
     "static/js/552.ebc4aa35.chunk.js": "/static/js/552.ebc4aa35.chunk.js",
-    "static/css/950.3ba31168.chunk.css": "/static/css/950.3ba31168.chunk.css",
-    "static/js/950.5e0d54ed.chunk.js": "/static/js/950.5e0d54ed.chunk.js",
+    "static/css/950.697da18b.chunk.css": "/static/css/950.697da18b.chunk.css",
+    "static/js/950.52307c2a.chunk.js": "/static/js/950.52307c2a.chunk.js",
     "static/css/755.999cd986.chunk.css": "/static/css/755.999cd986.chunk.css",
     "static/js/755.be30f6b1.chunk.js": "/static/js/755.be30f6b1.chunk.js",
     "static/css/793.af5461b7.chunk.css": "/static/css/793.af5461b7.chunk.css",
@@ -53,7 +53,6 @@
     "static/media/benefitSystem.webp": "/static/media/benefitSystem.d39c3011b49355605ef3.webp",
     "static/media/benefitNewcomers.webp": "/static/media/benefitNewcomers.437290f7bb4ef58268bc.webp",
     "static/media/energyFox.webp": "/static/media/energyFox.85a14be5c2589174e8f4.webp",
-    "static/media/hero.webp": "/static/media/hero.05ef920e12d17093e2a4.webp",
     "static/media/mascotExisting.webp": "/static/media/mascotExisting.afa47a502367d4163d8c.webp",
     "static/media/energyBeaver.webp": "/static/media/energyBeaver.b8c472ab36b5cd5ba874.webp",
     "static/media/energyDog.webp": "/static/media/energyDog.c4691299532021fe73fc.webp",
@@ -72,6 +71,7 @@
     "static/media/hse-onboarding.jpg": "/static/media/hse-onboarding.c0cdd65961e777929f07.jpg",
     "static/media/stylized-3d.webp": "/static/media/stylized-3d.07102f8602672f202429.webp",
     "static/media/aviandr-koala.webp": "/static/media/aviandr-koala.3a73f81abaf1c0c1fefa.webp",
+    "static/media/hero.webp": "/static/media/hero.382eea45eb07c3361e49.webp",
     "static/media/low-poly.webp": "/static/media/low-poly.1ededd39e5805780e3e1.webp",
     "static/media/aviandr-cover.webp": "/static/media/aviandr-cover.c978b408c88df0a63c1a.webp",
     "static/media/andrey-profile-academy-pitch.webp": "/static/media/andrey-profile-academy-pitch.5cab46671b43a9c86b4e.webp",
@@ -108,6 +108,6 @@
   },
   "entrypoints": [
     "static/css/main.c90228b0.css",
-    "static/js/main.94933ed6.js"
+    "static/js/main.4a733e09.js"
   ]
 }
