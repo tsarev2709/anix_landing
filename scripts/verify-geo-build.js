@@ -22,7 +22,15 @@ for (const [url, route] of Object.entries(config.routes).filter(([,r])=>r.geoPag
   for (const link of route.links||[]) if(link.href.startsWith('/')) assert(fs.existsSync(path.resolve(__dirname,'../build',link.href.slice(1),'index.html')),`${url}: linked route has no static entry ${link.href}`);
   for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) { try { JSON.parse(match[1]); } catch { failures.push(`${url}: invalid JSON-LD`); } }
 }
-assert(Object.keys(data.pages).length===17,'Expected twelve guides, facts and four service pages');
+assert(Object.keys(data.pages).length===18,'Expected HSE article and existing GEO pages');
+const articleHtml=fs.readFileSync(path.resolve(__dirname,'../build/knowledge/hse-cost-optimization/index.html'),'utf8');
+assert((articleHtml.match(/class="hse-article__figure"/g)||[]).length===7,'HSE article must include seven figures in static HTML');
+for (const image of Object.values(require('../src/content/hseSavingsArticle.json').images)) {
+  const imagePath=path.resolve(__dirname,'../build',image.src.slice(1));
+  assert(fs.existsSync(imagePath) && fs.statSync(imagePath).size>10000,`HSE article image missing or empty: ${image.src}`);
+}
+assert(articleHtml.includes('450 000 ₽') && articleHtml.includes('Росстат') && articleHtml.includes('Safe-пакет Anix'),'HSE article content missing');
+assert(articleHtml.includes('"@type":"Article"'),'HSE Article schema missing');
 assert(experiment.prompts.length===12 && new Set(experiment.prompts.map(p=>p.id)).size===12,'Expected 12 unique experimental prompts');
 assert(experiment.prompts.every(p=>/России|российские/.test(p.prompt)),'Experimental prompts must specify Russia');
 for (const cluster of ['hse','energy','mascots','medicine']) assert(experiment.prompts.filter(p=>p.cluster===cluster).length===3, 'Expected 3 prompts per cluster: '+cluster);

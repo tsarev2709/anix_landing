@@ -78,7 +78,12 @@ const absolutePageUrl = (path) => {
 
 const ogTypeForRoute = (route) => {
   if (route.kind === 'profile') return 'profile';
-  if (route.kind === 'case' || route.kind === 'creativeWork') return 'article';
+  if (
+    route.kind === 'article' ||
+    route.kind === 'case' ||
+    route.kind === 'creativeWork'
+  )
+    return 'article';
   return 'website';
 };
 
@@ -147,6 +152,21 @@ export const buildStructuredData = (route) => {
             },
           }
         : {}),
+    });
+  } else if (route.kind === 'article') {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: normalizeBrandText(route.h1),
+      description: normalizeBrandText(route.description),
+      mainEntityOfPage: url,
+      url,
+      image: absoluteAssetUrl(route.ogImage),
+      datePublished: route.reviewedAt,
+      dateModified: route.reviewedAt,
+      inLanguage: 'ru-RU',
+      author: organizationSchema,
+      publisher: organizationSchema,
     });
   } else if (route.kind === 'creativeWork' || route.kind === 'case') {
     schemas.push({
@@ -224,7 +244,8 @@ export default function SeoHead({ path = window.location.pathname }) {
   const route = resolveSeoRoute(path);
   const canonical = absolutePageUrl(route.path);
   const ogImage = absoluteAssetUrl(route.ogImage);
-  const robots = route.robots || (route.indexable ? 'index, follow' : 'noindex, follow');
+  const robots =
+    route.robots || (route.indexable ? 'index, follow' : 'noindex, follow');
   const schemas = buildStructuredData(route);
   const title = normalizeBrandText(route.title);
   const description = normalizeBrandText(route.description);

@@ -3,6 +3,8 @@ const path = require('path');
 const seoConfig = require('../src/seo/routes.json');
 const verification = require('../src/seo/verification.json');
 const { buildGeoSchemas } = require('../src/content/geoSchema');
+const hseArticle = require('../src/content/hseSavingsArticle.json');
+const { html: hseArticleHtml } = require('../src/content/hseSavingsArticleRendered.json');
 
 const root = path.resolve(__dirname, '..');
 const buildDir = path.join(root, 'build');
@@ -164,6 +166,14 @@ function buildSchemas(route) {
           }
         : {}),
     });
+  } else if (route.kind === 'article') {
+    schemas.push({
+      '@context': 'https://schema.org', '@type': 'Article',
+      headline: normalizeBrandText(route.h1), description: normalizeBrandText(route.description),
+      mainEntityOfPage: url, url, image: absoluteAssetUrl(route.ogImage),
+      datePublished: hseArticle.datePublished, dateModified: hseArticle.dateModified,
+      inLanguage: 'ru-RU', author: organization, publisher: organization,
+    });
   } else if (route.kind === 'creativeWork' || route.kind === 'case') {
     schemas.push({
       '@context': 'https://schema.org',
@@ -276,7 +286,7 @@ function buildHead(route) {
     `<meta property="og:description" content="${escapeHtml(ogDescription)}"/>`,
     `<meta property="og:url" content="${escapeHtml(canonical)}"/>`,
     `<meta property="og:image" content="${escapeHtml(ogImage)}"/>`,
-    `<meta property="og:type" content="${route.kind === 'case' || route.kind === 'creativeWork' ? 'article' : route.kind === 'profile' ? 'profile' : 'website'}"/>`,
+    `<meta property="og:type" content="${route.kind === 'article' || route.kind === 'case' || route.kind === 'creativeWork' ? 'article' : route.kind === 'profile' ? 'profile' : 'website'}"/>`,
     `<meta property="og:site_name" content="${brandName}"/>`,
     '<meta property="og:locale" content="ru_RU"/>',
     '<meta name="twitter:card" content="summary_large_image"/>',
@@ -301,6 +311,10 @@ function buildBreadcrumbs(route) {
 }
 
 function buildShell(route) {
+  if (route.article && route.path === '/knowledge/hse-cost-optimization') {
+    const links = (route.links || []).map(item => `<a href="${escapeHtml(publicPath(item.href))}">${escapeHtml(item.label)}</a>`).join(' · ');
+    return `<div data-seo-shell="true"><header><a href="/">${brandName}</a>${buildBreadcrumbs(route)}</header><main><h1>${escapeHtml(route.h1)}</h1><p class="seo-shell-intro">${escapeHtml(route.intro)}</p>${hseArticleHtml}<nav aria-label="Связанные страницы">${links}</nav><p><a href="/hse/#website-lead-form">Обсудить Safe-пакет Anix</a></p></main><footer><a href="/privacy/">Политика конфиденциальности</a></footer></div>`;
+  }
   const sections = [...(route.sections || []), ...(route.geoSections || []), ...[...(route.faq || []), ...(route.geoFaq || [])].map(item => ({heading:item.question,body:item.answer}))]
     .map(
       (section) =>

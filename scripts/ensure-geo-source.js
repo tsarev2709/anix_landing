@@ -12,9 +12,9 @@ const pages = { ...data.pages, '/knowledge': {
 for (const [url, page] of Object.entries(pages)) {
   config.routes[url] = {
     indexable: true, kind: page.kind || 'webPage', serviceType: page.h1,
-    title: `${page.h1} — Anix Studio`, description: page.intro,
+    title: page.title || `${page.h1} — Anix Studio`, description: page.description || page.intro,
     h1: page.h1, intro: page.intro, sections: page.sections, links: page.links,
-    ogImage: '/og/home.jpg', geoPage: true, reviewedAt: data.reviewedAt,
+    ogImage: page.ogImage || '/og/home.jpg', geoPage: true, article: Boolean(page.article), reviewedAt: page.reviewedAt || data.reviewedAt,
     breadcrumbs: [{ label: 'Главная', href: '/' }, ...(page.parent ? [page.parent] : url.startsWith('/knowledge/') ? [{label:'Ответы заказчику',href:'/knowledge'}] : []), {label:page.h1,href:url}],
   };
 }

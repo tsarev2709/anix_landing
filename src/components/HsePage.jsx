@@ -677,6 +677,34 @@ export default function HsePage() {
         </div>
       </section>
 
+      <section
+        className="hse2-article-teaser hse2-section"
+        aria-labelledby="hse-article-title"
+      >
+        <div className="hse2-wrap hse2-article-teaser__layout">
+          <div>
+            <span className="hse2-kicker">Практическое руководство · 2026</span>
+            <h2 id="hse-article-title">
+              Как сократить расходы на охрану труда и сохранить результат
+            </h2>
+            <p>
+              Разобрали ситуацию в промышленности, способы закрепить правила и
+              состав Safe-пакета Anix за 450 000 ₽.
+            </p>
+            <a href="/knowledge/hse-cost-optimization/">
+              Читать статью <ArrowRight size={19} aria-hidden="true" />
+            </a>
+          </div>
+          <img
+            src="/images/hse-cost/safe.webp"
+            alt="Safe-пакет Anix: маскот, визуальные правила и анимация"
+            loading="lazy"
+            width="1672"
+            height="941"
+          />
+        </div>
+      </section>
+
       <section className="hse2-leader" id="for-leader">
         <ProcurementDownloads product="hse" />
         <div className="hse2-wrap hse2-leader-action">
