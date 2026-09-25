@@ -1,0 +1,11 @@
+{
+  "widget": {
+    "name": "Anix HSE Integration",
+    "description": "Серверная интеграция для приёма заявок с сайта, без интерфейса внутри amoCRM.",
+    "short_description": "Headless API интеграция",
+    "tour_description": "Интеграция работает через API, без интерфейса внутри amoCRM."
+  },
+  "settings": {
+    "note": "Заметка (не используется)"
+  }
+}

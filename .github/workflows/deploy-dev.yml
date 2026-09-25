@@ -30,6 +30,9 @@ jobs:
         run: npm install
 
       - name: Build and verify static SEO
+        env:
+          PUBLIC_URL: /anix_landing/dev
+          CI: false
         run: npm run build
 
       - name: Deploy to gh-pages dev folder
