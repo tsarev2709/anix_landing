@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 require('./ensure-geo-source');
+require('./generate-hse-classifier-assets');
 const { renderHseArticle } = require('../src/content/renderHseArticle');
 fs.writeFileSync(path.resolve(__dirname, '../src/content/hseSavingsArticleRendered.json'),
   `${JSON.stringify({ html: renderHseArticle() })}\n`);

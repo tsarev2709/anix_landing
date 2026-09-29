@@ -35,14 +35,20 @@ export function setupAiReferralTracking() {
   if (aiInitialized || typeof document === 'undefined') return;
   aiInitialized = true;
   const aiReferral = classifyAiReferral({
-    utmSource: new URLSearchParams(window.location.search).get('utm_source') || '',
+    utmSource:
+      new URLSearchParams(window.location.search).get('utm_source') || '',
     referrer: document.referrer || '',
   });
   if (aiReferral.provider) {
     const path = window.location.pathname;
-    Promise.resolve(initLeadSessionTracking()).then(() => sendGoal('ai_referral_visit', {
-      ...aiReferral, path,
-    })).catch(() => {});
+    Promise.resolve(initLeadSessionTracking())
+      .then(() =>
+        sendGoal('ai_referral_visit', {
+          ...aiReferral,
+          path,
+        })
+      )
+      .catch(() => {});
   }
 }
 
@@ -64,8 +70,22 @@ export function setupSeoTracking() {
 
     const anchor = target.closest('a[href]');
     if (!anchor) return;
+    const href = anchor.getAttribute('href') || '';
+    if (/^\/(?:data|downloads)\//.test(href)) {
+      const ctaId = anchor.dataset.cta || 'resource_download';
+      recordAttributionCta(ctaId);
+      sendGoal('cta_click', {
+        path: window.location.pathname,
+        cta_id: ctaId,
+      });
+      return;
+    }
     if ((anchor.getAttribute('href') || '').includes('#website-lead-form')) {
-      recordAttributionCta(anchor.dataset.cta || anchor.id || `${anchor.closest('section')?.id || 'page'}:${(anchor.textContent || '').trim().slice(0, 100)}`);
+      recordAttributionCta(
+        anchor.dataset.cta ||
+          anchor.id ||
+          `${anchor.closest('section')?.id || 'page'}:${(anchor.textContent || '').trim().slice(0, 100)}`
+      );
     }
 
     const goal = goalForLink(anchor);

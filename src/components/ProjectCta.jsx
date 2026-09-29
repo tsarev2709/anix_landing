@@ -12,6 +12,7 @@ export default function ProjectCta({
     <a
       className={`${className} project-cta`}
       href="#website-lead-form"
+      data-cta={cta}
       onClick={() => {
         window.dispatchEvent(
           new CustomEvent('anix:brief-prefill', {

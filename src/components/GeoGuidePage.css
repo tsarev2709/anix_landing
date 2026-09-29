@@ -75,6 +75,15 @@
   font-size: 1.125rem;
   line-height: 1.6;
 }
+.geo-guide__cta-eyebrow {
+  display: block;
+  margin-bottom: 10px;
+  color: #6625bb;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 .geo-context {
   box-sizing: border-box;
   width: min(1180px, 90%);

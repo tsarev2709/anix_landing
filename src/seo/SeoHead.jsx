@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import seoConfig from './routes.json';
 import verification from './verification.json';
-import { buildGeoSchemas } from '../content/geoSchema';
+const { buildGeoSchemas } = require('../content/geoSchema');
 
 const PUBLIC_EMAIL = 'studio@anix-ai.pro';
 const BRAND_NAME = 'Anix Studio';

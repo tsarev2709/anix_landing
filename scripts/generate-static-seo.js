@@ -4,7 +4,10 @@ const seoConfig = require('../src/seo/routes.json');
 const verification = require('../src/seo/verification.json');
 const { buildGeoSchemas } = require('../src/content/geoSchema');
 const hseArticle = require('../src/content/hseSavingsArticle.json');
-const { html: hseArticleHtml } = require('../src/content/hseSavingsArticleRendered.json');
+const {
+  html: hseArticleHtml,
+} = require('../src/content/hseSavingsArticleRendered.json');
+const hseWorkClassifier = require('../src/content/hseWorkClassifier.json');
 
 const root = path.resolve(__dirname, '..');
 const buildDir = path.join(root, 'build');
@@ -32,7 +35,9 @@ function normalizeBrandText(value = '') {
 
 function normalizePath(value = '/') {
   const withoutQuery = value.split('?')[0].split('#')[0] || '/';
-  const withoutHtml = withoutQuery.replace(/\.html$/, '').replace(/\/index$/, '');
+  const withoutHtml = withoutQuery
+    .replace(/\.html$/, '')
+    .replace(/\/index$/, '');
   if (!withoutHtml || withoutHtml === '/') return '/';
   return withoutHtml.replace(/\/+$/, '') || '/';
 }
@@ -48,13 +53,15 @@ function routeFromFile(filePath) {
   const relative = path.relative(buildDir, filePath).replace(/\\/g, '/');
   if (relative === 'index.html') return '/';
   if (relative === '404.html') return '/404';
-  if (relative.endsWith('/index.html')) return normalizePath(`/${relative.slice(0, -'/index.html'.length)}`);
+  if (relative.endsWith('/index.html'))
+    return normalizePath(`/${relative.slice(0, -'/index.html'.length)}`);
   return normalizePath(`/${relative}`);
 }
 
 function resolveRoute(pathname) {
   const normalized = normalizePath(pathname);
-  if (seoConfig.routes[normalized]) return { path: normalized, ...seoConfig.routes[normalized] };
+  if (seoConfig.routes[normalized])
+    return { path: normalized, ...seoConfig.routes[normalized] };
   if (normalized === '/hse/mvp' || normalized.startsWith('/hse/mvp/')) {
     return { path: normalized, ...seoConfig.technicalDefaults };
   }
@@ -168,11 +175,18 @@ function buildSchemas(route) {
     });
   } else if (route.kind === 'article') {
     schemas.push({
-      '@context': 'https://schema.org', '@type': 'Article',
-      headline: normalizeBrandText(route.h1), description: normalizeBrandText(route.description),
-      mainEntityOfPage: url, url, image: absoluteAssetUrl(route.ogImage),
-      datePublished: hseArticle.datePublished, dateModified: hseArticle.dateModified,
-      inLanguage: 'ru-RU', author: organization, publisher: organization,
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: normalizeBrandText(route.h1),
+      description: normalizeBrandText(route.description),
+      mainEntityOfPage: url,
+      url,
+      image: absoluteAssetUrl(route.ogImage),
+      datePublished: hseArticle.datePublished,
+      dateModified: hseArticle.dateModified,
+      inLanguage: 'ru-RU',
+      author: organization,
+      publisher: organization,
     });
   } else if (route.kind === 'creativeWork' || route.kind === 'case') {
     schemas.push({
@@ -249,24 +263,42 @@ function buildSchemas(route) {
 function stripSeoHead(html) {
   return html
     .replace(/<title>[\s\S]*?<\/title>/gi, '')
-    .replace(/<meta\s+name=["'](?:description|robots|keywords|twitter:card|twitter:title|twitter:description|twitter:image|google-site-verification|yandex-verification)["'][^>]*\/?\s*>/gi, '')
-    .replace(/<meta\s+property=["']og:(?:title|description|url|image|type|site_name|locale)["'][^>]*\/?\s*>/gi, '')
+    .replace(
+      /<meta\s+name=["'](?:description|robots|keywords|twitter:card|twitter:title|twitter:description|twitter:image|google-site-verification|yandex-verification)["'][^>]*\/?\s*>/gi,
+      ''
+    )
+    .replace(
+      /<meta\s+property=["']og:(?:title|description|url|image|type|site_name|locale)["'][^>]*\/?\s*>/gi,
+      ''
+    )
     .replace(/<link\s+rel=["']canonical["'][^>]*\/?\s*>/gi, '')
-    .replace(/<script\s+type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi, '');
+    .replace(
+      /<script\s+type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi,
+      ''
+    );
 }
 
 function buildHead(route) {
   const canonical = absolutePageUrl(route.path);
   const ogImage = absoluteAssetUrl(route.ogImage);
-  const robots = route.robots || (route.indexable ? 'index, follow' : 'noindex, follow');
+  const robots =
+    route.robots || (route.indexable ? 'index, follow' : 'noindex, follow');
   const title = normalizeBrandText(route.title);
   const description = normalizeBrandText(route.description);
   const ogTitle = normalizeBrandText(route.ogTitle || route.title);
-  const ogDescription = normalizeBrandText(route.ogDescription || route.description);
+  const ogDescription = normalizeBrandText(
+    route.ogDescription || route.description
+  );
   const schemas = buildSchemas(route)
-    .map((schema) => `<script type="application/ld+json">${safeJson(schema)}</script>`)
+    .map(
+      (schema) =>
+        `<script type="application/ld+json">${safeJson(schema)}</script>`
+    )
     .join('');
-  const canonicalTag = route.kind === 'notFound' ? '' : `<link rel="canonical" href="${escapeHtml(canonical)}"/>`;
+  const canonicalTag =
+    route.kind === 'notFound'
+      ? ''
+      : `<link rel="canonical" href="${escapeHtml(canonical)}"/>`;
   const verificationTags = [
     verification.google
       ? `<meta name="google-site-verification" content="${escapeHtml(verification.google)}"/>`
@@ -310,34 +342,116 @@ function buildBreadcrumbs(route) {
   return `<nav aria-label="Хлебные крошки"><ol>${items}</ol></nav>`;
 }
 
+function buildClassifierContent() {
+  const labels = {
+    actions: 'Виды работ',
+    equipment: 'Оборудование',
+    conditions: 'Условия',
+    hazards: 'Опасности',
+  };
+  const indexes = Object.fromEntries(
+    Object.entries(hseWorkClassifier.dictionaries).map(([key, items]) => [
+      key,
+      new Map(items.map((item) => [item.code, item.title])),
+    ])
+  );
+  const names = (dictionary, codes) =>
+    codes.map((code) => indexes[dictionary].get(code) || code).join(', ');
+  const dictionaries = Object.entries(hseWorkClassifier.dictionaries)
+    .map(
+      ([key, items]) =>
+        `<section><h2>${escapeHtml(labels[key])}: ${items.length}</h2><ul>${items
+          .map(
+            (item) =>
+              `<li><code>${escapeHtml(item.code)}</code> — ${escapeHtml(item.title)}</li>`
+          )
+          .join('')}</ul></section>`
+    )
+    .join('');
+  const entries = hseWorkClassifier.entries
+    .map(
+      (entry) =>
+        `<article><h3>${escapeHtml(entry.work_id)} · ${escapeHtml(entry.title)}</h3>` +
+        `<p><strong>Работа:</strong> ${escapeHtml(names('actions', entry.action))}. ` +
+        `<strong>Оборудование:</strong> ${escapeHtml(names('equipment', entry.equipment))}. ` +
+        `<strong>Условия:</strong> ${escapeHtml(names('conditions', entry.conditions))}. ` +
+        `<strong>Опасности:</strong> ${escapeHtml(names('hazards', entry.hazards))}.</p>` +
+        `<p><strong>Проверить в допуске:</strong> ${escapeHtml(entry.permits.join(' '))}</p>` +
+        `<p><strong>Компетенции:</strong> ${escapeHtml(entry.competencies.join(' '))}</p>` +
+        `<p><strong>Темы обучения:</strong> ${escapeHtml(entry.training_modules.join(' '))}</p>` +
+        `<p>${escapeHtml(entry.applicability)}</p></article>`
+    )
+    .join('');
+  const products = hseWorkClassifier.product_ladder
+    .map(
+      (item) =>
+        `<li><strong>${escapeHtml(item.name)} — ${escapeHtml(item.stage)}.</strong> ${escapeHtml(item.result)}</li>`
+    )
+    .join('');
+  const sources = hseWorkClassifier.sources
+    .map(
+      (source) =>
+        `<li><a href="${escapeHtml(source.url)}">${escapeHtml(source.title)}</a>. ${escapeHtml(source.note)}</li>`
+    )
+    .join('');
+  return [
+    `<aside><strong>Важно.</strong> ${escapeHtml(hseWorkClassifier.disclaimer)}</aside>`,
+    `<section><h2>Рабочая формула</h2><p>${escapeHtml(hseWorkClassifier.method)}</p></section>`,
+    dictionaries,
+    `<section><h2>Демонстрационные комбинации</h2>${entries}</section>`,
+    '<section><h2>Скачать данные и шаблон</h2><p><a href="/data/hse-energy-work-classifier.json">JSON</a> · <a href="/data/hse-energy-work-classifier.csv">CSV</a> · <a href="/downloads/karta-rabot-povyshennoi-opasnosti-energy.xlsx">Шаблон XLSX</a> · <a href="/downloads/karta-rabot-povyshennoi-opasnosti-energy.csv">Шаблон CSV</a></p></section>',
+    `<section><h2>Продуктовая лестница</h2><ul>${products}</ul></section>`,
+    `<section><h2>Нормативные источники</h2><ol>${sources}</ol></section>`,
+  ].join('');
+}
+
 function buildShell(route) {
   if (route.article && route.path === '/knowledge/hse-cost-optimization') {
-    const links = (route.links || []).map(item => `<a href="${escapeHtml(publicPath(item.href))}">${escapeHtml(item.label)}</a>`).join(' · ');
+    const links = (route.links || [])
+      .map(
+        (item) =>
+          `<a href="${escapeHtml(publicPath(item.href))}">${escapeHtml(item.label)}</a>`
+      )
+      .join(' · ');
     return `<div data-seo-shell="true"><header><a href="/">${brandName}</a>${buildBreadcrumbs(route)}</header><main><h1>${escapeHtml(route.h1)}</h1><p class="seo-shell-intro">${escapeHtml(route.intro)}</p>${hseArticleHtml}<nav aria-label="Связанные страницы">${links}</nav><p><a href="/hse/#website-lead-form">Обсудить Safe-пакет Anix</a></p></main><footer><a href="/privacy/">Политика конфиденциальности</a></footer></div>`;
   }
-  const sections = [...(route.sections || []), ...(route.geoSections || []), ...[...(route.faq || []), ...(route.geoFaq || [])].map(item => ({heading:item.question,body:item.answer}))]
+  const sections = [
+    ...(route.sections || []),
+    ...(route.geoSections || []),
+    ...[...(route.faq || []), ...(route.geoFaq || [])].map((item) => ({
+      heading: item.question,
+      body: item.answer,
+    })),
+  ]
     .map(
       (section) =>
-        `<section><h2>${escapeHtml(normalizeBrandText(section.heading))}</h2><p>${escapeHtml(normalizeBrandText(section.body))}</p></section>`,
+        `<section><h2>${escapeHtml(normalizeBrandText(section.heading))}</h2><p>${escapeHtml(normalizeBrandText(section.body))}</p></section>`
     )
     .join('');
   const links = (route.links || [])
     .map(
       (item) =>
-        `<a href="${escapeHtml(publicPath(item.href))}">${escapeHtml(normalizeBrandText(item.label))}</a>`,
+        `<a href="${escapeHtml(publicPath(item.href))}">${escapeHtml(normalizeBrandText(item.label))}</a>`
     )
     .join('');
   const caseImage = route.case
     ? `<figure><img src="${escapeHtml(route.case.image)}" alt="${escapeHtml(normalizeBrandText(route.case.imageAlt))}" width="1200" height="675"/><figcaption>${escapeHtml(normalizeBrandText(route.case.tags || route.case.category))}</figcaption></figure>`
     : '';
+  const classifier = route.classifierPage ? buildClassifierContent() : '';
+  const cta = route.cta
+    ? `<aside><p><strong>${escapeHtml(route.cta.eyebrow || '')}</strong></p><h2>${escapeHtml(route.cta.heading)}</h2><p>${escapeHtml(route.cta.body)}</p><p><a data-cta="${escapeHtml(route.cta.cta || 'geo-guide')}" href="#website-lead-form">Получить 3 формата и вилку бюджета</a></p></aside>`
+    : '';
 
-  return `<div data-seo-shell="true"><header><a href="/">${brandName}</a>${buildBreadcrumbs(route)}</header><main><h1>${escapeHtml(normalizeBrandText(route.h1))}</h1><p class="seo-shell-intro">${escapeHtml(normalizeBrandText(route.intro))}</p>${caseImage}${sections}<nav aria-label="Связанные страницы">${links}</nav></main><footer><a href="/privacy/">Политика конфиденциальности</a> · <a href="/personal-data/">Обработка персональных данных</a></footer></div>`;
+  return `<div data-seo-shell="true"><header><a href="/">${brandName}</a>${buildBreadcrumbs(route)}</header><main><h1>${escapeHtml(normalizeBrandText(route.h1))}</h1><p class="seo-shell-intro">${escapeHtml(normalizeBrandText(route.intro))}</p>${caseImage}${sections}${classifier}<nav aria-label="Связанные страницы">${links}</nav>${cta}</main><footer><a href="/privacy/">Политика конфиденциальности</a> · <a href="/personal-data/">Обработка персональных данных</a></footer></div>`;
 }
 
 function renderHtml(baseHtml, route) {
   let html = stripSeoHead(baseHtml);
   html = html.replace('</head>', `${buildHead(route)}</head>`);
-  html = html.replace('<div id="root"></div>', `<div id="root">${buildShell(route)}</div>`);
+  html = html.replace(
+    '<div id="root"></div>',
+    `<div id="root">${buildShell(route)}</div>`
+  );
   return html;
 }
 
@@ -346,7 +460,8 @@ function collectHtmlFiles(directory) {
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
     const filePath = path.join(directory, entry.name);
     if (entry.isDirectory()) output.push(...collectHtmlFiles(filePath));
-    else if (entry.isFile() && entry.name.endsWith('.html')) output.push(filePath);
+    else if (entry.isFile() && entry.name.endsWith('.html'))
+      output.push(filePath);
   }
   return output;
 }
@@ -356,21 +471,32 @@ function writeSitemap() {
     .filter(([, route]) => route.indexable)
     .map(([routePath, route]) => {
       const loc = absolutePageUrl(routePath);
-      const lastmod = route.reviewedAt ? `<lastmod>${escapeHtml(route.reviewedAt)}</lastmod>` : '';
+      const lastmod = route.reviewedAt
+        ? `<lastmod>${escapeHtml(route.reviewedAt)}</lastmod>`
+        : '';
       return `  <url><loc>${escapeHtml(loc)}</loc>${lastmod}</url>`;
     })
     .join('\n');
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
   fs.writeFileSync(path.join(buildDir, 'sitemap.xml'), sitemap, 'utf8');
-  console.log(`[seo] sitemap: ${Object.values(seoConfig.routes).filter((route) => route.indexable).length} indexable routes`);
+  console.log(
+    `[seo] sitemap: ${Object.values(seoConfig.routes).filter((route) => route.indexable).length} indexable routes`
+  );
 }
 
 function main() {
-  if (!fs.existsSync(baseIndexPath)) throw new Error('build/index.html not found');
+  if (!fs.existsSync(baseIndexPath))
+    throw new Error('build/index.html not found');
   const baseHtml = fs.readFileSync(baseIndexPath, 'utf8');
   const files = collectHtmlFiles(buildDir).filter((filePath) => {
-    const relativePath = path.relative(buildDir, filePath).split(path.sep).join('/');
-    return path.basename(filePath) !== '404.html' && relativePath !== 'onepager/ohrana-truda/index.html';
+    const relativePath = path
+      .relative(buildDir, filePath)
+      .split(path.sep)
+      .join('/');
+    return (
+      path.basename(filePath) !== '404.html' &&
+      relativePath !== 'onepager/ohrana-truda/index.html'
+    );
   });
 
   for (const filePath of files) {
@@ -380,9 +506,15 @@ function main() {
   }
 
   const notFound = resolveRoute('/404');
-  fs.writeFileSync(path.join(buildDir, '404.html'), renderHtml(baseHtml, notFound), 'utf8');
+  fs.writeFileSync(
+    path.join(buildDir, '404.html'),
+    renderHtml(baseHtml, notFound),
+    'utf8'
+  );
   writeSitemap();
-  console.log(`[seo] rendered static HTML shells for ${files.length} files and a dedicated 404 page`);
+  console.log(
+    `[seo] rendered static HTML shells for ${files.length} files and a dedicated 404 page`
+  );
 }
 
 main();
