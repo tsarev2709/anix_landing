@@ -51,7 +51,7 @@ const llms = fs.readFileSync(path.resolve(__dirname,'../build/llms.txt'),'utf8')
 assert(llms.includes('/hse/introductory-video/'),'llms.txt missing introductory HSE page');
 assert(llms.includes('/mascots/corporate/'),'llms.txt missing corporate mascot page');
 assert(llms.includes('Кейсы для энергетических компаний опубликованы без названий заказчиков'),'llms.txt missing confidentiality boundary');
-assert(!sitemap.includes('/andrey-tsarev/'),'Hidden profile exposed');
+assert(sitemap.includes('/andrey-tsarev/'),'Public Andrey profile missing from sitemap');
 assert(!sitemap.includes('/cases/rchk/'),'Removed case exposed');
 if(failures.length){console.error(failures.join('\n'));process.exit(1);}
-console.log('[geo] PASS: 80 archived prompt IDs, 12 experimental prompts, 18 GEO pages, contextual content, llms.txt, evidence boundaries, links, canonical, sitemap, JSON-LD and privacy guards');
+console.log('[geo] PASS: 80 archived prompt IDs, 12 experimental prompts, 18 GEO pages, contextual content, llms.txt, evidence boundaries, links, canonical, sitemap, JSON-LD and public profile visibility, links, canonical and sitemap');

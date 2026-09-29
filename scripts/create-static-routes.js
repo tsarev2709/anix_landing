@@ -35,10 +35,10 @@ const routes = [
   ...Object.entries(require('../src/seo/routes.json').routes).filter(([,route]) => route.geoPage).map(([url]) => url.slice(1)),
   'medicine','medicine/price','why_it_works','ceo','andrey-tsarev','hse','hse/price','stoimost','animation','ai-video','rybki','rybki_page',
   'procurement',
-  'ships-and-ports','hospitality','tourism','education',
+  'ships-and-ports','hospitality','tourism','education','industrial-b2b','corporate-training','corporate-campaigns','hse/onboarding',
   'cases','cases/b2b','cases/medicine','cases/cinema','cases/hse',
   'cases/clappy','cases/hemotech-ai','cases/tpes','cases/mfti-endowment','cases/mosfarma','cases/multon-partners',
-  'cases/aviandr','cases/little-prince','cases/borodino',
+  'cases/aviandr','cases/little-prince','cases/borodino','cases/very-sweet-case',
   'hse/mvp','hse/mvp/showcase','hse/mvp/showcase/organization',
   ...departments.map((department) => `hse/mvp/showcase/departments/${department}`),
   ...modules.map((module) => `hse/mvp/showcase/modules/${module}`),
@@ -48,7 +48,7 @@ const routes = [
   'hse/mvp/test','hse/mvp/test/login','hse/mvp/test/register','hse/mvp/test/admin-login','hse/mvp/test/organization','hse/mvp/test/me','hse/mvp/test/admin','hse/mvp/test/specialist',
   'hse/mvp/employee','hse/mvp/course/life-saving-rules','hse/mvp/course/life-saving-rules/test','hse/mvp/course/slips-and-falls','hse/mvp/course/slips-and-falls/test','hse/mvp/course/electrical-safety','hse/mvp/course/electrical-safety/test',
   'hse/mvp/specialist','hse/mvp/admin','hse/mvp/request-course','hse/mvp/integrations','hse/mvp/support',
-  'personal-data','privacy','design1test','design_old',
+  'personal-data','privacy','design_old',
 ];
 
 if (!fs.existsSync(indexFile)) {

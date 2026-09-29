@@ -14,7 +14,7 @@ const routes = [
   { path: '/internal/utm-builder/', marker: 'class="utm-builder"', extraMarker: 'Скопировать ссылку', skipLeadForm: true },
   { path: '/', marker: 'class="design1-test"', extraMarker: 'd1-showreel-poster' },
   { path: '/medicine/', marker: 'class="medicine-page"' },
-  { path: '/hse/', marker: 'class="hse2"', extraMarker: 'Открыть интерактивное демо' },
+  { path: '/hse/', marker: 'class="hse2"', extraMarker: 'Демо модуля' },
   { path: '/procurement/', marker: 'class="procurement-page"', extraMarker: 'anix-procurement-kit.pdf' },
   { path: '/andrey-tsarev/', marker: 'class="andrey-page"', extraMarker: 'Собираю сложные идеи в продукты, истории и работающие системы' },
   { path: '/animation/', marker: 'class="animation-page"', extraMarker: 'Создание анимационных роликов для сложных продуктов' },
@@ -27,12 +27,17 @@ const routes = [
   { path: '/cases/hse/', marker: 'class="cases-hub-page cases-category-page"', extraMarker: 'Охрана труда' },
   { path: '/cases/aviandr/', marker: 'class="aviandr-case-page"', extraMarker: 'Авиандр: доказательная база, которая работает на доверие' },
   { path: '/cases/little-prince/', marker: 'class="case-page"', extraMarker: 'Маленький принц' },
+  { path: '/cases/very-sweet-case/', marker: 'class="sweet-case-page"', extraMarker: 'Очень сладкий кейс' },
+  { path: '/industrial-b2b/', marker: 'class="industry-page"', extraMarker: 'Анимация для промышленного B2B, оборудования и технологий' },
+  { path: '/corporate-training/', marker: 'class="industry-page"', extraMarker: 'Корпоративное обучение сотрудников в коротком визуальном формате' },
+  { path: '/corporate-campaigns/', marker: 'class="industry-page"', extraMarker: 'Внутрикорпоративные кампании вокруг одной сильной идеи' },
+  { path: '/hse/onboarding/', marker: 'class="industry-page"', extraMarker: 'Видео-onboarding подрядчиков перед выходом на объект' },
 ];
 
 // DOM-ready batch avoids waiting for Chrome dump-dom to finish unrelated page resources.
 // All routes retain their content, lead-form and removed-SEO-shell assertions.
 const pricingRoutes = [
-  { path: '/hse/energy/', marker: 'class="geo-guide"', extraMarker: 'Видео по охране труда для энергетических компаний' },
+  { path: '/hse/energy/', marker: 'class="energy-hse"', extraMarker: 'Правила объекта —' },
   { path: '/mascots/', marker: 'class="geo-guide"', extraMarker: 'Цифровые маскоты для компаний, охраны труда и обучения' },
   { path: '/knowledge/mechanism-of-action/', marker: 'class="geo-guide"', extraMarker: 'Как визуализировать механизм действия препарата' },
   { path: '/knowledge/order-hse-video/', marker: 'class="geo-guide"', extraMarker: 'Как заказать видео по охране труда' },
