@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.e2f13cf2.css",
-    "main.js": "/static/js/main.9d616876.js",
+    "main.js": "/static/js/main.0734ba43.js",
     "static/css/231.0286eff3.chunk.css": "/static/css/231.0286eff3.chunk.css",
     "static/js/231.cee5618f.chunk.js": "/static/js/231.cee5618f.chunk.js",
     "static/js/727.a85f38f6.chunk.js": "/static/js/727.a85f38f6.chunk.js",
@@ -9,10 +9,10 @@
     "static/js/833.7e1172cc.chunk.js": "/static/js/833.7e1172cc.chunk.js",
     "static/css/552.22e83285.chunk.css": "/static/css/552.22e83285.chunk.css",
     "static/js/552.ebc4aa35.chunk.js": "/static/js/552.ebc4aa35.chunk.js",
-    "static/css/172.24d71623.chunk.css": "/static/css/172.24d71623.chunk.css",
-    "static/js/172.2e77728b.chunk.js": "/static/js/172.2e77728b.chunk.js",
-    "static/css/250.617abf76.chunk.css": "/static/css/250.617abf76.chunk.css",
-    "static/js/250.c8d4e804.chunk.js": "/static/js/250.c8d4e804.chunk.js",
+    "static/css/948.24d71623.chunk.css": "/static/css/948.24d71623.chunk.css",
+    "static/js/948.c9d52493.chunk.js": "/static/js/948.c9d52493.chunk.js",
+    "static/css/256.0aa82475.chunk.css": "/static/css/256.0aa82475.chunk.css",
+    "static/js/256.cda05f4a.chunk.js": "/static/js/256.cda05f4a.chunk.js",
     "static/css/755.999cd986.chunk.css": "/static/css/755.999cd986.chunk.css",
     "static/js/755.be30f6b1.chunk.js": "/static/js/755.be30f6b1.chunk.js",
     "static/css/793.af5461b7.chunk.css": "/static/css/793.af5461b7.chunk.css",
@@ -58,6 +58,7 @@
     "static/media/mascotExisting.webp": "/static/media/mascotExisting.afa47a502367d4163d8c.webp",
     "static/media/energyBeaver.webp": "/static/media/energyBeaver.b8c472ab36b5cd5ba874.webp",
     "static/media/energyDog.webp": "/static/media/energyDog.c4691299532021fe73fc.webp",
+    "static/media/energy-hero.webp": "/static/media/energy-hero.50d372cef64aad419e7e.webp",
     "static/media/avineuro.png": "/static/media/avineuro.dcb22b3d0480db14983e.png",
     "static/media/energyOwl.webp": "/static/media/energyOwl.6a4a2c2ea99da60f514b.webp",
     "static/media/logistics.webp": "/static/media/logistics.56f1ed7ad258907bfc0c.webp",
@@ -110,6 +111,6 @@
   },
   "entrypoints": [
     "static/css/main.e2f13cf2.css",
-    "static/js/main.9d616876.js"
+    "static/js/main.0734ba43.js"
   ]
 }
