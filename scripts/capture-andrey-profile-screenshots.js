@@ -68,6 +68,10 @@ function connectCdp(webSocketDebuggerUrl) {
     });
     socket.on('message', (raw) => {
       const message = JSON.parse(raw.toString());
+      if (message.method === 'Runtime.exceptionThrown') {
+        const detail = message.params?.exceptionDetails;
+        console.error(`[andrey-runtime] ${detail?.exception?.description || detail?.text || 'unknown exception'}`);
+      }
       if (!message.id || !pending.has(message.id)) return;
       const command = pending.get(message.id);
       pending.delete(message.id);
@@ -135,7 +139,13 @@ async function capture(chromePath, name, width, height, selector, index) {
         const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
         const startedAt = Date.now();
         while (!document.querySelector('.andrey-page') && Date.now() - startedAt < 15000) await sleep(100);
-        if (!document.querySelector('.andrey-page')) throw new Error('Andrey profile did not render');
+        if (!document.querySelector('.andrey-page')) {
+          const root = document.querySelector('#root');
+          throw new Error('Andrey profile did not render; title=' + document.title
+            + '; ready=' + document.readyState
+            + '; root=' + (root?.textContent || 'empty').slice(0, 350)
+            + '; scripts=' + document.querySelectorAll('script[src]').length);
+        }
         if (document.fonts && document.fonts.ready) await document.fonts.ready;
         const selector = ${JSON.stringify(selector)};
         const target = selector ? document.querySelector(selector) : document.querySelector('.andrey-hero');
