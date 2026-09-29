@@ -17,7 +17,7 @@ import {
 import BrandLogo from './BrandLogo';
 import ProjectCta from './ProjectCta';
 import SiteFooter from './SiteFooter';
-import heroImage from '../images/hse/review/hero.webp';
+import heroImage from '../images/hse/review/energy-hero.webp';
 import foxImage from '../images/hse/review/energyFox.webp';
 import owlImage from '../images/hse/review/energyOwl.webp';
 import dogImage from '../images/hse/review/energyDog.webp';
