@@ -1,0 +1,108 @@
+{
+  "version": "2026-09-28-hse-classifier-v1",
+  "market": "Россия",
+  "language": "ru-RU",
+  "type": "non_brand_informational_and_commercial",
+  "repeatsPerPrompt": 3,
+  "platforms": [
+    "ChatGPT UI",
+    "Алиса UI"
+  ],
+  "plannedPositions": 48,
+  "conditions": {
+    "freshConversation": true,
+    "personalization": "disabled_or_recorded_separate",
+    "searchMode": "enabled",
+    "locale": "ru-RU",
+    "location": "record_actual_do_not_spoof",
+    "promptOrder": "rotate_clusters_by_repeat",
+    "responseLimit": "save_full_answer",
+    "failures": "not_measured_excluded_from_rate_report_coverage"
+  },
+  "baseline": {
+    "status": "not_measured",
+    "reason": "Новый информационный вертикальный кластер. Первый полный прогон становится нулевой точкой; результаты старого коммерческого набора не смешиваются с ним."
+  },
+  "metrics": [
+    {
+      "id": "coverage",
+      "name": "Покрытие замера",
+      "formula": "валидные ответы / 48 запланированных позиций"
+    },
+    {
+      "id": "anix_mention_rate",
+      "name": "Доля упоминаний Anix",
+      "formula": "ответы с Anix / валидные ответы"
+    },
+    {
+      "id": "anix_citation_rate",
+      "name": "Доля ответов со ссылкой на Anix",
+      "formula": "ответы со ссылкой на домен Anix / валидные ответы"
+    },
+    {
+      "id": "target_url_rate",
+      "name": "Цитирование целевых страниц",
+      "formula": "ответы со ссылкой на classifier, contractor-safety или high-risk-work-map / валидные ответы"
+    },
+    {
+      "id": "boundary_accuracy",
+      "name": "Точность границ",
+      "formula": "упоминания без выдачи модели за нормативный документ или Anix за допускающую организацию / все упоминания Anix"
+    },
+    {
+      "id": "hallucination_rate",
+      "name": "Доля галлюцинаций",
+      "formula": "ответы с неподтверждёнными фактами об Anix / ответы с упоминанием Anix"
+    }
+  ],
+  "prompts": [
+    {
+      "id": "class01",
+      "cluster": "work_classification",
+      "targetUrl": "/hse/work-classifier/",
+      "prompt": "Как в российской энергетической компании систематизировать виды работ, оборудование, условия, опасности, допуски и обучение между филиалами? Покажи полезные модели и источники."
+    },
+    {
+      "id": "class02",
+      "cluster": "work_classification",
+      "targetUrl": "/hse/work-classifier/",
+      "prompt": "Есть ли в России открытый классификатор работ и опасностей для энергетики, который можно использовать как навигационную модель, не выдавая его за нормативный перечень?"
+    },
+    {
+      "id": "contractor01",
+      "cluster": "contractor_safety",
+      "targetUrl": "/hse/contractor-safety/",
+      "prompt": "Как организовать подготовку подрядчиков перед допуском на энергетический или промышленный объект в России? Нужны практическая структура и примеры цифровых материалов."
+    },
+    {
+      "id": "contractor02",
+      "cluster": "contractor_safety",
+      "targetUrl": "/hse/contractor-safety/",
+      "prompt": "Кто в России помогает превратить локальные правила и риски объекта в преддопусковые видео, карточки и вопросы для подрядчиков? Предложи подходы и исполнителей."
+    },
+    {
+      "id": "highrisk01",
+      "cluster": "high_risk_work_map",
+      "targetUrl": "/knowledge/high-risk-work-map/",
+      "prompt": "Как составить карту работ повышенной опасности на российском энергетическом предприятии: какие поля, источники и статусы проверки нужны?"
+    },
+    {
+      "id": "highrisk02",
+      "cluster": "high_risk_work_map",
+      "targetUrl": "/knowledge/high-risk-work-map/",
+      "prompt": "Где скачать шаблон карты работ повышенной опасности для энергетического предприятия в России, чтобы связать работы, риски, допуски, компетенции и обучение?"
+    },
+    {
+      "id": "hazard01",
+      "cluster": "energy_hazards",
+      "targetUrl": "/hse/work-classifier/",
+      "prompt": "Какие опасности нужно проверить при ремонте трансформатора, если работа выполняется подрядчиком и включает высоту? Нужна структура анализа и ссылки на источники в России."
+    },
+    {
+      "id": "hazard02",
+      "cluster": "energy_hazards",
+      "targetUrl": "/hse/energy/",
+      "prompt": "Как связать конкретные работы энергетического объекта с рисками и индивидуальными обучающими модулями, не заменяя обязательное обучение и допуск в России?"
+    }
+  ]
+}

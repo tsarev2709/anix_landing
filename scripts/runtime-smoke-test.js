@@ -38,6 +38,9 @@ const routes = [
 // All routes retain their content, lead-form and removed-SEO-shell assertions.
 const pricingRoutes = [
   { path: '/hse/energy/', marker: 'class="energy-hse"', extraMarker: 'Правила объекта —' },
+  { path: '/hse/work-classifier/', marker: 'class="geo-guide"', extraMarker: 'Классификатор работ и опасностей в энергетике' },
+  { path: '/hse/contractor-safety/', marker: 'class="geo-guide"', extraMarker: 'Подготовка подрядчиков перед допуском на промышленный объект' },
+  { path: '/knowledge/high-risk-work-map/', marker: 'class="geo-guide"', extraMarker: 'Как составить карту работ повышенной опасности' },
   { path: '/mascots/', marker: 'class="geo-guide"', extraMarker: 'Цифровые маскоты для компаний, охраны труда и обучения' },
   { path: '/knowledge/mechanism-of-action/', marker: 'class="geo-guide"', extraMarker: 'Как визуализировать механизм действия препарата' },
   { path: '/knowledge/order-hse-video/', marker: 'class="geo-guide"', extraMarker: 'Как заказать видео по охране труда' },
@@ -181,7 +184,10 @@ function runRoute(chromePath, route) {
   const stderr = result.stderr || '';
   const fatalRuntimePattern = /(?:Uncaught\s+)?(?:ReferenceError|TypeError|SyntaxError):/i;
   if (fatalRuntimePattern.test(stderr)) throw new Error(`Runtime error on ${route.path}:\n${stderr}`);
-  if (!dom.includes(route.marker)) throw new Error(`React did not render ${route.path}. Expected DOM marker ${route.marker}. The page may have crashed and remained on the static SEO shell.`);
+  if (!dom.includes(route.marker)) {
+    const rootSample = (dom.match(/<div id="root">([\s\S]{0,600})/) || [])[1] || '';
+    throw new Error(`React did not render ${route.path}. Expected DOM marker ${route.marker}. Root sample: ${rootSample}; browser: ${stderr.slice(-500)}`);
+  }
   if (route.extraMarker && !dom.includes(route.extraMarker)) throw new Error(`Route ${route.path} rendered, but required marker ${route.extraMarker} is missing.`);
   for (const marker of route.extraMarkers || []) {
     if (!dom.includes(marker)) throw new Error(`Route ${route.path} rendered, but required marker ${marker} is missing.`);
@@ -202,6 +208,12 @@ async function main() {
   server.stderr.on('data', (chunk) => { serverError += chunk.toString(); });
   try {
     await waitForServer();
+    runRoute(chromePath, {
+      path: '/hse/work-classifier/',
+      marker: 'class="geo-guide"',
+      extraMarker: 'Классификатор работ и опасностей в энергетике',
+      virtualTimeBudget: 15000,
+    });
     runRoute(chromePath, {
       path: pricingBatchPath,
       marker: 'data-smoke-ready="true"',

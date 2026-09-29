@@ -72,6 +72,7 @@
 .energy-map__outputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .energy-map__outputs span { padding: 22px; border: 1px solid #3d5861; display: flex; flex-direction: column; justify-content: space-between; font-size: 15px; font-weight: 750; }
 .energy-map__outputs svg { color: var(--energy-accent); }
+.energy-map__next { max-width: 800px; margin: 32px 0 0; color: #b8c7c8; font-size: 16px; line-height: 1.5; }
 .energy-audiences { background: var(--energy-white); }
 .energy-audiences__grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(42px, 7vw, 110px); align-items: start; }
 .energy-audience-list { border-top: 1px solid #cbd3cf; }

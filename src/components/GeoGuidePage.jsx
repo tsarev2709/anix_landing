@@ -3,6 +3,7 @@ import { resolveSeoRoute, toPublicHref } from '../seo/SeoHead';
 import BrandLogo from './BrandLogo';
 import SiteFooter from './SiteFooter';
 import ProjectCta from './ProjectCta';
+import HseWorkClassifier from './HseWorkClassifier';
 import hseArticleRendered from '../content/hseSavingsArticleRendered.json';
 import './GeoGuidePage.css';
 
@@ -91,6 +92,7 @@ export default function GeoGuidePage({ path }) {
             <p>{section.body}</p>
           </section>
         ))}
+        {route.classifierPage ? <HseWorkClassifier /> : null}
         <nav className="geo-guide__reading" aria-label="Материалы по теме">
           {route.links.map((item) => (
             <a key={item.href} href={toPublicHref(item.href)}>
@@ -99,12 +101,19 @@ export default function GeoGuidePage({ path }) {
           ))}
         </nav>
         <aside className="geo-guide__cta">
-          <h2>Применим к вашей задаче</h2>
+          {route.cta?.eyebrow ? (
+            <span className="geo-guide__cta-eyebrow">{route.cta.eyebrow}</span>
+          ) : null}
+          <h2>{route.cta?.heading || 'Применим к вашей задаче'}</h2>
           <p>
-            Расскажите о продукте, аудитории и сроке. Определим состав
-            материалов и предварительный бюджет.
+            {route.cta?.body ||
+              'Расскажите о продукте, аудитории и сроке. Определим состав материалов и предварительный бюджет.'}
           </p>
-          <ProjectCta />
+          <ProjectCta
+            task={route.cta?.task}
+            scope={route.cta?.scope}
+            cta={route.cta?.cta || 'geo-guide'}
+          />
         </aside>
       </article>
       <SiteFooter />

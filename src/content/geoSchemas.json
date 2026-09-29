@@ -1,0 +1,921 @@
+{
+  "/knowledge/animation-budget": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/animation-budget/#article",
+      "headline": "Из чего складывается стоимость анимационного ролика",
+      "description": "Цена зависит не только от хронометража. На неё влияют сценарная и предметная сложность, число уникальных сцен, техника, персонажи, адаптации и порядок согласования.",
+      "url": "https://studio.anix-ai.pro/knowledge/animation-budget/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/animation-budget/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-15",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ],
+  "/knowledge/choose-animation-studio": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/choose-animation-studio/#article",
+      "headline": "Как выбрать студию медицинской анимации",
+      "description": "При выборе студии медицинской анимации сравните похожие работы, порядок проверки научных тезисов, сценарий согласования и состав поставки. Ниже — вопросы для одинакового брифа нескольким подрядчикам и опубликованные примеры Anix.",
+      "url": "https://studio.anix-ai.pro/knowledge/choose-animation-studio/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/choose-animation-studio/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-15",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ],
+  "/knowledge/contractor-onboarding": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/contractor-onboarding/#article",
+      "headline": "Видеоинструктаж и onboarding для подрядчиков",
+      "description": "Видеоматериал для подрядчиков помогает одинаково объяснить правила площадки до первого выхода в рабочую зону. Начните с категории работ и локальных рисков, затем согласуйте сценарии, вопросы и место материала в процессе подготовки.",
+      "url": "https://studio.anix-ai.pro/knowledge/contractor-onboarding/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/contractor-onboarding/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-15",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ],
+  "/knowledge/hse-energy": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/hse-energy/#article",
+      "headline": "Как подготовить HSE-видео для энергетического объекта",
+      "description": "Материал для энергетического объекта должен объяснять конкретной аудитории правила конкретной площадки. Общая анимация может быть основой, но не заменяет проверку локальных требований и обязательные процедуры.",
+      "url": "https://studio.anix-ai.pro/knowledge/hse-energy/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/hse-energy/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-15",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ],
+  "/knowledge/hse-measurement": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/hse-measurement/#article",
+      "headline": "Как оценивать HSE-видео и не приписывать ему лишний эффект",
+      "description": "Просмотры, понимание правил и безопасное поведение — разные результаты. План оценки должен разделять их и задавать исходную точку до запуска материала.",
+      "url": "https://studio.anix-ai.pro/knowledge/hse-measurement/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/hse-measurement/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-15",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ],
+  "/knowledge/industrial-mascot": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/industrial-mascot/#article",
+      "headline": "Зачем маскот охране труда и как поставить задачу студии",
+      "description": "Маскот в охране труда — цифровой персонаж для повторяющихся сообщений о безопасности. Перед разработкой определите, какие правила он объясняет, где появляется и кто выпускает материалы после создания героя.",
+      "url": "https://studio.anix-ai.pro/knowledge/industrial-mascot/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/industrial-mascot/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-15",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ],
+  "/knowledge/mascot-system": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/mascot-system/#article",
+      "headline": "Как превратить маскота в систему коммуникации",
+      "description": "После выбора персонажа нужно определить его роль, правила изображения и способы использования. Без этого новый герой остаётся отдельной картинкой, которую сложно последовательно развивать.",
+      "url": "https://studio.anix-ai.pro/knowledge/mascot-system/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/mascot-system/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-15",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ],
+  "/knowledge/medical-animation": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/medical-animation/#article",
+      "headline": "Медицинская анимация: что включить в проект",
+      "description": "Медицинская анимация показывает процессы, которые трудно объяснить съёмкой: взаимодействие молекул, работу устройства, последовательность процедуры. Её задача — сделать утверждённую научную логику понятной конкретной аудитории.",
+      "url": "https://studio.anix-ai.pro/knowledge/medical-animation/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/medical-animation/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-15",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ],
+  "/knowledge/pharma-production": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/pharma-production/#article",
+      "headline": "Как создаётся ролик для фармкомпании",
+      "description": "Производство фармролика начинается с согласования научных утверждений, аудитории и канала показа. Сценарий, раскадровка и анимация последовательно превращают этот набор ограничений в готовый материал.",
+      "url": "https://studio.anix-ai.pro/knowledge/pharma-production/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/pharma-production/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-15",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ],
+  "/knowledge/video-brief": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/video-brief/#article",
+      "headline": "Что включить в ТЗ на фарма- или HSE-ролик",
+      "description": "Хорошее ТЗ связывает задачу клиента с проверяемым составом результата. Оно описывает аудиторию, содержание, ограничения, версии и порядок согласования, а не только стиль и хронометраж.",
+      "url": "https://studio.anix-ai.pro/knowledge/video-brief/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/video-brief/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-15",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ],
+  "/knowledge/mechanism-of-action": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/mechanism-of-action/#article",
+      "headline": "Как визуализировать механизм действия препарата",
+      "description": "Проект ролика о механизме действия начинается с утверждённых научных тезисов, аудитории и допустимого уровня упрощения. Затем каждому тезису сопоставляют сцену и источник, чтобы проверять содержание до производства.",
+      "url": "https://studio.anix-ai.pro/knowledge/mechanism-of-action/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/mechanism-of-action/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-15",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ],
+  "/knowledge/order-hse-video": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/order-hse-video/#article",
+      "headline": "Как заказать видео по охране труда",
+      "description": "Чтобы оценить и заказать HSE-видео, определите аудиторию, рабочую ситуацию, утверждённые правила и способ показа. Подрядчику нужен этот контекст, чтобы предложить формат и состав работ, а службе охраны труда — понятные этапы проверки.",
+      "url": "https://studio.anix-ai.pro/knowledge/order-hse-video/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/order-hse-video/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-15",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ],
+  "/hse/work-classifier": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Dataset",
+      "@id": "https://studio.anix-ai.pro/hse/work-classifier/#dataset",
+      "name": "Классификатор работ и опасностей в энергетике",
+      "description": "Навигационная модель для сопоставления работ, оборудования, условий, опасностей, процедур допуска, компетенций и обучающих модулей.",
+      "url": "https://studio.anix-ai.pro/hse/work-classifier/",
+      "inLanguage": "ru-RU",
+      "version": "2026-09-28-mvp",
+      "dateModified": "2026-09-28",
+      "creator": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "isBasedOn": [
+        "https://publication.pravo.gov.ru/Document/View/0001202112140052",
+        "https://publication.pravo.gov.ru/Document/View/0001202012300142",
+        "https://publication.pravo.gov.ru/Document/View/0001202012160036",
+        "https://publication.pravo.gov.ru/Document/View/0001202012300160",
+        "https://publication.pravo.gov.ru/Document/View/0001202112290004"
+      ],
+      "variableMeasured": [
+        "работа",
+        "оборудование",
+        "условия",
+        "опасности",
+        "допуск",
+        "компетенции",
+        "обучение"
+      ],
+      "distribution": [
+        {
+          "@type": "DataDownload",
+          "encodingFormat": "application/json",
+          "contentUrl": "https://studio.anix-ai.pro/data/hse-energy-work-classifier.json"
+        },
+        {
+          "@type": "DataDownload",
+          "encodingFormat": "text/csv",
+          "contentUrl": "https://studio.anix-ai.pro/data/hse-energy-work-classifier.csv"
+        },
+        {
+          "@type": "DataDownload",
+          "encodingFormat": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "contentUrl": "https://studio.anix-ai.pro/downloads/karta-rabot-povyshennoi-opasnosti-energy.xlsx",
+          "name": "Шаблон карты работ повышенной опасности"
+        }
+      ],
+      "includedInDataCatalog": {
+        "@type": "DataCatalog",
+        "name": "Открытые материалы Anix по охране труда",
+        "url": "https://studio.anix-ai.pro/knowledge/"
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "DefinedTermSet",
+      "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions",
+      "name": "Виды работ в энергетике",
+      "url": "https://studio.anix-ai.pro/hse/work-classifier/#actions",
+      "inLanguage": "ru-RU",
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions-%D0%A0%D0%91-%D0%AD%D0%9A%D0%A1",
+          "name": "Эксплуатация и оперативное обслуживание",
+          "termCode": "РБ-ЭКС",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions-%D0%A0%D0%91-%D0%9F%D0%95%D0%A0",
+          "name": "Переключения",
+          "termCode": "РБ-ПЕР",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions-%D0%A0%D0%91-%D0%9E%D0%A1%D0%9C",
+          "name": "Осмотры",
+          "termCode": "РБ-ОСМ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions-%D0%A0%D0%91-%D0%94%D0%98%D0%93",
+          "name": "Диагностика, измерения и испытания",
+          "termCode": "РБ-ДИГ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions-%D0%A0%D0%91-%D0%A2%D0%9E",
+          "name": "Техническое обслуживание",
+          "termCode": "РБ-ТО",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions-%D0%A0%D0%91-%D0%A0%D0%95%D0%9C",
+          "name": "Ремонт",
+          "termCode": "РБ-РЕМ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions-%D0%A0%D0%91-%D0%9C%D0%9E%D0%9D",
+          "name": "Монтаж",
+          "termCode": "РБ-МОН",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions-%D0%A0%D0%91-%D0%94%D0%95%D0%9C",
+          "name": "Демонтаж",
+          "termCode": "РБ-ДЕМ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions-%D0%A0%D0%91-%D0%9D%D0%90%D0%9B",
+          "name": "Наладка и регулировка",
+          "termCode": "РБ-НАЛ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions-%D0%A0%D0%91-%D0%9E%D0%A7%D0%A1",
+          "name": "Очистка",
+          "termCode": "РБ-ОЧС",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions-%D0%A0%D0%91-%D0%9F%D0%9E%D0%94",
+          "name": "Перемещение и подъём оборудования",
+          "termCode": "РБ-ПОД",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions-%D0%A0%D0%91-%D0%90%D0%92%D0%A0",
+          "name": "Аварийно-восстановительные работы",
+          "termCode": "РБ-АВР",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#actions"
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "DefinedTermSet",
+      "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment",
+      "name": "Оборудование энергетического предприятия",
+      "url": "https://studio.anix-ai.pro/hse/work-classifier/#equipment",
+      "inLanguage": "ru-RU",
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment-%D0%9E%D0%91-%D0%A2%D0%A0%D0%A4",
+          "name": "Трансформатор",
+          "termCode": "ОБ-ТРФ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment-%D0%9E%D0%91-%D0%93%D0%95%D0%9D",
+          "name": "Генератор",
+          "termCode": "ОБ-ГЕН",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment-%D0%9E%D0%91-%D0%A0%D0%A3",
+          "name": "Распределительное устройство",
+          "termCode": "ОБ-РУ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment-%D0%9E%D0%91-%D0%9A%D0%90%D0%91",
+          "name": "Кабельная линия",
+          "termCode": "ОБ-КАБ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment-%D0%9E%D0%91-%D0%92%D0%9B",
+          "name": "Воздушная линия",
+          "termCode": "ОБ-ВЛ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment-%D0%9E%D0%91-%D0%A2%D0%A3%D0%A0",
+          "name": "Турбина",
+          "termCode": "ОБ-ТУР",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment-%D0%9E%D0%91-%D0%9A%D0%9E%D0%A2",
+          "name": "Котёл",
+          "termCode": "ОБ-КОТ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment-%D0%9E%D0%91-%D0%9D%D0%90%D0%A1",
+          "name": "Насос",
+          "termCode": "ОБ-НАС",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment-%D0%9E%D0%91-%D0%A2%D0%A0%D0%A3",
+          "name": "Трубопровод",
+          "termCode": "ОБ-ТРУ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment-%D0%9E%D0%91-%D0%A1%D0%94",
+          "name": "Сосуд под давлением",
+          "termCode": "ОБ-СД",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment-%D0%9E%D0%91-%D0%93%D0%90%D0%97",
+          "name": "Газовое оборудование",
+          "termCode": "ОБ-ГАЗ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment-%D0%9E%D0%91-%D0%93%D0%A2%D0%A1",
+          "name": "Гидротехническое сооружение",
+          "termCode": "ОБ-ГТС",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#equipment"
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "DefinedTermSet",
+      "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions",
+      "name": "Условия выполнения работ",
+      "url": "https://studio.anix-ai.pro/hse/work-classifier/#conditions",
+      "inLanguage": "ru-RU",
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions-%D0%A3%D0%A1-%D0%9D%D0%90%D0%9F",
+          "name": "Под напряжением",
+          "termCode": "УС-НАП",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions-%D0%A3%D0%A1-%D0%A1%D0%9D%D0%AF",
+          "name": "Со снятием напряжения",
+          "termCode": "УС-СНЯ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions-%D0%A3%D0%A1-%D0%92%D0%AB%D0%A1",
+          "name": "На высоте",
+          "termCode": "УС-ВЫС",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions-%D0%A3%D0%A1-%D0%9E%D0%97%D0%9F",
+          "name": "В ограниченном или замкнутом пространстве",
+          "termCode": "УС-ОЗП",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions-%D0%A3%D0%A1-%D0%92%D0%9E%D0%94",
+          "name": "Над водой или у воды",
+          "termCode": "УС-ВОД",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions-%D0%A3%D0%A1-%D0%93%D0%97",
+          "name": "В газоопасной зоне",
+          "termCode": "УС-ГЗ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions-%D0%A3%D0%A1-%D0%94%D0%9F",
+          "name": "На действующем производстве",
+          "termCode": "УС-ДП",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions-%D0%A3%D0%A1-%D0%9F%D0%9E%D0%94",
+          "name": "Выполняется подрядчиком",
+          "termCode": "УС-ПОД",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions-%D0%A3%D0%A1-%D0%9D%D0%9E%D0%A7",
+          "name": "В ночную смену",
+          "termCode": "УС-НОЧ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions-%D0%A3%D0%A1-%D0%9F%D0%9E%D0%93",
+          "name": "При неблагоприятной погоде",
+          "termCode": "УС-ПОГ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions-%D0%A3%D0%A1-%D0%A2%D0%95%D0%A1",
+          "name": "В стеснённых условиях",
+          "termCode": "УС-ТЕС",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions-%D0%A3%D0%A1-%D0%90%D0%92%D0%A0",
+          "name": "В аварийном режиме",
+          "termCode": "УС-АВР",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#conditions"
+          }
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "DefinedTermSet",
+      "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards",
+      "name": "Опасности при выполнении работ",
+      "url": "https://studio.anix-ai.pro/hse/work-classifier/#hazards",
+      "inLanguage": "ru-RU",
+      "hasDefinedTerm": [
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%A2%D0%9E%D0%9A",
+          "name": "Электрический ток",
+          "termCode": "ОП-ТОК",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%94%D0%A3%D0%93",
+          "name": "Электрическая дуга",
+          "termCode": "ОП-ДУГ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%9D%D0%9D",
+          "name": "Наведённое напряжение",
+          "termCode": "ОП-НН",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%9F%D0%90%D0%94",
+          "name": "Падение с высоты",
+          "termCode": "ОП-ПАД",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%9C%D0%95%D0%A5",
+          "name": "Движущиеся механизмы",
+          "termCode": "ОП-МЕХ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%94%D0%90%D0%92",
+          "name": "Избыточное давление",
+          "termCode": "ОП-ДАВ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%9F%D0%90%D0%A0",
+          "name": "Пар и горячие среды",
+          "termCode": "ОП-ПАР",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%A2%D0%95%D0%9C",
+          "name": "Высокая температура",
+          "termCode": "ОП-ТЕМ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%93%D0%90%D0%97",
+          "name": "Опасная газовая среда",
+          "termCode": "ОП-ГАЗ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%92%D0%97%D0%A0",
+          "name": "Взрыв",
+          "termCode": "ОП-ВЗР",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%9A%D0%98%D0%A1",
+          "name": "Недостаток кислорода",
+          "termCode": "ОП-КИС",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%93%D0%A0%D0%A3%D0%97",
+          "name": "Падение или смещение груза",
+          "termCode": "ОП-ГРУЗ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%A2%D0%A0%D0%90%D0%9D",
+          "name": "Движущийся транспорт",
+          "termCode": "ОП-ТРАН",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%A8%D0%A3%D0%9C",
+          "name": "Шум и вибрация",
+          "termCode": "ОП-ШУМ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%A5%D0%98%D0%9C",
+          "name": "Химическое воздействие",
+          "termCode": "ОП-ХИМ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%9F%D0%9E%D0%96",
+          "name": "Пожар",
+          "termCode": "ОП-ПОЖ",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%A3%D0%A2%D0%9E%D0%9F",
+          "name": "Падение в воду или утопление",
+          "termCode": "ОП-УТОП",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        },
+        {
+          "@type": "DefinedTerm",
+          "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards-%D0%9E%D0%9F-%D0%9E%D0%91%D0%A0",
+          "name": "Обрушение или падение предметов",
+          "termCode": "ОП-ОБР",
+          "inDefinedTermSet": {
+            "@id": "https://studio.anix-ai.pro/hse/work-classifier/#hazards"
+          }
+        }
+      ]
+    }
+  ],
+  "/knowledge/high-risk-work-map": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/high-risk-work-map/#article",
+      "headline": "Как составить карту работ повышенной опасности",
+      "description": "Карта работ повышенной опасности полезна, когда локальные перечни, программы обучения и требования к допуску существуют отдельно. Она не заменяет обязательные документы: её задача — показать связи и помочь найти расхождения до производства обучения.",
+      "url": "https://studio.anix-ai.pro/knowledge/high-risk-work-map/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/high-risk-work-map/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-28",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ],
+  "/knowledge/hse-cost-optimization": [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "@id": "https://studio.anix-ai.pro/knowledge/hse-cost-optimization/#article",
+      "headline": "Как сократить расходы на охрану труда в 2026 году и получить от них результат",
+      "description": "Когда бюджет под давлением, охрану труда нельзя сокращать до формальности. Разбираем, какие меры обязательны, как повысить вовлечённость и запоминание правил и что входит в Safe-пакет Anix за 450 000 ₽.",
+      "url": "https://studio.anix-ai.pro/knowledge/hse-cost-optimization/",
+      "mainEntityOfPage": "https://studio.anix-ai.pro/knowledge/hse-cost-optimization/",
+      "inLanguage": "ru-RU",
+      "dateModified": "2026-09-24",
+      "author": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://studio.anix-ai.pro/#organization",
+        "name": "Anix Studio"
+      },
+      "articleSection": "Материалы для заказчика"
+    }
+  ]
+}

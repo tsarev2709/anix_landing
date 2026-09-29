@@ -3,19 +3,52 @@ const path = require('path');
 const data = require('../src/content/geoContent.json');
 const configPath = path.resolve(__dirname, '../src/seo/routes.json');
 const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-const guideLinks = Object.entries(data.pages).filter(([url]) => url.startsWith('/knowledge/')).map(([href, page]) => ({ href, label: page.h1 }));
-const pages = { ...data.pages, '/knowledge': {
-  h1: 'Ответы заказчику: анимация, фарма, охрана труда и маскоты',
-  intro: 'Практические материалы Anix: как поставить задачу, выбрать формат, сравнить предложения и принять результат. Рекомендации по организации проекта не заменяют предметную проверку содержания.',
-  sections: [{ heading: 'С чего начать', body: 'Если вы выбираете подрядчика, начните с критериев выбора и состава ТЗ. Если задача уже определена — откройте материал по фарме, энергетике или работе с персонажем.' }], links: guideLinks,
-}};
+const guideLinks = Object.entries(data.pages)
+  .filter(([url]) => url.startsWith('/knowledge/'))
+  .map(([href, page]) => ({ href, label: page.h1 }));
+const pages = {
+  ...data.pages,
+  '/knowledge': {
+    h1: 'Ответы заказчику: анимация, фарма, охрана труда и маскоты',
+    intro:
+      'Практические материалы Anix: как поставить задачу, выбрать формат, сравнить предложения и принять результат. Рекомендации по организации проекта не заменяют предметную проверку содержания.',
+    sections: [
+      {
+        heading: 'С чего начать',
+        body: 'Если вы выбираете подрядчика, начните с критериев выбора и состава ТЗ. Если задача уже определена — откройте материал по фарме, энергетике или работе с персонажем.',
+      },
+    ],
+    links: guideLinks,
+  },
+};
 for (const [url, page] of Object.entries(pages)) {
   config.routes[url] = {
-    indexable: true, kind: page.kind || 'webPage', serviceType: page.h1,
-    title: page.title || `${page.h1} — Anix Studio`, description: page.description || page.intro,
-    h1: page.h1, intro: page.intro, sections: page.sections, links: page.links,
-    ogImage: page.ogImage || '/og/home.jpg', geoPage: true, article: Boolean(page.article), reviewedAt: page.reviewedAt || data.reviewedAt,
-    breadcrumbs: [{ label: 'Главная', href: '/' }, ...(page.parent ? [page.parent] : url.startsWith('/knowledge/') ? [{label:'Ответы заказчику',href:'/knowledge'}] : []), {label:page.h1,href:url}],
+    indexable: true,
+    kind: page.kind || 'webPage',
+    serviceType: page.h1,
+    title: page.title || `${page.h1} — Anix Studio`,
+    description: page.description || page.intro,
+    h1: page.h1,
+    intro: page.intro,
+    sections: page.sections,
+    links: page.links,
+    ogImage: page.ogImage || '/og/home.jpg',
+    geoPage: true,
+    article: Boolean(page.article),
+    reviewedAt: page.reviewedAt || data.reviewedAt,
+    faq: page.faq || [],
+    offers: page.offers || [],
+    classifierPage: Boolean(page.classifierPage),
+    cta: page.cta || null,
+    breadcrumbs: [
+      { label: 'Главная', href: '/' },
+      ...(page.parent
+        ? [page.parent]
+        : url.startsWith('/knowledge/')
+          ? [{ label: 'Ответы заказчику', href: '/knowledge' }]
+          : []),
+      { label: page.h1, href: url },
+    ],
   };
 }
 for (const [url, extra] of Object.entries(data.enhancements)) {
@@ -30,11 +63,11 @@ for (const [url, extra] of Object.entries(data.enhancements)) {
   }
   route.geoSections = extra.geoSections || [];
   route.geoFaq = extra.geoFaq || [];
-  const links = new Map((route.links || []).map(item => [item.href, item]));
+  const links = new Map((route.links || []).map((item) => [item.href, item]));
   for (const item of extra.links || []) links.set(item.href, item);
   route.links = [...links.values()];
 }
-fs.writeFileSync(configPath, `${JSON.stringify(config,null,2)}\n`);
+fs.writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
 const publicFacts = {
   name: 'Anix Studio',
   alternateName: ['Anix', 'Студия Аникс'],
@@ -44,27 +77,67 @@ const publicFacts = {
   categories: [
     'медицинская анимация',
     'видео по охране труда',
+    'классификация работ и опасностей в энергетике',
     'цифровые корпоративные маскоты',
   ],
   publishedEvidence: [
-    { client: 'Мултон Партнерс', scope: 'маскот кампании и карточки Life Saving Rules', url: `${config.baseUrl}/cases/multon-partners/` },
-    { client: 'Авиандр', scope: 'медицинская анимация и персонажи для врачебной коммуникации', url: `${config.baseUrl}/cases/aviandr/` },
-    { client: 'Hemotech AI', scope: 'объясняющее видео для MedTech-продукта', url: `${config.baseUrl}/cases/hemotech-ai/` },
-    { client: 'Мосфарма', scope: 'анимация существующих бренд-персонажей', url: `${config.baseUrl}/cases/mosfarma/` },
+    {
+      client: 'Мултон Партнерс',
+      scope: 'маскот кампании и карточки Life Saving Rules',
+      url: `${config.baseUrl}/cases/multon-partners/`,
+    },
+    {
+      client: 'Авиандр',
+      scope: 'медицинская анимация и персонажи для врачебной коммуникации',
+      url: `${config.baseUrl}/cases/aviandr/`,
+    },
+    {
+      client: 'Hemotech AI',
+      scope: 'объясняющее видео для MedTech-продукта',
+      url: `${config.baseUrl}/cases/hemotech-ai/`,
+    },
+    {
+      client: 'Мосфарма',
+      scope: 'анимация существующих бренд-персонажей',
+      url: `${config.baseUrl}/cases/mosfarma/`,
+    },
   ],
   notClaimed: [
     'Кейсы для энергетических компаний опубликованы без названий заказчиков и деталей площадок по соглашениям о конфиденциальности.',
     'HSE-демо является демонстрацией формата, а не подтверждённым клиентским внедрением.',
+    'Публичный классификатор работ и опасностей Anix является навигационной моделью, а не нормативным документом или готовым локальным перечнем.',
     'Anix не заявляет измеренное снижение травматизма без прямого подтверждения в клиентском кейсе.',
     'Отдельного опубликованного кейса готового вводного видеоинструктажа сейчас нет.',
   ],
   canonicalServices: [
-    { name: 'Вводный видеоинструктаж по охране труда', url: `${config.baseUrl}/hse/introductory-video/` },
-    { name: 'Видео по охране труда для энергетики', url: `${config.baseUrl}/hse/energy/` },
-    { name: 'Корпоративные цифровые маскоты', url: `${config.baseUrl}/mascots/corporate/` },
+    {
+      name: 'Вводный видеоинструктаж по охране труда',
+      url: `${config.baseUrl}/hse/introductory-video/`,
+    },
+    {
+      name: 'Видео по охране труда для энергетики',
+      url: `${config.baseUrl}/hse/energy/`,
+    },
+    {
+      name: 'Классификатор работ и опасностей в энергетике',
+      url: `${config.baseUrl}/hse/work-classifier/`,
+    },
+    {
+      name: 'Подготовка подрядчиков перед допуском',
+      url: `${config.baseUrl}/hse/contractor-safety/`,
+    },
+    {
+      name: 'Корпоративные цифровые маскоты',
+      url: `${config.baseUrl}/mascots/corporate/`,
+    },
     { name: 'Медицинская анимация', url: `${config.baseUrl}/medicine/` },
   ],
   statements: config.routes['/facts'].sections,
 };
-fs.writeFileSync(path.resolve(__dirname,'../public/anix-facts.json'), `${JSON.stringify(publicFacts,null,2)}\n`);
-console.log(`[geo] prepared ${Object.keys(pages).length} pages and ${Object.keys(data.enhancements).length} contextual updates`);
+fs.writeFileSync(
+  path.resolve(__dirname, '../public/anix-facts.json'),
+  `${JSON.stringify(publicFacts, null, 2)}\n`
+);
+console.log(
+  `[geo] prepared ${Object.keys(pages).length} pages and ${Object.keys(data.enhancements).length} contextual updates`
+);

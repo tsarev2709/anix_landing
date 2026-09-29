@@ -61,6 +61,8 @@ const publicFormRoutes = new Set([
   '/hse',
   '/hse/price',
   '/hse/energy',
+  '/hse/work-classifier',
+  '/hse/contractor-safety',
   '/stoimost',
   '/procurement',
   '/ships-and-ports',

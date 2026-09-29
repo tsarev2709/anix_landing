@@ -174,6 +174,20 @@ export default function EnergyHsePage() {
               <span><Smartphone /> Телефон</span>
             </div>
           </div>
+          <p className="energy-map__next">
+            Сначала описываем работу, оборудование, условия и опасности. Затем связываем их с правилами допуска и обучением конкретной группы людей.
+          </p>
+          <div className="energy-actions">
+            <a className="energy-button energy-button--glass" href="/hse/work-classifier/">
+              Классификатор работ и опасностей <ArrowRight size={18} />
+            </a>
+            <a className="energy-button energy-button--glass" href="/hse/contractor-safety/">
+              Подготовка подрядчиков <ArrowRight size={18} />
+            </a>
+            <a className="energy-button energy-button--glass" href="/knowledge/high-risk-work-map/">
+              Карта работ повышенной опасности <ArrowRight size={18} />
+            </a>
+          </div>
         </div>
       </section>
 
