@@ -158,7 +158,11 @@ async function capture(chromePath, name, width, height, selector, index) {
       })()
     `;
     const evaluation = await cdp.send('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: true });
-    if (evaluation.exceptionDetails) throw new Error(`Page preparation failed for ${name}`);
+    if (evaluation.exceptionDetails) {
+      const detail = evaluation.exceptionDetails;
+      const message = detail.exception?.description || detail.text || 'unknown page exception';
+      throw new Error(`Page preparation failed for ${name}: ${message}`);
+    }
     const pageState = evaluation.result && evaluation.result.value;
     if (!pageState || pageState.width > width + 1) throw new Error(`Horizontal overflow in ${name}: document ${pageState ? pageState.width : 'unknown'}px, viewport ${width}px`);
     if (selector && pageState.scrollY < 500) throw new Error(`Gallery screenshot did not scroll: ${pageState.scrollY}px`);

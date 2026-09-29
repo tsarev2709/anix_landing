@@ -32,7 +32,10 @@ const routes = [
 // DOM-ready batch avoids waiting for Chrome dump-dom to finish unrelated page resources.
 // All routes retain their content, lead-form and removed-SEO-shell assertions.
 const pricingRoutes = [
-  { path: '/hse/energy/', marker: 'class="geo-guide"', extraMarker: 'Видео по охране труда для энергетических компаний' },
+  { path: '/hse/energy/', marker: 'class="geo-guide"', extraMarker: 'Безопасность работ в энергетике: классификация, обучение и HSE-видео' },
+  { path: '/hse/work-classifier/', marker: 'class="geo-guide"', extraMarker: 'Классификатор работ и опасностей в энергетике' },
+  { path: '/hse/contractor-safety/', marker: 'class="geo-guide"', extraMarker: 'Подготовка подрядчиков перед допуском на промышленный объект' },
+  { path: '/knowledge/high-risk-work-map/', marker: 'class="geo-guide"', extraMarker: 'Как составить карту работ повышенной опасности' },
   { path: '/mascots/', marker: 'class="geo-guide"', extraMarker: 'Цифровые маскоты для компаний, охраны труда и обучения' },
   { path: '/knowledge/mechanism-of-action/', marker: 'class="geo-guide"', extraMarker: 'Как визуализировать механизм действия препарата' },
   { path: '/knowledge/order-hse-video/', marker: 'class="geo-guide"', extraMarker: 'Как заказать видео по охране труда' },
