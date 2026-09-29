@@ -280,12 +280,12 @@ for (const cluster of [
       2,
     'Expected 2 classifier prompts per cluster: ' + cluster
   );
-assert(!sitemap.includes('/andrey-tsarev/'), 'Hidden profile exposed');
+assert(sitemap.includes('/andrey-tsarev/'), 'Public Andrey profile missing from sitemap');
 assert(!sitemap.includes('/cases/rchk/'), 'Removed case exposed');
 if (failures.length) {
   console.error(failures.join('\n'));
   process.exit(1);
 }
 console.log(
-  '[geo] PASS: 80 archived prompt IDs, 20 experimental prompts, 21 GEO pages, classifier data and downloads, contextual content, llms.txt, evidence boundaries, links, canonical, sitemap, JSON-LD and privacy guards'
+  '[geo] PASS: 80 archived prompt IDs, 20 experimental prompts, 21 GEO pages, classifier data and downloads, contextual content, llms.txt, evidence boundaries, links, canonical, sitemap, JSON-LD and public profile visibility'
 );

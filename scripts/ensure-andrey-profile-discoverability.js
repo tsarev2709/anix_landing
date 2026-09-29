@@ -45,8 +45,8 @@ if (!profile.includes('width={photo.width}') || !profile.includes('height={photo
 }
 
 const home = fs.readFileSync(homePath, 'utf8');
-if (home.includes('/andrey-tsarev')) {
-  throw new Error('[andrey-discoverability] Андрей profile is linked from the homepage');
+if (!home.includes('/andrey-tsarev')) {
+  throw new Error('[andrey-discoverability] Андрей profile must be linked from the homepage');
 }
 
-console.log('[andrey-discoverability] eight original photos, natural geometry and hidden navigation verified');
+console.log('[andrey-discoverability] eight original photos, natural geometry and public homepage link verified');

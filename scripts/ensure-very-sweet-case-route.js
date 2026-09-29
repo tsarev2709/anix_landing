@@ -6,7 +6,7 @@ const config = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 const routePath = '/cases/very-sweet-case';
 
 config.routes[routePath] = {
-  indexable: false,
+  indexable: true,
   kind: 'case',
   title: 'Очень сладкий кейс — ANIX Studio',
   description: 'Кейс ANIX Studio: AI-анимация рецептурной сцены с сохранением персонажей, стиля и production-логики.',
@@ -42,4 +42,4 @@ config.routes[routePath] = {
 };
 
 fs.writeFileSync(filePath, `${JSON.stringify(config, null, 2)}\n`, 'utf8');
-console.log(`[very-sweet-case] ensured ${routePath} with noindex, follow`);
+console.log(`[very-sweet-case] ensured public indexable ${routePath}`);

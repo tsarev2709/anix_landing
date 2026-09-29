@@ -218,13 +218,13 @@ const NotFound = lazy(() => import('./components/NotFound'));
 const WhyItWorksPage = lazy(() => import('./components/WhyItWorksPage'));
 const MedicinePage = lazy(() => import('./components/MedicinePage'));
 const HsePage = lazy(() => import('./components/HsePage'));
+const EnergyHsePage = lazy(() => import('./components/EnergyHsePage'));
 const PricingGuidePage = lazy(() => import('./components/PricingGuidePage'));
 const IndustryLandingPage = lazy(
   () => import('./components/IndustryLandingPage')
 );
 const ProcurementPage = lazy(() => import('./components/ProcurementPage'));
 const HseMvpPage = lazy(() => import('./features/hseMvp/HseMvpPage'));
-const Design1TestPage = lazy(() => import('./components/Design1TestPage'));
 const DesignOldPage = lazy(() => import('./components/DesignOldPage'));
 const CeoPage = lazy(() => import('./components/CeoPage'));
 const AndreyProfilePage = lazy(() => import('./components/AndreyProfilePage'));
@@ -334,7 +334,9 @@ const renderInLayout = (component) => {
   );
 };
 
-if (resolveSeoRoute(normalizedPath).geoPage) {
+if (normalizedPath === '/hse/energy') {
+  renderInLayout(<EnergyHsePage />);
+} else if (resolveSeoRoute(normalizedPath).geoPage) {
   renderInLayout(<GeoGuidePage path={normalizedPath} />);
 } else if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
   renderInLayout(<HseMvpPage path={normalizedPath} />);
@@ -374,6 +376,10 @@ if (resolveSeoRoute(normalizedPath).geoPage) {
     case '/hospitality':
     case '/tourism':
     case '/education':
+    case '/industrial-b2b':
+    case '/corporate-training':
+    case '/corporate-campaigns':
+    case '/hse/onboarding':
       renderInLayout(<IndustryLandingPage path={normalizedPath} />);
       break;
     case '/procurement':
@@ -394,9 +400,6 @@ if (resolveSeoRoute(normalizedPath).geoPage) {
     case '/rybki':
     case '/rybki_page':
       renderInLayout(<RybkiPage />);
-      break;
-    case '/design1test':
-      renderInLayout(<Design1TestPage />);
       break;
     case '/design_old':
       renderInLayout(<DesignOldPage />);
