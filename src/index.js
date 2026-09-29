@@ -218,6 +218,7 @@ const NotFound = lazy(() => import('./components/NotFound'));
 const WhyItWorksPage = lazy(() => import('./components/WhyItWorksPage'));
 const MedicinePage = lazy(() => import('./components/MedicinePage'));
 const HsePage = lazy(() => import('./components/HsePage'));
+const EnergyHsePage = lazy(() => import('./components/EnergyHsePage'));
 const PricingGuidePage = lazy(() => import('./components/PricingGuidePage'));
 const IndustryLandingPage = lazy(
   () => import('./components/IndustryLandingPage')
@@ -334,7 +335,9 @@ const renderInLayout = (component) => {
   );
 };
 
-if (resolveSeoRoute(normalizedPath).geoPage) {
+if (normalizedPath === '/hse/energy') {
+  renderInLayout(<EnergyHsePage />);
+} else if (resolveSeoRoute(normalizedPath).geoPage) {
   renderInLayout(<GeoGuidePage path={normalizedPath} />);
 } else if (normalizedPath === '/hse/mvp' || normalizedPath.startsWith('/hse/mvp/')) {
   renderInLayout(<HseMvpPage path={normalizedPath} />);
