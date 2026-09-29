@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const seoConfig = require('../src/seo/routes.json');
 const verification = require('../src/seo/verification.json');
-const { buildGeoSchemas } = require('../src/content/geoSchema');
+const { buildGeoSchemas } = require('../src/content/geoSchema.cjs');
 const hseArticle = require('../src/content/hseSavingsArticle.json');
 const {
   html: hseArticleHtml,

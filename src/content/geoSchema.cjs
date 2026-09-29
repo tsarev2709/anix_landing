@@ -109,4 +109,4 @@ function buildGeoSchemas(route, baseUrl) {
     },
   ];
 }
-exports.buildGeoSchemas = buildGeoSchemas;
+module.exports = { buildGeoSchemas };

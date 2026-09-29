@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import seoConfig from './routes.json';
 import verification from './verification.json';
-const { buildGeoSchemas } = require('../content/geoSchema');
+import geoSchemas from '../content/geoSchemas.json';
 
 const PUBLIC_EMAIL = 'studio@anix-ai.pro';
 const BRAND_NAME = 'Anix Studio';
@@ -237,7 +237,7 @@ export const buildStructuredData = (route) => {
     });
   }
 
-  return [...schemas, ...buildGeoSchemas(route, seoConfig.baseUrl)];
+  return [...schemas, ...(geoSchemas[route.path] || [])];
 };
 
 export default function SeoHead({ path = window.location.pathname }) {
