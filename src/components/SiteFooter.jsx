@@ -31,11 +31,16 @@ const pageLinks = [
   { label: 'Факты об Anix', href: '/facts' },
   { label: 'Medicine', href: '/medicine' },
   { label: 'HSE', href: '/hse' },
+  { label: 'HSE onboarding', href: '/hse/onboarding' },
+  { label: 'Промышленный B2B', href: '/industrial-b2b' },
+  { label: 'Корпоративное обучение', href: '/corporate-training' },
+  { label: 'Корпоративные кампании', href: '/corporate-campaigns' },
   { label: 'Стоимость и закупка', href: '/stoimost' },
   { label: 'Документы для закупки · PDF', href: '/procurement' },
   { label: 'Цена ролика для фармы', href: '/medicine/price' },
   { label: 'Цена видео по охране труда', href: '/hse/price' },
   { label: 'CEO', href: '/ceo' },
+  { label: 'Андрей Царёв', href: '/andrey-tsarev' },
   { label: 'Почему это работает', href: '/why_it_works' },
   { label: 'Проект «Рыбки»', href: '/rybki' },
   { label: 'Кейс Hemotech AI', href: '/cases/hemotech-ai' },
@@ -70,6 +75,26 @@ const directionLinks = [
     icon: HardHat,
   },
   {
+    label: 'HSE onboarding',
+    href: '/hse/onboarding',
+    icon: HardHat,
+  },
+  {
+    label: 'Промышленный B2B',
+    href: '/industrial-b2b',
+    icon: Film,
+  },
+  {
+    label: 'Корпоративное обучение',
+    href: '/corporate-training',
+    icon: PlayCircle,
+  },
+  {
+    label: 'Корпоративные кампании',
+    href: '/corporate-campaigns',
+    icon: Sparkles,
+  },
+  {
     label: 'Цены и условия закупки',
     href: '/stoimost',
     icon: WalletCards,
@@ -77,6 +102,11 @@ const directionLinks = [
   {
     label: 'CEO Anix',
     href: '/ceo',
+    icon: Sparkles,
+  },
+  {
+    label: 'Андрей Царёв',
+    href: '/andrey-tsarev',
     icon: Sparkles,
   },
   {
@@ -121,7 +151,7 @@ export default function SiteFooter() {
             </a>
             <p>
               AI-видео, анимация, маскоты и визуальные системы для сложных
-              продуктов, фармы, HSE и событий.
+              продуктов, фармы, HSE, обучения и корпоративных кампаний.
             </p>
           </div>
 

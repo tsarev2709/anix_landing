@@ -225,7 +225,6 @@ const IndustryLandingPage = lazy(
 );
 const ProcurementPage = lazy(() => import('./components/ProcurementPage'));
 const HseMvpPage = lazy(() => import('./features/hseMvp/HseMvpPage'));
-const Design1TestPage = lazy(() => import('./components/Design1TestPage'));
 const DesignOldPage = lazy(() => import('./components/DesignOldPage'));
 const CeoPage = lazy(() => import('./components/CeoPage'));
 const AndreyProfilePage = lazy(() => import('./components/AndreyProfilePage'));
@@ -377,6 +376,10 @@ if (normalizedPath === '/hse/energy') {
     case '/hospitality':
     case '/tourism':
     case '/education':
+    case '/industrial-b2b':
+    case '/corporate-training':
+    case '/corporate-campaigns':
+    case '/hse/onboarding':
       renderInLayout(<IndustryLandingPage path={normalizedPath} />);
       break;
     case '/procurement':
@@ -397,9 +400,6 @@ if (normalizedPath === '/hse/energy') {
     case '/rybki':
     case '/rybki_page':
       renderInLayout(<RybkiPage />);
-      break;
-    case '/design1test':
-      renderInLayout(<Design1TestPage />);
       break;
     case '/design_old':
       renderInLayout(<DesignOldPage />);
