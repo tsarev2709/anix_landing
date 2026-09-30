@@ -16,6 +16,7 @@ import {
   LifeBuoy,
   Link as LinkIcon,
   Mail,
+  MessageCircle,
   Phone,
   Plus,
   RotateCcw,
@@ -59,7 +60,12 @@ import {
 import { downloadCsv, downloadXlsx, downloadXlsxFallback } from './lib/export';
 import { getRuleBasedRecommendations } from './lib/recommendations';
 import { generateAiRecommendation } from './lib/aiRecommendations';
-import { submitCourseRequest, getCrmMode } from './lib/crm';
+import {
+  submitCourseRequest,
+  getCrmMode,
+  getSupportTelegramHandle,
+  uploadCourseRequestFiles,
+} from './lib/crm';
 import { openCompletionPrint } from './lib/pdf';
 import {
   getHseSupabaseClient,
@@ -1891,6 +1897,9 @@ function AdminPage() {
     </>
   );
 }
+const MAX_COURSE_REQUEST_FILE_BYTES = 10 * 1024 * 1024;
+const MAX_COURSE_REQUEST_TOTAL_BYTES = 70 * 1024 * 1024;
+
 const requestFields = [
   ['companyName', 'Название компании', 'text'],
   ['industry', 'Отрасль', 'text'],
@@ -1920,15 +1929,39 @@ function RequestCoursePage() {
     email: '',
   });
   const [files, setFiles] = useState([]);
+  const [fileError, setFileError] = useState('');
   const [result, setResult] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const crmMode = getCrmMode();
+
+  const handleFilesSelected = (fileList) => {
+    const selected = Array.from(fileList || []);
+    const oversized = selected.find(
+      (file) => file.size > MAX_COURSE_REQUEST_FILE_BYTES
+    );
+    if (oversized) {
+      setFileError(
+        `Файл «${oversized.name}» больше 10 МБ — выберите файл меньшего размера.`
+      );
+      return;
+    }
+    const totalSize = selected.reduce((sum, file) => sum + file.size, 0);
+    if (totalSize > MAX_COURSE_REQUEST_TOTAL_BYTES) {
+      setFileError(
+        'Суммарный размер файлов превышает 70 МБ — уберите часть файлов.'
+      );
+      return;
+    }
+    setFileError('');
+    setFiles(selected);
+  };
 
   const update = (key, value) =>
     setForm((current) => ({ ...current, [key]: value }));
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitting(true);
+    const uploaded = await uploadCourseRequestFiles(files);
     const payload = {
       source: 'Anix HSE MVP',
       product: 'Единая визуальная система обучения по охране труда',
@@ -1943,11 +1976,12 @@ function RequestCoursePage() {
       phone: form.phone,
       email: form.email,
       comment: form.comment,
-      files: files.map((file) => ({
+      files: files.map((file, index) => ({
         name: file.name,
         size: file.size,
         type: file.type,
         lastModified: file.lastModified,
+        url: uploaded[index]?.url || undefined,
       })),
       createdAt: new Date().toISOString(),
     };
@@ -1957,6 +1991,7 @@ function RequestCoursePage() {
   };
 
   if (result) {
+    const telegramHandle = getSupportTelegramHandle();
     return (
       <section className="hse-mvp-result-hero hse-mvp-success-screen">
         <Badge tone="success">
@@ -1964,21 +1999,29 @@ function RequestCoursePage() {
             ? 'Заявка передана в CRM'
             : 'Демо-заявка сохранена'}
         </Badge>
-        <h1>Заявка принята</h1>
+        <h1>Спасибо, мы свяжемся с Вами</h1>
         <p>
           {result.message}. Специалист Anix свяжется для подготовки визуального
           курса.
         </p>
         <p className="hse-mvp-muted">
-          В деморежиме файлы не сохраняются. В промышленной версии материалы
-          передаются через защищенное хранилище.
+          {crmMode.crmWebhookConfigured
+            ? 'Прикреплённые файлы загружены в защищённое хранилище — ссылки видны специалисту в CRM.'
+            : 'В деморежиме файлы не сохраняются. В промышленной версии материалы передаются через защищенное хранилище.'}
         </p>
-        <a
-          className="hse-mvp-button hse-mvp-button-primary"
-          href={href(rootPath)}
-        >
-          Вернуться на демополигон
-        </a>
+        <div className="hse-mvp-actions">
+          <a
+            className="hse-mvp-button hse-mvp-button-primary"
+            href={`https://t.me/${telegramHandle}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <MessageCircle aria-hidden="true" size={18} /> Связаться в Telegram
+          </a>
+          <a className="hse-mvp-button" href={href(rootPath)}>
+            Вернуться на демополигон
+          </a>
+        </div>
       </section>
     );
   }
@@ -2028,9 +2071,7 @@ function RequestCoursePage() {
             <input
               type="file"
               multiple
-              onChange={(event) =>
-                setFiles(Array.from(event.target.files || []))
-              }
+              onChange={(event) => handleFilesSelected(event.target.files)}
               aria-label="Выбрать материалы для курса"
             />
             <span>
@@ -2038,6 +2079,10 @@ function RequestCoursePage() {
             </span>
           </label>
         </div>
+        <p className="hse-mvp-muted">
+          Каждый файл не более 10 МБ, суммарно не более 70 МБ.
+        </p>
+        {fileError ? <p className="hse-mvp-form-error">{fileError}</p> : null}
         {files.length ? (
           <div className="hse-mvp-file-list" aria-label="Выбранные файлы">
             {files.map((file) => (
@@ -2053,13 +2098,14 @@ function RequestCoursePage() {
             : 'VITE_CRM_WEBHOOK_URL не задан: заявка сохранится в demo localStorage.'}
         </p>
         <p className="hse-mvp-muted">
-          В деморежиме файлы не сохраняются. В промышленной версии материалы
-          передаются через защищенное хранилище.
+          {crmMode.crmWebhookConfigured
+            ? 'Прикреплённые файлы будут загружены в защищённое хранилище.'
+            : 'В деморежиме файлы не сохраняются. В промышленной версии материалы передаются через защищенное хранилище.'}
         </p>
         <button
           className="hse-mvp-button hse-mvp-button-primary"
           type="submit"
-          disabled={submitting}
+          disabled={submitting || Boolean(fileError)}
         >
           <Send aria-hidden="true" size={18} />{' '}
           {submitting ? 'Отправляем...' : 'Отправить заявку'}
